@@ -1,5 +1,20 @@
 # Atlas-Kitap.dc.html — İLERLEME DURUMU (devam notu)
 
+## TAM REDAKSİYON TAMAMLANDI ✓ (M0–M8, insanileştirme + okunabilirlik)
+Kapsam: ~90K karakter düzyazı, 62 bölüm, 45 demo paneli, 11 dinamik caption, kapak.
+- AI-yazım kalıpları temizlendi: "şaşırtıcı kadar" 0, em-dash 45→0 (modül verisi), "Amaç,/Vurgu," 0,
+  "kritik" 13→2, "Bu modülde" iskelesi 9→0 (her giriş farklı açılışla), "Kulağa tuhaf gelebilir" 0.
+- Basit modda 28+ kelimelik 6 cümle bölündü (artık 30+ kelime = 0).
+- Jargon ilk-geçiş kuralı: token/gömü/dikkat/RAG/CNN... hepsi ilk geçtiği yerde Türkçe karşılıkla.
+- "NE OLUYOR?" panelleri artık moda duyarlı: 45/45 demoda neOluyorBasit (M1–M2'deki eksik 11 yazıldı);
+  mekanizma renderVals'ta zaten vardı, kod değişmedi. Canlıda toggle doğrulandı.
+- Buton sözlüğü birleşti: tüm reset butonları "baştan" (10 adet); verdict ayracı "—"→":".
+- Kapak sloganı yeniden yazıldı (jargonsuz); kicker'daki em-dash kaldırıldı.
+- Teknik mod: formüller ve terimler korundu, yalnızca cümle akışı doğallaştırıldı (kullanıcı kararı).
+Doğrulama: node --check temiz; kalıp denetimi tüm hedefler OK; canlı testte (support.js + http-server)
+kapak/M1/M5/M8 gezildi, token + turing demoları çalıştırıldı, Basit/Teknik panel değişimi görüldü, konsol hatasız.
+
+
 ## Tamamlanan
 - Kapak (derinlik kadranı) + editöryel içindekiler ✓
 - Modül 1 (Zekâ ve Makineler) — 8 bölüm + demolar (intelligence, binary, turing, cycle, classify, exp) + quiz ✓ TEST EDİLDİ
