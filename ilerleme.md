@@ -184,3 +184,11 @@ v2'yi show_html ile aç, MODÜL N kartına tıkla, alt-sekmeleri scrape et (yuka
 
 ## scrape fonksiyonu (v2 iframe'de eval_js):
 async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; contentEl = h2'den yukarı <6500 char ata. clean() ile baş/son nav metnini temizle. Demo metinleri ve "NE OLUYOR?" içerik gövdesinde gelir.
+
+## EN SÜRÜMÜ + PAKETLEME TAMAMLANDI ✓
+- Atlas-Kitap-EN.dc.html: tam İngilizce (8 modül + 45 demo verisi + caption'lar + UI); v2'nin hazır
+  EN metinleri temel, TR redaksiyon disiplini uygulandı. TR↔EN üst barda gerçek link.
+- build.py → dist/: tek-dosya TR+EN (fontlar+runtime gömülü, ~580KB, 0 dış URL),
+  dist/web (index/en/support.js), demo.html (yalnız M1, 2-8 "Tam sürümde" kilitli).
+- YAYIN.md: gelir mimarisi (ücretsiz vitrin + Gumroad satışı), GitHub Pages adımları, PWA/mağaza/EPUB yol haritası.
+- Not: gizli sekmede rAF render'ı bekletir (test ederken ekran görüntüsü almak sekmeyi görünür kılar); kullanıcıda sorun yok.
