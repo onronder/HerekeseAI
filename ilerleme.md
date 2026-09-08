@@ -435,3 +435,14 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
 - store.js: "reach your book"→"open your book"; signupDesc gönderimi düzeldi ("you'll sign in
   with it to read on any device"). "Fire expert-system rules" bilinçli korundu (EN'de yerleşik terim).
 - Tüm EN store dosyaları + e-posta kartlarında İngiliz-yazımı süpürmesi: 0 kalıntı.
+
+## SATICI + TELİF BÖLÜMLERİ ✓ (2026-09-09)
+- Satıcı unvanı her yerde: Fittechs Yazılım Anonim Şirketi (TR ×3 + EN); e-posta alanları
+  onronder@gmail.com; "Yazar: Onur Önder. Satıcı: Fittechs..." ayrımı yapıldı.
+  KALAN köşeli alanlar (kullanıcı dolduracak): [ADRES], [VERGİ BİLGİSİ], [NO], [İL] + EN adres.
+- TR yasal: yeni "Telif Hakkı ve Kullanım Lisansı" bölümü — FSEK 5846 eser koruması, eser
+  sahibi/mali hak ayrımı, kişisel devredilemez lisans, yasak fiiller (kopyalama/ekran
+  kaydı/umuma iletim/koruma aşma), filigranla hesap tespiti, ihlalde erişim kapatma + FSEK
+  m.66 vd., m.68, m.71 hukuki-cezai sorumluluk. Mesafeli sözleşme m.3'e bölüme atıf eklendi.
+- EN legal: "Copyright and license for personal use" aynı kapsamda genişletildi (FSEK atıflı).
+- Not: metinler hazır taslaktır; mali müşavir/hukukçu onayı önerilir.
