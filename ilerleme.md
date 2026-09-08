@@ -192,3 +192,12 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   dist/web (index/en/support.js), demo.html (yalnız M1, 2-8 "Tam sürümde" kilitli).
 - YAYIN.md: gelir mimarisi (ücretsiz vitrin + Gumroad satışı), GitHub Pages adımları, PWA/mağaza/EPUB yol haritası.
 - Not: gizli sekmede rAF render'ı bekletir (test ederken ekran görüntüsü almak sekmeyi görünür kılar); kullanıcıda sorun yok.
+
+## ARKADAŞ GERİ BİLDİRİMİ UYGULANDI + MASALSI BASİT MOD ✓
+- Mekanik: kapak virgülü, tırnak/büyük harf düzeltmeleri, ", ama/ancak" kuralı (7 yer),
+  ikili-kod bölümü madde listesine çevrildi (arkadaşın önerdiği yapı).
+- Binary paneli "neden ilk kutu 128?" sorusunu ikiye-katlama hikâyesiyle cevaplıyor (arkadaşın ana şikâyeti).
+- 62 bölümün TÜM Basit anlatımı masallaştırıldı (TR+EN): kek tarifi, kapı bekçisi nöron,
+  sisli vadi inişi, lego token'lar, kelime şehri, üç okul, Kral Midas, kartopu tekilliği...
+  Teknik mod/quiz/demolar değişmedi; redaksiyon kuralları korundu ("Bir varmış"/"Once upon" 1'er kez, bilinçli).
+- gh-pages güncellendi (arkadaşlar linkten yeni sürümü görür). Commit: 909df83 + cb2aed9.
