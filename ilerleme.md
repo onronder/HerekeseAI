@@ -309,3 +309,17 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   linki; build artık store/demo'yu da yazıyor. node --check OK.
 - store.js kancaları korundu; data-buy metin mantığı sadeleşti (yalnız sahiplikte "Kitabı Aç").
 - Yerel: native genişlik + 1200 ölçümleri + 375 mobil doğrulandı; kadran testi DOM'dan geçti.
+
+## ÇİFT MENÜ + 3 KONULUK DEMO + FİYAT PANELİ + İLK BASIM ✓ (2026-09-09)
+- Kitap şablonu (TR+EN): okuma düzeni kenar çubuğuna İKİ menü — "Bölümler" (8 modül, renk
+  noktaları, aktif modül accent+bold, tıklayınca modül geçişi) + "Bu Bölümde · n/N" (alt
+  konular, aktif vurgulu). renderVals'a modNav (upcoming→kilitli) ve chapList'e
+  lockedSections stub desteği; kilit = inline SVG. Tek-dosya/gated/demo build'den miras alır.
+- Demo: ilk 3 alt konu açık (Giriş, Zekâ Nedir?, Düşünmek=Hesaplamak); kalan 5 konu kenar
+  çubuğunda kilitli (tıklanmaz), M2–M8 de kilitli listede. build.py kesimi babbage'a çekildi,
+  kilit başlıkları kaynaktan regex'le (yalnız üst düzey section label'ları) üretiliyor.
+- Landing: fiyat bölümü tam genişlik price-panel (630/380 iki sütun: maddeler+dene | ₺349+CTA
+  +iyzico notu; 880px altı tek sütun). "İlk iki konu"→"ilk üç konu" metinleri.
+- "Sürüm 03 · 8 Bölüm" → "İlk Basım · 8 Bölüm" (TR+landing), "Edition 03" → "First Edition" (EN).
+- Doğrulama: node --check TR+EN; tam kitapta menüler+modül geçişi tıklamayla; demoda 12 kilit
+  SVG ve kilitli tıklamanın etkisizliği; fiyat paneli ölçümü. Gated TR/EN bucket'a yeniden yüklendi.

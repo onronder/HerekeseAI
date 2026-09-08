@@ -79,13 +79,16 @@ def demo_variant(src_html: str) -> str:
     me = out.index("    ];\n  }", mi)
     kept = out[mi:m2]                       # modules başı + M1
     out = out[:mi] + kept + out[me:]        # M2-M8 verisini at
-    # M1'i ilk 2 alt konuya indir (landing vaadi: "ilk iki konu ücretsiz")
-    s3 = out.index("{ id:'dusunmek'")       # 3. alt konu başlangıcı
-    se = out.index("\n        ] }", s3)     # sections dizisinin kapanışı
-    head = out[:s3].rstrip()
+    # M1'i ilk 3 alt konuya indir; kalanlar kenar çubuğunda KİLİTLİ görünsün
+    s4 = out.index("{ id:'babbage'")        # 4. alt konu başlangıcı
+    se = out.index("\n        ] }", s4)     # sections dizisinin kapanışı
+    removed = out[s4:se]
+    labels = re.findall(r"\{ id:'[a-z0-9-]+', label:'((?:[^'\\]|\\.)*)'", removed)
+    head = out[:s4].rstrip()
     if head.endswith(","):
         head = head[:-1]
-    out = head + out[se:]
+    locked = ", lockedSections:[" + ",".join("'" + l + "'" for l in labels) + "]"
+    out = head + "\n        ]" + locked + " }" + out[se + len("\n        ] }"):]
     # Kapak meta barındaki TR·EN linki yerine satışa dönüş linki
     out = out.replace(
         '<span><a href="./index.html" style="color:#e85d3a;text-decoration:none;">TR</a> · '
@@ -180,8 +183,8 @@ def main():
     if store_demo.is_dir():
         (store_demo / "demo.html").write_text(demo, encoding="utf-8")
         (store_demo / "support.js").write_text(support, encoding="utf-8")
-        print("• store/demo güncellendi (ilk 2 konu)")
-    print(f"• web: index.html, en.html, demo.html (ilk 2 konu), support.js")
+        print("• store/demo güncellendi (ilk 3 konu)")
+    print(f"• web: index.html, en.html, demo.html (ilk 3 konu), support.js")
 
     # --- gated (satılan çevrimiçi sürüm; filigran yuvalı) ---
     gd = DIST / "gated"

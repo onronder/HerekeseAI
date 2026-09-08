@@ -30,7 +30,7 @@
     <div style="position:absolute;inset:0;opacity:0.5;background-image:linear-gradient(rgba(242,234,215,0.035) 1px,transparent 1px);background-size:100% 38px;pointer-events:none;"></div>
     <div style="position:relative;max-width:1120px;margin:0 auto;padding:36px 48px 0;">
       <div style="display:flex;align-items:center;justify-content:space-between;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.18em;color:#8c8470;text-transform:uppercase;animation:fadeIn 1.1s ease both;border-bottom:1px solid rgba(242,234,215,0.14);padding-bottom:14px;">
-        <span>İnteraktif Dijital Kitap</span><span style="color:#c7b88f;">Sürüm 03 · 8 Bölüm</span><span><a href="/#satin-al" style="color:#e85d3a;text-decoration:none;">Ücretsiz demo · Tamamı ₺349</a></span>
+        <span>İnteraktif Dijital Kitap</span><span style="color:#c7b88f;">İlk Basım · 8 Bölüm</span><span><a href="/#satin-al" style="color:#e85d3a;text-decoration:none;">Ücretsiz demo · Tamamı ₺349</a></span>
       </div>
     </div>
     <div style="position:relative;max-width:1120px;margin:0 auto;padding:46px 48px 0;">
@@ -121,13 +121,25 @@
             <button onClick="{{ setBasit }}" style="{{ basitTab }}">Basit</button>
             <button onClick="{{ setTeknik }}" style="{{ teknikTab }}">Teknik</button>
           </div>
-          <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8a8270;text-transform:uppercase;margin-bottom:14px;">Bölümler</div>
+          <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8a8270;text-transform:uppercase;margin-bottom:12px;">Bölümler</div>
+          <div style="display:flex;flex-direction:column;margin-bottom:30px;">
+            <sc-for list="{{ modNav }}" as="c" hint-placeholder-count="8">
+              <button onClick="{{ c.go }}" style="{{ c.style }}">
+                <span style="font-family:'Space Mono',monospace;font-size:11px;width:24px;flex:none;color:{{ c.numColor }};">{{ c.num }}</span>
+                <span style="width:7px;height:7px;border-radius:50%;flex:none;background:{{ c.dot }};"></span>
+                <span style="flex:1;">{{ c.label }}</span>
+                <sc-if value="{{ c.locked }}"><svg width="10" height="12" viewBox="0 0 10 12" fill="none" style="flex:none;opacity:0.5;"><rect x="1" y="5" width="8" height="6" rx="1" stroke="#8a8270" stroke-width="1.2"/><path d="M3 5 V3.4 a2 2 0 1 1 4 0 V5" stroke="#8a8270" stroke-width="1.2"/></svg></sc-if>
+              </button>
+            </sc-for>
+          </div>
+          <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8a8270;text-transform:uppercase;margin-bottom:12px;">Bu Bölümde · {{ secPager }}</div>
           <div style="display:flex;flex-direction:column;">
             <sc-for list="{{ chapList }}" as="c" hint-placeholder-count="8">
               <button onClick="{{ c.go }}" style="{{ c.style }}">
                 <span style="font-family:'Space Mono',monospace;font-size:11px;width:24px;flex:none;color:{{ c.numColor }};">{{ c.num }}</span>
                 <span style="flex:1;">{{ c.label }}</span>
                 <span style="width:6px;height:6px;border-radius:50%;flex:none;background:{{ c.mark }};"></span>
+                <sc-if value="{{ c.locked }}"><svg width="10" height="12" viewBox="0 0 10 12" fill="none" style="flex:none;opacity:0.5;"><rect x="1" y="5" width="8" height="6" rx="1" stroke="#8a8270" stroke-width="1.2"/><path d="M3 5 V3.4 a2 2 0 1 1 4 0 V5" stroke="#8a8270" stroke-width="1.2"/></svg></sc-if>
               </button>
             </sc-for>
           </div>
@@ -1072,8 +1084,15 @@ class Component extends DCLogic {
                 {name:'Bedensel-Kinestetik',level:'Zayıf',desc:'Bedeni ve el becerisini ustaca kullanma.'},
                 {name:'Kişilerarası',level:'Zayıf',desc:'Başkalarını anlama, empati ve iletişim.'},
                 {name:'İçsel',level:'Zayıf',desc:'Kendi duygularını ve amaçlarını tanıma.'},
-                {name:'Doğacı',level:'Orta',desc:'Doğadaki canlı ve örüntüleri ayırt etme.'} ] } }
-        ] },
+                {name:'Doğacı',level:'Orta',desc:'Doğadaki canlı ve örüntüleri ayırt etme.'} ] } },
+          { id:'dusunmek', label:'Düşünmek = Hesaplamak', h2:'Düşünmek = hesaplamak mı?',
+            basit:['Şimdi mutfağa girelim. Elinde bir kek tarifi var: yumurtayı kır, çırp, unu ekle, fırına ver. Tarifi harfi harfine izleyen biri, kek yapmayı hiç “anlamasa” bile ortaya kek çıkarır. Yapay zekânın temelindeki fikir tam bu: Belki “düşünmek” de küçük, mekanik adımları sırayla uygulamaktır.','Eğer öyleyse, bu adımları bir makineye de yaptırabiliriz. Bunun için iki şey gerekir:','• Makinenin kullanabileceği basit bir alfabe (ikili kod: 0 ve 1)','• Net bir adım listesi (yani tarifin kendisi: algoritma)','Aşağıda ikili kodun nasıl çalıştığını kendin gör.'],
+            teknik:['Bu görüşe hesaplamacılık (computationalism) denir: zihin bir bilgi-işleme sistemidir ve biliş, sembol manipülasyonu biçiminde bir hesaplamadır. Kökleri Hobbes\u2019a (“akıl yürütmek hesaplamaktır”) uzanır; modern formu Putnam ve Fodor ile gelişti.','Pratikte iki taş gerekir. İkili gösterim: her bilgi taban-2\u2019de (bit\u2019ler) kodlanır; Boole cebiri (Boole, 1854) ve Shannon\u2019ın 1937 tezi, mantığın elektrik anahtarlarıyla gerçeklenebileceğini gösterdi. Algoritma: sonlu, kesin tanımlı adımlar dizisi (terim, 9. yy matematikçisi el-Harezmî\u2019den gelir). Bu ikisi “düşünmeyi” mekanik olarak yürütülebilir kılar.'],
+            tip:'“Algoritma” kelimesi 9. yüzyıl Pers matematikçisi el-Harezmî\u2019nin adından gelir. İkili sistemi ise 1703\u2019te Leibniz biçimselleştirdi.',
+            demo:{ type:'binary', title:'İkili kodu çöz', hint:'Kutulara dokunarak yak/söndür.',
+              neOluyorBasit:'Sekiz kutu, sekiz ampul: sönük 0, yanık 1 demek. Peki bu değerleri kutulara kim dağıttı? Şöyle düşün: En sağdaki kutu en küçüğü, 1\u2019i tutar. Sola doğru her kutu, sağ komşusunun iki katını yüklenir: 1, 2, 4, 8, 16, 32, 64 ve en solda 128. Neden hep iki katı? Çünkü her yeni kutu, sağındaki kutuların toplamından bir fazlasını söyleyebilmeli; yoksa arada söylenemeyen sayılar kalırdı. Şimdi yanık kutuların değerlerini topla: İşte sayın. Bilgisayarın bütün dünyası, bu aç-kapa oyunundan ibaret.',
+              neOluyor:'İkili 01001001 = basamak değerlerinin toplamı = 64 + 8 + 1 = 73. Her bit, soldan sağa 128, 64, 32, … değerlerini temsil eder. 8 bit (1 bayt) 0–255 arası her sayıyı kodlar.' } }
+        ], lockedSections:['Babbage → Turing','Modern Bilgisayar','Dar mı Genel mi?','Moore Yasası','Quiz'] },
     ];
   }
 
@@ -1253,7 +1272,21 @@ class Component extends DCLogic {
         num:String(i+1).padStart(2,'0'), label:s.label, go:() => this.goSec(i),
         numColor:i===si?acc:'#aaa292', mark:i===si?acc:'transparent',
         style:'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:8px 0;cursor:pointer;font-family:\'Work Sans\',sans-serif;font-size:13.5px;transition:all .15s;' + (i===si?'color:#1f1f1f;font-weight:600;':'color:#6c6555;font-weight:500;')
-      }));
+      })).concat((mod.lockedSections || []).map((lbl, k) => ({
+        num:String(mod.sections.length + k + 1).padStart(2,'0'), label:lbl, locked:true, go:() => {},
+        numColor:'#c2bba9', mark:'transparent',
+        style:'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:8px 0;font-family:\'Work Sans\',sans-serif;font-size:13.5px;cursor:default;color:#aaa292;font-weight:500;'
+      })));
+      const navBase = 'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:7px 0;cursor:pointer;font-family:\'Work Sans\',sans-serif;font-size:13px;transition:all .15s;';
+      out.modNav = M.map((m, k) => ({
+        num:m.n, label:m.tag, dot:(k===mi-1)?acc:m.dot, go:() => this.open(k+1),
+        numColor:(k===mi-1)?acc:'#aaa292',
+        style:navBase + ((k===mi-1)?'color:#1f1f1f;font-weight:600;':'color:#6c6555;font-weight:500;')
+      })).concat(this.upcoming().map(u => ({
+        num:u.n, label:u.tag, dot:'rgba(138,130,112,0.3)', locked:true, go:() => {},
+        numColor:'#c2bba9',
+        style:navBase + 'cursor:default;color:#aaa292;font-weight:500;'
+      })));
       out.secPager = (si+1) + ' / ' + mod.sections.length;
       out.nextLabel = si < mod.sections.length - 1 ? 'İleri' : 'İçindekiler';
 
