@@ -393,3 +393,13 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   düşüşlerle (Georgia/Helvetica/Courier). Tablo düzeni, yalnız satır içi CSS, tek kalıptan
   üretim ({{ .ConfirmationURL }} korunarak, 3'ünde de doğrulandı). Tarayıcıda render kontrolü ✓.
 - Kurulum kullanıcıda: Dashboard → Authentication → Email Templates (OKUBENI'de tablo).
+
+## E-POSTALAR DİLE GÖRE TEK DİLLİ ✓ (2026-09-09)
+- Kullanıcı Supabase dokümanını işaret etti: şablonlar Go template, .Data=user_metadata,
+  koşul ({{ if eq .Data.lang "en" }}) ve konu satırı şablonu destekleniyor → iki dilli
+  gövdeden vazgeçildi.
+- store.js: kayıtta user_metadata.lang="tr|en" yazılıyor (sayfa diline göre).
+- 3 şablon tek kalıptan, dil dalları ayrı kartlar (marka bandı da dilli: "AI for Everyone /
+  First Edition"); konu satırları da koşullu (OKUBENI'de hazır). lang yoksa varsayılan TR.
+- grant-book makbuzu: dil = parametre > alıcının metadata.lang > TR; EN makbuz linki
+  /en/read'e düzeltildi. Fonksiyon yeniden dağıtıldı.
