@@ -271,3 +271,9 @@ footer{border-top:1px solid rgba(242,234,215,0.14);padding:36px 0 48px;}
   margin:44px 0 12px;padding-bottom:10px;border-bottom:1px solid rgba(242,234,215,0.14);}
 .legal p{font-size:14.5px;line-height:1.7;color:#b8b0a0;margin:10px 0;}
 .legal .mono{color:#8c8470;}
+
+/* Sahip (satın almış / yazar) modu: satış öğeleri gizlenir */
+body.owner .price-line{display:none;}
+body.owner .pp-try{display:none;}
+body.owner .pp-foot{display:none;}
+body.owner .pp-buy{padding-top:44px;}

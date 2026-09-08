@@ -28,6 +28,8 @@
       backSales: "← satış sayfası", browse: "Kitaba göz at",
       pending: (e) => `Hesap: ${e}. Ödemen alındıysa erişimin kısa süre içinde tanımlanır ve e-posta alırsın.`,
       author: (e) => `Yazar erişimin açık: <strong>${e}</strong>. Kitap senin; iyi okumalar!`,
+      metaRead: "Oku", ownerEyebrow: "Kitabın",
+      ownerNote: "Kitabın açık · iki dil, bütün bölümler ve demolar",
       consentLabel: "Dijital içeriğin hemen ifasına açık onay veriyorum; erişim hesabımda " +
         "tanımlandığında cayma hakkımı kaybedeceğimi biliyorum.",
       consentGo: "Ödemeye Git", consentNeed: "Devam etmek için onay kutusunu işaretlemen gerekiyor.",
@@ -64,6 +66,8 @@
       backSales: "← back to the book page", browse: "Browse the book",
       pending: (e) => `Account: ${e}. If your payment has been made, access will be granted shortly and you will get an email.`,
       author: (e) => `You have author access: <strong>${e}</strong>. The book is yours; happy reading!`,
+      metaRead: "Read", ownerEyebrow: "Your Book",
+      ownerNote: "Your book is unlocked · both languages, every chapter and demo",
       consentLabel: "I expressly consent to the immediate performance of this digital content " +
         "and acknowledge that I lose my right of withdrawal once access is granted to my account.",
       consentGo: "Proceed to Payment", consentNeed: "Please check the consent box to continue.",
@@ -275,10 +279,24 @@
     const user = await getUser();
     const owned = user ? await hasBook(user.id) : false;
     const author = user && !owned ? await isAdmin(user.id) : false;
+    const isOwner = owned || author;
+    const wasOwner = document.body.classList.contains("owner");
+    if (!isOwner && wasOwner) { location.reload(); return; }
+    if (isOwner && !wasOwner) {
+      document.body.classList.add("owner");
+      const metaCta = document.querySelector(".cover-meta .ember-link");
+      if (metaCta) { metaCta.textContent = T.metaRead; metaCta.setAttribute("href", READER); }
+      const startBtn = document.querySelector(".cover-cta .cbtn");
+      if (startBtn) startBtn.setAttribute("href", READER);
+      const note = document.querySelector(".cover-note");
+      if (note) note.textContent = T.ownerNote;
+      const eyebrow = document.querySelector(".price-panel")?.closest("section")?.querySelector(".sec-eyebrow");
+      if (eyebrow) eyebrow.textContent = T.ownerEyebrow;
+    }
     const state = $("#buy-state");
 
     document.querySelectorAll("[data-buy]").forEach((btn) => {
-      if (owned || author) btn.textContent = T.openBook;
+      if (isOwner) btn.textContent = T.openBook;
     });
     const acct = $("#account-line");
     if (acct) {
@@ -292,7 +310,7 @@
     }
 
     if (!state) return;
-    if (user && (owned || author)) {
+    if (user && isOwner) {
       state.className = "buy-state show";
       state.innerHTML = author ? T.author(user.email) : T.owned(user.email);
     } else if (user && !owned) {
