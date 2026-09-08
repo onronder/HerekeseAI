@@ -446,3 +446,10 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   m.66 vd., m.68, m.71 hukuki-cezai sorumluluk. Mesafeli sözleşme m.3'e bölüme atıf eklendi.
 - EN legal: "Copyright and license for personal use" aynı kapsamda genişletildi (FSEK atıflı).
 - Not: metinler hazır taslaktır; mali müşavir/hukukçu onayı önerilir.
+
+## ŞİRKET BİLGİLERİ İŞLENDİ ✓ (2026-09-09)
+- Adres (TR imlasıyla): Gayrettepe Mah. Yıldız Posta Cad. No: 8/34, İstanbul, Türkiye (TR+EN).
+- Vergi: Mecidiyeköy V.D. / 3880798863; DUNS: 533127058 (TR Hakkında + EN legal alt notu).
+- Uyuşmazlık ili: İstanbul (şirket merkezi). Mersis satırı kaldırılıp DUNS yazıldı.
+- Tek kalan yuva: [ISBN] — başvuru sonuçlanınca tek satırla eklenecek; sayfadaki köşeli-alan
+  uyarısı "ISBN, başvuru tamamlandığında eklenecektir." notuna dönüştü.
