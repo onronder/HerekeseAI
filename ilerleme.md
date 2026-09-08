@@ -365,3 +365,10 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
 - build.py: demo_variant(lang) — EN demo (demo-en.html) EN kitaptan üretiliyor: EN kilit
   başlıkları kaynaktan, EN upcoming tablosu, meta linki regex'le (renk sırası dilde farklıydı).
 - Yönetim sayfası bilinçli olarak TR (iç araç).
+
+## FAVICON ✓ (2026-09-09)
+- Marka işareti: charcoal yuvarlatılmış kare üzerinde ember, Instrument Serif İTALİK "â"
+  ("Yapay Zekâ"nın şapkalı â'sı; iki dilde de nötr). Tarayıcı canvas'ında kitabın gerçek
+  fontuyla çizildi (16/32/180/512 PNG + PNG-gömülü favicon.ico); baytlar elle geçilmedi,
+  yerel Node alıcısına POST edilerek birebir kaydedildi.
+- 7 sayfaya <link rel=icon> etiketleri; demo sayfaları kök /favicon.ico'dan otomatik alır.
