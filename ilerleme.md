@@ -268,3 +268,17 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   GoDaddy CNAME, (4) iyzico onayı sonrası iyzilink → store/assets/config.js IYZILINK_URL,
   (5) yasal [KÖŞELİ] alanlar. SQL sonrası kalan E2E: grant → filigranlı okuma → teardown.
 - lovable-icin-kitap-sayfasi.md: ana site tanıtım sayfası içerik paketi hazır.
+
+## CANLI E2E TAMAMLANDI ✓ (2026-09-08, akşam)
+- Kullanıcı adımları: SQL migration ✓, redirect URL ✓ (Site URL → book.onuronder.com önerildi),
+  Vercel deploy + GoDaddy CNAME ✓ → book.onuronder.com CANLI (satış/oku/yonetim/yasal 200).
+- SORUN+ÇÖZÜM: Supabase gateway, fonksiyon yanıtlarında Content-Type'ı text/plain+nosniff'e
+  zorluyor (anti-phishing; apikey de kaldırmıyor) → kitap iframe.src yerine fetch + iframe.srcdoc
+  ile servis ediliyor; book-content'e CORS eklendi. Ayrıca grant-book makbuzu send-email yerine
+  Resend API'ye doğrudan gidiyor (mevcut fonksiyon yalnız contact/newsletter tipi tanıyor).
+- CANLIDA DOĞRULANDI: geçici admin → grant-book → entitlement (audit alanlı) → alıcı girişi →
+  /oku'da kitap filigranla açıldı (e-posta+sipariş görünür), kitap içi etkileşim srcdoc'ta
+  çalışıyor, TR→EN geçişi ✓, RLS (alıcı yalnız kendi satırı) ✓. Test kullanıcıları silindi,
+  tablo temiz (0 entitlement, mevcut admin rolü korunlu).
+- KALAN: iyzico onayı → iyzilink → store/assets/config.js IYZILINK_URL; yasal [KÖŞELİ] alanlar;
+  kullanıcının kendi admin hesabıyla /yonetim provası; Lovable tanıtım sayfası (paket hazır).
