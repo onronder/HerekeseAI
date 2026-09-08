@@ -216,20 +216,11 @@
 
   <!-- AUTH MODAL -->
   <div class="modal-backdrop" id="auth-backdrop">
-    <div class="modal modal-inner">
-      <button class="close" id="auth-close" aria-label="Close">×</button>
-      <h2 id="auth-title">Sign in</h2>
-      <form id="auth-form">
-        <div class="field"><label for="auth-email">Email</label>
-          <input id="auth-email" type="email" autocomplete="email" required></div>
-        <div class="field"><label for="auth-password">Password</label>
-          <input id="auth-password" type="password" autocomplete="current-password" minlength="8" required></div>
-        <p class="form-msg" id="auth-msg"></p>
-        <button class="btn" type="submit" id="auth-submit">Sign in</button>
-        <button class="switch" type="button" id="auth-switch">No account yet? Create one</button>
-      </form>
-    </div>
+  <div class="modal modal-inner">
+    <button class="close" id="auth-close" aria-label="Close">×</button>
+    <div id="auth-body"></div>
   </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="/assets/config.js"></script>

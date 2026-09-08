@@ -28,6 +28,23 @@
       notOpen: "Bu kitap henüz açılmamış", needSignin: "Okumak için giriş yapman gerekiyor.",
       backSales: "← satış sayfası", browse: "Kitaba göz at",
       pending: (e) => `Hesap: ${e}. Ödemen alındıysa erişimin kısa süre içinde tanımlanır ve e-posta alırsın.`,
+      accEyebrow: "Hesap", signinDesc: "Kitabına ulaşmak için giriş yap.",
+      signupDesc: "Kitap bu hesaba bağlanır; her cihazda bu hesapla okursun.",
+      forgotTitle: "Şifreni mi unuttun?",
+      forgotDesc: "E-posta adresini yaz; sana yeni şifre belirleme bağlantısı gönderelim.",
+      forgotSend: "Sıfırlama bağlantısı gönder",
+      forgotSent: "Bağlantı yola çıktı. Gelen kutunu, gerekirse istenmeyen klasörünü kontrol et.",
+      resetTitle: "Yeni şifre belirle", resetDesc: "Hesabın için yeni bir şifre seç.",
+      resetDo: "Şifreyi güncelle", resetDone: "Şifren güncellendi; artık giriş yapabilirsin.",
+      nameLabel: "Ad Soyad", emailLabel: "E-posta", passLabel: "Şifre", pass2Label: "Şifre (tekrar)",
+      forgotLink: "Şifremi unuttum", backToSignin: "← Girişe dön", working: "Bir saniye…",
+      signupDone: "Hesabın oluşturuldu. Doğrulama bağlantısını e-postana gönderdik; tıkladıktan sonra giriş yapabilirsin.",
+      errName: "Adını ve soyadını yaz.", errPassLen: "Şifre en az 8 karakter olmalı.",
+      errPassMatch: "Şifreler birbirini tutmuyor.", errCreds: "E-posta ya da şifre hatalı.",
+      errUnconfirmed: "E-postan henüz doğrulanmamış; gelen kutundaki bağlantıya tıkla.",
+      errExists: "Bu e-postayla zaten bir hesap var; giriş yapmayı dene.",
+      errRate: "Art arda çok deneme oldu; biraz bekleyip tekrar dene.",
+      errGeneric: "Bir aksilik oldu; tekrar dener misin?",
     },
     en: {
       signinTitle: "Sign in", signupTitle: "Create an account",
@@ -45,6 +62,23 @@
       notOpen: "This book is not unlocked yet", needSignin: "You need to sign in to read.",
       backSales: "← back to the book page", browse: "Browse the book",
       pending: (e) => `Account: ${e}. If your payment has been made, access will be granted shortly and you will get an email.`,
+      accEyebrow: "Account", signinDesc: "Sign in to reach your book.",
+      signupDesc: "The book is tied to this account; you read with it on every device.",
+      forgotTitle: "Forgot your password?",
+      forgotDesc: "Enter your email address and we will send you a link to set a new one.",
+      forgotSend: "Send reset link",
+      forgotSent: "The link is on its way. Check your inbox, and your spam folder if needed.",
+      resetTitle: "Set a new password", resetDesc: "Choose a new password for your account.",
+      resetDo: "Update password", resetDone: "Your password has been updated; you can sign in now.",
+      nameLabel: "Full name", emailLabel: "Email", passLabel: "Password", pass2Label: "Password (again)",
+      forgotLink: "Forgot password", backToSignin: "← Back to sign in", working: "One moment…",
+      signupDone: "Your account has been created. We sent a verification link to your email; sign in after clicking it.",
+      errName: "Please enter your full name.", errPassLen: "The password must be at least 8 characters.",
+      errPassMatch: "The passwords do not match.", errCreds: "Wrong email or password.",
+      errUnconfirmed: "Your email is not verified yet; click the link in your inbox.",
+      errExists: "An account with this email already exists; try signing in.",
+      errRate: "Too many attempts in a row; wait a little and try again.",
+      errGeneric: "Something went wrong; please try again.",
     },
   }[L];
 
@@ -80,72 +114,144 @@
     return { ok: res.ok, status: res.status, json: await res.json().catch(() => ({})) };
   }
 
-  // ---- auth modal ----
+  // ---- hesap modalı (giriş / kayıt / şifre sıfırlama — Supabase akışları) ----
   let authMode = "signin";
   let onAuthed = null;
 
-  function openAuth(cb) {
-    onAuthed = cb || null;
-    $("#auth-backdrop").classList.add("show");
-    $("#auth-email").focus();
+  const F = (id, label, type, auto) =>
+    `<div class="field"><label for="${id}">${label}</label>` +
+    `<input id="${id}" type="${type}" autocomplete="${auto}" required></div>`;
+
+  function authTemplate(mode) {
+    const head = (title, desc) =>
+      `<p class="mono acc-eyebrow">${T.accEyebrow}</p><h2 id="auth-title">${title}</h2>` +
+      `<p class="acc-desc">${desc}</p>`;
+    if (mode === "signup") {
+      return head(T.signupTitle, T.signupDesc) +
+        `<form id="auth-form">` +
+        F("auth-name", T.nameLabel, "text", "name") +
+        F("auth-email", T.emailLabel, "email", "email") +
+        F("auth-password", T.passLabel, "password", "new-password") +
+        F("auth-password2", T.pass2Label, "password", "new-password") +
+        `<p class="form-msg" id="auth-msg"></p>` +
+        `<button class="btn" type="submit" id="auth-submit">${T.signupTitle}</button>` +
+        `<div class="acc-links"><span></span><button type="button" class="acc-link" data-go="signin">${T.switchToSignin}</button></div>` +
+        `</form>`;
+    }
+    if (mode === "forgot") {
+      return head(T.forgotTitle, T.forgotDesc) +
+        `<form id="auth-form">` +
+        F("auth-email", T.emailLabel, "email", "email") +
+        `<p class="form-msg" id="auth-msg"></p>` +
+        `<button class="btn" type="submit" id="auth-submit">${T.forgotSend}</button>` +
+        `<div class="acc-links"><button type="button" class="acc-link" data-go="signin">${T.backToSignin}</button><span></span></div>` +
+        `</form>`;
+    }
+    if (mode === "reset") {
+      return head(T.resetTitle, T.resetDesc) +
+        `<form id="auth-form">` +
+        F("auth-password", T.passLabel, "password", "new-password") +
+        F("auth-password2", T.pass2Label, "password", "new-password") +
+        `<p class="form-msg" id="auth-msg"></p>` +
+        `<button class="btn" type="submit" id="auth-submit">${T.resetDo}</button>` +
+        `</form>`;
+    }
+    return head(T.signinTitle, T.signinDesc) +
+      `<form id="auth-form">` +
+      F("auth-email", T.emailLabel, "email", "email") +
+      F("auth-password", T.passLabel, "password", "current-password") +
+      `<p class="form-msg" id="auth-msg"></p>` +
+      `<button class="btn" type="submit" id="auth-submit">${T.signinTitle}</button>` +
+      `<div class="acc-links"><button type="button" class="acc-link" data-go="forgot">${T.forgotLink}</button>` +
+      `<button type="button" class="acc-link" data-go="signup">${T.switchToSignup}</button></div>` +
+      `</form>`;
   }
-  function closeAuth() {
-    $("#auth-backdrop").classList.remove("show");
+
+  function say(kind, text) {
     const m = $("#auth-msg");
-    if (m) { m.className = "form-msg"; m.textContent = ""; }
+    if (!m) return;
+    m.className = "form-msg " + kind;
+    m.textContent = text;
   }
-  function setAuthMode(mode) {
+
+  function mapAuthError(err) {
+    const m = (err && err.message) || "";
+    if (/invalid login credentials/i.test(m)) return T.errCreds;
+    if (/email not confirmed/i.test(m)) return T.errUnconfirmed;
+    if (/already registered|already exists/i.test(m)) return T.errExists;
+    if (/rate limit|too many/i.test(m)) return T.errRate;
+    if (/at least|password should/i.test(m)) return T.errPassLen;
+    return T.errGeneric;
+  }
+
+  async function busy(fn) {
+    const btn = $("#auth-submit");
+    const label = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = T.working;
+    try { await fn(); } finally { btn.disabled = false; btn.textContent = label; }
+  }
+
+  function renderAuth(mode) {
     authMode = mode;
-    $("#auth-title").textContent = mode === "signin" ? T.signinTitle : T.signupTitle;
-    $("#auth-submit").textContent = mode === "signin" ? T.signinTitle : T.signupTitle;
-    $("#auth-switch").textContent =
-      mode === "signin" ? T.switchToSignup : T.switchToSignin;
+    $("#auth-body").innerHTML = authTemplate(mode);
+    document.querySelectorAll(".acc-link").forEach((b) => (b.onclick = () => renderAuth(b.dataset.go)));
+    $("#auth-form").onsubmit = (e) => {
+      e.preventDefault();
+      if (mode === "signin") return busy(async () => {
+        const { error } = await sb.auth.signInWithPassword({
+          email: $("#auth-email").value.trim(), password: $("#auth-password").value,
+        });
+        if (error) return say("err", mapAuthError(error));
+        closeAuth();
+        if (onAuthed) onAuthed();
+        refresh();
+      });
+      if (mode === "signup") return busy(async () => {
+        const name = $("#auth-name").value.trim().replace(/\s+/g, " ");
+        const pass = $("#auth-password").value;
+        if (name.length < 3 || !name.includes(" ")) return say("err", T.errName);
+        if (pass.length < 8) return say("err", T.errPassLen);
+        if (pass !== $("#auth-password2").value) return say("err", T.errPassMatch);
+        const { data, error } = await sb.auth.signUp({
+          email: $("#auth-email").value.trim(), password: pass,
+          options: { data: { full_name: name }, emailRedirectTo: window.location.origin + HOME },
+        });
+        if (error) return say("err", mapAuthError(error));
+        if (data.user && !data.session) { renderAuth("signin"); say("ok", T.signupDone); return; }
+        closeAuth(); if (onAuthed) onAuthed(); refresh();
+      });
+      if (mode === "forgot") return busy(async () => {
+        await sb.auth.resetPasswordForEmail($("#auth-email").value.trim(), {
+          redirectTo: window.location.origin + HOME,
+        });
+        say("ok", T.forgotSent);
+      });
+      if (mode === "reset") return busy(async () => {
+        const pass = $("#auth-password").value;
+        if (pass.length < 8) return say("err", T.errPassLen);
+        if (pass !== $("#auth-password2").value) return say("err", T.errPassMatch);
+        const { error } = await sb.auth.updateUser({ password: pass });
+        if (error) return say("err", mapAuthError(error));
+        renderAuth("signin"); say("ok", T.resetDone);
+      });
+    };
+    const first = $("#auth-form input");
+    if (first) first.focus();
   }
+
+  function openAuth(cb, mode) {
+    onAuthed = cb || null;
+    renderAuth(mode || "signin");
+    $("#auth-backdrop").classList.add("show");
+  }
+  function closeAuth() { $("#auth-backdrop").classList.remove("show"); }
 
   function wireAuthModal() {
     const bd = $("#auth-backdrop");
     if (!bd) return;
     $("#auth-close").onclick = closeAuth;
     bd.addEventListener("click", (e) => { if (e.target === bd) closeAuth(); });
-    $("#auth-switch").onclick = () => setAuthMode(authMode === "signin" ? "signup" : "signin");
-    $("#auth-form").onsubmit = async (e) => {
-      e.preventDefault();
-      const email = $("#auth-email").value.trim();
-      const password = $("#auth-password").value;
-      const msg = $("#auth-msg");
-      msg.className = "form-msg";
-      const btn = $("#auth-submit");
-      btn.disabled = true;
-      try {
-        let error;
-        if (authMode === "signin") {
-          ({ error } = await sb.auth.signInWithPassword({ email, password }));
-        } else {
-          const r = await sb.auth.signUp({
-            email, password,
-            options: { emailRedirectTo: window.location.origin + "/" },
-          });
-          error = r.error;
-          if (!error && r.data.user && !r.data.session) {
-            msg.className = "form-msg ok";
-            msg.textContent = T.created;
-            btn.disabled = false;
-            setAuthMode("signin");
-            return;
-          }
-        }
-        if (error) {
-          msg.className = "form-msg err";
-          msg.textContent = T.authFailed;
-        } else {
-          closeAuth();
-          if (onAuthed) onAuthed();
-          refresh();
-        }
-      } finally {
-        btn.disabled = false;
-      }
-    };
   }
 
   // ---- satış sayfası ----
@@ -347,6 +453,9 @@
     if (page === "index") { refreshIndex(); initCoverDial(); }
     if (page === "reader") { wireReaderBar(); initReader(); }
     if (page === "admin") initAdmin();
-    sb.auth.onAuthStateChange(() => refresh());
+    sb.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY") openAuth(null, "reset");
+      refresh();
+    });
   });
 })();

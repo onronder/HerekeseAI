@@ -372,3 +372,14 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   fontuyla çizildi (16/32/180/512 PNG + PNG-gömülü favicon.ico); baytlar elle geçilmedi,
   yerel Node alıcısına POST edilerek birebir kaydedildi.
 - 7 sayfaya <link rel=icon> etiketleri; demo sayfaları kök /favicon.ico'dan otomatik alır.
+
+## HESAP MODALI: SUPABASE AKIŞLARIYLA YENİDEN ✓ (2026-09-09)
+- Dört mod: giriş / kayıt / şifremi unuttum / yeni şifre belirle. Sıfırlama Supabase'in kendi
+  akışıyla: resetPasswordForEmail(redirectTo=dil ana sayfası) → e-posta bağlantısı →
+  PASSWORD_RECOVERY olayı yakalanıp modal "reset" modunda açılıyor → updateUser({password}).
+- Kayıt: Ad Soyad (user_metadata.full_name'e yazılıyor) + e-posta + şifre ×2; istemci denetimi
+  (ad soyad boşluk şartı, ≥8, eşleşme) + Supabase hataları düzgün mesaja eşleniyor
+  (yanlış bilgi / doğrulanmamış e-posta / kayıtlı hesap / hız sınırı; TR+EN).
+- Görsel: eyebrow+serif başlık+açıklama, çerçeveli hata/başarı kutuları, hairline ayraçlı
+  bağlantı satırı (Şifremi unuttum · Hesap oluştur), yüklenme durumu, blur'lu zemin.
+- Modal içeriği JS'ten dile göre üretiliyor; 5 sayfadaki markup ince kabuğa indi.
