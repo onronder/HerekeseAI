@@ -115,7 +115,7 @@
     const state = $("#buy-state");
 
     document.querySelectorAll("[data-buy]").forEach((btn) => {
-      btn.textContent = owned ? "Kitabı Aç" : (btn.dataset.buy === "hero" ? "Kitabı Satın Al" : `Satın Al · ${C.PRICE}`);
+      if (owned) btn.textContent = "Kitabı Aç";
     });
     const acct = $("#account-line");
     if (acct) {
@@ -269,6 +269,37 @@
     };
   }
 
+  // ---- kapak kadranı (kitaptaki Basit/Teknik geçişi, native) ----
+  function initCoverDial() {
+    const strip = $("#dial-strip");
+    if (!strip) return;
+    const fill = $("#dial-fill"), knob = $("#dial-knob");
+    const basit = $("#dial-basit"), teknik = $("#dial-teknik"), mode = $("#dial-mode");
+    let dragging = false;
+    function setPct(p) {
+      p = Math.max(0, Math.min(1, p));
+      const pct = (p * 100).toFixed(1) + "%";
+      fill.style.width = pct;
+      knob.style.left = pct;
+      const tek = p >= 0.5;
+      basit.style.opacity = tek ? 0 : 1;
+      teknik.style.opacity = tek ? 1 : 0;
+      mode.textContent = tek ? "TEKNİK" : "BASİT";
+    }
+    function fromEvent(e) {
+      const r = strip.getBoundingClientRect();
+      setPct((e.clientX - r.left) / r.width);
+    }
+    strip.addEventListener("pointerdown", (e) => {
+      dragging = true;
+      strip.setPointerCapture(e.pointerId);
+      fromEvent(e);
+    });
+    strip.addEventListener("pointermove", (e) => { if (dragging) fromEvent(e); });
+    strip.addEventListener("pointerup", () => { dragging = false; });
+    setPct(0.12);
+  }
+
   // ---- sayfa yönlendirme ----
   function refresh() {
     if (page === "index") refreshIndex();
@@ -277,7 +308,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     wireAuthModal();
     document.querySelectorAll("[data-buy]").forEach((b) => (b.onclick = buyFlow));
-    if (page === "index") refreshIndex();
+    if (page === "index") { refreshIndex(); initCoverDial(); }
     if (page === "reader") { wireReaderBar(); initReader(); }
     if (page === "admin") initAdmin();
     sb.auth.onAuthStateChange(() => refresh());

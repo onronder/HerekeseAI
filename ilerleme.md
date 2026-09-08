@@ -296,3 +296,16 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   SSS, büyük serif kapanış ("Okumayı elinle yap.").
 - store.js kancaları aynen korundu (data-buy, #buy-state, #account-line, auth modal).
 - Yerel 1024/375 doğrulandı; Vercel'e push.
+
+## LANDING = KAPAĞIN KENDİSİ ✓ (2026-09-08, gece 2. tur)
+- Kullanıcı: "iframe'li div amatörce; kitabın orijinal kapağı zaten landing." Doğru yaklaşım
+  uygulandı: kapak (dev serif başlık, kadran paneli, kapak İçindekiler'i) sayfanın KENDİ
+  HTML'i olarak birebir native inşa edildi — iframe/çerçeve yok. Kadran gerçek çalışıyor
+  (initCoverDial, pointer sürükleme, Basit↔Teknik opacity + mod etiketi).
+- Sadeleşme: "Bu kitap nedir", "İki derinlik" bölümü (kadran kapakta), "Üç adım" silindi.
+  Akış: Kapak+İçindekiler → demo şeridi → fiyat (+ "ilk iki konu ücretsiz" yanı) → SSS → kapanış.
+- Demo kullanıcı kararıyla İLK 2 ALT KONUYA indirildi (Giriş + Zekâ Nedir?): build.py
+  demo_variant M1 sections kırpması + kapak metasında "Ücretsiz demo · Tamamı ₺349" → /#satin-al
+  linki; build artık store/demo'yu da yazıyor. node --check OK.
+- store.js kancaları korundu; data-buy metin mantığı sadeleşti (yalnız sahiplikte "Kitabı Aç").
+- Yerel: native genişlik + 1200 ölçümleri + 375 mobil doğrulandı; kadran testi DOM'dan geçti.

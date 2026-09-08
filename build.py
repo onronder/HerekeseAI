@@ -72,13 +72,26 @@ def single_file(src_html: str, fonts_css: str, support_js: str, sibling_map: dic
 
 
 def demo_variant(src_html: str) -> str:
-    """Ücretsiz vitrin: modules() yalnız Modül 1 döndürür; 2-8 upcoming()'e taşınır (kilitli görünür)."""
+    """Ücretsiz vitrin: yalnız Modül 1'in İLK 2 alt konusu; 2-8 upcoming()'de kilitli görünür."""
     out = src_html
     mi = out.index("modules() {")
     m2 = out.index("      { n: '02'", mi)
     me = out.index("    ];\n  }", mi)
     kept = out[mi:m2]                       # modules başı + M1
     out = out[:mi] + kept + out[me:]        # M2-M8 verisini at
+    # M1'i ilk 2 alt konuya indir (landing vaadi: "ilk iki konu ücretsiz")
+    s3 = out.index("{ id:'dusunmek'")       # 3. alt konu başlangıcı
+    se = out.index("\n        ] }", s3)     # sections dizisinin kapanışı
+    head = out[:s3].rstrip()
+    if head.endswith(","):
+        head = head[:-1]
+    out = head + out[se:]
+    # Kapak meta barındaki TR·EN linki yerine satışa dönüş linki
+    out = out.replace(
+        '<span><a href="./index.html" style="color:#e85d3a;text-decoration:none;">TR</a> · '
+        '<a href="./en.html" style="color:#8c8470;text-decoration:none;">EN</a></span>',
+        '<span><a href="/#satin-al" style="color:#e85d3a;text-decoration:none;">'
+        'Ücretsiz demo · Tamamı ₺349</a></span>', 1)
     # upcoming(): 2-8'i "yakında" değil "tam sürümde" olarak listele
     up = """upcoming() {
     return [
@@ -160,10 +173,15 @@ def main():
     (web / "index.html").write_text(tr_web, encoding="utf-8")
     (web / "en.html").write_text(en_web, encoding="utf-8")
     (web / "support.js").write_text(support, encoding="utf-8")
-    # ücretsiz vitrin (M1)
+    # ücretsiz vitrin (M1'in ilk 2 alt konusu)
     demo = demo_variant(tr_web)
     (web / "demo.html").write_text(demo, encoding="utf-8")
-    print(f"• web: index.html, en.html, demo.html (yalnız Bölüm 1), support.js")
+    store_demo = ROOT / "store" / "demo"
+    if store_demo.is_dir():
+        (store_demo / "demo.html").write_text(demo, encoding="utf-8")
+        (store_demo / "support.js").write_text(support, encoding="utf-8")
+        print("• store/demo güncellendi (ilk 2 konu)")
+    print(f"• web: index.html, en.html, demo.html (ilk 2 konu), support.js")
 
     # --- gated (satılan çevrimiçi sürüm; filigran yuvalı) ---
     gd = DIST / "gated"
