@@ -490,3 +490,10 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   okumaya izin veriyordu ama landing yalnız entitlement'a bakıp "Satın Al" gösteriyordu.
 - store.js: isAdmin() yardımcısı (kendi rol satırı, RLS izinli); refreshIndex ve buyFlow'da
   yazar = sahip: butonlar "Kitabı Aç", durum kutusu "Yazar erişimin açık..." (TR/EN).
+
+## LANDING SAHİP MODU TAM ✓ (2026-09-09)
+- Üst bar "Satın Al" → sahip/yazar için "Oku" (READER'a link); "Okumaya Başla" gerçek kitaba;
+  kapak notu "Kitabın açık · iki dil, bütün bölümler ve demolar"; fiyat/₺349, "İlk Üç Konuyu
+  Dene" ve iyzico notu gizli (body.owner CSS); panel eyebrow'u "Kitabın". Çıkışta sayfa
+  yenilenerek satış görünümüne döner. TR/EN sözlükte.
+- Canlıda geçici admin ile 8 kriter doğrulandı; hesap silindi.
