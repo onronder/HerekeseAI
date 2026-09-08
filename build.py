@@ -55,6 +55,28 @@ def inline_fonts_css() -> str:
     return css
 
 
+def store_fonts() -> None:
+    """Store sayfaları için fontları self-host et (GDPR: Google'a IP ifşası kalksın).
+
+    fonts-cache'teki woff2'leri store/assets/fonts/ altına kopyalar ve CSS'i
+    relatif URL'lerle store/assets/fonts.css olarak yazar.
+    """
+    store_assets = ROOT / "store" / "assets"
+    fdir = store_assets / "fonts"
+    fdir.mkdir(parents=True, exist_ok=True)
+    css = (CACHE / "fonts.css").read_text()
+    urls = sorted(set(re.findall(r"url\((https://[^)]+\.woff2)\)", css)))
+    for u in urls:
+        name = u.rsplit("/", 2)[-2] + "-" + u.rsplit("/", 1)[-1]
+        fp = CACHE / name
+        if not fp.exists():
+            fp.write_bytes(fetch(u))
+        (fdir / name).write_bytes(fp.read_bytes())
+        css = css.replace(u, f"fonts/{name}")
+    (store_assets / "fonts.css").write_text(css, encoding="utf-8")
+    print(f"• store fontları self-host: {len(urls)} woff2 + fonts.css")
+
+
 def single_file(src_html: str, fonts_css: str, support_js: str, sibling_map: dict) -> str:
     """Tek dosyalık sürüm: fontlar + support.js gömülü; TR/EN linkleri kardeş dosyalara çevrilir."""
     out = src_html
@@ -173,6 +195,7 @@ def main():
 
     print("• fontlar gömülüyor...")
     fonts = inline_fonts_css()
+    store_fonts()
 
     # --- tek dosya ---
     td = DIST / "tek-dosya"
@@ -202,10 +225,14 @@ def main():
     demo_en = demo_variant(en_web, "en")
     (web / "demo.html").write_text(demo, encoding="utf-8")
     (web / "demo-en.html").write_text(demo_en, encoding="utf-8")
+    def localize_fonts(html):
+        html = re.sub(r'<link rel="preconnect"[^>]*/>\s*', "", html)
+        return re.sub(r'<link href="https://fonts\.googleapis\.com[^"]*"[^>]*/>',
+                      '<link rel="stylesheet" href="/assets/fonts.css" />', html, count=1)
     store_demo = ROOT / "store" / "demo"
     if store_demo.is_dir():
-        (store_demo / "demo.html").write_text(demo, encoding="utf-8")
-        (store_demo / "demo-en.html").write_text(demo_en, encoding="utf-8")
+        (store_demo / "demo.html").write_text(localize_fonts(demo), encoding="utf-8")
+        (store_demo / "demo-en.html").write_text(localize_fonts(demo_en), encoding="utf-8")
         (store_demo / "support.js").write_text(support, encoding="utf-8")
         print("• store/demo güncellendi (ilk 3 konu, TR+EN)")
     print(f"• web: index.html, en.html, demo.html + demo-en.html, support.js")

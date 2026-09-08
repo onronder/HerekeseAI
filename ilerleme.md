@@ -459,3 +459,21 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   (İletişim/İade/KVKK), EN legal ×2 (Contact + telif "let us know"), e-posta değişikliği
   şablonu ×2 (TR+EN kart notları). Canlıda doğrulandı (TR 3, EN geçerli).
 - Not: support@fittechs.com kutusunun gerçekten alım yapıyor olması kullanıcı sorumluluğunda.
+
+## AB/ABD UYUM PAKETİ ✓ (2026-09-09)
+- Analiz (plan dosyasında tam hâli): GDPR ihtiyatlı uyum (temsilci gerekmez), çerez bandı
+  GEREKMEZ (izleme yok, localStorage zorunlu sınıf), CCPA kapsam dışı (beyan yeter),
+  KVKK m.9 yurt dışı aktarım boşluğu tespit edildi (veriler Supabase us-east-1/ABD),
+  AB cayma istisnası için ifa ÖNCESİ açık onay şartı, OSS/KDV iş notu (Paddle rotası).
+- F1 metinler: TR KVKK "Aktarım ve yurt dışına aktarım" (Supabase-ABD/Resend-ABD/Vercel,
+  SCC'li DPA dayanağı) + "Çerezler ve Yerel Depolama" + "Uluslararası Kullanıcılar (GDPR ve
+  ABD)" bölümleri; EN legal'e GDPR dayanak/haklar/aktarım + Cookies + California paragrafları.
+- F2 cayma ön-onayı: satın alma kutusunda zorunlu onay (TR/EN sözlükte CRD 16(m) uyumlu metin);
+  işaretlenmeden Ödemeye Git çalışmaz; onayda user_metadata.withdrawal_consent_at (ISO) yazılır.
+- F3 üçüncü taraf sıfırlama: build.py store_fonts() → 22 woff2 + fonts.css self-host; store
+  demo kopyaları da yerel fonts.css'e çevriliyor; supabase-js UMD /assets/supabase.js olarak
+  sabitlendi. Ağ denetimi: taze yüklemede yalnız kendi origin (anonimde Supabase çağrısı bile yok).
+- F4 fiyat tek kaynağı: config.js PRICING{tr,en:{label,url}} (iyzilink çok para birimli ama
+  link başına tek fiyat; fiyat API'den okunamaz — panel+config elle eşit tutulur, yorumda not);
+  sayfalarda 4+4 data-price span'i store.js'ten dolduruluyor (doğrulandı); buyFlow dilin linkini açar.
+- Kullanıcı/hukukçu görevleri plan dosyasında (DPA'lar, KVKK m.9 mekanizması, VERBİS, OSS).

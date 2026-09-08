@@ -12,9 +12,7 @@
 <link rel="alternate" hreflang="tr" href="https://book.onuronder.com/">
 <link rel="alternate" hreflang="en" href="https://book.onuronder.com/en/">
 <link rel="alternate" hreflang="x-default" href="https://book.onuronder.com/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/fonts.css">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -47,7 +45,7 @@
             <a class="cbtn" href="/demo/demo-en">Start Reading <span class="ar">→</span></a>
             <a class="cbtn-ghost" href="#contents">Contents ↓</a>
           </div>
-          <p class="cover-note">First three topics free · full edition ₺349, both languages included</p>
+          <p class="cover-note">First three topics free · full edition <span data-price>₺349</span>, both languages included</p>
         </div>
 
         <div class="dial-panel">
@@ -155,8 +153,8 @@
       </div>
       <div class="pp-right">
         <div class="pp-buy">
-          <div class="price-line"><span class="amount serif">₺349</span><span class="muted" style="font-size:14px;">one-time · both languages</span></div>
-          <button class="btn btn-ember" data-buy="price">Buy · ₺349</button>
+          <div class="price-line"><span class="amount serif" data-price>₺349</span><span class="muted" style="font-size:14px;">one-time · both languages</span></div>
+          <button class="btn btn-ember" data-buy="price">Buy · <span data-price>₺349</span></button>
           <div class="buy-state" id="buy-state"></div>
         </div>
         <div class="pp-foot">Payments are processed by iyzico. Your card details never touch this
@@ -199,7 +197,7 @@
   <!-- ============ CLOSING ============ -->
   <section class="closing wrap">
     <p class="serif closing-line">Read it with your <em>hands</em>.</p>
-    <button class="btn btn-ember" data-buy="closing">Buy the Book · ₺349</button>
+    <button class="btn btn-ember" data-buy="closing">Buy the Book · <span data-price>₺349</span></button>
   </section>
 
   <footer class="wrap">
@@ -222,7 +220,7 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/assets/supabase.js"></script>
 <script src="/assets/config.js"></script>
 <script src="/assets/store.js"></script>
 </body>

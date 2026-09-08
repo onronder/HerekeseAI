@@ -10,6 +10,7 @@
   const L = document.body.dataset.lang === "en" ? "en" : "tr";
   const HOME = L === "en" ? "/en/" : "/";
   const READER = L === "en" ? "/en/read" : "/oku";
+  const PRICING = (C.PRICING && C.PRICING[L]) || { label: C.PRICE || "", url: C.IYZILINK_URL || null };
 
   const T = {
     tr: {
@@ -26,6 +27,9 @@
       notOpen: "Bu kitap henüz açılmamış", needSignin: "Okumak için giriş yapman gerekiyor.",
       backSales: "← satış sayfası", browse: "Kitaba göz at",
       pending: (e) => `Hesap: ${e}. Ödemen alındıysa erişimin kısa süre içinde tanımlanır ve e-posta alırsın.`,
+      consentLabel: "Dijital içeriğin hemen ifasına açık onay veriyorum; erişim hesabımda " +
+        "tanımlandığında cayma hakkımı kaybedeceğimi biliyorum.",
+      consentGo: "Ödemeye Git", consentNeed: "Devam etmek için onay kutusunu işaretlemen gerekiyor.",
       accEyebrow: "Hesap", signinDesc: "Kitabına ulaşmak için giriş yap.",
       signupDesc: "Kitap bu hesaba bağlanır; her cihazda bu hesapla okursun.",
       forgotTitle: "Şifreni mi unuttun?",
@@ -58,6 +62,9 @@
       notOpen: "This book is not unlocked yet", needSignin: "You need to sign in to read.",
       backSales: "← back to the book page", browse: "Browse the book",
       pending: (e) => `Account: ${e}. If your payment has been made, access will be granted shortly and you will get an email.`,
+      consentLabel: "I expressly consent to the immediate performance of this digital content " +
+        "and acknowledge that I lose my right of withdrawal once access is granted to my account.",
+      consentGo: "Proceed to Payment", consentNeed: "Please check the consent box to continue.",
       accEyebrow: "Account", signinDesc: "Sign in to open your book.",
       signupDesc: "The book is tied to this account; you’ll sign in with it to read on any device.",
       forgotTitle: "Forgot your password?",
@@ -251,7 +258,12 @@
   }
 
   // ---- satış sayfası ----
+  function fillPrices() {
+    document.querySelectorAll("[data-price]").forEach((el) => (el.textContent = PRICING.label));
+  }
+
   async function refreshIndex() {
+    fillPrices();
     const user = await getUser();
     const owned = user ? await hasBook(user.id) : false;
     const state = $("#buy-state");
@@ -276,8 +288,21 @@
       state.innerHTML = T.owned(user.email);
     } else if (user && !owned) {
       state.className = "buy-state show";
-      if (C.IYZILINK_URL) {
-        state.innerHTML = T.pay(user.email);
+      if (PRICING.url) {
+        state.innerHTML = T.pay(user.email) +
+          `<label style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;cursor:pointer;">` +
+          `<input type="checkbox" id="consent-box" style="margin-top:3px;accent-color:#e85d3a;">` +
+          `<span style="font-size:13px;line-height:1.55;color:#b8b0a0;">${T.consentLabel}</span></label>` +
+          `<button class="btn btn-ember" id="consent-go" style="margin-top:14px;">${T.consentGo}</button>` +
+          `<p class="form-msg" id="consent-msg" style="margin-top:10px;"></p>`;
+        $("#consent-go").onclick = async () => {
+          if (!$("#consent-box").checked) {
+            const m = $("#consent-msg"); m.className = "form-msg err"; m.textContent = T.consentNeed;
+            return;
+          }
+          await sb.auth.updateUser({ data: { withdrawal_consent_at: new Date().toISOString() } });
+          window.open(PRICING.url, "_blank", "noopener");
+        };
       } else {
         state.innerHTML = T.soon(user.email);
       }
@@ -290,14 +315,8 @@
     getUser().then(async (user) => {
       if (!user) { openAuth(buyFlow); return; }
       if (await hasBook(user.id)) { window.location.href = READER; return; }
-      if (C.IYZILINK_URL) {
-        window.open(C.IYZILINK_URL, "_blank", "noopener");
-        refresh();
-        document.getElementById("buy-state")?.scrollIntoView({ behavior: "smooth", block: "center" });
-      } else {
-        refresh();
-        document.getElementById("buy-state")?.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
+      await refreshIndex();
+      document.getElementById("buy-state")?.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   }
 
