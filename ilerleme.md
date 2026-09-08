@@ -484,3 +484,9 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   "yazar" damgası taşır. store.js initReader artık hasBook yerine sunucuya sorar (tek otorite).
 - Canlı E2E: erişim kayıtsız geçici admin → token ✓ → 669KB içerik ✓ → filigran
   "yazar-test@example.com · yazar" ✓ → temizlendi. Fonksiyon deploy + push edildi.
+
+## LANDING YAZAR-FARKINDALI ✓ (2026-09-09)
+- Teşhis: kullanıcının hesabı (onronder@gmail.com) TEK kullanıcı ve admin rolü var; arka uç
+  okumaya izin veriyordu ama landing yalnız entitlement'a bakıp "Satın Al" gösteriyordu.
+- store.js: isAdmin() yardımcısı (kendi rol satırı, RLS izinli); refreshIndex ve buyFlow'da
+  yazar = sahip: butonlar "Kitabı Aç", durum kutusu "Yazar erişimin açık..." (TR/EN).
