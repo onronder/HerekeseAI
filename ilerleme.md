@@ -217,3 +217,20 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
 - EN dar yansıma: rival neighbourhoods→camps, "right neighbourhood"→"right camp", Midas's genie→genies in old tales.
 - Doğrulama: her yama count==1; tüm değişen cümleler ikinci turda yeniden okundu; node --check TR+EN OK;
   canlı önizlemede M2/M3 ekranda teyit; build.py + gh-pages push, canlıda curl ile içerik teyidi.
+
+## EN US-ENGLISH EDİTÖR OKUMASI TAMAMLANDI ✓ (2026-09-08)
+- TR'deki TDK okumasının aynası: EN sürümün TÜM düzyazısı (M1–M8 + kapak/şablon/caption) satır satır okundu.
+- US yazım dönüşümü: 114 kelime (colour→color, -ise→-ize ailesi, labelled→labeled, defence→defense,
+  centre→center, artefacts→artifacts, neighbour→neighbor...) + backwards→backward (7), non-linear→nonlinear,
+  fulfils→fulfills, skilful→skillful, memoriser→memorizer, dreamt→dreamed, leftwards→leftward.
+- US noktalama: tırnak dışı nokta/virgül içeri alındı (”.→.” 58, ”,→,” 32); CMOS gereği ?,” → ?” (5).
+- Britanya sözcükleri: torch→flashlight (3), collars→catches, sit an exam→take, junction→intersection,
+  holiday/seaside→trip/beach, adviser→advisor, films→movies, any more→anymore.
+- Çeviri kokusu/anlatım: "will show itself", "two stones are needed", "the cycle turns", "pour out code",
+  "the case's solved verdict", "watch it all on stage", "keeper keep its tally", "keepers get excited",
+  "nobody left to scold"→blame'e bağlandı, "forger ripens"→"masters its craft", "The turn now is",
+  "question rises"→arises, "turned to glass"→"into a glass one", "moving symbols"→"shuffling symbols" (2),
+  "usta/çırak" çelişkisi (hand the master its tools), bozuk quiz soruları (2), eksik Turing testi adlandırma
+  cümlesi eklendi ("He called it the imitation game; today we call it the Turing test.").
+- Doğrulama: her yama count==1; değişen tüm cümleler ikinci turda yeniden okundu; node --check OK;
+  canlı önizleme (M5) teyit; build + gh-pages push; canlıda curl teyidi.
