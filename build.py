@@ -23,7 +23,7 @@ TR = ROOT / "Atlas-Kitap.dc.html"
 EN = ROOT / "Atlas-Kitap-EN.dc.html"
 SUPPORT = ROOT / "support.js"
 
-FONT_CSS_URL = ("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700"
+FONT_CSS_URL = ("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700"
                 "&family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&display=swap")
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh) AppleWebKit/537.36 Chrome/120 Safari/537.36"}
 
@@ -95,6 +95,39 @@ def demo_variant(src_html: str) -> str:
     return out
 
 
+GATED_EXTRAS = """
+<div id="wm-badge" style="position:fixed;bottom:8px;right:10px;z-index:99998;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.04em;color:rgba(128,124,116,0.5);pointer-events:none;user-select:none;">%%WM_LABEL%% %%WM_EMAIL%% \\u00b7 %%WM_ORDER%%</div>
+<!--wm:%%WM_HASH%%-->
+<script data-guard>
+(function(){
+  var stop=function(e){e.preventDefault();return false;};
+  document.addEventListener('contextmenu',stop);
+  document.addEventListener('selectstart',stop);
+  document.addEventListener('copy',stop);
+  document.addEventListener('dragstart',stop);
+  var st=document.createElement('style');
+  st.textContent='body{-webkit-user-select:none;user-select:none;}';
+  document.head.appendChild(st);
+})();
+</script>
+<!--wm:%%WM_HASH%%-->
+"""
+
+
+def gated_variant(single_html: str, wm_label: str) -> str:
+    """Satılan çevrimiçi sürüm: filigran yuvaları + hafif caydırıcılık.
+
+    %%WM_EMAIL%% / %%WM_ORDER%% / %%WM_HASH%% yer tutucuları servis anında
+    (book-content Edge Function) alıcı bilgisiyle doldurulur.
+    """
+    out = single_html
+    extras = GATED_EXTRAS.replace("%%WM_LABEL%%", wm_label).replace("\\u00b7", "·")
+    out = out.replace("</body>", extras + "\n</body>", 1)
+    # içeriğe dağıtılmış ek gizli işaret (kapak kökünden hemen sonra)
+    out = out.replace("<x-dc>", "<x-dc data-lic=\"%%WM_HASH%%\">", 1)
+    return out
+
+
 def main():
     print("== Atlas-Kitap build ==")
     tr = TR.read_text(encoding="utf-8")
@@ -131,6 +164,13 @@ def main():
     demo = demo_variant(tr_web)
     (web / "demo.html").write_text(demo, encoding="utf-8")
     print(f"• web: index.html, en.html, demo.html (yalnız Bölüm 1), support.js")
+
+    # --- gated (satılan çevrimiçi sürüm; filigran yuvalı) ---
+    gd = DIST / "gated"
+    gd.mkdir(parents=True, exist_ok=True)
+    (gd / "book-tr.html").write_text(gated_variant(tr_single, "Lisans:"), encoding="utf-8")
+    (gd / "book-en.html").write_text(gated_variant(en_single, "Licensed to"), encoding="utf-8")
+    print("• gated: book-tr.html, book-en.html (filigran yuvalı)")
     print("BİTTİ →", DIST)
 
 
