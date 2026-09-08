@@ -42,7 +42,7 @@ serve(async (req: Request) => {
     if (!target || !target.includes("@")) return json({ error: "bad_email" }, 400);
 
     // Alıcı hesabını bul (kayıtlı olmalı; satın alma akışı önce üyelik istiyor)
-    let buyer: { id: string; email?: string } | null = null;
+    let buyer: { id: string; email?: string; user_metadata?: Record<string, unknown> } | null = null;
     let page = 1;
     while (!buyer && page <= 20) {
       const { data, error } = await admin.auth.admin.listUsers({ page, perPage: 200 });
@@ -69,7 +69,9 @@ serve(async (req: Request) => {
     try {
       const resendKey = Deno.env.get("RESEND_API_KEY");
       if (resendKey) {
-        const isEn = lang === "en";
+        // Dil: açık parametre > alıcının kayıt dili (user_metadata.lang) > TR
+        const buyerLang = lang ?? (buyer.user_metadata?.lang as string | undefined) ?? "tr";
+        const isEn = buyerLang === "en";
         const res = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
@@ -83,7 +85,7 @@ serve(async (req: Request) => {
               ? "Your book is unlocked — AI for Everyone"
               : "Kitabın açıldı — Herkes İçin Yapay Zekâ",
             html: isEn
-              ? `<p>Your purchase is confirmed and the book is now unlocked.</p><p><a href="${SITE}/oku">Start reading</a> — sign in with this email address.</p>`
+              ? `<p>Your purchase is confirmed and the book is now unlocked.</p><p><a href="${SITE}/en/read">Start reading</a> — sign in with this email address.</p>`
               : `<p>Ödemen onaylandı, kitabın açıldı.</p><p><a href="${SITE}/oku">Okumaya başla</a> — bu e-posta adresinle giriş yapman yeterli.</p>`,
           }),
         });

@@ -215,7 +215,7 @@
         if (pass !== $("#auth-password2").value) return say("err", T.errPassMatch);
         const { data, error } = await sb.auth.signUp({
           email: $("#auth-email").value.trim(), password: pass,
-          options: { data: { full_name: name }, emailRedirectTo: window.location.origin + HOME },
+          options: { data: { full_name: name, lang: L }, emailRedirectTo: window.location.origin + HOME },
         });
         if (error) return say("err", mapAuthError(error));
         if (data.user && !data.session) { renderAuth("signin"); say("ok", T.signupDone); return; }
@@ -397,7 +397,7 @@
       const res = $("#g-result");
       res.textContent = "Açılıyor…";
       const r = await callFn("grant-book", {
-        email: $("#g-email").value, note: $("#g-note").value, lang: "tr",
+        email: $("#g-email").value, note: $("#g-note").value,
       });
       if (r.ok && r.json.ok) {
         res.innerHTML = `✓ Açıldı: <strong>${$("#g-email").value}</strong>` +
