@@ -453,3 +453,9 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
 - Uyuşmazlık ili: İstanbul (şirket merkezi). Mersis satırı kaldırılıp DUNS yazıldı.
 - Tek kalan yuva: [ISBN] — başvuru sonuçlanınca tek satırla eklenecek; sayfadaki köşeli-alan
   uyarısı "ISBN, başvuru tamamlandığında eklenecektir." notuna dönüştü.
+
+## İLETİŞİM ADRESİ: support@fittechs.com ✓ (2026-09-09)
+- KVKK Haklarınız satırı dâhil TÜM yasal iletişim noktaları güncellendi: TR yasal ×3
+  (İletişim/İade/KVKK), EN legal ×2 (Contact + telif "let us know"), e-posta değişikliği
+  şablonu ×2 (TR+EN kart notları). Canlıda doğrulandı (TR 3, EN geçerli).
+- Not: support@fittechs.com kutusunun gerçekten alım yapıyor olması kullanıcı sorumluluğunda.
