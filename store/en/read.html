@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Read — AI for Everyone</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/store.css">
+</head>
+<body data-page="reader" data-lang="en" data-booklang="en" class="page-full">
+
+  <div class="reader-bar">
+    <a href="/en/" class="mono muted" style="text-decoration:none;">← Back</a>
+    <span class="title">AI for Everyone</span>
+    <span class="lang mono">
+      <button data-lang="tr">TR</button><span class="muted">·</span><button data-lang="en" class="active">EN</button>
+      <span class="muted" style="padding:0 6px;">|</span>
+      <a href="#" id="reader-signout" class="muted" style="text-decoration:none;font-size:11px;letter-spacing:.16em;">SIGN OUT</a>
+    </span>
+  </div>
+
+  <div class="reader-body" id="reader-body">
+    <div class="center-msg" id="reader-msg">
+      <p class="muted mono">OPENING YOUR BOOK…</p>
+    </div>
+  </div>
+
+<!-- AUTH MODAL -->
+<div class="modal-backdrop" id="auth-backdrop">
+  <div class="modal modal-inner">
+    <button class="close" id="auth-close" aria-label="Close">×</button>
+    <h2 id="auth-title">Sign in</h2>
+    <form id="auth-form">
+      <div class="field"><label for="auth-email">Email</label>
+        <input id="auth-email" type="email" autocomplete="email" required></div>
+      <div class="field"><label for="auth-password">Password</label>
+        <input id="auth-password" type="password" minlength="8" autocomplete="current-password" required></div>
+      <button class="btn" type="submit" id="auth-submit">Sign in</button>
+      <p class="form-msg" id="auth-msg"></p>
+      <button class="switch" type="button" id="auth-switch">No account yet? Create one</button>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/assets/config.js"></script>
+<script src="/assets/store.js"></script>
+</body>
+</html>

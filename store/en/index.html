@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI for Everyone — An Interactive Digital Book</title>
+<meta name="description" content="The book about AI you don't just read; you try it with your own hands: 45 live demos, 8 chapters, Simple + Technical reading modes, English and Turkish together.">
+<meta property="og:title" content="AI for Everyone — the book you read with your hands">
+<meta property="og:description" content="45 live demos: run a Turing machine, train a neural network, wipe away diffusion noise. 8 chapters, two reading depths, EN + TR.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://book.onuronder.com/en/">
+<link rel="alternate" hreflang="tr" href="https://book.onuronder.com/">
+<link rel="alternate" hreflang="en" href="https://book.onuronder.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://book.onuronder.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/store.css">
+</head>
+<body data-page="index" data-lang="en" class="ruled">
+
+  <!-- ============ COVER ============ -->
+  <div class="cover">
+    <div class="cover-inner">
+      <div class="cover-meta">
+        <span>An Interactive Digital Book</span>
+        <span class="cover-meta-mid">First Edition · 8 Chapters</span>
+        <span class="cover-meta-r"><a href="/" class="muted" style="text-decoration:none;">TR</a><span class="cover-meta-sep"> · </span><a href="#buy" class="ember-link">Buy the Book</a><span class="cover-meta-sep"> · </span><span id="account-line"></span></span>
+      </div>
+    </div>
+
+    <div class="cover-inner cover-body">
+      <div class="cover-eyebrow">From Rules to Deep Learning</div>
+      <h1 class="cover-title">
+        <span class="l1">AI for</span>
+        <span class="l2">Everyone</span>
+      </h1>
+
+      <div class="cover-grid">
+        <div class="cover-left">
+          <p class="cover-lead">A two-century story, from the first calculating gears to today’s
+          chatbots. And you don’t just read it; you try every idea with your own hands.</p>
+          <div class="cover-cta">
+            <a class="cbtn" href="/demo/demo-en">Start Reading <span class="ar">→</span></a>
+            <a class="cbtn-ghost" href="#contents">Contents ↓</a>
+          </div>
+          <p class="cover-note">First three topics free · full edition ₺349, both languages included</p>
+        </div>
+
+        <div class="dial-panel">
+          <div class="dial-head"><span>One idea · two depths</span><span class="ember" id="dial-mode">SIMPLE</span></div>
+          <div class="dial-q">How does a machine learn?</div>
+          <div class="dial-answers">
+            <p id="dial-basit">You show it plenty of examples; seeing the right answer again and
+            again, it works out the pattern <em>itself</em>. You never write the rules.</p>
+            <p id="dial-teknik" class="mono-p">It learns the mapping f(x;&nbsp;θ) by minimizing a
+            <span class="ember">loss function</span> over labeled (x, y) pairs via gradient descent.</p>
+          </div>
+          <div class="dial-strip" id="dial-strip">
+            <div class="dial-track"></div>
+            <div class="dial-fill" id="dial-fill"></div>
+            <div class="dial-knob" id="dial-knob"></div>
+          </div>
+          <div class="dial-foot"><span>SIMPLE</span><span>← turn the dial →</span><span>TECHNICAL</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CONTENTS (part of the cover) ============ -->
+    <div class="cover-inner cover-toc" id="contents">
+      <div class="toc-head">
+        <span class="toc-title">Contents</span>
+        <span class="toc-kicker">EIGHT CHAPTERS · ONE JOURNEY</span>
+      </div>
+      <div class="trow"><span class="tn">01</span><span class="td" style="background:#2a3bb0;"></span>
+        <span class="tm"><span class="tt">FOUNDATIONS</span><span class="ts">Minds and Machines</span></span>
+        <span class="tr-sub">Can a machine think?</span></div>
+      <div class="trow"><span class="tn">02</span><span class="td" style="background:#bb4d17;"></span>
+        <span class="tm"><span class="tt">CLASSICAL AI</span><span class="ts">The Age of Rules</span></span>
+        <span class="tr-sub">Before learning: hand-written intelligence</span></div>
+      <div class="trow"><span class="tn">03</span><span class="td" style="background:#1d6149;"></span>
+        <span class="tm"><span class="tt">STATISTICAL AI</span><span class="ts">How Machines Learn</span></span>
+        <span class="tr-sub">From rules to patterns</span></div>
+      <div class="trow"><span class="tn">04</span><span class="td" style="background:#3155c4;"></span>
+        <span class="tm"><span class="tt">DEEP LEARNING</span><span class="ts">The Artificial Brain</span></span>
+        <span class="tr-sub">From neuron to network</span></div>
+      <div class="trow"><span class="tn">05</span><span class="td" style="background:#7a3fb0;"></span>
+        <span class="tm"><span class="tt">GENERATIVE ERA</span><span class="ts">Today’s AI</span></span>
+        <span class="tr-sub">From tokens to language models, attention to diffusion</span></div>
+      <div class="trow"><span class="tn">06</span><span class="td" style="background:#2a7d86;"></span>
+        <span class="tm"><span class="tt">APPLICATION</span><span class="ts">Using and Building AI</span></span>
+        <span class="tr-sub">From prompts to agents, architecture to the real world</span></div>
+      <div class="trow"><span class="tn">07</span><span class="td" style="background:#b03a52;"></span>
+        <span class="tm"><span class="tt">SOCIETY</span><span class="ts">AI and Society</span></span>
+        <span class="tr-sub">From bias to regulation, deepfakes to alignment</span></div>
+      <div class="trow"><span class="tn">08</span><span class="td" style="background:#9a5a1f;"></span>
+        <span class="tm"><span class="tt">PHILOSOPHY &amp; FUTURE</span><span class="ts">Philosophy and the Future</span></span>
+        <span class="tr-sub">Understanding, consciousness, singularity and responsibility</span></div>
+    </div>
+  </div>
+
+  <!-- ============ DEMO TICKER ============ -->
+  <section class="ticker-sec">
+    <p class="mono sec-eyebrow wrap">A Few of the Forty-Five Live Demos</p>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Make a Turing machine add 1</span><span>Write numbers with eight bulbs</span>
+        <span>Spin the fetch–execute cycle</span><span>Fire expert-system rules</span>
+        <span>Race heuristic search against BFS</span><span>Forecast weather with a Markov chain</span>
+        <span>Walk down a valley by gradient</span><span>Catch overfitting red-handed</span>
+        <span>Fire a single neuron</span><span>Train a network with backpropagation</span>
+        <span>Slide a CNN filter across an image</span><span>Catch the GAN forger</span>
+        <span>Split a sentence into tokens</span><span>Read an attention map</span>
+        <span>Turn up the temperature</span><span>Wipe away diffusion noise</span>
+        <span>Toggle RAG on and off</span><span>Step through an agent loop</span>
+        <span>Slide the bias, watch the verdict</span><span>Make the black box say why</span>
+        <span>Spot the deepfake tell</span><span>Test Midas’s wish</span>
+        <span>Play the Turing test</span><span>Shuffle symbols in the Chinese Room</span>
+        <span>Make a Turing machine add 1</span><span>Write numbers with eight bulbs</span>
+        <span>Spin the fetch–execute cycle</span><span>Fire expert-system rules</span>
+        <span>Race heuristic search against BFS</span><span>Forecast weather with a Markov chain</span>
+        <span>Walk down a valley by gradient</span><span>Catch overfitting red-handed</span>
+        <span>Fire a single neuron</span><span>Train a network with backpropagation</span>
+        <span>Slide a CNN filter across an image</span><span>Catch the GAN forger</span>
+        <span>Split a sentence into tokens</span><span>Read an attention map</span>
+        <span>Turn up the temperature</span><span>Wipe away diffusion noise</span>
+        <span>Toggle RAG on and off</span><span>Step through an agent loop</span>
+        <span>Slide the bias, watch the verdict</span><span>Make the black box say why</span>
+        <span>Spot the deepfake tell</span><span>Test Midas’s wish</span>
+        <span>Play the Turing test</span><span>Shuffle symbols in the Chinese Room</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section id="buy" class="wrap">
+    <p class="mono sec-eyebrow">Get the Book</p>
+    <h2 class="serif sec-title">One book, every door open</h2>
+    <div class="price-panel">
+      <div class="pp-left">
+        <ul class="pp-list">
+          <li>All 8 chapters, with 45 interactive demos</li>
+          <li>Simple + Technical reading modes</li>
+          <li>English and Turkish editions together</li>
+          <li>Tied to your account; read online on any device</li>
+          <li>All future content updates</li>
+        </ul>
+        <div class="pp-try">
+          <p class="serif">Still undecided? The first three topics are free — dial, demos and all.</p>
+          <a class="btn btn-ghost" href="/demo/demo-en">Try the First Three Topics</a>
+        </div>
+      </div>
+      <div class="pp-right">
+        <div class="pp-buy">
+          <div class="price-line"><span class="amount serif">₺349</span><span class="muted" style="font-size:14px;">one-time · both languages</span></div>
+          <button class="btn btn-ember" data-buy="price">Buy · ₺349</button>
+          <div class="buy-state" id="buy-state"></div>
+        </div>
+        <div class="pp-foot">Payments are processed by iyzico. Your card details never touch this
+        site, and the charge is made in Turkish lira.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="wrap">
+    <p class="mono sec-eyebrow">Questions</p>
+    <h2 class="serif sec-title">Frequently asked</h2>
+    <div class="faq">
+      <details><summary>I have paid; when does the book unlock?</summary>
+        <p class="a">As soon as iyzico confirms your payment, we unlock the book on your account
+        and send you a confirmation email. Access is usually granted within a few hours, and always
+        within 24. Using your account email address at checkout speeds things up.</p></details>
+      <details><summary>How do I read it? Is there a download?</summary>
+        <p class="a">The book is read online: you sign in to your account and read in your browser.
+        There is no file to download; you always read the latest edition, and your book is
+        available on every device you own.</p></details>
+      <details><summary>Which devices does it work on?</summary>
+        <p class="a">Any device with a modern browser: a computer, a tablet, or a phone. There is
+        nothing to install.</p></details>
+      <details><summary>Are both languages included?</summary>
+        <p class="a">Yes. A single purchase unlocks both the English and the Turkish edition; while
+        reading, you can switch between them with one tap.</p></details>
+      <details><summary>I have no technical background; will I follow it?</summary>
+        <p class="a">That is exactly who this book was written for. Simple mode assumes nothing;
+        when you want to go deeper, Technical mode explains the same idea with its formulas. You
+        can switch between the two at any time.</p></details>
+      <details><summary>What is the refund policy?</summary>
+        <p class="a">Because the book is digital content, the right of withdrawal no longer applies
+        once access has been granted to your account; the details are on our
+        <a href="/en/legal" style="color:#e85d3a;">legal page</a>. If you are undecided, read the
+        first three topics first; that is exactly what the free demo is for.</p></details>
+    </div>
+  </section>
+
+  <!-- ============ CLOSING ============ -->
+  <section class="closing wrap">
+    <p class="serif closing-line">Read it with your <em>hands</em>.</p>
+    <button class="btn btn-ember" data-buy="closing">Buy the Book · ₺349</button>
+  </section>
+
+  <footer class="wrap">
+    <div class="foot-grid">
+      <span class="mono muted">© 2026 Onur Önder · AI for Everyone</span>
+      <nav class="foot-links">
+        <a href="/en/legal">Terms &amp; Refunds</a>
+        <a href="/en/legal#privacy">Privacy</a>
+        <a href="/en/legal#contact">Contact</a>
+        <a href="https://onuronder.com" rel="author">onuronder.com</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- AUTH MODAL -->
+  <div class="modal-backdrop" id="auth-backdrop">
+    <div class="modal modal-inner">
+      <button class="close" id="auth-close" aria-label="Close">×</button>
+      <h2 id="auth-title">Sign in</h2>
+      <form id="auth-form">
+        <div class="field"><label for="auth-email">Email</label>
+          <input id="auth-email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="auth-password">Password</label>
+          <input id="auth-password" type="password" autocomplete="current-password" minlength="8" required></div>
+        <p class="form-msg" id="auth-msg"></p>
+        <button class="btn" type="submit" id="auth-submit">Sign in</button>
+        <button class="switch" type="button" id="auth-switch">No account yet? Create one</button>
+      </form>
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/assets/config.js"></script>
+<script src="/assets/store.js"></script>
+</body>
+</html>

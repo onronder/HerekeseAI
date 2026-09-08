@@ -349,3 +349,19 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   için var". Cevaplar tam cümlelerle yeniden kuruldu.
 - Not: satış sitesi şu an yalnız TR; İngilizce satış sayfası ayrı iş (kitabın EN'i zaten
   US-English redaksiyonundan geçmişti).
+
+## SİTE TAMAMEN İKİ DİLLİ ✓ (2026-09-09)
+- Yapı: TR kökte (/), EN /en/ altında (hreflang + x-default çift yönlü; kapak metalarında
+  TR↔EN geçiş linkleri). Vercel cleanUrls: /en/, /en/read, /en/legal.
+- /en/index.html: tam İngilizce landing — kapak metinleri kitabın redakte EN'inden birebir
+  ("AI for / Everyone", "One idea · two depths", kadran cevapları), 8 bölümlük EN İçindekiler,
+  24 demo adlık EN şerit, fiyat paneli ("one-time · both languages", TL notu), 6 soruluk
+  özenli EN SSS, "Read it with your hands." kapanışı.
+- /en/read.html: EN okuyucu (Back/SIGN OUT, varsayılan kitap dili EN); /en/legal.html:
+  İngilizce bilgilendirme (bağlayıcı metinlerin Türkçe olduğu açıkça belirtildi; teslimat,
+  cayma istisnası, KVKK özeti, kişisel lisans+filigran, iletişim). /yasal ↔ /en/legal karşı linkli.
+- store.js i18n: body[data-lang] → TR/EN sözlüğü (auth modalı, buy-state, okuyucu mesajları,
+  GİRİŞ/SIGN IN, yönlendirmeler /oku vs /en/read). node --check OK.
+- build.py: demo_variant(lang) — EN demo (demo-en.html) EN kitaptan üretiliyor: EN kilit
+  başlıkları kaynaktan, EN upcoming tablosu, meta linki regex'le (renk sırası dilde farklıydı).
+- Yönetim sayfası bilinçli olarak TR (iç araç).

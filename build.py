@@ -71,8 +71,39 @@ def single_file(src_html: str, fonts_css: str, support_js: str, sibling_map: dic
     return out
 
 
-def demo_variant(src_html: str) -> str:
-    """Ücretsiz vitrin: yalnız Modül 1'in İLK 2 alt konusu; 2-8 upcoming()'de kilitli görünür."""
+DEMO_UPCOMING = {
+    "tr": """upcoming() {
+    return [
+      { n:'02', tag:'Klasik YZ', title:'Kuralların Çağı', right:'Tam sürümde', dot:'#bb4d17' },
+      { n:'03', tag:'İstatistiksel YZ', title:'Makineler Nasıl Öğrenir', right:'Tam sürümde', dot:'#1d6149' },
+      { n:'04', tag:'Derin Öğrenme', title:'Yapay Beyin', right:'Tam sürümde', dot:'#3155c4' },
+      { n:'05', tag:'Üretken Çağ', title:'Bugünün Yapay Zekâsı', right:'Tam sürümde', dot:'#7a3fb0' },
+      { n:'06', tag:'Uygulama', title:'YZ\\u2019yi Kullanmak ve İnşa Etmek', right:'Tam sürümde', dot:'#2a7d86' },
+      { n:'07', tag:'Toplum', title:'Yapay Zekâ ve Toplum', right:'Tam sürümde', dot:'#b03a52' },
+      { n:'08', tag:'Felsefe & Gelecek', title:'Felsefe ve Gelecek', right:'Tam sürümde', dot:'#9a5a1f' }
+    ];
+  }""",
+    "en": """upcoming() {
+    return [
+      { n:'02', tag:'Classical AI', title:'The Age of Rules', right:'In the full edition', dot:'#bb4d17' },
+      { n:'03', tag:'Statistical AI', title:'How Machines Learn', right:'In the full edition', dot:'#1d6149' },
+      { n:'04', tag:'Deep Learning', title:'The Artificial Brain', right:'In the full edition', dot:'#3155c4' },
+      { n:'05', tag:'Generative Era', title:'Today\\u2019s AI', right:'In the full edition', dot:'#7a3fb0' },
+      { n:'06', tag:'Application', title:'Using and Building AI', right:'In the full edition', dot:'#2a7d86' },
+      { n:'07', tag:'Society', title:'AI and Society', right:'In the full edition', dot:'#b03a52' },
+      { n:'08', tag:'Philosophy & Future', title:'Philosophy and the Future', right:'In the full edition', dot:'#9a5a1f' }
+    ];
+  }""",
+}
+
+DEMO_METALINK = {
+    "tr": ("/#satin-al", "Ücretsiz demo · Tamamı ₺349"),
+    "en": ("/en/#buy", "Free demo · Full edition ₺349"),
+}
+
+
+def demo_variant(src_html: str, lang: str = "tr") -> str:
+    """Ücretsiz vitrin: yalnız Modül 1'in İLK 3 alt konusu; kalanlar + M2-8 kilitli görünür."""
     out = src_html
     mi = out.index("modules() {")
     m2 = out.index("      { n: '02'", mi)
@@ -89,25 +120,15 @@ def demo_variant(src_html: str) -> str:
         head = head[:-1]
     locked = ", lockedSections:[" + ",".join("'" + l + "'" for l in labels) + "]"
     out = head + "\n        ]" + locked + " }" + out[se + len("\n        ] }"):]
-    # Kapak meta barındaki TR·EN linki yerine satışa dönüş linki
-    out = out.replace(
-        '<span><a href="./index.html" style="color:#e85d3a;text-decoration:none;">TR</a> · '
-        '<a href="./en.html" style="color:#8c8470;text-decoration:none;">EN</a></span>',
-        '<span><a href="/#satin-al" style="color:#e85d3a;text-decoration:none;">'
-        'Ücretsiz demo · Tamamı ₺349</a></span>', 1)
-    # upcoming(): 2-8'i "yakında" değil "tam sürümde" olarak listele
-    up = """upcoming() {
-    return [
-      { n:'02', tag:'Klasik YZ', title:'Kuralların Çağı', right:'Tam sürümde', dot:'#bb4d17' },
-      { n:'03', tag:'İstatistiksel YZ', title:'Makineler Nasıl Öğrenir', right:'Tam sürümde', dot:'#1d6149' },
-      { n:'04', tag:'Derin Öğrenme', title:'Yapay Beyin', right:'Tam sürümde', dot:'#3155c4' },
-      { n:'05', tag:'Üretken Çağ', title:'Bugünün Yapay Zekâsı', right:'Tam sürümde', dot:'#7a3fb0' },
-      { n:'06', tag:'Uygulama', title:'YZ\\u2019yi Kullanmak ve İnşa Etmek', right:'Tam sürümde', dot:'#2a7d86' },
-      { n:'07', tag:'Toplum', title:'Yapay Zekâ ve Toplum', right:'Tam sürümde', dot:'#b03a52' },
-      { n:'08', tag:'Felsefe & Gelecek', title:'Felsefe ve Gelecek', right:'Tam sürümde', dot:'#9a5a1f' }
-    ];
-  }"""
-    out = re.sub(r"upcoming\(\) \{\s*return \[\];\s*\}", lambda _: up, out, count=1)
+    # Kapak meta barındaki TR·EN linki yerine satışa dönüş linki (renk sırası dilde farklı)
+    href, label = DEMO_METALINK[lang]
+    out, n = re.subn(
+        r'<span><a href="\./index\.html"[^>]*>TR</a> · <a href="\./en\.html"[^>]*>EN</a></span>',
+        '<span><a href="' + href + '" style="color:#e85d3a;text-decoration:none;">'
+        + label + '</a></span>', out, count=1)
+    assert n == 1, "demo meta linki bulunamadı"
+    # upcoming(): 2-8'i kilitli listele
+    out = re.sub(r"upcoming\(\) \{\s*return \[\];\s*\}", lambda _: DEMO_UPCOMING[lang], out, count=1)
     return out
 
 
@@ -176,15 +197,18 @@ def main():
     (web / "index.html").write_text(tr_web, encoding="utf-8")
     (web / "en.html").write_text(en_web, encoding="utf-8")
     (web / "support.js").write_text(support, encoding="utf-8")
-    # ücretsiz vitrin (M1'in ilk 2 alt konusu)
-    demo = demo_variant(tr_web)
+    # ücretsiz vitrin (M1'in ilk 3 alt konusu; TR + EN)
+    demo = demo_variant(tr_web, "tr")
+    demo_en = demo_variant(en_web, "en")
     (web / "demo.html").write_text(demo, encoding="utf-8")
+    (web / "demo-en.html").write_text(demo_en, encoding="utf-8")
     store_demo = ROOT / "store" / "demo"
     if store_demo.is_dir():
         (store_demo / "demo.html").write_text(demo, encoding="utf-8")
+        (store_demo / "demo-en.html").write_text(demo_en, encoding="utf-8")
         (store_demo / "support.js").write_text(support, encoding="utf-8")
-        print("• store/demo güncellendi (ilk 3 konu)")
-    print(f"• web: index.html, en.html, demo.html (ilk 3 konu), support.js")
+        print("• store/demo güncellendi (ilk 3 konu, TR+EN)")
+    print(f"• web: index.html, en.html, demo.html + demo-en.html, support.js")
 
     # --- gated (satılan çevrimiçi sürüm; filigran yuvalı) ---
     gd = DIST / "gated"

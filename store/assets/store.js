@@ -1,4 +1,4 @@
-/* book.onuronder.com — ortak istemci mantığı (satış, okuma, yönetim) */
+/* book.onuronder.com — ortak istemci mantığı (satış, okuma, yönetim) — TR + EN */
 (function () {
   "use strict";
   const C = window.BOOK_CONFIG;
@@ -7,6 +7,46 @@
 
   const $ = (sel) => document.querySelector(sel);
   const page = document.body.dataset.page;
+  const L = document.body.dataset.lang === "en" ? "en" : "tr";
+  const HOME = L === "en" ? "/en/" : "/";
+  const READER = L === "en" ? "/en/read" : "/oku";
+
+  const T = {
+    tr: {
+      signinTitle: "Giriş yap", signupTitle: "Hesap oluştur",
+      switchToSignup: "Hesabın yok mu? Oluştur", switchToSignin: "Zaten hesabın var mı? Giriş yap",
+      created: "Hesap oluşturuldu. E-postana gelen doğrulama linkine tıkla, sonra giriş yap.",
+      authFailed: "Olmadı. E-posta ve şifreni kontrol et (şifre en az 8 karakter).",
+      openBook: "Kitabı Aç", signinShort: "GİRİŞ", signoutShort: "çıkış",
+      owned: (e) => `Kitap bu hesapta açık: <strong>${e}</strong>. İyi okumalar!`,
+      pay: (e) => `Ödeme sayfasında e-posta olarak <strong>${e}</strong> adresini kullan; ` +
+        `erişimini bu hesaba tanımlayacağız. Ödemen alındıktan sonra kitabın genellikle birkaç saat içinde açılır ` +
+        `ve sana e-posta gelir.`,
+      soon: (e) => `Hesabın hazır: <strong>${e}</strong>. Ödeme sayfamız çok yakında açılıyor; ` +
+        `açılır açılmaz bu adrese haber vereceğiz.`,
+      loading: "KİTABIN AÇILIYOR…", err: "Bir aksilik oldu.", retry: "Tekrar dene",
+      notOpen: "Bu kitap henüz açılmamış", needSignin: "Okumak için giriş yapman gerekiyor.",
+      backSales: "← satış sayfası", browse: "Kitaba göz at",
+      pending: (e) => `Hesap: ${e}. Ödemen alındıysa erişimin kısa süre içinde tanımlanır ve e-posta alırsın.`,
+    },
+    en: {
+      signinTitle: "Sign in", signupTitle: "Create an account",
+      switchToSignup: "No account yet? Create one", switchToSignin: "Already have an account? Sign in",
+      created: "Account created. Click the verification link in your email, then sign in.",
+      authFailed: "That didn’t work. Check your email and password (at least 8 characters).",
+      openBook: "Open the Book", signinShort: "SIGN IN", signoutShort: "sign out",
+      owned: (e) => `The book is unlocked on this account: <strong>${e}</strong>. Happy reading!`,
+      pay: (e) => `On the payment page, use <strong>${e}</strong> as your email address; ` +
+        `we will grant access to this account. Once your payment is received, the book usually unlocks ` +
+        `within a few hours and you will get an email.`,
+      soon: (e) => `Your account is ready: <strong>${e}</strong>. Our payment page opens very soon; ` +
+        `we will let you know at this address the moment it does.`,
+      loading: "OPENING YOUR BOOK…", err: "Something went wrong.", retry: "Try again",
+      notOpen: "This book is not unlocked yet", needSignin: "You need to sign in to read.",
+      backSales: "← back to the book page", browse: "Browse the book",
+      pending: (e) => `Account: ${e}. If your payment has been made, access will be granted shortly and you will get an email.`,
+    },
+  }[L];
 
   // ---- ortak: oturum + erişim ----
   async function getUser() {
@@ -56,10 +96,10 @@
   }
   function setAuthMode(mode) {
     authMode = mode;
-    $("#auth-title").textContent = mode === "signin" ? "Giriş yap" : "Hesap oluştur";
-    $("#auth-submit").textContent = mode === "signin" ? "Giriş yap" : "Hesap oluştur";
+    $("#auth-title").textContent = mode === "signin" ? T.signinTitle : T.signupTitle;
+    $("#auth-submit").textContent = mode === "signin" ? T.signinTitle : T.signupTitle;
     $("#auth-switch").textContent =
-      mode === "signin" ? "Hesabın yok mu? Oluştur" : "Zaten hesabın var mı? Giriş yap";
+      mode === "signin" ? T.switchToSignup : T.switchToSignin;
   }
 
   function wireAuthModal() {
@@ -88,7 +128,7 @@
           error = r.error;
           if (!error && r.data.user && !r.data.session) {
             msg.className = "form-msg ok";
-            msg.textContent = "Hesap oluşturuldu. E-postana gelen doğrulama linkine tıkla, sonra giriş yap.";
+            msg.textContent = T.created;
             btn.disabled = false;
             setAuthMode("signin");
             return;
@@ -96,7 +136,7 @@
         }
         if (error) {
           msg.className = "form-msg err";
-          msg.textContent = "Olmadı. E-posta ve şifreni kontrol et (şifre en az 8 karakter).";
+          msg.textContent = T.authFailed;
         } else {
           closeAuth();
           if (onAuthed) onAuthed();
@@ -115,15 +155,15 @@
     const state = $("#buy-state");
 
     document.querySelectorAll("[data-buy]").forEach((btn) => {
-      if (owned) btn.textContent = "Kitabı Aç";
+      if (owned) btn.textContent = T.openBook;
     });
     const acct = $("#account-line");
     if (acct) {
       if (user) {
-        acct.innerHTML = `<span class="muted">${user.email}</span> · <a href="#" id="signout" style="color:#8c8470;">çıkış</a>`;
+        acct.innerHTML = `<span class="muted">${user.email}</span> · <a href="#" id="signout" style="color:#8c8470;">${T.signoutShort}</a>`;
         $("#signout").onclick = async (e) => { e.preventDefault(); await sb.auth.signOut(); refresh(); };
       } else {
-        acct.innerHTML = `<a href="#" id="signin-link" style="color:#8c8470;text-decoration:none;">GİRİŞ</a>`;
+        acct.innerHTML = `<a href="#" id="signin-link" style="color:#8c8470;text-decoration:none;">${T.signinShort}</a>`;
         $("#signin-link").onclick = (e) => { e.preventDefault(); openAuth(); };
       }
     }
@@ -131,17 +171,13 @@
     if (!state) return;
     if (user && owned) {
       state.className = "buy-state show";
-      state.innerHTML = `Kitap bu hesapta açık: <strong>${user.email}</strong>. İyi okumalar!`;
+      state.innerHTML = T.owned(user.email);
     } else if (user && !owned) {
       state.className = "buy-state show";
       if (C.IYZILINK_URL) {
-        state.innerHTML =
-          `Ödeme sayfasında e-posta olarak <strong>${user.email}</strong> adresini kullan; ` +
-          `erişimini bu hesaba tanımlayacağız. Ödemen alındıktan sonra kitabın genellikle birkaç saat içinde açılır ` +
-          `ve sana e-posta gelir.`;
+        state.innerHTML = T.pay(user.email);
       } else {
-        state.innerHTML = `Hesabın hazır: <strong>${user.email}</strong>. Ödeme sayfamız çok yakında açılıyor; ` +
-          `açılır açılmaz bu adrese haber vereceğiz.`;
+        state.innerHTML = T.soon(user.email);
       }
     } else {
       state.className = "buy-state";
@@ -151,7 +187,7 @@
   function buyFlow() {
     getUser().then(async (user) => {
       if (!user) { openAuth(buyFlow); return; }
-      if (await hasBook(user.id)) { window.location.href = "/oku"; return; }
+      if (await hasBook(user.id)) { window.location.href = READER; return; }
       if (C.IYZILINK_URL) {
         window.open(C.IYZILINK_URL, "_blank", "noopener");
         refresh();
@@ -164,24 +200,24 @@
   }
 
   // ---- reader ----
-  let bookLang = "tr";
+  let bookLang = document.body.dataset.booklang || (L === "en" ? "en" : "tr");
   async function initReader() {
     const user = await getUser();
     const frameWrap = $("#reader-msg");
     if (!user) {
       frameWrap.innerHTML =
-        `<p class="serif" style="font-size:26px;margin:0;">Bu kitap henüz açılmamış</p>` +
-        `<p class="muted" style="max-width:340px;font-size:14px;">Okumak için giriş yapman gerekiyor.</p>` +
-        `<button class="btn" id="reader-signin">Giriş yap</button>` +
-        `<a class="muted" style="font-size:13px;" href="/">← satış sayfası</a>`;
+        `<p class="serif" style="font-size:26px;margin:0;">${T.notOpen}</p>` +
+        `<p class="muted" style="max-width:340px;font-size:14px;">${T.needSignin}</p>` +
+        `<button class="btn" id="reader-signin">${T.signinTitle}</button>` +
+        `<a class="muted" style="font-size:13px;" href="${HOME}">${T.backSales}</a>`;
       $("#reader-signin").onclick = () => openAuth(() => location.reload());
       return;
     }
     if (!(await hasBook(user.id))) {
       frameWrap.innerHTML =
-        `<p class="serif" style="font-size:26px;margin:0;">Bu kitap henüz açılmamış</p>` +
-        `<p class="muted" style="max-width:360px;font-size:14px;">Hesap: ${user.email}. Ödemen alındıysa erişimin kısa süre içinde tanımlanır ve e-posta alırsın.</p>` +
-        `<a class="btn" href="/">Kitaba göz at</a>`;
+        `<p class="serif" style="font-size:26px;margin:0;">${T.notOpen}</p>` +
+        `<p class="muted" style="max-width:360px;font-size:14px;">${T.pending(user.email)}</p>` +
+        `<a class="btn" href="${HOME}">${T.browse}</a>`;
       return;
     }
     loadBook();
@@ -189,7 +225,7 @@
 
   async function loadBook() {
     const wrap = $("#reader-msg");
-    wrap.innerHTML = `<p class="muted mono">KİTABIN AÇILIYOR…</p>`;
+    wrap.innerHTML = `<p class="muted mono">${T.loading}</p>`;
     try {
       const r = await callFn("book-token", {});
       if (!r.ok || !r.json.token) throw new Error("token");
@@ -211,7 +247,7 @@
       wrap.innerHTML = "";
     } catch (e) {
       console.error(e);
-      wrap.innerHTML = `<p class="muted">Bir aksilik oldu.</p><button class="btn" onclick="location.reload()">Tekrar dene</button>`;
+      wrap.innerHTML = `<p class="muted">${T.err}</p><button class="btn" onclick="location.reload()">${T.retry}</button>`;
     }
   }
 
@@ -225,7 +261,7 @@
       };
     });
     const out = $("#reader-signout");
-    if (out) out.onclick = async (e) => { e.preventDefault(); await sb.auth.signOut(); location.href = "/"; };
+    if (out) out.onclick = async (e) => { e.preventDefault(); await sb.auth.signOut(); location.href = HOME; };
   }
 
   // ---- yönetim ----
