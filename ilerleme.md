@@ -424,3 +424,14 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   içerik çevrimiçi okunur"; "iletişime rağmen çözülmemesi" eksiltisi → "iletişime geçilmesine
   rağmen sorunun çözülememesi". Kalan em-dash'ler yalnız <title> ayracı + kod yorumu.
 - İkinci tur: tüm değişimler dosyadan yeniden okundu; node --check OK.
+
+## SİTE GENELİ EN REDAKSİYON TURU ✓ (2026-09-09)
+- Kapsam: en/index, en/read, en/legal, store.js EN sözlüğü, e-posta EN kartları, demo-en ekleri.
+- en/legal: "Licence/licence" → License/license (US; kitap turundaki sınıftan kaçak),
+  "put it right" → "make it right" (US deyimi).
+- Şerit: "Forecast weather"→"Forecast the weather", "Walk down a valley by gradient"→
+  "Follow the gradient down the valley", "Test Midas's wish"→"Watch Midas's wish backfire".
+- SSS: "will I follow it?"→"will I be able to follow it?"; pp-try gövde em-dash'i → ":".
+- store.js: "reach your book"→"open your book"; signupDesc gönderimi düzeldi ("you'll sign in
+  with it to read on any device"). "Fire expert-system rules" bilinçli korundu (EN'de yerleşik terim).
+- Tüm EN store dosyaları + e-posta kartlarında İngiliz-yazımı süpürmesi: 0 kalıntı.
