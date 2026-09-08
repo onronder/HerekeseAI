@@ -234,3 +234,18 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   cümlesi eklendi ("He called it the imitation game; today we call it the Turing test.").
 - Doğrulama: her yama count==1; değişen tüm cümleler ikinci turda yeniden okundu; node --check OK;
   canlı önizleme (M5) teyit; build + gh-pages push; canlıda curl teyidi.
+
+## SİTEYLE GÖRSEL UYUMLANDIRMA ✓ + KAPSAM DEĞİŞİKLİĞİ (2026-09-08)
+- Kitap, onuronder.com'un "Charcoal & Ember" tasarım diline uyumlandı (54a11b2):
+  Hanken Grotesk→Work Sans (65 yer + font URL), kapak/panel zeminleri #1a1a1a/#1f1f1f,
+  UI altın vurgusu→Ember #e85d3a (kapak italiği, dial, TOC numaraları, seçim, CTA hover+beyaz),
+  hairline mürekkep nötrlendi. Instrument Serif, Space Mono, 8 modül renk kimliği ve
+  semantik amber paleti KORUNDU. TR+EN kapak ve iç sayfalar canlıda gözle doğrulandı;
+  gh-pages yeniden yayınlandı (Work Sans canlıda teyitli).
+- build.py: gated_variant (filigran yuvalı satış sürümü) + upload_book.py hazır (dist/gated/).
+- KAPSAM: Kullanıcı kararıyla site UI'ı (satış/login/ödeme sayfaları) KULLANICIYA geçti;
+  ben yalnız kitabın tasarımından sorumluyum. Site repo'sunda `book-sales` dalı duruyor:
+  içinde migration (book_orders/book_entitlements+RLS+private bucket), 4 Edge Function
+  (create-checkout, iyzico-callback, book-token, book-content), çeviriler ve örnek UI var —
+  kullanıcı kendi sayfasını yaparken malzeme olarak kullanabilir ya da dalı silebilir.
+  Supabase'e HİÇBİR ŞEY deploy edilmedi (migration uygulanmadı, fonksiyon/secret yok).

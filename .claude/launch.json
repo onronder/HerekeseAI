@@ -4,7 +4,14 @@
     {
       "name": "atlas-kitap",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["-y", "http-server", "-p", "8642", "-c-1", "--silent"],
+      "runtimeArgs": [
+        "-y",
+        "http-server",
+        "-p",
+        "8642",
+        "-c-1",
+        "--silent"
+      ],
       "port": 8642
     }
   ]
