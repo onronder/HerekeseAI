@@ -282,3 +282,17 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   tablo temiz (0 entitlement, mevcut admin rolü korunlu).
 - KALAN: iyzico onayı → iyzilink → store/assets/config.js IYZILINK_URL; yasal [KÖŞELİ] alanlar;
   kullanıcının kendi admin hesabıyla /yonetim provası; Lovable tanıtım sayfası (paket hazır).
+
+## LANDING YENİDEN TASARLANDI ✓ (2026-09-08, gece)
+- Kullanıcı geri bildirimi: "hero, kapağın kopyası; demo div'i sayfanın kopyası gibi — orijinal
+  (kapak) daha iyi." Haklı teşhis: hero tipografisi kapağı taklit ediyordu, altındaki demo
+  iframe'i de kapakla açılınca sayfa kendini iki kez gösteriyordu.
+- Yeni konsept: "KİTABIN KENDİSİ KARŞILAR" — hero = canlı demo iframe'i (gerçek kapak, çalışan
+  kadran; '● Canlı' şeridi + altta satış çubuğu). Mobilde iframe dokunmaya kapalı önizleme +
+  "Dokun → tam ekran dene" (scroll tuzağı yok). Kapak tipografisini kopyalayan hero silindi.
+- Yeni bölümler: değer + sayı sütunu (45/8/2/2), 24 gerçek demo adından akan şerit (CSS marquee,
+  hover'da durur), İçindekiler (korundu), "Aynı fikir · iki derinlik" karşılaştırma kartları
+  (kapaktaki gerçek Basit/Teknik içerik), 3 adım, fiyat ızgarası (+ "önce dene" yan sütunu),
+  SSS, büyük serif kapanış ("Okumayı elinle yap.").
+- store.js kancaları aynen korundu (data-buy, #buy-state, #account-line, auth modal).
+- Yerel 1024/375 doğrulandı; Vercel'e push.

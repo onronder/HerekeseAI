@@ -14,76 +14,152 @@
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Space+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/store.css">
 </head>
-<body data-page="index" class="ruled">
-<div class="wrap">
+<body data-page="index">
 
-  <header class="topbar">
-    <span class="mono">İnteraktif Dijital Kitap</span>
+  <!-- ÜST BAR -->
+  <header class="topbar wrap-wide">
+    <span class="mono">Onur Önder<span class="hide-sm"> · İnteraktif Dijital Kitap</span></span>
     <span class="mono" style="display:flex;gap:18px;align-items:center;">
-      <span class="muted">45 Demo · 8 Bölüm · TR+EN</span>
+      <a href="#satin-al" class="muted" style="text-decoration:none;">SATIN AL</a>
       <span id="account-line"></span>
     </span>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <p class="mono eyebrow">Kuraldan Derin Öğrenmeye</p>
-    <h1 class="serif">Herkes İçin<br><em>Yapay Zekâ</em></h1>
-    <p class="lead serif">İlk hesap çarklarından bugünün sohbet robotlarına uzanan iki
-    yüzyıllık bir hikâye. Üstelik okuyup geçmiyorsun, her kavramı kendi elinle deniyorsun.</p>
-    <div class="cta-row">
-      <button class="btn" data-buy="hero">Kitabı Satın Al <span class="serif">→</span></button>
-      <a class="btn btn-ghost" href="#demo">1. Bölümü Ücretsiz Dene</a>
+  <!-- HERO: KİTABIN KENDİSİ -->
+  <section class="stage">
+    <div class="stage-caption wrap-wide">
+      <span class="mono ember">● Canlı — şu an gerçek kitaba bakıyorsun</span>
+      <span class="mono muted stage-caption-r">Bölüm 1 tamamen açık · kadranı çevir, demoları oyna</span>
     </div>
-    <p class="note">Tek satın alma: iki dil (TR + EN), tüm demolar ve gelecekteki güncellemeler dahil.</p>
+    <div class="stage-frame wrap-wide">
+      <iframe src="/demo/demo" title="Herkes İçin Yapay Zekâ — canlı önizleme" loading="eager"></iframe>
+      <a class="stage-touch" href="/demo/demo" aria-label="Demoyu tam ekran aç">
+        <span class="mono">DOKUN → TAM EKRAN DENE</span>
+      </a>
+    </div>
+    <div class="stage-bar wrap-wide">
+      <p class="stage-pitch serif">Okumakla kalmıyorsun; <em>her kavramı elinle deniyorsun.</em></p>
+      <div class="stage-cta">
+        <button class="btn btn-ember" data-buy="hero">Tamamını Edin · ₺349</button>
+        <a class="mono muted stage-more" href="#neler-var">NELER VAR ↓</a>
+      </div>
+    </div>
   </section>
 
-  <hr class="hairline">
+  <!-- DEĞER ÖNERİSİ + SAYILAR -->
+  <section id="neler-var" class="wrap">
+    <div class="value-grid">
+      <div class="value-copy">
+        <p class="mono sec-eyebrow">Bu Kitap Nedir</p>
+        <h2 class="serif sec-title">İki yüzyıllık hikâye,<br>kırk beş çalışan makine</h2>
+        <p class="value-lead">Babbage’ın çarklarından bugünün sohbet robotlarına uzanan yolun
+        her durağında durup makineyi kendin çalıştırıyorsun: Turing makinesine sayı ekletiyor,
+        bir nöronu ateşliyor, difüzyonun gürültüsünü kendi elinle siliyorsun. Video yok,
+        animasyon süsü yok; her demo gerçekten hesaplıyor.</p>
+      </div>
+      <div class="stat-col">
+        <div class="stat"><span class="serif n">45</span><span class="mono">Canlı Demo</span></div>
+        <div class="stat"><span class="serif n">8</span><span class="mono">Bölüm · 62 Alt Konu</span></div>
+        <div class="stat"><span class="serif n">2</span><span class="mono">Dil: TR + EN</span></div>
+        <div class="stat"><span class="serif n">2</span><span class="mono">Okuma Derinliği</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO ŞERİDİ -->
+  <section class="ticker-sec">
+    <p class="mono sec-eyebrow wrap">Kırk Beş Demodan Bazıları</p>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Turing makinesine 1 ekletmek</span><span>Sekiz ampulle sayı yazmak</span>
+        <span>Getir–çalıştır döngüsünü döndürmek</span><span>Uzman sistem kurallarını ateşlemek</span>
+        <span>Sezgisel aramayı BFS ile yarıştırmak</span><span>Markov zinciriyle hava tahmini</span>
+        <span>Gradyan inişiyle vadiye inmek</span><span>Aşırı uyumu suçüstü yakalamak</span>
+        <span>Bir nöronu ateşlemek</span><span>Geri yayılımla ağ eğitmek</span>
+        <span>CNN filtresini görüntüde gezdirmek</span><span>GAN kalpazanını yakalamak</span>
+        <span>Cümleyi token’lara böldürmek</span><span>Dikkat haritasını okumak</span>
+        <span>Sıcaklığı açıp modeli şaşırtmak</span><span>Difüzyon gürültüsünü silmek</span>
+        <span>RAG’ı açıp kapatmak</span><span>Ajan döngüsünü adımlamak</span>
+        <span>Önyargıyı kaydırıp sonucu görmek</span><span>Kara kutuya “neden?” dedirtmek</span>
+        <span>Deepfake’i ipucundan yakalamak</span><span>Midas’ın dileğini denemek</span>
+        <span>Turing testini oynamak</span><span>Çince Oda’da sembol işlemek</span>
+        <!-- akış için kopya -->
+        <span>Turing makinesine 1 ekletmek</span><span>Sekiz ampulle sayı yazmak</span>
+        <span>Getir–çalıştır döngüsünü döndürmek</span><span>Uzman sistem kurallarını ateşlemek</span>
+        <span>Sezgisel aramayı BFS ile yarıştırmak</span><span>Markov zinciriyle hava tahmini</span>
+        <span>Gradyan inişiyle vadiye inmek</span><span>Aşırı uyumu suçüstü yakalamak</span>
+        <span>Bir nöronu ateşlemek</span><span>Geri yayılımla ağ eğitmek</span>
+        <span>CNN filtresini görüntüde gezdirmek</span><span>GAN kalpazanını yakalamak</span>
+        <span>Cümleyi token’lara böldürmek</span><span>Dikkat haritasını okumak</span>
+        <span>Sıcaklığı açıp modeli şaşırtmak</span><span>Difüzyon gürültüsünü silmek</span>
+        <span>RAG’ı açıp kapatmak</span><span>Ajan döngüsünü adımlamak</span>
+        <span>Önyargıyı kaydırıp sonucu görmek</span><span>Kara kutuya “neden?” dedirtmek</span>
+        <span>Deepfake’i ipucundan yakalamak</span><span>Midas’ın dileğini denemek</span>
+        <span>Turing testini oynamak</span><span>Çince Oda’da sembol işlemek</span>
+      </div>
+    </div>
+  </section>
 
   <!-- İÇİNDEKİLER -->
-  <section id="icindekiler">
+  <section id="icindekiler" class="wrap">
     <p class="mono sec-eyebrow">Sekiz Bölüm · Bir Yolculuk</p>
     <h2 class="serif sec-title">İçindekiler</h2>
     <div class="toc">
-      <div class="toc-row"><span class="toc-num">01</span><span class="toc-dot" style="background:#2a3bb0;"></span>
-        <span class="toc-main"><span class="mono">Temeller</span><span class="t">Zekâ ve Makineler</span></span>
+      <div class="toc-row"><span class="toc-num serif">01</span><span class="toc-dot" style="background:#2a3bb0;"></span>
+        <span class="toc-main"><span class="mono">Temeller</span><span class="t serif">Zekâ ve Makineler</span></span>
         <span class="toc-sub">Bir makine düşünebilir mi?</span></div>
-      <div class="toc-row"><span class="toc-num">02</span><span class="toc-dot" style="background:#bb4d17;"></span>
-        <span class="toc-main"><span class="mono">Klasik YZ</span><span class="t">Kuralların Çağı</span></span>
+      <div class="toc-row"><span class="toc-num serif">02</span><span class="toc-dot" style="background:#bb4d17;"></span>
+        <span class="toc-main"><span class="mono">Klasik YZ</span><span class="t serif">Kuralların Çağı</span></span>
         <span class="toc-sub">Öğrenmeden önce: elle yazılan zekâ</span></div>
-      <div class="toc-row"><span class="toc-num">03</span><span class="toc-dot" style="background:#1d6149;"></span>
-        <span class="toc-main"><span class="mono">İstatistiksel YZ</span><span class="t">Makineler Nasıl Öğrenir</span></span>
+      <div class="toc-row"><span class="toc-num serif">03</span><span class="toc-dot" style="background:#1d6149;"></span>
+        <span class="toc-main"><span class="mono">İstatistiksel YZ</span><span class="t serif">Makineler Nasıl Öğrenir</span></span>
         <span class="toc-sub">Kuraldan örüntüye</span></div>
-      <div class="toc-row"><span class="toc-num">04</span><span class="toc-dot" style="background:#3155c4;"></span>
-        <span class="toc-main"><span class="mono">Derin Öğrenme</span><span class="t">Yapay Beyin</span></span>
+      <div class="toc-row"><span class="toc-num serif">04</span><span class="toc-dot" style="background:#3155c4;"></span>
+        <span class="toc-main"><span class="mono">Derin Öğrenme</span><span class="t serif">Yapay Beyin</span></span>
         <span class="toc-sub">Nörondan sinir ağına</span></div>
-      <div class="toc-row"><span class="toc-num">05</span><span class="toc-dot" style="background:#7a3fb0;"></span>
-        <span class="toc-main"><span class="mono">Üretken Çağ</span><span class="t">Bugünün Yapay Zekâsı</span></span>
+      <div class="toc-row"><span class="toc-num serif">05</span><span class="toc-dot" style="background:#7a3fb0;"></span>
+        <span class="toc-main"><span class="mono">Üretken Çağ</span><span class="t serif">Bugünün Yapay Zekâsı</span></span>
         <span class="toc-sub">Token’dan dil modeline, dikkatten difüzyona</span></div>
-      <div class="toc-row"><span class="toc-num">06</span><span class="toc-dot" style="background:#2a7d86;"></span>
-        <span class="toc-main"><span class="mono">Uygulama</span><span class="t">YZ’yi Kullanmak ve İnşa Etmek</span></span>
+      <div class="toc-row"><span class="toc-num serif">06</span><span class="toc-dot" style="background:#2a7d86;"></span>
+        <span class="toc-main"><span class="mono">Uygulama</span><span class="t serif">YZ’yi Kullanmak ve İnşa Etmek</span></span>
         <span class="toc-sub">İstemden ajana, mimariden gerçek dünyaya</span></div>
-      <div class="toc-row"><span class="toc-num">07</span><span class="toc-dot" style="background:#b03a52;"></span>
-        <span class="toc-main"><span class="mono">Toplum</span><span class="t">Yapay Zekâ ve Toplum</span></span>
+      <div class="toc-row"><span class="toc-num serif">07</span><span class="toc-dot" style="background:#b03a52;"></span>
+        <span class="toc-main"><span class="mono">Toplum</span><span class="t serif">Yapay Zekâ ve Toplum</span></span>
         <span class="toc-sub">Önyargıdan düzenlemeye, deepfake’ten hizalamaya</span></div>
-      <div class="toc-row"><span class="toc-num">08</span><span class="toc-dot" style="background:#9a5a1f;"></span>
-        <span class="toc-main"><span class="mono">Felsefe &amp; Gelecek</span><span class="t">Felsefe ve Gelecek</span></span>
+      <div class="toc-row"><span class="toc-num serif">08</span><span class="toc-dot" style="background:#9a5a1f;"></span>
+        <span class="toc-main"><span class="mono">Felsefe &amp; Gelecek</span><span class="t serif">Felsefe ve Gelecek</span></span>
         <span class="toc-sub">Anlama, bilinç, tekillik ve sorumluluk</span></div>
     </div>
   </section>
 
-  <!-- CANLI DEMO -->
-  <section id="demo">
-    <p class="mono sec-eyebrow">Almadan Önce Dene</p>
-    <h2 class="serif sec-title">1. bölüm ücretsiz — <em class="ember" style="font-style:italic;">oyna</em></h2>
-    <p class="muted" style="max-width:620px;font-size:15px;">İlk bölümün tamamı, demolarıyla birlikte:
-    çoklu zekâlar, ikili ampuller, çalışan bir Turing makinesi, getir-çalıştır döngüsü ve Moore
-    yasasının ikiye katlanışı. Aşağıda gerçek kitabın içindesin.</p>
-    <div class="demo-frame"><iframe src="/demo/demo" title="Ücretsiz demo — Bölüm 1" loading="lazy"></iframe></div>
+  <!-- İKİ DERİNLİK -->
+  <section class="wrap">
+    <p class="mono sec-eyebrow">Aynı Fikir · İki Derinlik</p>
+    <h2 class="serif sec-title">Sen hangi derinlikte okursan</h2>
+    <p class="depth-intro">Her bölümün iki anlatımı var; tek dokunuşla geçiyorsun.
+    İşte aynı soruya iki cevap:</p>
+    <div class="depth-grid">
+      <div class="depth-card">
+        <span class="mono depth-tag">Basit Mod</span>
+        <p class="q serif">Bir makine nasıl öğrenir?</p>
+        <p class="a">Ona bol bol örnek gösterirsin; doğru cevabı tekrar tekrar görerek aradaki
+        örüntüyü çıkarır. Kuralları sen yazmazsın.</p>
+      </div>
+      <div class="depth-card">
+        <span class="mono depth-tag ember">Teknik Mod</span>
+        <p class="q serif">Bir makine nasıl öğrenir?</p>
+        <p class="a">Etiketli (x, y) çiftleri üzerinde bir kayıp fonksiyonunu gradyan inişiyle
+        minimize ederek f(x;&nbsp;θ) eşlemesini öğrenir.</p>
+      </div>
+    </div>
+    <p class="note" style="margin-top:18px;">14 yaşındaki de 70 yaşındaki de aynı kitabı okur;
+    mühendis olan Teknik modda formülleri bulur.</p>
   </section>
 
+  <hr class="hairline">
+
   <!-- NASIL ÇALIŞIR -->
-  <section>
+  <section class="wrap">
     <p class="mono sec-eyebrow">Nasıl Çalışır</p>
     <h2 class="serif sec-title">Üç adımda kitabın</h2>
     <div class="steps">
@@ -100,28 +176,38 @@
   </section>
 
   <!-- FİYAT -->
-  <section id="satin-al">
+  <section id="satin-al" class="wrap">
     <p class="mono sec-eyebrow">Kitabı Edin</p>
     <h2 class="serif sec-title">Tek kitap, bütün kapılar açık</h2>
-    <div class="price-card">
-      <div class="inner">
-        <div class="price-line"><span class="amount">₺349</span><span class="muted" style="font-size:14px;">tek seferlik</span></div>
-        <ul>
-          <li>8 bölümün tamamı, 45 interaktif demoyla</li>
-          <li>Basit + Teknik okuma modları</li>
-          <li>Türkçe ve İngilizce sürümler birlikte</li>
-          <li>Hesabına bağlı; her cihazda çevrimiçi oku</li>
-          <li>Gelecekteki tüm içerik güncellemeleri</li>
-        </ul>
-        <button class="btn btn-ember" data-buy="price">Satın Al · ₺349</button>
-        <div class="buy-state" id="buy-state"></div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="inner">
+          <div class="price-line"><span class="amount serif">₺349</span><span class="muted" style="font-size:14px;">tek seferlik</span></div>
+          <ul>
+            <li>8 bölümün tamamı, 45 interaktif demoyla</li>
+            <li>Basit + Teknik okuma modları</li>
+            <li>Türkçe ve İngilizce sürümler birlikte</li>
+            <li>Hesabına bağlı; her cihazda çevrimiçi oku</li>
+            <li>Gelecekteki tüm içerik güncellemeleri</li>
+          </ul>
+          <button class="btn btn-ember" data-buy="price">Satın Al · ₺349</button>
+          <div class="buy-state" id="buy-state"></div>
+        </div>
+        <div class="price-foot">Ödemeler iyzico altyapısıyla alınır. Kart bilgilerin bu siteye hiç uğramaz.</div>
       </div>
-      <div class="price-foot">Ödemeler iyzico altyapısıyla alınır. Kart bilgilerin bu siteye hiç uğramaz.</div>
+      <div class="price-aside">
+        <p class="serif" style="font-size:24px;line-height:1.3;margin:0 0 14px;">“Önce dene,
+        sonra karar ver.”</p>
+        <p style="font-size:14.5px;line-height:1.7;color:#b8b0a0;margin:0 0 22px;">Yukarıdaki
+        önizleme kırpılmış bir tanıtım değil; kitabın birinci bölümünün ta kendisi. Beğendiysen
+        gerisi aynı ellerle yazıldı.</p>
+        <a class="btn btn-ghost" href="/demo/demo">1. Bölümü Tam Ekran Dene</a>
+      </div>
     </div>
   </section>
 
   <!-- SSS -->
-  <section>
+  <section class="wrap">
     <p class="mono sec-eyebrow">Sorular</p>
     <h2 class="serif sec-title">Sık sorulanlar</h2>
     <div class="faq">
@@ -129,50 +215,56 @@
         <p class="a">Ödemen iyzico’dan doğrulanır doğrulanmaz kitabı hesabında açıyoruz ve sana e-posta geliyor.
         Bu genellikle birkaç saat içinde olur, en geç 24 saat. Ödemede hesap e-postanı kullanman süreci hızlandırır.</p></details>
       <details><summary>Kitabı nasıl okurum, indirme var mı?</summary>
-        <p class="a">Kitap hesabına bağlı çevrimiçi bir okuma deneyimi; herhangi bir cihazda giriş yapıp okursun,
-        kurulum ve dosya indirmesi yok. Böylece içerik herkes için hep güncel kalıyor.</p></details>
+        <p class="a">Kitap çevrimiçi okunur: hesabınla giriş yapar, tarayıcıdan okursun. Dosya indirme yoktur;
+        böylece her güncellemede en yeni sürümü okursun ve kitabın her cihazında seni bekler.</p></details>
+      <details><summary>Hangi cihazlarda çalışıyor?</summary>
+        <p class="a">Güncel bir tarayıcısı olan her şeyde: bilgisayar, tablet, telefon. Uygulama kurulumu gerekmez.</p></details>
       <details><summary>İngilizce sürüm dahil mi?</summary>
-        <p class="a">Evet. Tek satın alma TR ve EN’in ikisini birden açar; okurken tek dokunuşla dil değiştirirsin.</p></details>
-      <details><summary>Hangi cihazlarda çalışır?</summary>
-        <p class="a">Modern tarayıcısı olan her cihazda: telefon, tablet, bilgisayar. Bir aksilik olursa yaz;
-        ya düzeltiriz ya ücretini iade ederiz.</p></details>
-      <details><summary>İade koşulları ne?</summary>
-        <p class="a">Dijital içerik erişim tanımlandıktan sonra iade edilemez; ancak erişimin hiç tanımlanmaması ya da
-        kitabın hiçbir cihazında açılamaması hâlinde ücretin tamamı iade edilir. Ayrıntılar <a href="/yasal" style="color:#e85d3a;">yasal sayfada</a>.</p></details>
+        <p class="a">Evet. Tek satın almayla Türkçe ve İngilizce sürümlerin ikisi de açılır; okurken tek tuşla dil değiştirirsin.</p></details>
+      <details><summary>Teknik bilgim yok, anlayabilir miyim?</summary>
+        <p class="a">Kitap tam olarak bunun için yazıldı. Basit mod hiçbir ön bilgi istemez; merak edersen
+        Teknik mod formülleriyle derinleşir. İkisi arasında istediğin an geçersin.</p></details>
+      <details><summary>İade koşulları neler?</summary>
+        <p class="a">Dijital içerik olduğu için ifa başladıktan (kitap hesabında açıldıktan) sonra cayma hakkı
+        kapsam dışıdır; detaylar <a href="/yasal" style="color:#e85d3a;">yasal sayfamızda</a>. Kararsızsan önce
+        ücretsiz 1. bölümü dene — tam da bunun için açık.</p></details>
     </div>
   </section>
 
-  <footer>
+  <!-- KAPANIŞ -->
+  <section class="closing wrap">
+    <p class="serif closing-line">Okumayı <em>elinle</em> yap.</p>
+    <button class="btn btn-ember" data-buy="closing">Kitabı Satın Al · ₺349</button>
+  </section>
+
+  <footer class="wrap">
     <div class="foot-grid">
-      <span class="mono muted">Herkes İçin Yapay Zekâ · Sürüm 03</span>
+      <span class="mono muted">© 2026 Onur Önder · Herkes İçin Yapay Zekâ</span>
       <nav class="foot-links">
-        <a href="/yasal#on-bilgilendirme">Ön Bilgilendirme</a>
-        <a href="/yasal#mesafeli-satis">Mesafeli Satış</a>
-        <a href="/yasal#teslimat-iade">Teslimat &amp; İade</a>
-        <a href="/yasal#kvkk">KVKK</a>
+        <a href="/yasal">Mesafeli Satış &amp; İade</a>
+        <a href="/yasal#kvkk">KVKK &amp; Gizlilik</a>
         <a href="/yasal#iletisim">İletişim</a>
-        <a href="https://onuronder.com" rel="noopener">onuronder.com</a>
+        <a href="https://onuronder.com" rel="author">onuronder.com</a>
       </nav>
     </div>
   </footer>
-</div>
 
-<!-- AUTH MODAL -->
-<div class="modal-backdrop" id="auth-backdrop">
-  <div class="modal modal-inner">
-    <button class="close" id="auth-close" aria-label="Kapat">×</button>
-    <h2 id="auth-title">Giriş yap</h2>
-    <form id="auth-form">
-      <div class="field"><label for="auth-email">E-posta</label>
-        <input id="auth-email" type="email" autocomplete="email" required></div>
-      <div class="field"><label for="auth-password">Şifre</label>
-        <input id="auth-password" type="password" minlength="8" autocomplete="current-password" required></div>
-      <button class="btn" type="submit" id="auth-submit">Giriş yap</button>
-      <p class="form-msg" id="auth-msg"></p>
-      <button class="switch" type="button" id="auth-switch">Hesabın yok mu? Oluştur</button>
-    </form>
+  <!-- AUTH MODAL -->
+  <div class="modal-backdrop" id="auth-backdrop">
+    <div class="modal modal-inner">
+      <button class="close" id="auth-close" aria-label="Kapat">×</button>
+      <h2 id="auth-title">Giriş yap</h2>
+      <form id="auth-form">
+        <div class="field"><label for="auth-email">E-posta</label>
+          <input id="auth-email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="auth-password">Şifre</label>
+          <input id="auth-password" type="password" autocomplete="current-password" minlength="8" required></div>
+        <p class="form-msg" id="auth-msg"></p>
+        <button class="btn" type="submit" id="auth-submit">Giriş yap</button>
+        <button class="switch" type="button" id="auth-switch">Hesabın yok mu? Oluştur</button>
+      </form>
+    </div>
   </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="/assets/config.js"></script>
