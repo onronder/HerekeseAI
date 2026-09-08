@@ -383,3 +383,13 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
 - Görsel: eyebrow+serif başlık+açıklama, çerçeveli hata/başarı kutuları, hairline ayraçlı
   bağlantı satırı (Şifremi unuttum · Hesap oluştur), yüklenme durumu, blur'lu zemin.
 - Modal içeriği JS'ten dile göre üretiliyor; 5 sayfadaki markup ince kabuğa indi.
+
+## SUPABASE E-POSTA ŞABLONLARI ✓ (2026-09-09)
+- eposta-sablonlari/: dogrulama.html (Confirm signup), sifre-sifirlama.html (Reset password),
+  eposta-degisikligi.html (Change email) + OKUBENI.md (konu satırları + yapıştırma adımları).
+- Supabase tür başına TEK şablon/konu tuttuğu için İKİ DİLLİ tasarım (TR + altında muted EN).
+- Palet: kitabın OKUMA sayfası (krem #faf7ef + charcoal marka bandı + ember düğme) — koyu
+  zeminli e-postayı Gmail karanlık modu bozduğu için bilinçli; fontlar e-posta güvenli
+  düşüşlerle (Georgia/Helvetica/Courier). Tablo düzeni, yalnız satır içi CSS, tek kalıptan
+  üretim ({{ .ConfirmationURL }} korunarak, 3'ünde de doğrulandı). Tarayıcıda render kontrolü ✓.
+- Kurulum kullanıcıda: Dashboard → Authentication → Email Templates (OKUBENI'de tablo).
