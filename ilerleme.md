@@ -337,3 +337,15 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   marjinalya (sağ rayda, bölüm boyunca görünür). Konteyner 1220→1400, boşluklar 48/44.
   Dar ekranda ray metnin altına sarar (flex-wrap). TR+EN; demo/gated/tek-dosya build'den;
   gated bucket'a yüklendi. Doğrulama: div dengesi 0, ray sticky+yan yana ölçümü, görsel.
+
+## SSS: YERLEŞİM + REDAKSİYON ✓ (2026-09-09)
+- Yerleşim: SSS 680px sol sütundan çıkıp TAM genişliğe yayıldı; iki sütunlu grid (72px ara,
+  820px altında tek sütun). Ölü sağ boşluk bitti.
+- Redaksiyon (TR, TDK disiplini): "Ödedim —" → "Ödeme yaptım;" (em-dash kalktı); zaman uyumu
+  ("açıyoruz ve geliyor" → "açıyor, gönderiyoruz"); eksiltili "en geç 24 saat" tamamlandı;
+  "her şeyde" (konuşma dili) → "her cihazda: bilgisayarda, tablette ve telefonda"; "dahil" →
+  TDK "dâhil" (kitaptaki şapka tutarlılığı); "ifa başladıktan" (hukuk jargonu) → "erişim
+  hesabında tanımlandıktan sonra"; "— tam da bunun için açık" → "; ücretsiz demo tam da bunun
+  için var". Cevaplar tam cümlelerle yeniden kuruldu.
+- Not: satış sitesi şu an yalnız TR; İngilizce satış sayfası ayrı iş (kitabın EN'i zaten
+  US-English redaksiyonundan geçmişti).
