@@ -329,3 +329,11 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   sticky; Okuma Modu üstte. Dış ızgara minmax(280px,412px) 1fr + max-width 1220; dar ekranda
   flex-wrap ile menüler alt alta sarar (eski davranışa zarif düşüş). chapList fontu 13px.
 - TR+EN şablon; build ile demo/gated/tek-dosya; gated bucket'a yeniden yüklendi.
+
+## SAYFA KULLANIMI: MARJİNALYA RAYI ✓ (2026-09-09)
+- Kullanıcı "sayfa kullanımı kötü gibi" dedi; teşhis: metin 620px'te bitip sütun sağı boş
+  kalıyordu, Kenar Notu da akışı bölüyordu. Çözüm klasik kitap düzeni: içerik alanı
+  [ana akış ≤660px] + [sağ kenar rayı 232px, sticky] flex'i; KENAR NOTU artık gerçek
+  marjinalya (sağ rayda, bölüm boyunca görünür). Konteyner 1220→1400, boşluklar 48/44.
+  Dar ekranda ray metnin altına sarar (flex-wrap). TR+EN; demo/gated/tek-dosya build'den;
+  gated bucket'a yüklendi. Doğrulama: div dengesi 0, ray sticky+yan yana ölçümü, görsel.
