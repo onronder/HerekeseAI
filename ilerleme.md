@@ -477,3 +477,10 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   link başına tek fiyat; fiyat API'den okunamaz — panel+config elle eşit tutulur, yorumda not);
   sayfalarda 4+4 data-price span'i store.js'ten dolduruluyor (doğrulandı); buyFlow dilin linkini açar.
 - Kullanıcı/hukukçu görevleri plan dosyasında (DPA'lar, KVKK m.9 mekanizması, VERBİS, OSS).
+
+## YAZAR/ADMIN OKUMA ERİŞİMİ ✓ (2026-09-09)
+- Sorun: admin rolü yalnız /yonetim yetkisiydi; erişim kaydı olmayan admin'e kitap kilitliydi.
+- book-token: entitlement yoksa user_roles(admin) kontrolü → izin; filigran sipariş yerine
+  "yazar" damgası taşır. store.js initReader artık hasBook yerine sunucuya sorar (tek otorite).
+- Canlı E2E: erişim kayıtsız geçici admin → token ✓ → 669KB içerik ✓ → filigran
+  "yazar-test@example.com · yazar" ✓ → temizlendi. Fonksiyon deploy + push edildi.
