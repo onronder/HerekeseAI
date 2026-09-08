@@ -64,28 +64,32 @@ serve(async (req: Request) => {
     );
     if (upErr) throw upErr;
 
-    // "Kitabın açıldı" e-postası (best-effort; mevcut send-email/Resend fonksiyonu)
+    // "Kitabın açıldı" e-postası (best-effort; Resend doğrudan — proje secret'ı ortak)
     let mailed = false;
     try {
-      const isEn = lang === "en";
-      const res = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${serviceKey}`,
-        },
-        body: JSON.stringify({
-          type: "book-access",
-          to: target,
-          subject: isEn
-            ? "Your book is unlocked — AI for Everyone"
-            : "Kitabın açıldı — Herkes İçin Yapay Zekâ",
-          html: isEn
-            ? `<p>Your purchase is confirmed and the book is now unlocked.</p><p><a href="${SITE}/oku">Start reading</a> — sign in with this email address.</p>`
-            : `<p>Ödemen onaylandı, kitabın açıldı.</p><p><a href="${SITE}/oku">Okumaya başla</a> — bu e-posta adresinle giriş yapman yeterli.</p>`,
-        }),
-      });
-      mailed = res.ok;
+      const resendKey = Deno.env.get("RESEND_API_KEY");
+      if (resendKey) {
+        const isEn = lang === "en";
+        const res = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${resendKey}`,
+          },
+          body: JSON.stringify({
+            from: "Herkes İçin Yapay Zekâ <noreply@onuronder.com>",
+            to: [target],
+            subject: isEn
+              ? "Your book is unlocked — AI for Everyone"
+              : "Kitabın açıldı — Herkes İçin Yapay Zekâ",
+            html: isEn
+              ? `<p>Your purchase is confirmed and the book is now unlocked.</p><p><a href="${SITE}/oku">Start reading</a> — sign in with this email address.</p>`
+              : `<p>Ödemen onaylandı, kitabın açıldı.</p><p><a href="${SITE}/oku">Okumaya başla</a> — bu e-posta adresinle giriş yapman yeterli.</p>`,
+          }),
+        });
+        mailed = res.ok;
+        if (!res.ok) console.error("resend failed:", res.status, await res.text());
+      }
     } catch (mailErr) {
       console.error("access email failed:", mailErr);
     }

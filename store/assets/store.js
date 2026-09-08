@@ -190,19 +190,29 @@
   async function loadBook() {
     const wrap = $("#reader-msg");
     wrap.innerHTML = `<p class="muted mono">KİTABIN AÇILIYOR…</p>`;
-    const r = await callFn("book-token", {});
-    if (!r.ok || !r.json.token) {
+    try {
+      const r = await callFn("book-token", {});
+      if (!r.ok || !r.json.token) throw new Error("token");
+      // İçerik fetch edilip srcdoc ile basılır: Supabase gateway'i fonksiyon
+      // yanıtlarının Content-Type'ını ezebildiği için iframe.src kullanılamıyor.
+      const res = await fetch(
+        `${C.FUNCTIONS_URL}/book-content?t=${encodeURIComponent(r.json.token)}&lang=${bookLang}`,
+        { headers: { apikey: C.SUPABASE_ANON_KEY } },
+      );
+      if (!res.ok) throw new Error("content " + res.status);
+      const html = await res.text();
+      const iframe = document.createElement("iframe");
+      iframe.title = "Herkes İçin Yapay Zekâ";
+      iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
+      iframe.srcdoc = html;
+      const body = $("#reader-body");
+      body.querySelectorAll("iframe").forEach((f) => f.remove());
+      body.appendChild(iframe);
+      wrap.innerHTML = "";
+    } catch (e) {
+      console.error(e);
       wrap.innerHTML = `<p class="muted">Bir aksilik oldu.</p><button class="btn" onclick="location.reload()">Tekrar dene</button>`;
-      return;
     }
-    const iframe = document.createElement("iframe");
-    iframe.title = "Herkes İçin Yapay Zekâ";
-    iframe.src = `${C.FUNCTIONS_URL}/book-content?t=${encodeURIComponent(r.json.token)}&lang=${bookLang}`;
-    iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
-    const body = $("#reader-body");
-    body.querySelectorAll("iframe").forEach((f) => f.remove());
-    body.appendChild(iframe);
-    wrap.innerHTML = "";
   }
 
   function wireReaderBar() {

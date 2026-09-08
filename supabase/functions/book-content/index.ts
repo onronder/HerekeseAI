@@ -1,8 +1,10 @@
-// Kitabı private bucket'tan çekip alıcıya özel filigranla servis eder.
-// verify_jwt=false: iframe JWT taşıyamaz; güvenlik kısa ömürlü HMAC tokenında.
-// Filigran servis anında basılır ki filigransız ana kopya asla istemciye inmesin.
+// Kitabı private bucket'tan çekip alıcıya özel filigranla döner.
+// verify_jwt=false: istemci fetch'i kısa ömürlü HMAC tokenıyla gelir; güvenlik tokendadır.
+// NOT: Supabase gateway, fonksiyon yanıtlarının Content-Type'ını text/plain+nosniff'e
+// zorlayabildiği için içerik iframe src olarak DEĞİL, istemcide fetch edilip
+// iframe.srcdoc ile basılır (store.js). Bu yüzden CORS başlıkları şarttır.
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { verifyReadToken } from "../_shared/token.ts";
+import { corsHeaders, verifyReadToken } from "../_shared/token.ts";
 
 async function sha256Hex(s: string): Promise<string> {
   const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
@@ -10,6 +12,8 @@ async function sha256Hex(s: string): Promise<string> {
 }
 
 serve(async (req: Request) => {
+  if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+
   try {
     const url = new URL(req.url);
     const token = url.searchParams.get("t") ?? "";
@@ -19,7 +23,7 @@ serve(async (req: Request) => {
     if (!payload) {
       return new Response("Erişim süresi doldu ya da geçersiz. / Access expired or invalid.", {
         status: 401,
-        headers: { "Content-Type": "text/plain; charset=utf-8" },
+        headers: { ...corsHeaders, "Content-Type": "text/plain; charset=utf-8" },
       });
     }
 
@@ -32,7 +36,7 @@ serve(async (req: Request) => {
     );
     if (!objRes.ok) {
       console.error("storage fetch failed:", objRes.status);
-      return new Response("Content unavailable", { status: 503 });
+      return new Response("Content unavailable", { status: 503, headers: corsHeaders });
     }
     let html = await objRes.text();
 
@@ -44,15 +48,13 @@ serve(async (req: Request) => {
 
     return new Response(html, {
       headers: {
+        ...corsHeaders,
         "Content-Type": "text/html; charset=utf-8",
         "Cache-Control": "no-store, max-age=0",
-        // Yalnız kitap sitesi (ve yerel geliştirme) iframe'leyebilir
-        "Content-Security-Policy":
-          "frame-ancestors 'self' https://book.onuronder.com https://*.vercel.app http://localhost:* http://127.0.0.1:*",
       },
     });
   } catch (e) {
     console.error("book-content error:", e);
-    return new Response("Internal error", { status: 500 });
+    return new Response("Internal error", { status: 500, headers: corsHeaders });
   }
 });
