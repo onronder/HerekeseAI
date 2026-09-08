@@ -34,17 +34,28 @@ serve(async (req: Request) => {
       .eq("product_code", PRODUCT_CODE)
       .maybeSingle();
 
+    // Erişim kaydı yoksa: yönetici (yazar) her zaman okuyabilir
+    let orderTag = ent ? String(ent.id).slice(0, 8) : "";
     if (!ent) {
-      return new Response(JSON.stringify({ error: "no_entitlement" }), {
-        status: 403,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      const { data: role } = await admin
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id)
+        .eq("role", "admin")
+        .maybeSingle();
+      if (!role) {
+        return new Response(JSON.stringify({ error: "no_entitlement" }), {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      orderTag = "yazar";
     }
 
     const token = await signReadToken({
       u: user.id,
       m: user.email ?? "",
-      o: ent.id.slice(0, 8),
+      o: orderTag,
       e: Math.floor(Date.now() / 1000) + TOKEN_TTL_SECONDS,
     });
 

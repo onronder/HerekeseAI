@@ -334,7 +334,9 @@
       $("#reader-signin").onclick = () => openAuth(() => location.reload());
       return;
     }
-    if (!(await hasBook(user.id))) {
+    // Yetki kararını sunucu verir (erişim kaydı YA DA yönetici rolü)
+    const probe = await callFn("book-token", {});
+    if (!probe.ok) {
       frameWrap.innerHTML =
         `<p class="serif" style="font-size:26px;margin:0;">${T.notOpen}</p>` +
         `<p class="muted" style="max-width:360px;font-size:14px;">${T.pending(user.email)}</p>` +
