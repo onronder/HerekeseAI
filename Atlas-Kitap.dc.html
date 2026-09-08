@@ -113,7 +113,7 @@
     </div>
 
     <div style="background:#f4efe6;color:#262626;">
-      <div style="position:relative;max-width:1080px;margin:0 auto;padding:48px 40px 90px;display:grid;grid-template-columns:228px 1fr;gap:56px;align-items:start;">
+      <div style="position:relative;max-width:1220px;margin:0 auto;padding:48px 40px 90px;display:grid;grid-template-columns:minmax(280px,412px) 1fr;gap:56px;align-items:start;">
 
         <div style="position:sticky;top:64px;">
           <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8a8270;text-transform:uppercase;margin-bottom:12px;">Okuma Modu</div>
@@ -121,8 +121,10 @@
             <button onClick="{{ setBasit }}" style="{{ basitTab }}">Basit</button>
             <button onClick="{{ setTeknik }}" style="{{ teknikTab }}">Teknik</button>
           </div>
+          <div style="display:flex;flex-wrap:wrap;gap:26px;align-items:flex-start;">
+          <div style="flex:0 0 176px;">
           <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8a8270;text-transform:uppercase;margin-bottom:12px;">Bölümler</div>
-          <div style="display:flex;flex-direction:column;margin-bottom:30px;">
+          <div style="display:flex;flex-direction:column;">
             <sc-for list="{{ modNav }}" as="c" hint-placeholder-count="8">
               <button onClick="{{ c.go }}" style="{{ c.style }}">
                 <span style="font-family:'Space Mono',monospace;font-size:11px;width:24px;flex:none;color:{{ c.numColor }};">{{ c.num }}</span>
@@ -132,6 +134,8 @@
               </button>
             </sc-for>
           </div>
+          </div>
+          <div style="flex:1;min-width:0;">
           <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8a8270;text-transform:uppercase;margin-bottom:12px;">Bu Bölümde · {{ secPager }}</div>
           <div style="display:flex;flex-direction:column;">
             <sc-for list="{{ chapList }}" as="c" hint-placeholder-count="8">
@@ -142,6 +146,8 @@
                 <sc-if value="{{ c.locked }}"><svg width="10" height="12" viewBox="0 0 10 12" fill="none" style="flex:none;opacity:0.5;"><rect x="1" y="5" width="8" height="6" rx="1" stroke="#8a8270" stroke-width="1.2"/><path d="M3 5 V3.4 a2 2 0 1 1 4 0 V5" stroke="#8a8270" stroke-width="1.2"/></svg></sc-if>
               </button>
             </sc-for>
+          </div>
+          </div>
           </div>
         </div>
 
@@ -1719,11 +1725,11 @@ class Component extends DCLogic {
       out.chapList = mod.sections.map((s, i) => ({
         num:String(i+1).padStart(2,'0'), label:s.label, go:() => this.goSec(i),
         numColor:i===si?acc:'#aaa292', mark:i===si?acc:'transparent',
-        style:'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:8px 0;cursor:pointer;font-family:\'Work Sans\',sans-serif;font-size:13.5px;transition:all .15s;' + (i===si?'color:#1f1f1f;font-weight:600;':'color:#6c6555;font-weight:500;')
+        style:'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:8px 0;cursor:pointer;font-family:\'Work Sans\',sans-serif;font-size:13px;transition:all .15s;' + (i===si?'color:#1f1f1f;font-weight:600;':'color:#6c6555;font-weight:500;')
       })).concat((mod.lockedSections || []).map((lbl, k) => ({
         num:String(mod.sections.length + k + 1).padStart(2,'0'), label:lbl, locked:true, go:() => {},
         numColor:'#c2bba9', mark:'transparent',
-        style:'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:8px 0;font-family:\'Work Sans\',sans-serif;font-size:13.5px;cursor:default;color:#aaa292;font-weight:500;'
+        style:'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:8px 0;font-family:\'Work Sans\',sans-serif;font-size:13px;cursor:default;color:#aaa292;font-weight:500;'
       })));
       const navBase = 'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:7px 0;cursor:pointer;font-family:\'Work Sans\',sans-serif;font-size:13px;transition:all .15s;';
       out.modNav = M.map((m, k) => ({

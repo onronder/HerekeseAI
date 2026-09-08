@@ -323,3 +323,9 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
 - "Sürüm 03 · 8 Bölüm" → "İlk Basım · 8 Bölüm" (TR+landing), "Edition 03" → "First Edition" (EN).
 - Doğrulama: node --check TR+EN; tam kitapta menüler+modül geçişi tıklamayla; demoda 12 kilit
   SVG ve kilitli tıklamanın etkisizliği; fiyat paneli ölçümü. Gated TR/EN bucket'a yeniden yüklendi.
+
+## MENÜLER YAN YANA STICKY ✓ (2026-09-09)
+- Okuma düzeni kenar çubuğu: "Bölümler" (176px) + "Bu Bölümde" (esnek) YAN YANA, birlikte
+  sticky; Okuma Modu üstte. Dış ızgara minmax(280px,412px) 1fr + max-width 1220; dar ekranda
+  flex-wrap ile menüler alt alta sarar (eski davranışa zarif düşüş). chapList fontu 13px.
+- TR+EN şablon; build ile demo/gated/tek-dosya; gated bucket'a yeniden yüklendi.
