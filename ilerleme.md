@@ -403,3 +403,8 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   First Edition"); konu satırları da koşullu (OKUBENI'de hazır). lang yoksa varsayılan TR.
 - grant-book makbuzu: dil = parametre > alıcının metadata.lang > TR; EN makbuz linki
   /en/read'e düzeltildi. Fonksiyon yeniden dağıtıldı.
+
+## TR KAPANIŞ DÜZELTMESİ ✓ (2026-09-09)
+- "Okumayı elinle yap." (uydurma kalıp; EN 'Read it with your hands.' zorlama aynası)
+  kullanıcı yönlendirmesiyle → "Yeni bir okuma deneyimi." ("tecrübe+deneyimleyin" kök
+  ikilemesi ve siz-kayması giderilerek). EN kapanış deyimsel olduğu için korundu.
