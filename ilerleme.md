@@ -408,3 +408,19 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
 - "Okumayı elinle yap." (uydurma kalıp; EN 'Read it with your hands.' zorlama aynası)
   kullanıcı yönlendirmesiyle → "Yeni bir okuma deneyimi." ("tecrübe+deneyimleyin" kök
   ikilemesi ve siz-kayması giderilerek). EN kapanış deyimsel olduğu için korundu.
+
+## SİTE GENELİ TR REDAKSİYON TURU ✓ (2026-09-09)
+- Kapsam: landing, oku, yönetim, yasal, store.js TR sözlüğü, e-posta TR kartları, demo ekleri.
+- Şerit calque'ları: "adımlamak"→"adım adım izlemek" (step-through), "sıcaklığı açıp"→
+  "yükseltip" (turn-up), "böldürmek"→"token'larına ayırmak", "gradyan inişiyle inmek" kök
+  tekrarı→"Gradyanla sisli vadiye inmek" (kitap imgesi), "ateşlemek"→"tetiklemek" (tırnaksız
+  jargon), "hava tahmini"→"havayı tahmin etmek" (liste ritmi).
+- "Kararsızsan karar senin elinde" kök yankısı → "Kararsız mısın? İlk üç konu ücretsiz;
+  kadranıyla, demolarıyla." (em-dash de kalktı).
+- store.js: yönetim etiketi em-dash'i giderildi ("isteğe bağlı iyzico işlem numarası");
+  ölü sözlük anahtarları (created/authFailed, TR+EN) temizlendi.
+- yasal.html: HUKUKİ DOĞRULUK — "1. bölümünü ücretsiz" → "ilk üç konusunu demolarıyla
+  birlikte" (demo kapsamı değişmişti); "dosya indirmesi yoktur" → "alıcıya dosya indirilmez,
+  içerik çevrimiçi okunur"; "iletişime rağmen çözülmemesi" eksiltisi → "iletişime geçilmesine
+  rağmen sorunun çözülememesi". Kalan em-dash'ler yalnız <title> ayracı + kod yorumu.
+- İkinci tur: tüm değişimler dosyadan yeniden okundu; node --check OK.

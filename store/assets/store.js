@@ -15,8 +15,6 @@
     tr: {
       signinTitle: "Giriş yap", signupTitle: "Hesap oluştur",
       switchToSignup: "Hesabın yok mu? Oluştur", switchToSignin: "Zaten hesabın var mı? Giriş yap",
-      created: "Hesap oluşturuldu. E-postana gelen doğrulama linkine tıkla, sonra giriş yap.",
-      authFailed: "Olmadı. E-posta ve şifreni kontrol et (şifre en az 8 karakter).",
       openBook: "Kitabı Aç", signinShort: "GİRİŞ", signoutShort: "çıkış",
       owned: (e) => `Kitap bu hesapta açık: <strong>${e}</strong>. İyi okumalar!`,
       pay: (e) => `Ödeme sayfasında e-posta olarak <strong>${e}</strong> adresini kullan; ` +
@@ -49,8 +47,6 @@
     en: {
       signinTitle: "Sign in", signupTitle: "Create an account",
       switchToSignup: "No account yet? Create one", switchToSignin: "Already have an account? Sign in",
-      created: "Account created. Click the verification link in your email, then sign in.",
-      authFailed: "That didn’t work. Check your email and password (at least 8 characters).",
       openBook: "Open the Book", signinShort: "SIGN IN", signoutShort: "sign out",
       owned: (e) => `The book is unlocked on this account: <strong>${e}</strong>. Happy reading!`,
       pay: (e) => `On the payment page, use <strong>${e}</strong> as your email address; ` +
@@ -388,7 +384,7 @@
     box.innerHTML =
       `<form id="grant-form">
         <div class="field"><label>Alıcı e-postası</label><input id="g-email" type="email" required placeholder="alici@ornek.com"></div>
-        <div class="field"><label>Not (iyzico işlem no — isteğe bağlı)</label><input id="g-note" type="text"></div>
+        <div class="field"><label>Not (isteğe bağlı iyzico işlem numarası)</label><input id="g-note" type="text"></div>
         <button class="btn btn-ember" type="submit">Kitabı Aç</button>
       </form>
       <div class="admin-result" id="g-result"></div>`;
