@@ -1,0 +1,4 @@
+project_id = "dtsgewamjkcojffustrg"
+
+[functions.book-content]
+verify_jwt = false

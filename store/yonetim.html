@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yönetim — Herkes İçin Yapay Zekâ</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/store.css">
+</head>
+<body data-page="admin" class="ruled">
+<div class="wrap narrow">
+  <header class="topbar">
+    <a href="/" class="mono muted" style="text-decoration:none;">← Kitap</a>
+    <span class="mono muted">Yönetim</span>
+  </header>
+  <section>
+    <p class="mono sec-eyebrow">Elle Onay</p>
+    <h2 class="serif sec-title">Erişim aç</h2>
+    <p class="muted" style="font-size:14px;max-width:460px;">iyzico’da ödemeyi gördükten sonra
+    alıcının hesap e-postasını yaz; kitap o hesapta açılır ve alıcıya e-posta gider.</p>
+    <div id="admin-box" style="margin-top:24px;"></div>
+  </section>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-backdrop" id="auth-backdrop">
+  <div class="modal modal-inner">
+    <button class="close" id="auth-close" aria-label="Kapat">×</button>
+    <h2 id="auth-title">Giriş yap</h2>
+    <form id="auth-form">
+      <div class="field"><label for="auth-email">E-posta</label>
+        <input id="auth-email" type="email" autocomplete="email" required></div>
+      <div class="field"><label for="auth-password">Şifre</label>
+        <input id="auth-password" type="password" minlength="8" autocomplete="current-password" required></div>
+      <button class="btn" type="submit" id="auth-submit">Giriş yap</button>
+      <p class="form-msg" id="auth-msg"></p>
+      <button class="switch" type="button" id="auth-switch">Hesabın yok mu? Oluştur</button>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/assets/config.js"></script>
+<script src="/assets/store.js"></script>
+</body>
+</html>

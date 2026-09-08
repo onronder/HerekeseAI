@@ -249,3 +249,22 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   (create-checkout, iyzico-callback, book-token, book-content), çeviriler ve örnek UI var —
   kullanıcı kendi sayfasını yaparken malzeme olarak kullanabilir ya da dalı silebilir.
   Supabase'e HİÇBİR ŞEY deploy edilmedi (migration uygulanmadı, fonksiyon/secret yok).
+
+## BOOK.ONURONDER.COM SATIŞ SİTESİ KURULDU (2026-09-08)
+- Karar: kalıcı iyzico "Link ile Ödeme" (Sanal POS/API yok) → teslimat elle onaylı
+  (/yonetim → grant-book). Supabase: mevcut MyDomain (dtsgewamjkcojffustrg). Hosting: Vercel.
+- store/: kitap kapak estetiğinde statik site — index (satış: hero, içindekiler, canlı M1
+  demo iframe'i, 3 adım, ₺349 kartı, SSS, yasal linkler), oku (reader), yonetim (admin grant),
+  yasal (5 metin), demo/, assets/ (config: IYZILINK_URL null=yakında modu). vercel.json cleanUrls.
+- supabase/: migration (book_entitlements+RLS+private bucket), functions book-token /
+  book-content (filigran) / grant-book (admin, has_role + Resend bildirimi), config.toml.
+- DEPLOY EDİLDİ: 3 fonksiyon canlı, BOOK_TOKEN_SECRET set, 'book' bucket'ı oluşturuldu,
+  filigran-yuvalı book-tr/en.html yüklendi. Doğrulanan: satış sayfası + auth (gerçek proje,
+  geçici test alıcısı book-e2e-test@example.com / e2eTest!2026 — silinecek), paywall,
+  sahte token 401, JWT'siz book-token 401, keysiz storage 400. gh-pages: tam kitap kaldırıldı,
+  book.onuronder.com stub'u + demo kaldı.
+- KULLANICI ADIMLARI BEKLENİYOR: (1) migration SQL'i Dashboard SQL Editor'da çalıştır,
+  (2) Auth → URL Configuration'a book.onuronder.com redirect'i, (3) Vercel'e store/ deploy +
+  GoDaddy CNAME, (4) iyzico onayı sonrası iyzilink → store/assets/config.js IYZILINK_URL,
+  (5) yasal [KÖŞELİ] alanlar. SQL sonrası kalan E2E: grant → filigranlı okuma → teardown.
+- lovable-icin-kitap-sayfasi.md: ana site tanıtım sayfası içerik paketi hazır.
