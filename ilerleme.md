@@ -201,3 +201,19 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   sisli vadi inişi, lego token'lar, kelime şehri, üç okul, Kral Midas, kartopu tekilliği...
   Teknik mod/quiz/demolar değişmedi; redaksiyon kuralları korundu ("Bir varmış"/"Once upon" 1'er kez, bilinçli).
 - gh-pages güncellendi (arkadaşlar linkten yeni sürümü görür). Commit: 909df83 + cb2aed9.
+
+## TDK EDİTÖR OKUMASI TAMAMLANDI ✓ (2026-09-08)
+- Tetik: kullanıcı M2'de "cümleleri doğru mahalleye yerleştir"i yakaladı (Türkçede yok) → tüm kitap
+  satır satır TDK esaslı okundu (M1–M8 basit/teknik/kurulum/hint/neOluyor/quiz + kapak/şablon/caption'lar).
+- Kök neden: masallaştırmada metaforların yönerge cümlelerine sızması + eşdizim/anlatım hataları.
+- ~45 düzeltme. Öne çıkanlar: mahalle→kamp (M2, kullanıcının şikâyeti), "öğretmene götür"→"hangi
+  öğretmene ait olduğunu bul" (M3), "haberleri kıs"→"girdileri zayıflat" (M4), "kod döküyor"→"üretiyor",
+  "difüzyona uğrayacağız"→"difüzyon modellerine uğrayacağız" (M5), "dolandırıcıyı enseliyor"→"yakalıyor"
+  (argo), "isteminizi gözden geçirin"→"istemini gözden geçir" (sen/siz tutarlılığı, M6), "Midas'ın cini"→
+  "masallardaki cinler" (olgu hatası: cin Midas'ta yok; TR+EN), "çığ gibi patlayıp"→"büyüyüp",
+  "kaynakça da doğrulanan"→"kaynağın da doğruladığı" (M7-8), "sezgili"→"sezgisel", "roketleniş",
+  "elden çıkıyor", "kalbinde cümle atar", "açık-kapa" vb. (M1-2, önceki partiler).
+- Meşru metaforlara dokunulmadı: gömü "kelime şehri/mahalle/komşu" (M5, kurulumu yapılmış betimleme).
+- EN dar yansıma: rival neighbourhoods→camps, "right neighbourhood"→"right camp", Midas's genie→genies in old tales.
+- Doğrulama: her yama count==1; tüm değişen cümleler ikinci turda yeniden okundu; node --check TR+EN OK;
+  canlı önizlemede M2/M3 ekranda teyit; build.py + gh-pages push, canlıda curl ile içerik teyidi.
