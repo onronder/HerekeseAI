@@ -27,6 +27,7 @@
       notOpen: "Bu kitap henüz açılmamış", needSignin: "Okumak için giriş yapman gerekiyor.",
       backSales: "← satış sayfası", browse: "Kitaba göz at",
       pending: (e) => `Hesap: ${e}. Ödemen alındıysa erişimin kısa süre içinde tanımlanır ve e-posta alırsın.`,
+      author: (e) => `Yazar erişimin açık: <strong>${e}</strong>. Kitap senin; iyi okumalar!`,
       consentLabel: "Dijital içeriğin hemen ifasına açık onay veriyorum; erişim hesabımda " +
         "tanımlandığında cayma hakkımı kaybedeceğimi biliyorum.",
       consentGo: "Ödemeye Git", consentNeed: "Devam etmek için onay kutusunu işaretlemen gerekiyor.",
@@ -62,6 +63,7 @@
       notOpen: "This book is not unlocked yet", needSignin: "You need to sign in to read.",
       backSales: "← back to the book page", browse: "Browse the book",
       pending: (e) => `Account: ${e}. If your payment has been made, access will be granted shortly and you will get an email.`,
+      author: (e) => `You have author access: <strong>${e}</strong>. The book is yours; happy reading!`,
       consentLabel: "I expressly consent to the immediate performance of this digital content " +
         "and acknowledge that I lose my right of withdrawal once access is granted to my account.",
       consentGo: "Proceed to Payment", consentNeed: "Please check the consent box to continue.",
@@ -99,6 +101,12 @@
       .eq("product_code", C.PRODUCT_CODE)
       .maybeSingle();
     if (error) return false;
+    return !!data;
+  }
+
+  async function isAdmin(userId) {
+    const { data } = await sb
+      .from("user_roles").select("role").eq("user_id", userId).eq("role", "admin").maybeSingle();
     return !!data;
   }
 
@@ -266,10 +274,11 @@
     fillPrices();
     const user = await getUser();
     const owned = user ? await hasBook(user.id) : false;
+    const author = user && !owned ? await isAdmin(user.id) : false;
     const state = $("#buy-state");
 
     document.querySelectorAll("[data-buy]").forEach((btn) => {
-      if (owned) btn.textContent = T.openBook;
+      if (owned || author) btn.textContent = T.openBook;
     });
     const acct = $("#account-line");
     if (acct) {
@@ -283,9 +292,9 @@
     }
 
     if (!state) return;
-    if (user && owned) {
+    if (user && (owned || author)) {
       state.className = "buy-state show";
-      state.innerHTML = T.owned(user.email);
+      state.innerHTML = author ? T.author(user.email) : T.owned(user.email);
     } else if (user && !owned) {
       state.className = "buy-state show";
       if (PRICING.url) {
@@ -314,7 +323,7 @@
   function buyFlow() {
     getUser().then(async (user) => {
       if (!user) { openAuth(buyFlow); return; }
-      if (await hasBook(user.id)) { window.location.href = READER; return; }
+      if (await hasBook(user.id) || await isAdmin(user.id)) { window.location.href = READER; return; }
       await refreshIndex();
       document.getElementById("buy-state")?.scrollIntoView({ behavior: "smooth", block: "center" });
     });
