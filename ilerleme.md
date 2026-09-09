@@ -508,3 +508,16 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   (grid-area:1/1) — kutu en uzun cevaba göre kendini boyutlar (mobilde 153px'e büyüyor,
   taşma yok; çapraz solma animasyonu korunur). store.css + iki kitabın satır içi stilleri.
 - build → demo/gated/tek-dosya; gated bucket'a yüklendi; node --check TR+EN OK.
+
+## E-POSTA BAĞLANTILARI MARKALANDI ✓ (2026-09-09)
+- Sorun: {{ .ConfirmationURL }} → dtsgewamjkcojffustrg.supabase.co/auth/v1/verify (proje kimliği,
+  uç yapısı ve ham token e-postada). Çözüm: Supabase'in token-hash deseni.
+- store/auth/confirm.html (/auth/confirm): marka çubuklu doğrulama sayfası; ?lang store.js'ten
+  önce basılır. store.js initConfirm(): verifyOtp(token_hash,type) → recovery'de reset modalı
+  (başarıda HOME'a), signup/email_change'de doğrulandı+yönlendirme; hata → linkExpired.
+- 3 şablonda 7'şer bağlantı → book.onuronder.com/auth/confirm?token_hash={{ .TokenHash }}
+  &type=...&lang={{ .Data.lang }}; şablonlarda "supabase" geçişi 0. signupDone metni güncellendi
+  (bağlantı doğrudan kitaba getirir). OKUBENI notu.
+- Canlı E2E (e-postasız, admin generate_link hashed_token ile): recovery → oturum + reset modalı
+  → şifre güncellendi ✓; aynı hash ikinci kullanımda linkExpired ✓. Test hesabı silindi.
+- Kullanıcı görevi: 3 şablon gövdesini panele YENİDEN yapıştırmak.
