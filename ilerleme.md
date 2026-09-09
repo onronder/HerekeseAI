@@ -611,8 +611,10 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
 - Kullanıcı şablonları panele yapıştırdı (e-posta tarafı tamam).
 
 ## ISBN İŞLENDİ ✓ (2026-09-09) — 978-625-00-5299-0
-- Kullanıcının el ile eklediği ISBN kanonik kaynaklara ulaşmamıştı (web kitap build.py çıktısı +
-  bucket yüklemesiyle üretilir; kaynak düzenlemek tek başına yansımaz).
+- Kullanıcı ISBN'i GitHub web'den kaynak kitaplara işlemişti (yerel klon geride kaldığı için
+  önce görünmedi; rebase ile birleştirildi). Web'e yansımamasının asıl sebebi: web kitap
+  build.py çıktısı + bucket yüklemesiyle üretilir; kaynak düzenlemek tek başına yansımaz.
+  Biçim "ISBN 978-…" olarak standardize edildi (iki nokta yerine boşluk).
 - Eklendi: iki kitap kapağının meta çubuğu (TR "İlk Basım · 8 Bölüm · ISBN …", EN karşılığı),
   landing TR+EN cover-meta-mid, yasal.html satıcı bloğu ([ISBN] yuvası dolduruldu, "başvuru
   tamamlandığında eklenecektir" notu kaldırıldı), en/legal.html künye satırı.
