@@ -30,30 +30,30 @@ serve(async (req: Request) => {
     const { data: { user }, error: userErr } = await userClient.auth.getUser();
     if (userErr || !user) return json({ error: "unauthorized" }, 401);
 
+    const { data: isAdmin } = await userClient.rpc("has_role", {
+      _user_id: user.id,
+      _role: "admin",
+    });
+    if (!isAdmin) return json({ error: "forbidden" }, 403);
+
     const admin = createClient(supabaseUrl, serviceKey);
-    const { data: role } = await admin
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", user.id)
-      .eq("role", "admin")
-      .maybeSingle();
-    if (!role) return json({ error: "forbidden" }, 403);
 
     const { email, note, lang } = await req.json();
     const target = String(email ?? "").trim().toLowerCase();
     if (!EMAIL_RX.test(target) || target.length > 254) return json({ error: "bad_email" }, 400);
     const langParam = lang === "en" || lang === "tr" ? lang : null;
 
-    // Alıcı hesabını bul (kayıtlı olmalı; satın alma akışı önce üyelik istiyor)
-    let buyer: { id: string; email?: string; user_metadata?: Record<string, unknown> } | null = null;
-    let page = 1;
-    while (!buyer && page <= 20) {
-      const { data, error } = await admin.auth.admin.listUsers({ page, perPage: 200 });
-      if (error) throw error;
-      buyer = data.users.find((u) => (u.email ?? "").toLowerCase() === target) ?? null;
-      if (data.users.length < 200) break;
-      page++;
-    }
+    // Alıcı hesabını bul (kayıtlı olmalı; satın alma akışı önce üyelik istiyor).
+    // GoTrue admin API'sinin filter parametresiyle doğrudan arama; filtre alt-dize
+    // eşleşmesi yaptığı için sonuç yine tam eşitlikle doğrulanır.
+    const lookup = await fetch(
+      `${supabaseUrl}/auth/v1/admin/users?filter=${encodeURIComponent(target)}&per_page=10`,
+      { headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` } },
+    );
+    if (!lookup.ok) throw new Error("user lookup failed: " + lookup.status);
+    const found: { users?: { id: string; email?: string; user_metadata?: Record<string, unknown> }[] } =
+      await lookup.json();
+    const buyer = (found.users ?? []).find((u) => (u.email ?? "").toLowerCase() === target) ?? null;
     if (!buyer) return json({ error: "user_not_found" }, 404);
 
     const { error: upErr } = await admin.from("book_entitlements").upsert(

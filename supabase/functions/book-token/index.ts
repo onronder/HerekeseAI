@@ -1,4 +1,6 @@
 // Girişli + erişim hakkı olan kullanıcıya kısa ömürlü okuma tokenı verir.
+// En az yetki: service role KULLANILMAZ — entitlement kendi-satır RLS ile,
+// yazar denetimi SECURITY DEFINER has_role() ile kullanıcı bağlamında okunur.
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { cors, makeRateLimiter, signReadToken } from "../_shared/token.ts";
@@ -14,7 +16,6 @@ serve(async (req: Request) => {
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
-    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
     const authHeader = req.headers.get("Authorization") ?? "";
     const userClient = createClient(supabaseUrl, anonKey, {
@@ -35,8 +36,7 @@ serve(async (req: Request) => {
       });
     }
 
-    const admin = createClient(supabaseUrl, serviceKey);
-    const { data: ent } = await admin
+    const { data: ent } = await userClient
       .from("book_entitlements")
       .select("id")
       .eq("user_id", user.id)
@@ -46,13 +46,11 @@ serve(async (req: Request) => {
     // Erişim kaydı yoksa: yönetici (yazar) her zaman okuyabilir
     let orderTag = ent ? String(ent.id).slice(0, 8) : "";
     if (!ent) {
-      const { data: role } = await admin
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user.id)
-        .eq("role", "admin")
-        .maybeSingle();
-      if (!role) {
+      const { data: isAdmin } = await userClient.rpc("has_role", {
+        _user_id: user.id,
+        _role: "admin",
+      });
+      if (!isAdmin) {
         return new Response(JSON.stringify({ error: "no_entitlement" }), {
           status: 403,
           headers: { ...corsHeaders, "Content-Type": "application/json" },

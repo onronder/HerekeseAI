@@ -595,3 +595,17 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   kaydı silindi. Fonksiyonlar deploy edildi, site yayında.
 - Ertelenen (düşük): grant-book listUsers taraması yerine doğrudan arama; book-token'da
   entitlement sorgusunun user-client'a alınması; has_role() kullanımı.
+
+## ERTELENMİŞ ÜÇ İYİLEŞTİRME KAPATILDI ✓ (2026-09-09)
+- book-token: service role TAMAMEN kaldırıldı — entitlement kendi-satır RLS ile user-client'tan,
+  yazar denetimi has_role() RPC ile (SECURITY DEFINER, search_path sabit, authenticated EXECUTE
+  yetkisi Management API'den teyitli). En az yetki ilkesi sağlandı.
+- grant-book: admin denetimi doğrudan tablo sorgusu yerine has_role() RPC; alıcı araması
+  20×200 listUsers taraması yerine GoTrue admin ?filter= parametresiyle doğrudan arama
+  (canlıda doğrulandı; filtre alt-dize olduğundan sonuç tam eşitlikle teyit ediliyor —
+  4.000 kullanıcı tavanı ve sessiz user_not_found riski kalktı).
+- Canlı E2E (geçici admin+alıcı, curl ile): erişimsiz alıcı 403 no_entitlement; alıcının
+  grant-book çağrısı 403 forbidden; admin grant → ok+mailed; alıcı token aldı; book-content
+  başlık-tokenla 200 + filigranında alıcı e-postası; admin tokenında o="yazar". Tüm test
+  verisi (rol, erişim, 2 kullanıcı) silindi.
+- Kullanıcı şablonları panele yapıştırdı (e-posta tarafı tamam).
