@@ -123,6 +123,13 @@ DEMO_METALINK = {
     "en": ("/en/#buy", "Free demo · Full edition ₺349"),
 }
 
+# Kilitli satır tıklaması: landing'e dön, store.js ?buy=1'i görüp buyFlow'u başlatır
+# (giriş yoksa üyelik modalı; girişliyse satın alma kutusu; sahipse /oku).
+DEMO_BUYLINK = {
+    "tr": "/?buy=1#satin-al",
+    "en": "/en/?buy=1#buy",
+}
+
 
 def demo_variant(src_html: str, lang: str = "tr") -> str:
     """Ücretsiz vitrin: yalnız Modül 1'in İLK 3 alt konusu; kalanlar + M2-8 kilitli görünür."""
@@ -151,6 +158,16 @@ def demo_variant(src_html: str, lang: str = "tr") -> str:
     assert n == 1, "demo meta linki bulunamadı"
     # upcoming(): 2-8'i kilitli listele
     out = re.sub(r"upcoming\(\) \{\s*return \[\];\s*\}", lambda _: DEMO_UPCOMING[lang], out, count=1)
+    # Kilitli satırlar satın almaya götürsün (tam sürümde bu handler'lar zaten etkisiz/boş)
+    buy = DEMO_BUYLINK[lang]
+    go_buy = "locked:true, go:() => { location.href='" + buy + "'; }"
+    out, n = re.subn(re.escape("locked:true, go:() => {}"), lambda _: go_buy, out)
+    assert n == 2, "kilitli go handler sayısı beklenenden farklı: %d" % n
+    out, n = re.subn(re.escape("open:() => {}"),
+                     lambda _: "open:() => { location.href='" + buy + "'; }", out)
+    assert n == 1, "kilitli open handler sayısı beklenenden farklı: %d" % n
+    out, n = re.subn("cursor:default", "cursor:pointer", out)
+    assert n == 3, "kilitli cursor stili sayısı beklenenden farklı: %d" % n
     return out
 
 

@@ -1256,7 +1256,7 @@ class Component extends DCLogic {
 
     const rowBase = 'display:flex;align-items:center;gap:22px;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(242,234,215,0.14);padding:20px 0;cursor:pointer;transition:padding .18s ease;';
     out.toc = M.map((m, i) => ({ n:m.n, tag:m.tag.toUpperCase(), title:m.title, right:m.subtitle, dot:m.dot, numColor:'#e85d3a', titleColor:'#f4eddb', rowStyle:rowBase, open:() => this.open(i+1) }))
-      .concat(this.upcoming().map(m => ({ n:m.n, tag:m.tag.toUpperCase(), title:m.title, right:m.right+' · yakında', dot:'rgba(242,234,215,0.22)', numColor:'rgba(242,234,215,0.3)', titleColor:'rgba(242,234,215,0.42)', rowStyle:rowBase+'cursor:default;', open:() => {} })));
+      .concat(this.upcoming().map(m => ({ n:m.n, tag:m.tag.toUpperCase(), title:m.title, right:m.right+' · yakında', dot:'rgba(242,234,215,0.22)', numColor:'rgba(242,234,215,0.3)', titleColor:'rgba(242,234,215,0.42)', rowStyle:rowBase+'cursor:pointer;', open:() => { location.href='/?buy=1#satin-al'; } })));
 
     if (isModule) {
       const mod = M[mi - 1];
@@ -1278,9 +1278,9 @@ class Component extends DCLogic {
         numColor:i===si?acc:'#aaa292', mark:i===si?acc:'transparent',
         style:'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:8px 0;cursor:pointer;font-family:\'Work Sans\',sans-serif;font-size:13px;transition:all .15s;' + (i===si?'color:#1f1f1f;font-weight:600;':'color:#6c6555;font-weight:500;')
       })).concat((mod.lockedSections || []).map((lbl, k) => ({
-        num:String(mod.sections.length + k + 1).padStart(2,'0'), label:lbl, locked:true, go:() => {},
+        num:String(mod.sections.length + k + 1).padStart(2,'0'), label:lbl, locked:true, go:() => { location.href='/?buy=1#satin-al'; },
         numColor:'#c2bba9', mark:'transparent',
-        style:'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:8px 0;font-family:\'Work Sans\',sans-serif;font-size:13px;cursor:default;color:#aaa292;font-weight:500;'
+        style:'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:8px 0;font-family:\'Work Sans\',sans-serif;font-size:13px;cursor:pointer;color:#aaa292;font-weight:500;'
       })));
       const navBase = 'display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;padding:7px 0;cursor:pointer;font-family:\'Work Sans\',sans-serif;font-size:13px;transition:all .15s;';
       out.modNav = M.map((m, k) => ({
@@ -1288,9 +1288,9 @@ class Component extends DCLogic {
         numColor:(k===mi-1)?acc:'#aaa292',
         style:navBase + ((k===mi-1)?'color:#1f1f1f;font-weight:600;':'color:#6c6555;font-weight:500;')
       })).concat(this.upcoming().map(u => ({
-        num:u.n, label:u.tag, dot:'rgba(138,130,112,0.3)', locked:true, go:() => {},
+        num:u.n, label:u.tag, dot:'rgba(138,130,112,0.3)', locked:true, go:() => { location.href='/?buy=1#satin-al'; },
         numColor:'#c2bba9',
-        style:navBase + 'cursor:default;color:#aaa292;font-weight:500;'
+        style:navBase + 'cursor:pointer;color:#aaa292;font-weight:500;'
       })));
       out.secPager = (si+1) + ' / ' + mod.sections.length;
       out.nextLabel = si < mod.sections.length - 1 ? 'İleri' : 'İçindekiler';

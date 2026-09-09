@@ -549,3 +549,19 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   6 sayfanın footer pay-band'inde sağda 44px; ≤520px'te footer'daki gizlenir (pp-foot'taki kalır).
 - Halka yazısı harf aralığı getComputedTextLength ile ölçülüp daire çevresine (2π·49) birebir
   oturtuldu (letter-spacing 4.59); göz kararı değerler taşma/boşluk yapmıştı.
+
+## DEMO AKIŞI VE NAVİGASYON DÜZELTİLDİ ✓ (2026-09-09)
+- Teşhis: "Okumaya Başla" demoya gidiyordu ama demo KAPAKLA açılıyordu; kapak landing'in ikizi
+  olduğundan "aynı sayfa yeniden yüklendi" algısı doğuyordu. Ayrıca demoda kilitli satırların
+  handler'ları boştu (go/open = ()=>{}), üyelik/ödeme zinciri hiç başlamıyordu.
+- CTA derin bağlantıları: "Okumaya Başla" ve "İlk Üç Konuyu Dene" → /demo/demo#m=1&s=0
+  (EN: demo-en) — support.js'in hazır deep-link'i ile kapak atlanıp doğrudan Bölüm 01 okuma
+  görünümü açılıyor. Owner modu override'ı (startBtn→/oku) değişmedi.
+- build.py demo_variant: DEMO_BUYLINK (tr /?buy=1#satin-al, en /en/?buy=1#buy); kilitli
+  satır handler'ları assert'li regex'le dolduruldu (go×2 + open×1 → location.href=BUYLINK;
+  cursor:default×3 → pointer). Yalnız demo çıktısı; kaynak kitap + gated değişmez.
+- store.js: index'te ?buy=1 → history.replaceState ile temizle + buyFlow() (giriş yoksa auth
+  modal; girişli+sahipsiz → satın alma kutusu; sahip → /oku). initConfirm signup yönlendirmesi
+  HOME?buy=1 oldu; confirmOkSignup metni "Yönlendiriliyorsun…" (kitaba/HOME çelişkisi giderildi).
+- Yerel E2E (Browser pane): TR+EN — CTA → doğrudan okuma görünümü; kilitli "Babbage → Turing"
+  tıklaması → landing + auth modalı açık, ?buy=1 URL'den temizlenmiş. node --check + build OK.

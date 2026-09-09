@@ -30,7 +30,7 @@
       author: (e) => `Yazar erişimin açık: <strong>${e}</strong>. Kitap senin; iyi okumalar!`,
       metaRead: "Oku", ownerEyebrow: "Kitabın",
       confirmWorking: "BAĞLANTI DOĞRULANIYOR…",
-      confirmOkSignup: "E-postan doğrulandı! Kitaba yönlendiriliyorsun…",
+      confirmOkSignup: "E-postan doğrulandı! Yönlendiriliyorsun…",
       confirmOkChange: "E-posta adresin güncellendi. Yönlendiriliyorsun…",
       confirmRecovery: "Kimliğin doğrulandı; şimdi yeni şifreni belirle.",
       confirmKind: { signup: "E-POSTA DOĞRULAMA", recovery: "ŞİFRE SIFIRLAMA", email_change: "E-POSTA DEĞİŞİKLİĞİ" },
@@ -75,7 +75,7 @@
       author: (e) => `You have author access: <strong>${e}</strong>. The book is yours; happy reading!`,
       metaRead: "Read", ownerEyebrow: "Your Book",
       confirmWorking: "VERIFYING YOUR LINK…",
-      confirmOkSignup: "Your email is verified! Taking you to the book…",
+      confirmOkSignup: "Your email is verified! Redirecting…",
       confirmOkChange: "Your email address has been updated. Redirecting…",
       confirmRecovery: "You're verified; now set your new password.",
       confirmKind: { signup: "EMAIL VERIFICATION", recovery: "PASSWORD RESET", email_change: "EMAIL CHANGE" },
@@ -531,7 +531,8 @@
     }
     box.innerHTML = `<p class="serif" style="font-size:24px;margin:0;">` +
       (type === "email_change" ? T.confirmOkChange : T.confirmOkSignup) + `</p>`;
-    setTimeout(() => { window.location.href = HOME; }, 1500);
+    const dest = type === "email_change" ? HOME : HOME + "?buy=1";
+    setTimeout(() => { window.location.href = dest; }, 1500);
   }
 
   // ---- sayfa yönlendirme ----
@@ -542,7 +543,13 @@
   document.addEventListener("DOMContentLoaded", () => {
     wireAuthModal();
     document.querySelectorAll("[data-buy]").forEach((b) => (b.onclick = buyFlow));
-    if (page === "index") { refreshIndex(); initCoverDial(); }
+    if (page === "index") {
+      refreshIndex(); initCoverDial();
+      if (new URLSearchParams(location.search).has("buy")) {
+        history.replaceState(null, "", location.pathname + location.hash);
+        buyFlow();
+      }
+    }
     if (page === "reader") { wireReaderBar(); initReader(); }
     if (page === "admin") initAdmin();
     if (page === "confirm") initConfirm();
