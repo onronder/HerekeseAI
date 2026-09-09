@@ -538,3 +538,14 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
 - Yerel doğrulama (Browser pane): TR/EN index + hakkımızda + en/legal'de tüm iyzico görselleri
   yüklü (naturalWidth>0), mobil 375px'te band taşmıyor, footer linkleri sarıyor.
 - Başvuru formu URL'leri: book.onuronder.com/hakkimizda · /mesafeli-satis · /teslimat-iade · /gizlilik
+
+## SSL/SHA-256 GÜVEN MÜHRÜ ✓ (2026-09-09)
+- Piyasa tarzı "SHA-256 certified" rozeti yerine sitenin matbaa diliyle elle çizilmiş SVG mühür:
+  ince çift daire, dairesel textPath halka yazısı "SECURE CONNECTION · SSL/TLS ·", merkezde
+  çizgisel asma kilit (ember onay işareti) + "SHA-256". Kullanıcı kararıyla TEK İNGİLİZCE
+  varyant (store/assets/img/seal-ssl.svg) her iki dilde kullanılır; TR varyant kaldırıldı.
+- Doğru beyan: sertifika gerçekten SHA-256 imzalı (Let's Encrypt), "certified" iddiası yok.
+- Yerleşim: fiyat paneli pp-foot'ta .pp-trust (iyzico logosu + 56px mühür, -6° damga eğimi);
+  6 sayfanın footer pay-band'inde sağda 44px; ≤520px'te footer'daki gizlenir (pp-foot'taki kalır).
+- Halka yazısı harf aralığı getComputedTextLength ile ölçülüp daire çevresine (2π·49) birebir
+  oturtuldu (letter-spacing 4.59); göz kararı değerler taşma/boşluk yapmıştı.
