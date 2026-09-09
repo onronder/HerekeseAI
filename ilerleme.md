@@ -565,3 +565,33 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   HOME?buy=1 oldu; confirmOkSignup metni "Yönlendiriliyorsun…" (kitaba/HOME çelişkisi giderildi).
 - Yerel E2E (Browser pane): TR+EN — CTA → doğrudan okuma görünümü; kilitli "Babbage → Turing"
   tıklaması → landing + auth modalı açık, ?buy=1 URL'den temizlenmiş. node --check + build OK.
+
+## GÜVENLİK DENETİMİ + SIKILAŞTIRMA ✓ (2026-09-09)
+- Lovable'ın ana site bulgu sınıfları bizim yığına uygulandı (repo + canlı problar).
+- TEMİZ çıkanlar (canlı doğrulama): kimliksiz ve yalnız-anon-key fonksiyon çağrıları 401 jenerik;
+  bucket private (public URL NoSuchBucket); user_roles tek politika = authenticated kendi-satır
+  SELECT (Management API pg_policies sorgusuyla teyit; yazma politikası YOK → rol yükseltme
+  imkânsız, isAdmin() çalışmaya devam ediyor); book_entitlements kendi-satır; has_role SECURITY
+  DEFINER + search_path=public sabit; repoda/geçmişte sır yok; newsletter/form/webhook/analitik
+  uçları yok (Lovable Critical sınıfları N/A).
+- SIKILAŞTIRMALAR:
+  • .gitignore += tam kitap dosyası + supabase/.temp/ + *.env; .temp git'ten çıkarıldı
+    (public repoda git add -A ürün sızıntısı riski kapandı).
+  • Okuma tokenı query-string'den Authorization başlığına taşındı (book-content + store.js;
+    query kabulü kaldırıldı — loglara token/e-posta düşmüyor).
+  • CORS * → yalnız book.onuronder.com + localhost:8643 (cors(req), Vary: Origin,
+    Allow-Methods/Max-Age eklendi); kötü origin ACAO alamıyor (canlı teyit).
+  • Per-isolate rate limit: book-content 30/10dk (payload.u), book-token 10/10dk (user.id) → 429.
+  • Filigran değerleri htmlEscape ile basılıyor; store.js'e esc() eklendi (7 innerHTML noktası);
+    initConfirm type beyaz listesi.
+  • grant-book: e-posta regex + lang enum ('tr'|'en').
+  • iframe sandbox'tan allow-same-origin kaldırıldı (kitap runtime'ı localStorage/parent
+    kullanmıyor — doğrulandı; gated kitap tamamen self-contained, dış istek 0).
+  • vercel.json: CSP (script 'self'+inline+eval — kitap motoru new Function kullanıyor,
+    canlıda EvalError ile tespit edilip eklendi), X-Frame-Options SAMEORIGIN,
+    frame-ancestors 'self', Permissions-Policy, object-src 'none', connect-src self+supabase.
+- E2E: landing/demo CSP altında sorunsuz ("Refused" 0); /oku geçici yetkili kullanıcıyla tam
+  kitap + filigran açıldı (başlık-token + sıkı sandbox altında); test kullanıcısı ve erişim
+  kaydı silindi. Fonksiyonlar deploy edildi, site yayında.
+- Ertelenen (düşük): grant-book listUsers taraması yerine doğrudan arama; book-token'da
+  entitlement sorgusunun user-client'a alınması; has_role() kullanımı.
