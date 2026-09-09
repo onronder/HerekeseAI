@@ -2,12 +2,14 @@
 // iyzilink ödemesini panelde gören Onur, /yonetim'den bu fonksiyonu çağırır.
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { corsHeaders } from "../_shared/token.ts";
+import { cors } from "../_shared/token.ts";
 
 const PRODUCT_CODE = "herkes-icin-yz";
 const SITE = "https://book.onuronder.com";
+const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 serve(async (req: Request) => {
+  const corsHeaders = cors(req);
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   const json = (body: unknown, status = 200) =>
     new Response(JSON.stringify(body), {
@@ -39,7 +41,8 @@ serve(async (req: Request) => {
 
     const { email, note, lang } = await req.json();
     const target = String(email ?? "").trim().toLowerCase();
-    if (!target || !target.includes("@")) return json({ error: "bad_email" }, 400);
+    if (!EMAIL_RX.test(target) || target.length > 254) return json({ error: "bad_email" }, 400);
+    const langParam = lang === "en" || lang === "tr" ? lang : null;
 
     // Alıcı hesabını bul (kayıtlı olmalı; satın alma akışı önce üyelik istiyor)
     let buyer: { id: string; email?: string; user_metadata?: Record<string, unknown> } | null = null;
@@ -70,7 +73,7 @@ serve(async (req: Request) => {
       const resendKey = Deno.env.get("RESEND_API_KEY");
       if (resendKey) {
         // Dil: açık parametre > alıcının kayıt dili (user_metadata.lang) > TR
-        const buyerLang = lang ?? (buyer.user_metadata?.lang as string | undefined) ?? "tr";
+        const buyerLang = langParam ?? (buyer.user_metadata?.lang as string | undefined) ?? "tr";
         const isEn = buyerLang === "en";
         const res = await fetch("https://api.resend.com/emails", {
           method: "POST",

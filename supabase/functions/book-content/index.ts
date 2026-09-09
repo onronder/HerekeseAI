@@ -1,10 +1,13 @@
 // Kitabı private bucket'tan çekip alıcıya özel filigranla döner.
 // verify_jwt=false: istemci fetch'i kısa ömürlü HMAC tokenıyla gelir; güvenlik tokendadır.
+// Token, loglara düşmemesi için query-string yerine Authorization başlığıyla taşınır.
 // NOT: Supabase gateway, fonksiyon yanıtlarının Content-Type'ını text/plain+nosniff'e
 // zorlayabildiği için içerik iframe src olarak DEĞİL, istemcide fetch edilip
 // iframe.srcdoc ile basılır (store.js). Bu yüzden CORS başlıkları şarttır.
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { corsHeaders, verifyReadToken } from "../_shared/token.ts";
+import { cors, htmlEscape, makeRateLimiter, verifyReadToken } from "../_shared/token.ts";
+
+const allow = makeRateLimiter(30, 10 * 60 * 1000); // kullanıcı başına 30 istek / 10 dk
 
 async function sha256Hex(s: string): Promise<string> {
   const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
@@ -12,12 +15,14 @@ async function sha256Hex(s: string): Promise<string> {
 }
 
 serve(async (req: Request) => {
+  const corsHeaders = cors(req);
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
     const url = new URL(req.url);
-    const token = url.searchParams.get("t") ?? "";
     const lang = url.searchParams.get("lang") === "en" ? "en" : "tr";
+    const auth = req.headers.get("Authorization") ?? "";
+    const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
 
     const payload = await verifyReadToken(token);
     if (!payload) {
@@ -25,6 +30,9 @@ serve(async (req: Request) => {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "text/plain; charset=utf-8" },
       });
+    }
+    if (!allow(payload.u)) {
+      return new Response("Too many requests", { status: 429, headers: corsHeaders });
     }
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
@@ -42,8 +50,8 @@ serve(async (req: Request) => {
 
     const wmHash = (await sha256Hex(`${payload.m}|${payload.o}`)).slice(0, 16);
     html = html
-      .replaceAll("%%WM_EMAIL%%", payload.m || payload.u.slice(0, 8))
-      .replaceAll("%%WM_ORDER%%", payload.o)
+      .replaceAll("%%WM_EMAIL%%", htmlEscape(payload.m || payload.u.slice(0, 8)))
+      .replaceAll("%%WM_ORDER%%", htmlEscape(payload.o))
       .replaceAll("%%WM_HASH%%", wmHash);
 
     return new Response(html, {

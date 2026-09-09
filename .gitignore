@@ -1,1 +1,5 @@
 dist/
+Herkes-Icin-Yapay-Zeka-v2.html
+supabase/.temp/
+*.env
+.env*

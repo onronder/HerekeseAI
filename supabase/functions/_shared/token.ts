@@ -1,5 +1,5 @@
 // Kısa ömürlü okuma tokenı: book-token üretir, book-content doğrular.
-// iframe header taşıyamadığı için token query-string ile gider; ömrü kısadır.
+// Token istemciden Authorization başlığıyla taşınır (query-string loglara düşer).
 
 const enc = new TextEncoder();
 
@@ -60,8 +60,50 @@ export async function verifyReadToken(token: string): Promise<ReadToken | null> 
   }
 }
 
-export const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
+// CORS: yalnız kendi origin'lerimiz. Origin göndermeyen (tarayıcı dışı) isteklere
+// ACAO dönülmez; izinsiz origin'ler ACAO alamadığı için yanıtı okuyamaz.
+const ALLOWED_ORIGINS = [
+  "https://book.onuronder.com",
+  "http://localhost:8643", // yerel önizleme
+];
+
+export function cors(req: Request): Record<string, string> {
+  const origin = req.headers.get("Origin") ?? "";
+  const h: Record<string, string> = {
+    "Access-Control-Allow-Headers":
+      "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Max-Age": "86400",
+    "Vary": "Origin",
+  };
+  if (ALLOWED_ORIGINS.includes(origin)) h["Access-Control-Allow-Origin"] = origin;
+  return h;
+}
+
+export function htmlEscape(s: string): string {
+  return s
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+// Basit istek sınırlayıcı. Isolate başına bellek içi (best-effort): soğuk başlatma
+// sayaçları sıfırlar, birden çok isolate ayrı sayar — amaç kaba kötüye kullanımı kesmek.
+export function makeRateLimiter(limit: number, windowMs: number) {
+  const hits = new Map<string, { n: number; t: number }>();
+  return (key: string): boolean => {
+    const now = Date.now();
+    if (hits.size > 5000) {
+      for (const [k, v] of hits) if (now - v.t > windowMs) hits.delete(k);
+    }
+    const e = hits.get(key);
+    if (!e || now - e.t > windowMs) {
+      hits.set(key, { n: 1, t: now });
+      return true;
+    }
+    e.n++;
+    return e.n <= limit;
+  };
+}

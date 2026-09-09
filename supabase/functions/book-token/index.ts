@@ -1,12 +1,14 @@
 // Girişli + erişim hakkı olan kullanıcıya kısa ömürlü okuma tokenı verir.
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { corsHeaders, signReadToken } from "../_shared/token.ts";
+import { cors, makeRateLimiter, signReadToken } from "../_shared/token.ts";
 
 const PRODUCT_CODE = "herkes-icin-yz";
 const TOKEN_TTL_SECONDS = 600; // 10 dakika
+const allow = makeRateLimiter(10, 10 * 60 * 1000); // kullanıcı başına 10 token / 10 dk
 
 serve(async (req: Request) => {
+  const corsHeaders = cors(req);
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
@@ -22,6 +24,13 @@ serve(async (req: Request) => {
     if (userErr || !user) {
       return new Response(JSON.stringify({ error: "unauthorized" }), {
         status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (!allow(user.id)) {
+      return new Response(JSON.stringify({ error: "rate_limited" }), {
+        status: 429,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }

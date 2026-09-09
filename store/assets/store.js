@@ -143,6 +143,12 @@
     return { ok: res.ok, status: res.status, json: await res.json().catch(() => ({})) };
   }
 
+  // innerHTML'e giren kullanıcı verisi (e-posta vb.) için HTML kaçışı
+  function esc(s) {
+    return String(s ?? "").replace(/[&<>"']/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
   // ---- hesap modalı (giriş / kayıt / şifre sıfırlama — Supabase akışları) ----
   let authMode = "signin";
   let onAuthed = null;
@@ -320,7 +326,7 @@
     const acct = $("#account-line");
     if (acct) {
       if (user) {
-        acct.innerHTML = `<span class="muted">${user.email}</span> · <a href="#" id="signout" style="color:#8c8470;">${T.signoutShort}</a>`;
+        acct.innerHTML = `<span class="muted">${esc(user.email)}</span> · <a href="#" id="signout" style="color:#8c8470;">${T.signoutShort}</a>`;
         $("#signout").onclick = async (e) => { e.preventDefault(); await sb.auth.signOut(); refresh(); };
       } else {
         acct.innerHTML = `<a href="#" id="signin-link" style="color:#8c8470;text-decoration:none;">${T.signinShort}</a>`;
@@ -331,11 +337,11 @@
     if (!state) return;
     if (user && isOwner) {
       state.className = "buy-state show";
-      state.innerHTML = author ? T.author(user.email) : T.owned(user.email);
+      state.innerHTML = author ? T.author(esc(user.email)) : T.owned(esc(user.email));
     } else if (user && !owned) {
       state.className = "buy-state show";
       if (PRICING.url) {
-        state.innerHTML = T.pay(user.email) +
+        state.innerHTML = T.pay(esc(user.email)) +
           `<label style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;cursor:pointer;">` +
           `<input type="checkbox" id="consent-box" style="margin-top:3px;accent-color:#e85d3a;">` +
           `<span style="font-size:13px;line-height:1.55;color:#b8b0a0;">${T.consentLabel}</span></label>` +
@@ -350,7 +356,7 @@
           window.open(PRICING.url, "_blank", "noopener");
         };
       } else {
-        state.innerHTML = T.soon(user.email);
+        state.innerHTML = T.soon(esc(user.email));
       }
     } else {
       state.className = "buy-state";
@@ -385,7 +391,7 @@
     if (!probe.ok) {
       frameWrap.innerHTML =
         `<p class="serif" style="font-size:26px;margin:0;">${T.notOpen}</p>` +
-        `<p class="muted" style="max-width:360px;font-size:14px;">${T.pending(user.email)}</p>` +
+        `<p class="muted" style="max-width:360px;font-size:14px;">${T.pending(esc(user.email))}</p>` +
         `<a class="btn" href="${HOME}">${T.browse}</a>`;
       return;
     }
@@ -400,15 +406,16 @@
       if (!r.ok || !r.json.token) throw new Error("token");
       // İçerik fetch edilip srcdoc ile basılır: Supabase gateway'i fonksiyon
       // yanıtlarının Content-Type'ını ezebildiği için iframe.src kullanılamıyor.
+      // Token, loglara düşmemesi için query yerine Authorization başlığında.
       const res = await fetch(
-        `${C.FUNCTIONS_URL}/book-content?t=${encodeURIComponent(r.json.token)}&lang=${bookLang}`,
-        { headers: { apikey: C.SUPABASE_ANON_KEY } },
+        `${C.FUNCTIONS_URL}/book-content?lang=${bookLang}`,
+        { headers: { apikey: C.SUPABASE_ANON_KEY, Authorization: `Bearer ${r.json.token}` } },
       );
       if (!res.ok) throw new Error("content " + res.status);
       const html = await res.text();
       const iframe = document.createElement("iframe");
       iframe.title = "Herkes İçin Yapay Zekâ";
-      iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
+      iframe.setAttribute("sandbox", "allow-scripts");
       iframe.srcdoc = html;
       const body = $("#reader-body");
       body.querySelectorAll("iframe").forEach((f) => f.remove());
@@ -445,7 +452,7 @@
     const { data: role } = await sb
       .from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin").maybeSingle();
     if (!role) {
-      box.innerHTML = `<p class="muted">Bu sayfa yönetici hesabına özel. (${user.email})</p>`;
+      box.innerHTML = `<p class="muted">Bu sayfa yönetici hesabına özel. (${esc(user.email)})</p>`;
       return;
     }
     box.innerHTML =
@@ -463,7 +470,7 @@
         email: $("#g-email").value, note: $("#g-note").value,
       });
       if (r.ok && r.json.ok) {
-        res.innerHTML = `✓ Açıldı: <strong>${$("#g-email").value}</strong>` +
+        res.innerHTML = `✓ Açıldı: <strong>${esc($("#g-email").value)}</strong>` +
           (r.json.mailed ? " · bilgilendirme e-postası gönderildi" : " · e-posta gönderilemedi (elle haber ver)");
         $("#g-email").value = ""; $("#g-note").value = "";
       } else if (r.status === 404) {
@@ -509,7 +516,8 @@
   async function initConfirm() {
     const q = new URLSearchParams(window.location.search);
     const tokenHash = q.get("token_hash");
-    const type = q.get("type") || "signup";
+    const rawType = q.get("type");
+    const type = ["signup", "recovery", "email_change"].includes(rawType) ? rawType : "signup";
     const box = $("#confirm-box");
     const kind = $("#confirm-kind");
     const home = $("#confirm-home");
