@@ -609,3 +609,12 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   başlık-tokenla 200 + filigranında alıcı e-postası; admin tokenında o="yazar". Tüm test
   verisi (rol, erişim, 2 kullanıcı) silindi.
 - Kullanıcı şablonları panele yapıştırdı (e-posta tarafı tamam).
+
+## ISBN İŞLENDİ ✓ (2026-09-09) — 978-625-00-5299-0
+- Kullanıcının el ile eklediği ISBN kanonik kaynaklara ulaşmamıştı (web kitap build.py çıktısı +
+  bucket yüklemesiyle üretilir; kaynak düzenlemek tek başına yansımaz).
+- Eklendi: iki kitap kapağının meta çubuğu (TR "İlk Basım · 8 Bölüm · ISBN …", EN karşılığı),
+  landing TR+EN cover-meta-mid, yasal.html satıcı bloğu ([ISBN] yuvası dolduruldu, "başvuru
+  tamamlandığında eklenecektir" notu kaldırıldı), en/legal.html künye satırı.
+- build.py → 6 çıktının 6'sında ISBN doğrulandı (demo TR/EN, gated TR/EN, web TR/EN);
+  gated kitaplar bucket'a yüklendi (200); commit+push ile demo+landing yayında.
