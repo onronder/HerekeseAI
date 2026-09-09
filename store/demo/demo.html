@@ -48,9 +48,9 @@
         <div style="border:1px solid rgba(242,234,215,0.18);background:rgba(242,234,215,0.03);padding:26px 26px 22px;animation:riseIn 1s ease both;animation-delay:.62s;">
           <div style="display:flex;align-items:center;justify-content:space-between;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8c8470;text-transform:uppercase;"><span>Aynı fikir · iki derinlik</span><span style="color:#e85d3a;">{{ dialMode }}</span></div>
           <div style="font-family:'Instrument Serif',serif;font-size:23px;color:#f4eddb;margin:14px 0 4px;">Bir makine nasıl öğrenir?</div>
-          <div style="position:relative;min-height:118px;">
-            <p style="position:absolute;inset:0;margin:0;font-size:16.5px;line-height:1.6;color:#cfc6ae;transition:opacity .45s ease;opacity:{{ basitOp }};">Ona bol bol örnek gösterirsin; doğru cevabı tekrar tekrar görerek aradaki örüntüyü <em style="font-style:normal;color:#e85d3a;">kendi</em> çıkarır. Kuralları sen yazmazsın.</p>
-            <p style="position:absolute;inset:0;margin:0;font-family:'Space Mono',monospace;font-size:13.5px;line-height:1.62;color:#cfc6ae;transition:opacity .45s ease;opacity:{{ teknikOp }};">Etiketli (x, y) çiftleri üzerinde bir <span style="color:#e85d3a;">kayıp fonksiyonunu</span> gradyan inişiyle minimize ederek f(x; θ) eşlemesini öğrenir.</p>
+          <div style="display:grid;">
+            <p style="grid-area:1/1;margin:0;font-size:16.5px;line-height:1.6;color:#cfc6ae;transition:opacity .45s ease;opacity:{{ basitOp }};">Ona bol bol örnek gösterirsin; doğru cevabı tekrar tekrar görerek aradaki örüntüyü <em style="font-style:normal;color:#e85d3a;">kendi</em> çıkarır. Kuralları sen yazmazsın.</p>
+            <p style="grid-area:1/1;margin:0;font-family:'Space Mono',monospace;font-size:13.5px;line-height:1.62;color:#cfc6ae;transition:opacity .45s ease;opacity:{{ teknikOp }};">Girdi x ile doğru cevap y’den oluşan etiketli örneklere bakar; tahminin ne kadar yanıldığını <span style="color:#e85d3a;">kayıp fonksiyonu</span> ölçer. Bu kaybı gradyan inişiyle adım adım azaltır ve x’i y’ye götüren f(x; θ) eşlemesini öğrenir.</p>
           </div>
           <div onPointerDown="{{ onDialDown }}" onPointerMove="{{ onDialMove }}" onPointerUp="{{ onDialUp }}" style="position:relative;height:34px;margin-top:10px;display:flex;align-items:center;cursor:ew-resize;touch-action:none;">
             <div style="position:absolute;left:0;right:0;height:2px;background:rgba(242,234,215,0.18);"></div>

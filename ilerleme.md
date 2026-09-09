@@ -497,3 +497,14 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   Dene" ve iyzico notu gizli (body.owner CSS); panel eyebrow'u "Kitabın". Çıkışta sayfa
   yenilenerek satış görünümüne döner. TR/EN sözlükte.
 - Canlıda geçici admin ile 8 kriter doğrulandı; hesap silindi.
+
+## KADRAN TEKNİK CEVABI ANLAMLANDIRILDI ✓ (2026-09-09)
+- Kullanıcı isteği: "tekniğini koruyarak daha anlamlı". Eski cümle doğru ama tanım gibiydi
+  (üç sembol tek nefeste). Yeni: semboller cümle içinde görevlendirildi — "Girdi x ile doğru
+  cevap y'den oluşan etiketli örneklere bakar; tahminin ne kadar yanıldığını kayıp fonksiyonu
+  ölçer. Bu kaybı gradyan inişiyle adım adım azaltır ve x'i y'ye götüren f(x; θ) eşlemesini
+  öğrenir." EN eşdeğeri aynı yapıda. 4 yerde: landing TR/EN + kitap kapakları TR/EN.
+- Yerleşim kök çözümü: kadran cevap kutusu sabit 118px + absolute yerine GRID BİNDİRME
+  (grid-area:1/1) — kutu en uzun cevaba göre kendini boyutlar (mobilde 153px'e büyüyor,
+  taşma yok; çapraz solma animasyonu korunur). store.css + iki kitabın satır içi stilleri.
+- build → demo/gated/tek-dosya; gated bucket'a yüklendi; node --check TR+EN OK.

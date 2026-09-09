@@ -50,9 +50,9 @@
         <div style="border:1px solid rgba(242,234,215,0.18);background:rgba(242,234,215,0.03);padding:26px 26px 22px;animation:riseIn 1s ease both;animation-delay:.62s;">
           <div style="display:flex;align-items:center;justify-content:space-between;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8c8470;text-transform:uppercase;"><span>One idea · two depths</span><span style="color:#e85d3a;">{{ dialMode }}</span></div>
           <div style="font-family:'Instrument Serif',serif;font-size:23px;color:#f4eddb;margin:14px 0 4px;">How does a machine learn?</div>
-          <div style="position:relative;min-height:118px;">
-            <p style="position:absolute;inset:0;margin:0;font-size:16.5px;line-height:1.6;color:#cfc6ae;transition:opacity .45s ease;opacity:{{ basitOp }};">You show it plenty of examples; seeing the right answer again and again, it works out the pattern <em style="font-style:normal;color:#e85d3a;">itself</em>. You never write the rules.</p>
-            <p style="position:absolute;inset:0;margin:0;font-family:'Space Mono',monospace;font-size:13.5px;line-height:1.62;color:#cfc6ae;transition:opacity .45s ease;opacity:{{ teknikOp }};">It learns the mapping f(x; θ) by minimizing a <span style="color:#e85d3a;">loss function</span> over labeled (x, y) pairs via gradient descent.</p>
+          <div style="display:grid;">
+            <p style="grid-area:1/1;margin:0;font-size:16.5px;line-height:1.6;color:#cfc6ae;transition:opacity .45s ease;opacity:{{ basitOp }};">You show it plenty of examples; seeing the right answer again and again, it works out the pattern <em style="font-style:normal;color:#e85d3a;">itself</em>. You never write the rules.</p>
+            <p style="grid-area:1/1;margin:0;font-family:'Space Mono',monospace;font-size:13.5px;line-height:1.62;color:#cfc6ae;transition:opacity .45s ease;opacity:{{ teknikOp }};">It studies labeled examples: an input x paired with its correct answer y. A <span style="color:#e85d3a;">loss function</span> measures how wrong each guess is; gradient descent shrinks that loss step by step until it has learned the mapping f(x; θ) from x to y.</p>
           </div>
           <div onPointerDown="{{ onDialDown }}" onPointerMove="{{ onDialMove }}" onPointerUp="{{ onDialUp }}" style="position:relative;height:34px;margin-top:10px;display:flex;align-items:center;cursor:ew-resize;touch-action:none;">
             <div style="position:absolute;left:0;right:0;height:2px;background:rgba(242,234,215,0.18);"></div>

@@ -88,8 +88,8 @@ a{color:inherit;}
   font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8c8470;
   text-transform:uppercase;}
 .dial-q{font-family:'Instrument Serif',Georgia,serif;font-size:23px;color:#f4eddb;margin:14px 0 4px;}
-.dial-answers{position:relative;min-height:118px;}
-.dial-answers p{position:absolute;inset:0;margin:0;font-size:16.5px;line-height:1.6;
+.dial-answers{display:grid;}
+.dial-answers p{grid-area:1/1;margin:0;font-size:16.5px;line-height:1.6;
   color:#cfc6ae;transition:opacity .45s ease;}
 .dial-answers em{font-style:normal;color:#e85d3a;}
 .dial-answers .mono-p{font-family:'Space Mono',monospace;font-size:13.5px;line-height:1.62;}
