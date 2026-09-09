@@ -1,6 +1,11 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/mesafeli-satis", "destination": "/yasal#mesafeli-satis" },
+    { "source": "/teslimat-iade", "destination": "/yasal#teslimat-iade" },
+    { "source": "/gizlilik", "destination": "/yasal#kvkk" }
+  ],
   "headers": [
     {
       "source": "/(.*)",

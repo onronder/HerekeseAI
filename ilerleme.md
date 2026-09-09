@@ -521,3 +521,20 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
 - Canlı E2E (e-postasız, admin generate_link hashed_token ile): recovery → oturum + reset modalı
   → şifre güncellendi ✓; aynı hash ikinci kullanımda linkExpired ✓. Test hesabı silindi.
 - Kullanıcı görevi: 3 şablon gövdesini panele YENİDEN yapıştırmak.
+
+## İYZİCO BAŞVURU GEREKSİNİMLERİ TAMAMLANDI ✓ (2026-09-09)
+- iyzico "Link ile Ödeme" başvurusunun 7 maddesi sitede karşılandı:
+  1) Hakkımızda: yeni /hakkimizda + /en/about sayfaları (kitap, yazar, Fittechs satıcı bloğu, iletişim).
+  2) SSL: zaten aktif (Let's Encrypt, CN=book.onuronder.com, Vercel otomatik yeniler) — iş çıkmadı.
+  3-5) Teslimat/İade, Gizlilik, Mesafeli Satış: metinler /yasal'da zaten vardı; footer'a tam
+  adlarıyla linkler + vercel.json redirects ile temiz URL'ler: /mesafeli-satis, /teslimat-iade,
+  /gizlilik → /yasal çapaları. KVKK başlığı "Gizlilik ve Kişisel Verilerin Korunması (KVKK
+  Aydınlatma Metni)" oldu; en/legal'e id="withdrawal".
+  6-7) Logolar: zip'ten White varyantlar self-host (store/assets/img/): footer bandı
+  iyzico-band-white.svg (tek SVG'de iyzico+Visa+Mastercard+Troy+Amex — grep ile doğrulandı,
+  Mastercard grubu "mc_vrt_solid_rev") 6 sayfanın footer'ında; satın alma panelinin pp-foot'una
+  dile göre iyzico-ode-tr/en-white.svg. Zemin koyu (#1a1a1a) olduğundan White seçildi.
+- CSS: .pay-band (24px, opacity .62, ≤520px'te 20px), .pp-iyzico (28px). Dış istek yok.
+- Yerel doğrulama (Browser pane): TR/EN index + hakkımızda + en/legal'de tüm iyzico görselleri
+  yüklü (naturalWidth>0), mobil 375px'te band taşmıyor, footer linkleri sarıyor.
+- Başvuru formu URL'leri: book.onuronder.com/hakkimizda · /mesafeli-satis · /teslimat-iade · /gizlilik
