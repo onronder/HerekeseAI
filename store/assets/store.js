@@ -29,6 +29,13 @@
       pending: (e) => `Hesap: ${e}. Ödemen alındıysa erişimin kısa süre içinde tanımlanır ve e-posta alırsın.`,
       author: (e) => `Yazar erişimin açık: <strong>${e}</strong>. Kitap senin; iyi okumalar!`,
       metaRead: "Oku", ownerEyebrow: "Kitabın",
+      confirmWorking: "BAĞLANTI DOĞRULANIYOR…",
+      confirmOkSignup: "E-postan doğrulandı! Kitaba yönlendiriliyorsun…",
+      confirmOkChange: "E-posta adresin güncellendi. Yönlendiriliyorsun…",
+      confirmRecovery: "Kimliğin doğrulandı; şimdi yeni şifreni belirle.",
+      confirmKind: { signup: "E-POSTA DOĞRULAMA", recovery: "ŞİFRE SIFIRLAMA", email_change: "E-POSTA DEĞİŞİKLİĞİ" },
+      linkExpired: "Bu bağlantının süresi dolmuş ya da bağlantı daha önce kullanılmış. Ana sayfadan tekrar deneyebilirsin.",
+      toHome: "← Ana sayfa",
       ownerNote: "Kitabın açık · iki dil, bütün bölümler ve demolar",
       consentLabel: "Dijital içeriğin hemen ifasına açık onay veriyorum; erişim hesabımda " +
         "tanımlandığında cayma hakkımı kaybedeceğimi biliyorum.",
@@ -43,7 +50,7 @@
       resetDo: "Şifreyi güncelle", resetDone: "Şifren güncellendi; artık giriş yapabilirsin.",
       nameLabel: "Ad Soyad", emailLabel: "E-posta", passLabel: "Şifre", pass2Label: "Şifre (tekrar)",
       forgotLink: "Şifremi unuttum", backToSignin: "← Girişe dön", working: "Bir saniye…",
-      signupDone: "Hesabın oluşturuldu. Doğrulama bağlantısını e-postana gönderdik; tıkladıktan sonra giriş yapabilirsin.",
+      signupDone: "Hesabın oluşturuldu. Doğrulama bağlantısını e-postana gönderdik; bağlantı seni doğrudan kitaba getirecek.",
       errName: "Adını ve soyadını yaz.", errPassLen: "Şifre en az 8 karakter olmalı.",
       errPassMatch: "Şifreler birbirini tutmuyor.", errCreds: "E-posta ya da şifre hatalı.",
       errUnconfirmed: "E-postan henüz doğrulanmamış; gelen kutundaki bağlantıya tıkla.",
@@ -67,6 +74,13 @@
       pending: (e) => `Account: ${e}. If your payment has been made, access will be granted shortly and you will get an email.`,
       author: (e) => `You have author access: <strong>${e}</strong>. The book is yours; happy reading!`,
       metaRead: "Read", ownerEyebrow: "Your Book",
+      confirmWorking: "VERIFYING YOUR LINK…",
+      confirmOkSignup: "Your email is verified! Taking you to the book…",
+      confirmOkChange: "Your email address has been updated. Redirecting…",
+      confirmRecovery: "You're verified; now set your new password.",
+      confirmKind: { signup: "EMAIL VERIFICATION", recovery: "PASSWORD RESET", email_change: "EMAIL CHANGE" },
+      linkExpired: "This link has expired or has already been used. You can try again from the home page.",
+      toHome: "← Home",
       ownerNote: "Your book is unlocked · both languages, every chapter and demo",
       consentLabel: "I expressly consent to the immediate performance of this digital content " +
         "and acknowledge that I lose my right of withdrawal once access is granted to my account.",
@@ -81,7 +95,7 @@
       resetDo: "Update password", resetDone: "Your password has been updated; you can sign in now.",
       nameLabel: "Full name", emailLabel: "Email", passLabel: "Password", pass2Label: "Password (again)",
       forgotLink: "Forgot password", backToSignin: "← Back to sign in", working: "One moment…",
-      signupDone: "Your account has been created. We sent a verification link to your email; sign in after clicking it.",
+      signupDone: "Your account has been created. We sent a verification link to your email; it will take you straight to the book.",
       errName: "Please enter your full name.", errPassLen: "The password must be at least 8 characters.",
       errPassMatch: "The passwords do not match.", errCreds: "Wrong email or password.",
       errUnconfirmed: "Your email is not verified yet; click the link in your inbox.",
@@ -248,6 +262,11 @@
         if (pass !== $("#auth-password2").value) return say("err", T.errPassMatch);
         const { error } = await sb.auth.updateUser({ password: pass });
         if (error) return say("err", mapAuthError(error));
+        if (page === "confirm") {
+          say("ok", T.resetDone);
+          setTimeout(() => { window.location.href = HOME; }, 1500);
+          return;
+        }
         renderAuth("signin"); say("ok", T.resetDone);
       });
     };
@@ -486,6 +505,35 @@
     setPct(0.12);
   }
 
+  // ---- e-posta bağlantısı doğrulama sayfası (/auth/confirm) ----
+  async function initConfirm() {
+    const q = new URLSearchParams(window.location.search);
+    const tokenHash = q.get("token_hash");
+    const type = q.get("type") || "signup";
+    const box = $("#confirm-box");
+    const kind = $("#confirm-kind");
+    const home = $("#confirm-home");
+    if (home) home.setAttribute("href", HOME);
+    if (kind) kind.textContent = T.confirmKind[type] || "";
+    const fail = () => {
+      box.innerHTML =
+        `<p class="serif" style="font-size:24px;margin:0;max-width:420px;">${T.linkExpired}</p>` +
+        `<a class="btn" href="${HOME}">${T.toHome}</a>`;
+    };
+    if (!tokenHash) { fail(); return; }
+    box.innerHTML = `<p class="muted mono">${T.confirmWorking}</p>`;
+    const { error } = await sb.auth.verifyOtp({ token_hash: tokenHash, type });
+    if (error) { console.error(error); fail(); return; }
+    if (type === "recovery") {
+      box.innerHTML = `<p class="serif" style="font-size:24px;margin:0;">${T.confirmRecovery}</p>`;
+      openAuth(null, "reset");
+      return;
+    }
+    box.innerHTML = `<p class="serif" style="font-size:24px;margin:0;">` +
+      (type === "email_change" ? T.confirmOkChange : T.confirmOkSignup) + `</p>`;
+    setTimeout(() => { window.location.href = HOME; }, 1500);
+  }
+
   // ---- sayfa yönlendirme ----
   function refresh() {
     if (page === "index") refreshIndex();
@@ -497,6 +545,7 @@
     if (page === "index") { refreshIndex(); initCoverDial(); }
     if (page === "reader") { wireReaderBar(); initReader(); }
     if (page === "admin") initAdmin();
+    if (page === "confirm") initConfirm();
     sb.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY") openAuth(null, "reset");
       refresh();

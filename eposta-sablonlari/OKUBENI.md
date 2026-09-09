@@ -29,7 +29,10 @@ Her şablon için: dosya içeriğinin TAMAMINI "Message body"ye, aşağıdaki sa
 ```
 
 Notlar:
-- `{{ .ConfirmationURL }}` her iki dil dalında da korunur; Supabase doldurur.
+- Bağlantılar `{{ .ConfirmationURL }}` KULLANMAZ: kendi alan adımızda
+  `book.onuronder.com/auth/confirm?token_hash={{ .TokenHash }}&type=...` kurulur; sayfa
+  doğrulamayı arka planda yapar. E-postada supabase.co ve ham token GÖRÜNMEZ
+  (token_hash tek kullanımlık ve kısa ömürlüdür). Şablon değiştiğinde panele yeniden yapıştır.
 - Satın alma makbuzu (grant-book/Resend) da alıcının `user_metadata.lang`ına
   göre TR/EN gider; EN makbuz linki /en/read'e yönlenir.
 - Magic Link / Invite kullanılmıyor; gerekirse aynı kalıptan türetilir.

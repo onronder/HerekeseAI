@@ -1,6 +1,6 @@
 <!-- Herkes İçin Yapay Zekâ — Supabase e-posta şablonu (Change email)
      Dil, kayıtta yazılan user_metadata.lang ile seçilir (Go template koşulu);
-     lang yoksa Türkçe gönderilir. Değişken: {{ .ConfirmationURL }} -->
+     lang yoksa Türkçe gönderilir. Değişken: https://book.onuronder.com/auth/confirm?token_hash={{ .TokenHash }}&type=email_change&lang={{ .Data.lang }} -->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
   style="background-color:#efe9dc;padding:32px 12px;">
   <tr><td align="center">
@@ -26,7 +26,7 @@
       <tr><td style="padding:28px 40px 6px;">
         <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
           <td style="background-color:#e85d3a;">
-            <a href="{{ .ConfirmationURL }}" target="_blank"
+            <a href="https://book.onuronder.com/auth/confirm?token_hash={{ .TokenHash }}&type=email_change&lang={{ .Data.lang }}" target="_blank"
               style="display:inline-block;padding:15px 30px;font-family:Helvetica,Arial,sans-serif;font-size:15px;font-weight:bold;color:#ffffff;text-decoration:none;">
               Confirm Change
             </a>
@@ -34,7 +34,7 @@
         </tr></table>
         <div style="font-family:'Courier New',Courier,monospace;font-size:11px;line-height:1.7;color:#8c8470;padding-top:18px;">
           If the button doesn't work, use this link:<br>
-          <a href="{{ .ConfirmationURL }}" target="_blank" style="color:#c2541d;word-break:break-all;">{{ .ConfirmationURL }}</a>
+          <a href="https://book.onuronder.com/auth/confirm?token_hash={{ .TokenHash }}&type=email_change&lang={{ .Data.lang }}" target="_blank" style="color:#c2541d;word-break:break-all;">https://book.onuronder.com/auth/confirm?token_hash={{ .TokenHash }}&type=email_change&lang={{ .Data.lang }}</a>
         </div>
       </td></tr>
       <tr><td style="padding:26px 40px 34px;">
@@ -74,7 +74,7 @@
       <tr><td style="padding:28px 40px 6px;">
         <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
           <td style="background-color:#e85d3a;">
-            <a href="{{ .ConfirmationURL }}" target="_blank"
+            <a href="https://book.onuronder.com/auth/confirm?token_hash={{ .TokenHash }}&type=email_change&lang={{ .Data.lang }}" target="_blank"
               style="display:inline-block;padding:15px 30px;font-family:Helvetica,Arial,sans-serif;font-size:15px;font-weight:bold;color:#ffffff;text-decoration:none;">
               Değişikliği Onayla
             </a>
@@ -82,7 +82,7 @@
         </tr></table>
         <div style="font-family:'Courier New',Courier,monospace;font-size:11px;line-height:1.7;color:#8c8470;padding-top:18px;">
           Düğme çalışmazsa bu bağlantıyı kullan:<br>
-          <a href="{{ .ConfirmationURL }}" target="_blank" style="color:#c2541d;word-break:break-all;">{{ .ConfirmationURL }}</a>
+          <a href="https://book.onuronder.com/auth/confirm?token_hash={{ .TokenHash }}&type=email_change&lang={{ .Data.lang }}" target="_blank" style="color:#c2541d;word-break:break-all;">https://book.onuronder.com/auth/confirm?token_hash={{ .TokenHash }}&type=email_change&lang={{ .Data.lang }}</a>
         </div>
       </td></tr>
       <tr><td style="padding:26px 40px 34px;">
