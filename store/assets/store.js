@@ -332,7 +332,8 @@
     fillPrices();
     const user = await getUser();
     const owned = user ? await hasBook(user.id) : false;
-    const author = user && !owned ? await isAdmin(user.id) : false;
+    // Beta bayrağı açıkken yazar hesabı da alıcı görünümünü alır (sandbox testi; okuma yetkisi book-token'da korunur).
+    const author = user && !owned && !checkoutBeta ? await isAdmin(user.id) : false;
     const isOwner = owned || author;
     const wasOwner = document.body.classList.contains("owner");
     if (!isOwner && wasOwner) { location.reload(); return; }
