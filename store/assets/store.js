@@ -578,22 +578,42 @@
       <div class="admin-result" id="g-result"></div>
       <hr style="border:0;border-top:1px solid rgba(255,255,255,.12);margin:26px 0;">
       <form id="refund-form">
-        <p class="muted" style="font-size:13px;">İade (Checkout Form siparişleri): sipariş numarasını yaz. "İade et" iyzico'da iadeyi yapar; "İade edildi işaretle" iade panelden yapıldıysa iyzico kaydını doğrulayıp erişimi kapatır.</p>
-        <div class="field"><label>Sipariş numarası (UUID)</label><input id="r-order" type="text" required placeholder="xxxxxxxx-xxxx-…"></div>
-        <button class="btn" type="submit" data-action="refund">İade et</button>
-        <button class="btn" type="button" id="r-mark" style="margin-left:8px;">İade edildi işaretle</button>
+        <p class="muted" style="font-size:13px;">İade (Checkout Form siparişleri): alıcının e-postasını yazıp siparişleri listele. "İade et" iyzico'da iadeyi yapar ve erişimi kapatır; "İade edildi işaretle" iade iyzico panelinden yapıldıysa kaydı doğrulayıp erişimi kapatır.</p>
+        <div class="field"><label>Alıcı e-postası</label><input id="r-email" type="email" required placeholder="alici@ornek.com"></div>
+        <button class="btn" type="submit">Siparişleri listele</button>
       </form>
       <div class="admin-result" id="r-result"></div>`;
-    const doRefund = async (action) => {
+    const listOrders = async () => {
       const res = $("#r-result");
-      res.textContent = "iyzico ile görüşülüyor…";
-      const r = await callFn("refund-book", { orderId: $("#r-order").value.trim(), action });
-      if (r.ok && r.json.ok) res.innerHTML = `✓ Sipariş iade olarak kapatıldı, erişim kaldırıldı` + (r.json.mailed ? " · alıcıya e-posta gitti" : "");
-      else if (r.ok && r.json.already) res.textContent = "Bu sipariş zaten iade edilmiş.";
-      else res.textContent = `✗ ${r.json.error || r.status}${r.json.message ? " · " + r.json.message : ""}${r.json.refundStatus ? " · iyzico: " + r.json.refundStatus : ""}`;
+      res.textContent = "Siparişler alınıyor…";
+      const r = await callFn("refund-book", { action: "list", email: $("#r-email").value.trim() });
+      if (!r.ok) { res.textContent = `✗ ${r.json.error || r.status}`; return; }
+      if (!r.json.orders.length) { res.textContent = "Bu e-postayla sipariş yok."; return; }
+      res.innerHTML = r.json.orders.map((o) => {
+        const d = (o.paid_at || o.created_at).slice(0, 16).replace("T", " ");
+        const can = (o.status === "paid" || o.status === "review") && o.iyzico_payment_id;
+        return `<div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:13px;">` +
+          `<span class="mono">${esc(o.id.slice(0, 8))}</span> · ${d} · ${esc(String(o.price))} ${esc(o.currency)} · <strong>${esc(o.status)}</strong>` +
+          (o.fraud_status === 0 ? " · fraud incelemede" : "") +
+          (can ? ` <button class="btn" data-refund="${esc(o.id)}" style="margin-left:10px;padding:4px 10px;font-size:12px;">İade et</button>` +
+                 ` <button class="btn" data-mark="${esc(o.id)}" style="margin-left:4px;padding:4px 10px;font-size:12px;">İade edildi işaretle</button>` : "") +
+          `<div class="mono muted" id="r-line-${esc(o.id.slice(0, 8))}" style="font-size:11px;margin-top:4px;"></div></div>`;
+      }).join("");
+      res.querySelectorAll("[data-refund],[data-mark]").forEach((b) => {
+        b.onclick = async () => {
+          const id = b.dataset.refund || b.dataset.mark;
+          const action = b.dataset.refund ? "refund" : "mark_refunded";
+          if (action === "refund" && !confirm("iyzico üzerinden iade yapılacak ve erişim kapanacak. Emin misin?")) return;
+          const line = document.getElementById("r-line-" + id.slice(0, 8));
+          line.textContent = "iyzico ile görüşülüyor…";
+          const rr = await callFn("refund-book", { orderId: id, action });
+          if (rr.ok && rr.json.ok) { line.textContent = "✓ iade olarak kapatıldı, erişim kaldırıldı" + (rr.json.mailed ? " · e-posta gitti" : ""); listOrders(); }
+          else if (rr.ok && rr.json.already) line.textContent = "zaten iade edilmiş";
+          else line.textContent = `✗ ${rr.json.error || rr.status}${rr.json.message ? " · " + rr.json.message : ""}${rr.json.refundStatus ? " · iyzico: " + rr.json.refundStatus : ""}`;
+        };
+      });
     };
-    $("#refund-form").onsubmit = (e) => { e.preventDefault(); if (confirm("iyzico üzerinden iade yapılacak. Emin misin?")) doRefund("refund"); };
-    $("#r-mark").onclick = () => doRefund("mark_refunded");
+    $("#refund-form").onsubmit = (e) => { e.preventDefault(); listOrders(); };
     $("#grant-form").onsubmit = async (e) => {
       e.preventDefault();
       const res = $("#g-result");

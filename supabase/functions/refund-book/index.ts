@@ -32,11 +32,25 @@ serve(async (req: Request) => {
     if (!isAdmin) return json({ error: "forbidden" }, 403);
 
     const body = await req.json().catch(() => ({}));
-    const orderId = String(body?.orderId ?? "");
+    const admin = createClient(supabaseUrl, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+
+    // action:"list" → alıcı e-postasına göre son siparişler (yönetim ekranı için)
+    if (body?.action === "list") {
+      const email = String(body?.email ?? "").trim().toLowerCase();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: "bad_request" }, 400);
+      const { data } = await admin
+        .from("book_orders")
+        .select("id,status,price,currency,lang,created_at,paid_at,refunded_at,iyzico_payment_id,fraud_status")
+        .eq("buyer_email", email)
+        .order("created_at", { ascending: false })
+        .limit(20);
+      return json({ orders: data ?? [] });
+    }
+
+    const orderId = String(body?.orderId ?? "").trim();
     const action = body?.action === "mark_refunded" ? "mark_refunded" : "refund";
     if (!UUID_RX.test(orderId)) return json({ error: "bad_request" }, 400);
 
-    const admin = createClient(supabaseUrl, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
     const order = await loadOrderById(admin, orderId);
     if (!order) return json({ error: "not_found" }, 404);
     if (order.status === "refunded") {
