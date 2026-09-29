@@ -14,6 +14,7 @@ Service role anahtarı YALNIZ ortam değişkeninden okunur; asla repo'ya yazılm
 import os
 import pathlib
 import sys
+import urllib.error
 import urllib.request
 
 ROOT = pathlib.Path(__file__).parent
@@ -26,25 +27,28 @@ def main() -> int:
     if not url or not key:
         print("HATA: SUPABASE_URL ve SUPABASE_SERVICE_ROLE_KEY ortam değişkenleri gerekli.")
         return 1
+    if len(key) < 30:
+        print(f"HATA: anahtar çok kısa ({len(key)} karakter); yapıştırma boş gelmiş olabilir.")
+        return 1
+    # İki anahtar biçimi: eski service_role JWT (eyJ…) → Authorization Bearer; yeni sb_secret_… → yalnız apikey.
+    headers = {"apikey": key, "Content-Type": "text/html; charset=utf-8", "x-upsert": "true"}
+    if key.startswith("eyJ"):
+        headers["Authorization"] = f"Bearer {key}"
+    print(f"anahtar biçimi: {'service_role JWT' if key.startswith('eyJ') else 'sb_secret (apikey)'}")
     for name in FILES:
         path = ROOT / "dist" / "gated" / name
         if not path.exists():
             print(f"HATA: {path} yok — önce `python3 build.py` çalıştır.")
             return 1
         data = path.read_bytes()
-        req = urllib.request.Request(
-            f"{url}/storage/v1/object/book/{name}",
-            data=data,
-            method="POST",
-            headers={
-                "Authorization": f"Bearer {key}",
-                "apikey": key,
-                "Content-Type": "text/html; charset=utf-8",
-                "x-upsert": "true",
-            },
-        )
-        with urllib.request.urlopen(req, timeout=60) as r:
-            print(f"• {name}: {r.status} ({len(data)//1024} KB)")
+        req = urllib.request.Request(f"{url}/storage/v1/object/book/{name}", data=data, method="POST", headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                print(f"• {name}: {r.status} ({len(data)//1024} KB)")
+        except urllib.error.HTTPError as e:
+            body = e.read().decode("utf-8", "replace")[:300]
+            print(f"HATA: {name}: HTTP {e.code} — {body}")
+            return 1
     print("Yükleme tamam.")
     return 0
 
