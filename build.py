@@ -14,7 +14,7 @@ Atlas-Kitap paketleme scripti.
 Kullanım:  python3 build.py
 Fontlar Google Fonts'tan bir kez indirilir ve dist/fonts-cache/ altında saklanır.
 """
-import base64, os, re, sys, urllib.request, pathlib
+import base64, hashlib, json, os, re, subprocess, sys, tempfile, urllib.request, pathlib
 
 ROOT = pathlib.Path(__file__).parent
 DIST = ROOT / "dist"
@@ -204,6 +204,149 @@ def gated_variant(single_html: str, wm_label: str) -> str:
     return out
 
 
+# ============================================================
+# Basılı kitap QR'ları: giriş istemeyen "tek demo" sayfaları (store/d/<slug>.html)
+# Her dosya yalnız bir modül + bir bölüm içerir (demo + "Ne oluyor?"); metin/quiz/kenar notu yok.
+# ============================================================
+QR_EDITION = "hiyz-qr-1"
+QR_SLUGS = ROOT / "qr-slugs.json"
+
+QR_TEXT = {
+    "tr": {"brand": "Herkes İçin Yapay Zekâ", "fig": "Şekil", "live": "Canlı demo · basılı kitabın eki",
+           "cta_title": "Bu demo basılı kitabın canlı ekidir.",
+           "cta_body": "Kitabın tamamı, 45 canlı demosu ve iki okuma derinliğiyle dijital sürümde.",
+           "cta_btn": "Dijital kitaba git", "home": "/"},
+    "en": {"brand": "AI for Everyone", "fig": "Figure", "live": "Live demo · companion to the printed book",
+           "cta_title": "This demo is the live companion to the printed book.",
+           "cta_body": "The full book, with all 45 live demos and both reading depths, lives in the digital edition.",
+           "cta_btn": "Go to the digital book", "home": "/en/"},
+}
+
+
+def qr_slugs() -> dict:
+    """{'tr': {'2.3': slug}, 'en': {...}}; dosya yoksa üretir. Slug = sha256(baskı|dil|N.j)[:10]."""
+    if QR_SLUGS.exists():
+        return json.loads(QR_SLUGS.read_text(encoding="utf-8"))
+    return {}
+
+
+def _save_slugs(slugs: dict):
+    QR_SLUGS.write_text(json.dumps(slugs, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def qr_sections(src_html: str) -> dict:
+    """node ile modules()'ı değerlendirir; her demo için tek-bölümlük JS literal döner (fonksiyonlar korunur)."""
+    m = re.search(r"\n  modules\(\) \{\n(.*?)\n  \}\n\n  upcoming\(\)", src_html, re.S)
+    if not m:
+        sys.exit("qr: modules() bloğu bulunamadı")
+    js = (
+        "const modules=function(){\n" + m.group(1) + "\n};\n"
+        "function ser(v){ if (typeof v==='function') return v.toString();"
+        " if (Array.isArray(v)) return '['+v.map(ser).join(',')+']';"
+        " if (v && typeof v==='object') return '{'+Object.keys(v).map(k=>JSON.stringify(k)+':'+ser(v[k])).join(',')+'}';"
+        " return JSON.stringify(v); }\n"
+        "const out={};\n"
+        "modules().forEach(m=>{ let fig=0; m.sections.forEach((s,si)=>{ if(!s.demo) return; fig++;"
+        " const sec={id:s.id,label:s.label,h2:s.h2,basit:[],teknik:[],demo:s.demo};"
+        " const mod={n:m.n,tag:m.tag,title:m.title,subtitle:m.subtitle,acc:m.acc,dot:m.dot,sections:[sec]};"
+        " out[String(Number(m.n))+'.'+fig]={literal:ser([mod]),title:s.demo.title,h2:s.h2,si}; }); });\n"
+        "process.stdout.write(JSON.stringify(out));"
+    )
+    with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as f:
+        f.write(js)
+        path = f.name
+    try:
+        res = subprocess.run(["node", path], capture_output=True, text=True, check=True)
+    finally:
+        os.unlink(path)
+    return json.loads(res.stdout)
+
+
+def _cut(html: str, start: str, end: str, repl: str) -> str:
+    a = html.index(start)
+    b = html.index(end, a)
+    return html[:a] + repl + html[b:]
+
+
+def qr_variant(web_html: str, lang: str, key: str, sec: dict, slug: str) -> str:
+    """Tek demo sayfası: modules() tek modül/tek bölüm; nav, hero, menüler, kicker, alt gezinme budanır."""
+    t = QR_TEXT[lang]
+    out = web_html
+    # 1) veri: yalnız hedef bölüm
+    out, n = re.subn(r"\n  modules\(\) \{\n.*?\n  \}\n\n  upcoming\(\)",
+                     "\n  modules() {\n    return " + sec["literal"].replace("\\", "\\\\") + ";\n  }\n\n  upcoming()",
+                     out, count=1, flags=re.S)
+    assert n == 1, "qr: modules() değiştirilemedi"
+    # 2) üst nav + hero → ince şerit
+    strip = (
+        '    <div style="background:#1a1a1a;color:#f2ead7;">'
+        '<div style="max-width:720px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;">'
+        f'<a href="{t["home"]}" style="font-family:\'Instrument Serif\',serif;font-size:20px;color:#f2ead7;text-decoration:none;">{t["brand"]}</a>'
+        f'<span style="font-family:\'Space Mono\',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#b8b0a0;">{t["fig"]} {key}</span>'
+        '</div></div>\n'
+    )
+    out = _cut(out, '<div style="position:sticky;top:0;z-index:40;', '<div style="background:#f4efe6;color:#262626;">', strip)
+    # 3) kenar menüleri kaldır (Basit/Teknik geçişi kicker yerine gelir)
+    out = _cut(out, '        <div style="position:sticky;top:64px;">', '        <div style="display:flex;flex-wrap:wrap;gap:36px 44px;align-items:flex-start;">', "")
+    out = out.replace("display:grid;grid-template-columns:minmax(280px,412px) 1fr;gap:48px;align-items:start;", "display:block;", 1)
+    out = out.replace("max-width:1400px;margin:0 auto;padding:48px 40px 90px;", "max-width:720px;margin:0 auto;padding:28px 20px 60px;", 1)
+    kicker = re.search(r'          <div style="[^"]*">\{\{ secKicker \}\}</div>\n', out)
+    assert kicker, "qr: kicker bulunamadı"
+    toggle = (
+        '          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">'
+        f'<span style="font-family:\'Space Mono\',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:{{{{ acc }}}};">{t["live"]}</span>'
+        '<span style="display:inline-flex;border:1px solid {{ acc }};"><button onClick="{{ setBasit }}" style="{{ basitTab }}">Basit</button>'
+        '<button onClick="{{ setTeknik }}" style="{{ teknikTab }}">Teknik</button></span></div>\n'
+    )
+    if lang == "en":
+        toggle = toggle.replace(">Basit<", ">Simple<").replace(">Teknik<", ">Technical<")
+    out = out[:kicker.start()] + toggle + out[kicker.end():]
+    # 4) alt önceki/sonraki → CTA
+    cta = (
+        '          <div style="margin-top:40px;padding:22px 24px;border:1px solid rgba(26,26,26,0.16);background:#faf7ef;max-width:640px;">'
+        f'<div style="font-family:\'Instrument Serif\',serif;font-size:22px;color:#1f1f1f;margin-bottom:6px;">{t["cta_title"]}</div>'
+        f'<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#4a4539;">{t["cta_body"]}</p>'
+        f'<a href="{t["home"]}" style="display:inline-block;padding:11px 20px;background:{{{{ acc }}}};color:#f4eddb;font-family:\'Work Sans\',sans-serif;font-weight:600;font-size:14px;text-decoration:none;">{t["cta_btn"]} →</a>'
+        '</div>\n'
+    )
+    a = out.index('          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:48px;')
+    b = out.index("          </div>\n", a) + len("          </div>\n")
+    out = out[:a] + cta + out[b:]
+    # 5) başlık, robots, support.js yolu, derin bağlantı kilidi
+    title = f'{t["fig"]} {key} · {sec["title"]}'
+    out = out.replace('<meta name="viewport" content="width=device-width, initial-scale=1">',
+                      '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+                      f'<title>{title}</title>\n<meta name="robots" content="noindex, nofollow">', 1)
+    out = out.replace('<script src="./support.js"></script>', '<script src="/d/support.js"></script>', 1)
+    out = out.replace("</body>", '<script>window.__DEEPLINK="m=1&s=0";window.__DEEPLINK_LOCK=true;</script>\n</body>', 1)
+    return out
+
+
+def build_qr_pages(tr_web: str, en_web: str, localize_fonts) -> int:
+    slugs = qr_slugs()
+    changed = False
+    out_dir = ROOT / "store" / "d"
+    (out_dir / "en").mkdir(parents=True, exist_ok=True)
+    for old in list(out_dir.glob("*.html")) + list((out_dir / "en").glob("*.html")):
+        old.unlink()
+    count = 0
+    for lang, src in (("tr", tr_web), ("en", en_web)):
+        secs = qr_sections(src)
+        slugs.setdefault(lang, {})
+        for key, sec in secs.items():
+            if key not in slugs[lang]:
+                slugs[lang][key] = hashlib.sha256(f"{QR_EDITION}|{lang}|{key}".encode()).hexdigest()[:10]
+                changed = True
+            slug = slugs[lang][key]
+            html = localize_fonts(qr_variant(src, lang, key, sec, slug))
+            dest = out_dir / (slug + ".html") if lang == "tr" else out_dir / "en" / (slug + ".html")
+            dest.write_text(html, encoding="utf-8")
+            count += 1
+    if changed or not QR_SLUGS.exists():
+        _save_slugs(slugs)
+    return count
+
+
 def main():
     print("== Atlas-Kitap build ==")
     tr = TR.read_text(encoding="utf-8")
@@ -253,6 +396,10 @@ def main():
         (store_demo / "support.js").write_text(support, encoding="utf-8")
         print("• store/demo güncellendi (ilk 3 konu, TR+EN)")
     print(f"• web: index.html, en.html, demo.html + demo-en.html, support.js")
+    # basılı kitap QR sayfaları (tek demo, girişsiz)
+    qr_n = build_qr_pages(tr_web, en_web, localize_fonts)
+    (ROOT / "store" / "d" / "support.js").write_text(support, encoding="utf-8")
+    print(f"• store/d: {qr_n} tek-demo sayfası (qr-slugs.json)")
 
     # --- gated (satılan çevrimiçi sürüm; filigran yuvalı) ---
     gd = DIST / "gated"

@@ -334,6 +334,7 @@
       if (d) { inst.state.mi = d.mi; inst.state.si = d.si; }
     } catch (e) {}
     window.addEventListener("hashchange", function () {
+      if (window.__DEEPLINK_LOCK) return; // tek-demo (QR) sayfaları: hash ile gezinme kapalı
       try {
         const d = clampDeep(parseDeep(location.hash));
         if (!d) return;

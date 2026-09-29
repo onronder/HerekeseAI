@@ -659,3 +659,8 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
 - GERÇEK TEST (2026-09-29, yazar): yeni hesap (o.onder@fittechs.com) + gerçek kart → kitap açıldı; /yonetim'den iade yapıldı (ilk denemede
   yanlış UUID → 404). Yönetim ekranı düzeltildi: alıcı e-postasıyla sipariş listesi + tek tıkla "İade et / İade edildi işaretle"
   (refund-book action:list). Konsoldaki ethereum/evmAsk ve vercel.live satırları tarayıcı eklentisi / Vercel aracı; bizden değil.
+- BASILI KİTAP QR'LARI → TEK DEMO SAYFALARI (2026-09-29, yazar kararı: QR sabit, girişsiz, yalnız o demo):
+  build.py qr_variant: modules() node ile değerlendirilip tek modül/tek bölüm literaline (fonksiyonlar korunur; M2.2 rules[].test),
+  nav/hero/menüler/kicker/alt gezinme budanır, Basit/Teknik geçişi + h2 + demo paneli + "Ne oluyor?" + CTA kalır;
+  window.__DEEPLINK_LOCK ile hash gezinmesi kapalı (support.js). Çıktı store/d/<slug>.html ×45 TR + store/d/en/<slug>.html ×45 EN,
+  slug'lar qr-slugs.json (sha256(baskı|dil|N.j)[:10]). make_qr.mjs/assemble.py/export.py yeni adresleri kullanır; QR'lar ve el yazması yenilendi.
