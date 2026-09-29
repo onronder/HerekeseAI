@@ -654,3 +654,5 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   ₺349 ile açıldı (Checkout Form canlıda yetkili, havale kapalı). Canlı panelde Merchant Notifications URL girildi; fraud IFN alanı panelde yok
   (iyzico tanımlar; reconcile yolu var). CHECKOUT_ENABLED:true push edildi → satış Checkout Form ile. KALAN: yazarın gerçek kartla
   öz-satın alma + iade testi; upload_book.py; imza V3 aktivasyonu sonrası IYZICO_WEBHOOK_REQUIRE_SIGNATURE=true.
+- upload_book.py çalıştırıldı (2026-09-29): book-tr/en.html güncel (derin bağlantı kodu içeriyor). Canlıda /oku#m=3&s=5 → Bölüm 3 açıldı,
+  iframe'e __DEEPLINK enjekte edildi. Basılı kitaptaki QR hedefleri artık çalışıyor.
