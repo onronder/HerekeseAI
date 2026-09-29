@@ -331,7 +331,8 @@
   async function refreshIndex() {
     fillPrices();
     const user = await getUser();
-    const owned = user ? await hasBook(user.id) : false;
+    let owned = user ? await hasBook(user.id) : false;
+    if (user && !owned && await reconcilePendingOrder(user.id)) owned = true;
     // Beta bayrağı açıkken yazar hesabı da alıcı görünümünü alır (sandbox testi; okuma yetkisi book-token'da korunur).
     const author = user && !owned && !checkoutBeta ? await isAdmin(user.id) : false;
     const isOwner = owned || author;
@@ -439,7 +440,8 @@
       return;
     }
     // Yetki kararını sunucu verir (erişim kaydı YA DA yönetici rolü)
-    const probe = await callFn("book-token", {});
+    let probe = await callFn("book-token", {});
+    if (!probe.ok && await reconcilePendingOrder(user.id)) probe = await callFn("book-token", {});
     if (!probe.ok) {
       frameWrap.innerHTML =
         `<p class="serif" style="font-size:26px;margin:0;">${T.notOpen}</p>` +
@@ -494,6 +496,20 @@
     });
     const out = $("#reader-signout");
     if (out) out.onclick = async (e) => { e.preventDefault(); await sb.auth.signOut(); location.href = HOME; };
+  }
+
+  // ---- güvenlik ağı: yarım kalan sipariş varsa sunucuya (iyzico mutabakatı) sor ----
+  // Alıcı ödeme sırasında sekmeyi kapatır ve webhook gelmezse, siteye döndüğünde burada tamamlanır.
+  async function reconcilePendingOrder(userId) {
+    try {
+      const since = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString();
+      const { data } = await sb.from("book_orders").select("id").eq("user_id", userId)
+        .in("status", ["initialized", "review"]).gte("created_at", since)
+        .order("created_at", { ascending: false }).limit(1);
+      if (!data || !data.length) return false;
+      const r = await callFn("order-status", { orderId: data[0].id });
+      return !!(r.ok && (r.json.entitled || r.json.status === "paid"));
+    } catch (e) { return false; }
   }
 
   // ---- satın alma dönüş sayfası ----
