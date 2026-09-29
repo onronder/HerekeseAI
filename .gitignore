@@ -3,3 +3,5 @@ Herkes-Icin-Yapay-Zeka-v2.html
 supabase/.temp/
 *.env
 .env*
+print/figures/out/
+print/qr/node_modules/

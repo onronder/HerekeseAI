@@ -620,3 +620,20 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   tamamlandığında eklenecektir" notu kaldırıldı), en/legal.html künye satırı.
 - build.py → 6 çıktının 6'sında ISBN doğrulandı (demo TR/EN, gated TR/EN, web TR/EN);
   gated kitaplar bucket'a yüklendi (200); commit+push ile demo+landing yayında.
+
+## BASILI SÜRÜM P1–P3 + ÖDEME DOĞRULAMA + DERİN BAĞLANTI (2026-09-28)
+- Derin bağlantı: support.js `#m=N&s=K` (window.__DEEPLINK || hash; modules() ile sınır denetimi; hashchange → open/goSec).
+  store.js loadBook() srcdoc'a `window.__DEEPLINK` enjekte eder; satış sayfası `/#m=` → `/oku#m=` yönlendirir.
+  build.py çalıştırıldı (dist/, store/demo güncel). KALAN: `python3 upload_book.py` (gated kitaplar yeni support.js) + Vercel deploy.
+  Canlıda test: /demo/demo#m=1&s=2 → 1.3 açıldı; hashchange çalıştı; #m=7&s=99 → kapak.
+- Ödeme (iyzico Checkout Form, belgelere göre): migration book_orders + entitlements.order_id; _shared/{iyzico,fulfil,mail}.ts;
+  functions create-checkout, iyzico-callback, iyzico-webhook, iyzico-ifn, order-status, refund-book (config.toml verify_jwt=false ×3).
+  Ön yüz: config.js CHECKOUT_ENABLED/PURCHASE_PAGE/SUPPORT_EMAIL; store.js checkout dalı (telefon alanı, onay, create-checkout → location.href),
+  satın alma dönüş sayfası (/satin-alma, /en/purchase: order-status polling 45 sn), yönetimde iade formu. SSS/yasal teslimat metinleri güncellendi.
+  KALAN (yazar): Supabase migration + secrets (IYZICO_API_KEY, IYZICO_SECRET, IYZICO_BASE_URL, IYZICO_MODE, IYZICO_WEBHOOK_REQUIRE_SIGNATURE,
+  SITE_URL, BOOK_PRICE_TRY) + `functions deploy`; iyzico panelde webhook/IFN URL'leri; sandbox test planı (plan §2.7); sonra CHECKOUT_ENABLED:true.
+  `npx -y deno-bin check` ile 6 fonksiyon tip denetiminden geçti (hatasız).
+- Baskı: figürler iki dilli (strings/M0x.mjs; TR bayt bayt aynı, EN 45 figür, check_i18n temiz); QR (print/qr/make_qr.mjs → out/tr|en/qr-N-j.svg),
+  assemble.py: QR yerleştirme, Dizin (dizin-terimler.yaml → terim→alt bölüm, h3 id'leri), sayfa sonu; künye (yazar yayını) ve Teşekkür taslağı.
+- Hak dağılımı (yazar kararı 2026-09-28): tüm haklar Onur Önder, pazarlama+satış hakları Fittechs → yasal.html, en/legal.html,
+  hakkimizda/about, basılı künye güncellendi. iyzico anahtarları hiçbir yere yazılmadı; süreç supabase/DAGITIM.md (yazar secrets girer).

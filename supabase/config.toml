@@ -2,3 +2,13 @@ project_id = "dtsgewamjkcojffustrg"
 
 [functions.book-content]
 verify_jwt = false
+
+# iyzico'dan gelen çağrılar JWT taşımaz; doğrulama fonksiyon içinde (Retrieve + imza).
+[functions.iyzico-callback]
+verify_jwt = false
+
+[functions.iyzico-webhook]
+verify_jwt = false
+
+[functions.iyzico-ifn]
+verify_jwt = false

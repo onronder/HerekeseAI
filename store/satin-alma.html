@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Satın alma — Herkes İçin Yapay Zekâ</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/assets/fonts.css">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="stylesheet" href="/assets/store.css">
+</head>
+<body data-page="purchase" data-lang="tr" class="ruled page-full">
+
+  <div class="reader-bar">
+    <a href="/" class="mono muted" style="text-decoration:none;">← Herkes İçin Yapay Zekâ</a>
+    <span class="title">Herkes İçin Yapay Zekâ</span>
+    <span class="mono muted">SATIN ALMA</span>
+  </div>
+
+  <div class="reader-body">
+    <div class="center-msg" id="purchase-box">
+      <p class="muted mono">ÖDEME DOĞRULANIYOR…</p>
+    </div>
+  </div>
+
+<!-- AUTH MODAL -->
+<div class="modal-backdrop" id="auth-backdrop">
+  <div class="modal modal-inner">
+    <button class="close" id="auth-close" aria-label="Kapat">×</button>
+    <div id="auth-body"></div>
+  </div>
+</div>
+
+<script src="/assets/supabase.js"></script>
+<script src="/assets/config.js"></script>
+<script src="/assets/store.js"></script>
+</body>
+</html>

@@ -11,6 +11,11 @@
   const HOME = L === "en" ? "/en/" : "/";
   const READER = L === "en" ? "/en/read" : "/oku";
   const PRICING = (C.PRICING && C.PRICING[L]) || { label: C.PRICE || "", url: C.IYZILINK_URL || null };
+  const PURCHASE = (C.PURCHASE_PAGE && C.PURCHASE_PAGE[L]) || (L === "en" ? "/en/purchase" : "/satin-alma");
+  const SUPPORT = C.SUPPORT_EMAIL || "support@fittechs.com";
+  let checkoutBeta = false;
+  try { checkoutBeta = localStorage.getItem("book_checkout_beta") === "1"; } catch (e) {}
+  const CHECKOUT_ON = !!C.CHECKOUT_ENABLED || checkoutBeta;
 
   const T = {
     tr: {
@@ -57,6 +62,18 @@
       errExists: "Bu e-postayla zaten bir hesap var; giriş yapmayı dene.",
       errRate: "Art arda çok deneme oldu; biraz bekleyip tekrar dene.",
       errGeneric: "Bir aksilik oldu; tekrar dener misin?",
+      payCheckout: (e) => `Ödeme, iyzico'nun güvenli sayfasında alınır. Ödeme onaylanır onaylanmaz kitap bu hesapta açılır ve ` +
+        `<strong>${e}</strong> adresine bilgilendirme gelir.`,
+      gsmLabel: "Telefon (isteğe bağlı)", gsmHint: "Ödeme sayfasına aktarılır; boş bırakabilirsin.",
+      checkoutStartFail: "Ödeme başlatılamadı; biraz sonra tekrar dene.",
+      purchaseVerifying: "ÖDEME DOĞRULANIYOR…",
+      purchaseOk: "Kitabın açıldı.", purchaseOkNote: "Bilgilendirme e-postası gönderildi. İyi okumalar!", purchaseRead: "Oku",
+      purchaseFail: "Ödeme tamamlanamadı.", purchaseFailNote: "Kartından çekim yapılmadı. İstersen tekrar deneyebilirsin.",
+      purchaseRetry: "Tekrar dene",
+      purchaseReview: "Ödemen alındı, güvenlik incelemesinde.", purchaseReviewNote: "iyzico ödemeyi inceliyor; sonuçlanınca kitap açılır ve e-posta gelir. Bu genellikle aynı gün tamamlanır.",
+      purchaseSlow: "Doğrulama uzun sürüyor.", purchaseSlowNote: "Ödemen alındıysa kitap birkaç dakika içinde açılır ve e-posta gelir. Bu sayfayı yenileyebilirsin.",
+      purchaseRefresh: "Yenile", purchaseSignin: "Sonucu görmek için giriş yap.",
+      purchaseSupport: (m) => `Sorun yaşarsan: <a href="mailto:${m}" style="color:#e85d3a;">${m}</a>`,
     },
     en: {
       signinTitle: "Sign in", signupTitle: "Create an account",
@@ -102,6 +119,18 @@
       errExists: "An account with this email already exists; try signing in.",
       errRate: "Too many attempts in a row; wait a little and try again.",
       errGeneric: "Something went wrong; please try again.",
+      payCheckout: (e) => `Payment is taken on iyzico's secure page. As soon as it is approved, the book unlocks on this account and ` +
+        `a confirmation goes to <strong>${e}</strong>.`,
+      gsmLabel: "Phone (optional)", gsmHint: "Passed to the payment page; you can leave it empty.",
+      checkoutStartFail: "Payment could not be started; please try again in a moment.",
+      purchaseVerifying: "VERIFYING PAYMENT…",
+      purchaseOk: "Your book is unlocked.", purchaseOkNote: "A confirmation email has been sent. Happy reading!", purchaseRead: "Read",
+      purchaseFail: "Payment could not be completed.", purchaseFailNote: "Your card was not charged. You can try again.",
+      purchaseRetry: "Try again",
+      purchaseReview: "Payment received, under security review.", purchaseReviewNote: "iyzico is reviewing the payment; once cleared the book unlocks and you get an email. This usually completes the same day.",
+      purchaseSlow: "Verification is taking a while.", purchaseSlowNote: "If your payment went through, the book unlocks within a few minutes and you get an email. You can refresh this page.",
+      purchaseRefresh: "Refresh", purchaseSignin: "Sign in to see the result.",
+      purchaseSupport: (m) => `If something is wrong: <a href="mailto:${m}" style="color:#e85d3a;">${m}</a>`,
     },
   }[L];
 
@@ -340,7 +369,29 @@
       state.innerHTML = author ? T.author(esc(user.email)) : T.owned(esc(user.email));
     } else if (user && !owned) {
       state.className = "buy-state show";
-      if (PRICING.url) {
+      if (CHECKOUT_ON) {
+        state.innerHTML = T.payCheckout(esc(user.email)) +
+          `<div class="field" style="margin-top:14px;"><label>${T.gsmLabel}</label>` +
+          `<input id="gsm-box" type="tel" inputmode="tel" placeholder="05xx xxx xx xx" autocomplete="tel">` +
+          `<p class="muted" style="font-size:12px;margin:6px 0 0;">${T.gsmHint}</p></div>` +
+          `<label style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;cursor:pointer;">` +
+          `<input type="checkbox" id="consent-box" style="margin-top:3px;accent-color:#e85d3a;">` +
+          `<span style="font-size:13px;line-height:1.55;color:#b8b0a0;">${T.consentLabel}</span></label>` +
+          `<button class="btn btn-ember" id="consent-go" style="margin-top:14px;">${T.consentGo}</button>` +
+          `<p class="form-msg" id="consent-msg" style="margin-top:10px;"></p>`;
+        $("#consent-go").onclick = async () => {
+          const m = $("#consent-msg");
+          if (!$("#consent-box").checked) { m.className = "form-msg err"; m.textContent = T.consentNeed; return; }
+          const btn = $("#consent-go");
+          btn.disabled = true; btn.textContent = T.working; m.className = "form-msg"; m.textContent = "";
+          const r = await callFn("create-checkout", { lang: L, consent: true, gsm: $("#gsm-box").value });
+          if (r.ok && r.json.alreadyOwned) { refreshIndex(); return; }
+          if (r.ok && r.json.paymentPageUrl) { location.href = r.json.paymentPageUrl; return; }
+          btn.disabled = false; btn.textContent = T.consentGo;
+          m.className = "form-msg err";
+          m.innerHTML = esc(T.checkoutStartFail) + " " + T.purchaseSupport(SUPPORT);
+        };
+      } else if (PRICING.url) {
         state.innerHTML = T.pay(esc(user.email)) +
           `<label style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;cursor:pointer;">` +
           `<input type="checkbox" id="consent-box" style="margin-top:3px;accent-color:#e85d3a;">` +
@@ -412,7 +463,11 @@
         { headers: { apikey: C.SUPABASE_ANON_KEY, Authorization: `Bearer ${r.json.token}` } },
       );
       if (!res.ok) throw new Error("content " + res.status);
-      const html = await res.text();
+      let html = await res.text();
+      // Derin bağlantı (#m=N&s=K): srcdoc iframe üst sayfanın hash'ini göremez; kitaba enjekte edilir.
+      const deep = (location.hash || "").replace(/^#/, "");
+      const inject = `<script>window.__DEEPLINK=${JSON.stringify(deep)};<\/script>`;
+      html = html.includes("</body>") ? html.replace("</body>", inject + "</body>") : html + inject;
       const iframe = document.createElement("iframe");
       iframe.title = "Herkes İçin Yapay Zekâ";
       iframe.setAttribute("sandbox", "allow-scripts");
@@ -440,6 +495,48 @@
     if (out) out.onclick = async (e) => { e.preventDefault(); await sb.auth.signOut(); location.href = HOME; };
   }
 
+  // ---- satın alma dönüş sayfası ----
+  async function initPurchase() {
+    const box = $("#purchase-box");
+    const q = new URLSearchParams(location.search);
+    const orderId = /^[0-9a-f-]{36}$/i.test(q.get("order") || "") ? q.get("order") : null;
+    const hint = q.get("status");
+    const show = (title, note, actions) => {
+      box.innerHTML = `<p class="serif" style="font-size:26px;margin:0;">${title}</p>` +
+        (note ? `<p class="muted" style="max-width:380px;font-size:14px;">${note}</p>` : "") + (actions || "");
+    };
+    const user = await getUser();
+    if (!user) {
+      show(T.purchaseVerifying, T.purchaseSignin, `<button class="btn" id="p-signin">${T.signinTitle}</button>`);
+      $("#p-signin").onclick = () => openAuth(() => location.reload());
+      return;
+    }
+    const ok = () => show(T.purchaseOk, T.purchaseOkNote, `<a class="btn btn-ember" href="${READER}">${T.purchaseRead}</a>`);
+    const fail = () => show(T.purchaseFail, T.purchaseFailNote + "<br>" + T.purchaseSupport(SUPPORT),
+      `<a class="btn" href="${HOME}?buy=1">${T.purchaseRetry}</a>`);
+    const review = () => show(T.purchaseReview, T.purchaseReviewNote + "<br>" + T.purchaseSupport(SUPPORT),
+      `<a class="muted" style="font-size:13px;" href="${HOME}">${T.toHome}</a>`);
+    const slow = () => show(T.purchaseSlow, T.purchaseSlowNote + "<br>" + T.purchaseSupport(SUPPORT),
+      `<button class="btn" onclick="location.reload()">${T.purchaseRefresh}</button>`);
+    if (!orderId) { if (await hasBook(user.id)) ok(); else fail(); return; }
+    show(T.purchaseVerifying, "");
+    // Sonuç sunucudan: order-status (gerekirse iyzico ile mutabakat). Tarayıcıdaki status yalnız ipucu.
+    const deadline = Date.now() + 45000;
+    let sawReview = false;
+    while (Date.now() < deadline) {
+      const r = await callFn("order-status", { orderId });
+      if (r.ok) {
+        const st = r.json.status;
+        if (r.json.entitled || st === "paid") { ok(); return; }
+        if (st === "failed" || st === "expired") { fail(); return; }
+        if (st === "review") { sawReview = true; review(); return; }
+      } else if (r.status === 404) { fail(); return; }
+      if (hint === "fail" && !sawReview) { fail(); return; } // callback zaten başarısız dedi; sunucu da onaylamadı
+      await new Promise((res) => setTimeout(res, 2000));
+    }
+    slow();
+  }
+
   // ---- yönetim ----
   async function initAdmin() {
     const user = await getUser();
@@ -461,7 +558,25 @@
         <div class="field"><label>Not (isteğe bağlı iyzico işlem numarası)</label><input id="g-note" type="text"></div>
         <button class="btn btn-ember" type="submit">Kitabı Aç</button>
       </form>
-      <div class="admin-result" id="g-result"></div>`;
+      <div class="admin-result" id="g-result"></div>
+      <hr style="border:0;border-top:1px solid rgba(255,255,255,.12);margin:26px 0;">
+      <form id="refund-form">
+        <p class="muted" style="font-size:13px;">İade (Checkout Form siparişleri): sipariş numarasını yaz. "İade et" iyzico'da iadeyi yapar; "İade edildi işaretle" iade panelden yapıldıysa iyzico kaydını doğrulayıp erişimi kapatır.</p>
+        <div class="field"><label>Sipariş numarası (UUID)</label><input id="r-order" type="text" required placeholder="xxxxxxxx-xxxx-…"></div>
+        <button class="btn" type="submit" data-action="refund">İade et</button>
+        <button class="btn" type="button" id="r-mark" style="margin-left:8px;">İade edildi işaretle</button>
+      </form>
+      <div class="admin-result" id="r-result"></div>`;
+    const doRefund = async (action) => {
+      const res = $("#r-result");
+      res.textContent = "iyzico ile görüşülüyor…";
+      const r = await callFn("refund-book", { orderId: $("#r-order").value.trim(), action });
+      if (r.ok && r.json.ok) res.innerHTML = `✓ Sipariş iade olarak kapatıldı, erişim kaldırıldı` + (r.json.mailed ? " · alıcıya e-posta gitti" : "");
+      else if (r.ok && r.json.already) res.textContent = "Bu sipariş zaten iade edilmiş.";
+      else res.textContent = `✗ ${r.json.error || r.status}${r.json.message ? " · " + r.json.message : ""}${r.json.refundStatus ? " · iyzico: " + r.json.refundStatus : ""}`;
+    };
+    $("#refund-form").onsubmit = (e) => { e.preventDefault(); if (confirm("iyzico üzerinden iade yapılacak. Emin misin?")) doRefund("refund"); };
+    $("#r-mark").onclick = () => doRefund("mark_refunded");
     $("#grant-form").onsubmit = async (e) => {
       e.preventDefault();
       const res = $("#g-result");
@@ -552,6 +667,8 @@
     wireAuthModal();
     document.querySelectorAll("[data-buy]").forEach((b) => (b.onclick = buyFlow));
     if (page === "index") {
+      // Basılı kitaptaki QR'lar ve eski paylaşımlar: /#m=N&s=K → okuyucuya (sahip değilse giriş/satın alma görünür)
+      if (/^#m=\d/.test(location.hash)) { location.replace(READER + location.hash); return; }
       refreshIndex(); initCoverDial();
       if (new URLSearchParams(location.search).has("buy")) {
         history.replaceState(null, "", location.pathname + location.hash);
@@ -560,6 +677,7 @@
     }
     if (page === "reader") { wireReaderBar(); initReader(); }
     if (page === "admin") initAdmin();
+    if (page === "purchase") initPurchase();
     if (page === "confirm") initConfirm();
     sb.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY") openAuth(null, "reset");

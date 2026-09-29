@@ -301,19 +301,46 @@
       return;
     }
 
-    // Optional deep-link for local testing: #m=<module>&s=<section>
-    try {
-      const h = (location.hash || "").replace(/^#/, "");
-      if (h && inst.state) {
-        const q = {};
-        h.split("&").forEach(function (p) {
-          const kv = p.split("=");
-          q[kv[0]] = kv[1];
-        });
-        if (q.m != null) inst.state.mi = parseInt(q.m, 10) || 0;
-        if (q.s != null) inst.state.si = parseInt(q.s, 10) || 0;
+    // Deep link: #m=<module>&s=<section>. Kaynak: window.__DEEPLINK (okuyucu sayfası srcdoc iframe'e
+    // enjekte eder; hash iframe'e ulaşmaz) ya da location.hash. Sınır denetimi: geçersiz → kapak.
+    function parseDeep(h) {
+      h = String(h || "").replace(/^#/, "");
+      if (!h) return null;
+      const q = {};
+      h.split("&").forEach(function (p) {
+        const kv = p.split("=");
+        if (kv[0]) q[kv[0]] = decodeURIComponent(kv[1] || "");
+      });
+      if (q.m == null) return null;
+      return { m: parseInt(q.m, 10), s: q.s == null ? 0 : q.s };
+    }
+    function clampDeep(d) {
+      if (!d || !inst || !inst.state) return null;
+      let mods = [];
+      try { mods = typeof inst.modules === "function" ? inst.modules() : []; } catch (e) {}
+      let mi = isFinite(d.m) ? d.m : 0;
+      if (mi < 0 || mi > mods.length) mi = 0;
+      let si = 0;
+      if (mi > 0) {
+        const secs = (mods[mi - 1] && mods[mi - 1].sections) || [];
+        if (/^\d+$/.test(String(d.s))) si = parseInt(d.s, 10);
+        else { const k = secs.findIndex(function (x) { return x && x.id === d.s; }); si = k < 0 ? 0 : k; }
+        if (si < 0 || si >= secs.length) si = 0;
       }
+      return { mi: mi, si: si };
+    }
+    try {
+      const d = clampDeep(parseDeep(window.__DEEPLINK || location.hash));
+      if (d) { inst.state.mi = d.mi; inst.state.si = d.si; }
     } catch (e) {}
+    window.addEventListener("hashchange", function () {
+      try {
+        const d = clampDeep(parseDeep(location.hash));
+        if (!d) return;
+        if (typeof inst.open === "function") inst.open(d.mi);
+        if (d.mi > 0 && d.si > 0 && typeof inst.goSec === "function") inst.goSec(d.si);
+      } catch (e) {}
+    });
 
     let scheduled = false;
     inst.__scheduleRender = function () {
