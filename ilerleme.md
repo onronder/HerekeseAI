@@ -637,3 +637,14 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   assemble.py: QR yerleştirme, Dizin (dizin-terimler.yaml → terim→alt bölüm, h3 id'leri), sayfa sonu; künye (yazar yayını) ve Teşekkür taslağı.
 - Hak dağılımı (yazar kararı 2026-09-28): tüm haklar Onur Önder, pazarlama+satış hakları Fittechs → yasal.html, en/legal.html,
   hakkimizda/about, basılı künye güncellendi. iyzico anahtarları hiçbir yere yazılmadı; süreç supabase/DAGITIM.md (yazar secrets girer).
+- SANDBOX TESTLERİ (2026-09-29, canlı site + sandbox anahtarları, admin hesabı + beta bayrağı):
+  ✓ initialize (imza doğru; ilk denemede 1001 = canlı anahtar/sandbox URL uyumsuzluğu, sandbox anahtarla çözüldü)
+  ✓ mutlu yol: test kartı → callback → /satin-alma?status=ok → book_orders paid, fraud 1, hak iyzico:callback + paymentId, makbuz gönderildi
+  ✓ çift callback → tek hak; ✓ bozuk imza 401; ✓ yanlış token 401; ✓ JWT'siz 401; ✓ bilinmeyen sipariş 200 ignored
+  ✓ refund-book → iyzico iade success, sipariş refunded, hak silindi, e-posta gitti
+  ✗→✓ BULUNAN AÇIK: iade edilmiş siparişe tekrar gelen webhook eski kodla hakkı yeniden açıyordu → fulfil.ts düzeltildi
+     (geçiş yoksa yalnız status=paid ise hak), refund-book iade edilmişte kalan hakkı temizler; dağıtıldı ve tekrar test edildi (hak 0 kaldı)
+  ✓ başarısız kart (4111…1129): iyzico sayfada "Kart limiti yetersiz", sipariş initialized kalır; order-status mutabakatı iyzico'ya sorup
+     durumu korur; /satin-alma?status=fail doğru görünüm; bilinmeyen sipariş 404
+  Hesap notu: sandbox'ta bankTransferEnabled:false (havale sekmesi yok). Dashboard webhook logu ve e-postalar yazar tarafından teyit edilecek.
+  KALAN: canlı geçiş (DAGITIM.md §7), upload_book.py (derin bağlantı için gated kitaplar), beta bayrağı tarayıcıdan silinebilir.

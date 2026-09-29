@@ -70,6 +70,9 @@ Test kartı: `5528790000000008`, ileri tarihli SKT, herhangi CVV. Hata kartları
 7. Yönetim (`/yonetim`) → sipariş numarasıyla "İade et" → e-posta gelir, `/oku` kapanır.
 Her adımda DB: Dashboard → Table Editor → `book_orders` (status, source, iyzico_payment_id, fraud_status, receipt_sent_at).
 
+## 6b. Sandbox test sonucu (2026-09-29)
+1–7 numaralı testler geçti (ayrıntı ilerleme.md). Bulunan ve düzeltilen açık: iade sonrası tekrar gelen webhook hakkı yeniden açıyordu (fulfil.ts). Sandbox'ta initialize `1001` dönerse anahtar/URL uyumsuzluğudur (canlı anahtar + sandbox URL).
+
 ## 7. Canlıya geçiş
 1. Canlı panelde (https://merchant.iyzipay.com) API anahtarları; aynı `read -s` komutu canlı değerlerle, ardından
    `supabase secrets set IYZICO_BASE_URL=https://api.iyzipay.com IYZICO_MODE=live`.
