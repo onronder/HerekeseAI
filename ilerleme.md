@@ -646,5 +646,7 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
      (geçiş yoksa yalnız status=paid ise hak), refund-book iade edilmişte kalan hakkı temizler; dağıtıldı ve tekrar test edildi (hak 0 kaldı)
   ✓ başarısız kart (4111…1129): iyzico sayfada "Kart limiti yetersiz", sipariş initialized kalır; order-status mutabakatı iyzico'ya sorup
      durumu korur; /satin-alma?status=fail doğru görünüm; bilinmeyen sipariş 404
-  Hesap notu: sandbox'ta bankTransferEnabled:false (havale sekmesi yok). Dashboard webhook logu ve e-postalar yazar tarafından teyit edilecek.
+  ✓ webhook: sandbox panelde Merchant Notifications URL girildikten sonra 2. ödemede iyzico bildirimi 16 sn içinde geldi (token eşleşti, imza başlığı yok = özellik kapalı).
+  ✓ güvenlik ağı: ana sayfa/okuyucu açılışında yarım kalan sipariş için order-status mutabakatı (store.js reconcilePendingOrder).
+  Hesap notu: sandbox'ta bankTransferEnabled:false (havale sekmesi yok). Makbuz e-postası geldi; iade e-postası Resend'e teslim edildi, gelen kutusunda görülmedi (spam/Resend paneli).
   KALAN: canlı geçiş (DAGITIM.md §7), upload_book.py (derin bağlantı için gated kitaplar), beta bayrağı tarayıcıdan silinebilir.

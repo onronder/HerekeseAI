@@ -76,6 +76,7 @@ serve(async (req: Request) => {
     }
 
     const outcome = await fulfil(admin, order, r, "webhook", siteUrl());
+    console.log(`webhook outcome=${outcome} order=${order.id} paymentId=${r.paymentId ?? "-"} signed=${sig ? "v3" : "none"}`);
     return json({ outcome });
   } catch (e) {
     console.error("iyzico-webhook error:", e);
