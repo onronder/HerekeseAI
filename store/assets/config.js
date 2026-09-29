@@ -9,7 +9,7 @@ window.BOOK_CONFIG = {
   // iyzico Checkout Form (siteden başlatılan, sunucuda doğrulanan ödeme). false iken aşağıdaki iyzilink
   // akışı (elle onay) kullanılır. Test için tarayıcıda localStorage.book_checkout_beta = "1".
   // Fiyat: Supabase secret BOOK_PRICE_TRY ile PRICING.label AYNI tutulmalıdır.
-  CHECKOUT_ENABLED: false,
+  CHECKOUT_ENABLED: true,
   PURCHASE_PAGE: { tr: "/satin-alma", en: "/en/purchase" },
 
   // Dil başına fiyat + iyzilink. ÖNEMLİ: iyzico panelindeki tutarla buradaki

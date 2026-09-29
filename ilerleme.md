@@ -650,3 +650,7 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   ✓ güvenlik ağı: ana sayfa/okuyucu açılışında yarım kalan sipariş için order-status mutabakatı (store.js reconcilePendingOrder).
   Hesap notu: sandbox'ta bankTransferEnabled:false (havale sekmesi yok). Makbuz e-postası geldi; iade e-postası Resend'e teslim edildi, gelen kutusunda görülmedi (spam/Resend paneli).
   KALAN: canlı geçiş (DAGITIM.md §7), upload_book.py (derin bağlantı için gated kitaplar), beta bayrağı tarayıcıdan silinebilir.
+- CANLIYA GEÇİŞ (2026-09-29): canlı anahtarlar + IYZICO_MODE=live secrets'ta (yazar); canlı initialize denemesi cpp.iyzipay.com'da
+  ₺349 ile açıldı (Checkout Form canlıda yetkili, havale kapalı). Canlı panelde Merchant Notifications URL girildi; fraud IFN alanı panelde yok
+  (iyzico tanımlar; reconcile yolu var). CHECKOUT_ENABLED:true push edildi → satış Checkout Form ile. KALAN: yazarın gerçek kartla
+  öz-satın alma + iade testi; upload_book.py; imza V3 aktivasyonu sonrası IYZICO_WEBHOOK_REQUIRE_SIGNATURE=true.
