@@ -201,14 +201,19 @@ export async function fulfil(
     fraud_status: fraud,
     paid_at: now,
   });
-  // 8) Erişim hakkı (idempotent; already_paid durumunda eksikse tamamlanır).
-  await grantEntitlement(admin, order, source, r.paymentId ?? "");
   if (!became) {
+    // Geçiş olmadı: sipariş zaten paid (yarış/tekrar) ya da refunded/failed. Hak YALNIZ paid ise tamamlanır;
+    // iade edilmiş siparişe geç gelen callback/webhook erişimi geri açamaz.
     const fresh = await loadOrderById(admin, order.id);
-    if (fresh && fresh.status === "paid") await sendReceiptOnce(admin, fresh, siteUrl);
-    return "already_paid";
+    if (fresh && fresh.status === "paid") {
+      await grantEntitlement(admin, fresh, source, r.paymentId ?? "");
+      await sendReceiptOnce(admin, fresh, siteUrl);
+      return "already_paid";
+    }
+    return "unchanged";
   }
-  // 9) Makbuz (yalnız paid geçişinde; best-effort).
+  // 8) Erişim hakkı (idempotent) ve 9) makbuz (yalnız paid geçişinde; best-effort).
+  await grantEntitlement(admin, order, source, r.paymentId ?? "");
   await sendReceiptOnce(admin, { ...order, status: "paid" }, siteUrl);
   return "paid";
 }
