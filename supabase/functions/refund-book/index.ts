@@ -39,7 +39,11 @@ serve(async (req: Request) => {
     const admin = createClient(supabaseUrl, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
     const order = await loadOrderById(admin, orderId);
     if (!order) return json({ error: "not_found" }, 404);
-    if (order.status === "refunded") return json({ ok: true, already: true });
+    if (order.status === "refunded") {
+      // İdempotent temizlik: iade sonrası (eski kod / yarış) kalmış sipariş bağlı hak varsa sil.
+      const { data: gone } = await admin.from("book_entitlements").delete().eq("order_id", order.id).select("id");
+      return json({ ok: true, already: true, cleaned: Array.isArray(gone) ? gone.length : 0 });
+    }
     if (!(order.status === "paid" || order.status === "review") || !order.iyzico_payment_id) {
       return json({ error: "not_refundable", status: order.status }, 409);
     }
