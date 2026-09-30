@@ -1,0 +1,21 @@
+/* Kindle / EPUB stili: reflowable, cihaz fontları; yalnız yapı ve vurgu */
+body { font-family: serif; line-height: 1.5; }
+h1 { font-size: 1.8em; margin: 1.2em 0 .3em; page-break-before: always; }
+h1 + h2 { font-size: 1.3em; font-weight: normal; margin: 0 0 1em; color: #444; }
+h2 { font-size: 1.25em; margin: 1.4em 0 .4em; }
+h3 { font-size: 1.15em; margin: 1.4em 0 .4em; }
+h4 { font-size: .8em; letter-spacing: .12em; text-transform: uppercase; color: #b8452a; margin: 1em 0 .3em; }
+p { margin: 0 0 .7em; text-align: left; }
+blockquote { margin: 1em 0; padding: .4em .9em; border-left: 3px solid #e85d3a; font-style: italic; }
+blockquote p { margin: 0; }
+aside.tech { margin: 1em 0; padding: .4em .9em .6em; border: 1px solid #c9c2b4; background: #faf7ef; page-break-inside: avoid; }
+figure { margin: 1.2em 0; text-align: center; page-break-inside: avoid; }
+figure img { max-width: 100%; height: auto; }
+figcaption { font-size: .8em; color: #666; margin-top: .3em; }
+table { border-collapse: collapse; width: 100%; font-size: .85em; margin: .6em 0 1em; }
+th, td { border-bottom: 1px solid #ccc; padding: .3em .4em; text-align: left; vertical-align: top; }
+th { font-weight: normal; color: #666; font-size: .8em; text-transform: uppercase; letter-spacing: .06em; }
+a.live { display: inline-block; margin: .2em 0 .8em; padding: .2em .6em; border: 1px solid #e85d3a; border-radius: 4px; color: #b8452a; text-decoration: none; font-size: .9em; }
+code { font-family: monospace; font-size: .9em; }
+ul, ol { margin: 0 0 .9em 1.2em; padding: 0; }
+li { margin: .2em 0; }

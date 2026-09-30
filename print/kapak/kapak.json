@@ -1,0 +1,16 @@
+{
+  "isbn": "978-625-00-5211-2",
+  "spine_mm": 14.0,
+  "paper_note": "Sırt genişliği matbaadan: sayfa sayısı × kâğıt kalınlığı (80 g/m² ofset ≈ 0,1 mm/yaprak → 256 sayfa = 128 yaprak ≈ 12,8 mm + kapak kartonu ≈ 14 mm). kapak.json içindeki spine_mm matbaanın verdiği değerle güncellenir.",
+  "price": "",
+  "back_text": [
+    "İlk hesap çarklarından bugünün sohbet robotlarına uzanan iki yüzyıllık hikâye: kural, arama, olasılık, öğrenme, nöron, dikkat. Her fikir bir öncekinin duvara tosladığı yerde doğdu; bölümler de o sırayla ilerliyor.",
+    "Kırk beş deney kâğıt üstünde sayılarla yürütülüyor: bir Turing makinesine 1 ekletiyor, bir nöronu ateşliyor, gürültüden görsel çıkarıyorsun. Her şeklin altındaki QR kod aynı deneyin canlı halini telefonunda açıyor; giriş gerekmiyor.",
+    "İki derinlikte yazıldı. Ana akış hiç ön bilgisi olmayan biri için; “Teknik derinlik” kutuları formülü ve matematiği merak edenler için. Kutuları atlayarak da okunur, hiçbir şey eksik kalmaz."
+  ],
+  "author_bio": "Onur Önder, yazılım ve yapay zekâ alanında çalışan bir mühendis ve Fittechs'in kurucu ortağı. Asıl sorun ne zaman neyi öğrenmemiz gerektiğini anlayamamamız. İnsanlık ve teknoloji tarihinin en radikal dönüşüm ve devrimlerinden birinin anlamak ve sindirmek için detaylı bir şekilde okumanız gerekli.İnsanlığın ileride karşılacağı sorunun asıl kaynağını temelinden öğrenmeye hazır olun. Bu kitabın interaktif dijital sürümü book.onuronder.com adresinde.",
+  "seller": "Pazarlama ve satış: Fittechs Yazılım A.Ş. · support@fittechs.com",
+  "variant": "ag",
+  "subtitle": "Sekiz bölüm, kırk beş deney: kâğıtta adım adım, telefonda canlı.",
+  "back_lead": "Bir makine düşünebilir mi? Soru dört yüz yıllık. Yeni olan, cevabı deneyebilecek makinelerin artık masanın üstünde durması."
+}

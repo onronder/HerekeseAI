@@ -1,0 +1,21 @@
+%!
+% PDF/X-1a tanım dosyası (Ghostscript pdfwrite, -dPDFX ile). ICC yolu dizgi.sh tarafından ICC ortam değişkeninden yazılır.
+systemdict /ProcessColorModel known {
+  systemdict /ProcessColorModel get dup /DeviceGray ne exch /DeviceCMYK ne and
+  { (\n\n ERROR: ProcessColorModel CMYK olmalı \n\n) print flush stop } if
+} if
+[ /GTS_PDFXVersion (PDF/X-1:2001) /GTS_PDFXConformance (PDF/X-1a:2001)
+  /Title (Herkes İçin Yapay Zekâ) /Author (Onur Önder) /Trapped /False /DOCINFO pdfmark
+[ /_objdef {icc_PDFX} /type /stream /OBJ pdfmark
+[ {icc_PDFX} << /N 4 >> /PUT pdfmark
+[ {icc_PDFX} ICCPROFILE (r) file /PUT pdfmark
+[ /_objdef {OutputIntent_PDFX} /type /dict /OBJ pdfmark
+[ {OutputIntent_PDFX} <<
+  /Type /OutputIntent
+  /S /GTS_PDFX
+  /OutputCondition (OUTPUTCONDITION)
+  /OutputConditionIdentifier (OUTPUTCONDITIONID)
+  /RegistryName (http://www.color.org)
+  /DestOutputProfile {icc_PDFX}
+>> /PUT pdfmark
+[ {Catalog} << /OutputIntents [ {OutputIntent_PDFX} ] >> /PUT pdfmark

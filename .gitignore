@@ -5,3 +5,8 @@ supabase/.temp/
 .env*
 print/figures/out/
 print/qr/node_modules/
+print/typeset/node_modules/
+print/typeset/out/
+print/kapak/node_modules/
+print/kapak/out/
+print/kindle/out/

@@ -664,3 +664,54 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   nav/hero/menüler/kicker/alt gezinme budanır, Basit/Teknik geçişi + h2 + demo paneli + "Ne oluyor?" + CTA kalır;
   window.__DEEPLINK_LOCK ile hash gezinmesi kapalı (support.js). Çıktı store/d/<slug>.html ×45 TR + store/d/en/<slug>.html ×45 EN,
   slug'lar qr-slugs.json (sha256(baskı|dil|N.j)[:10]). make_qr.mjs/assemble.py/export.py yeni adresleri kullanır; QR'lar ve el yazması yenilendi.
+- BASKIYA HAZIR PDF HATTI (2026-09-29, yazar kararı: şimdi kur, iç blok tam renk CMYK): print/typeset (Paged.js dizgi, print.css,
+  typeset.py, boxes.mjs, dizgi.sh, PDFX_def.ps, check.sh, check_qr.mjs) + print/kapak (kapak.json/mjs/sh). Çıktı print/kitap/ic-blok.pdf
+  (272 sayfa = 17 forma; 160×240 mm + 3 mm taşma; PDF 1.3, PDF/X-1a etiketi, OutputIntent, yalnız DeviceCMYK, tümü vektör, fontlar gömülü)
+  ve print/kitap/kapak.pdf (334,7×240 mm net, sırt 14,5 mm geçici). check.sh: sayfa 16'nın katı, TrimBox, fontlar, RGB yok, PDF/X, 45/45 QR
+  PDF'ten okundu. Bulunup çözülen: img-SVG'de belge fontu yüklenmiyor (inline), Paged.js body-justify son satırları yayıyor (p/li),
+  rgba/opacity/#rrggbbaa saydamlık → Ghostscript 41 sayfayı rasterleştiriyordu (düzleştirme), Type 3 sentetik kalın alt simge (tspan),
+  emoji (düşürüldü), adlı sayfa geçişi boş sayfa yaratıyordu (.rh). Kalan (yazar): ISBN/bandrol/matbaa bilgileri, kâğıt-sırt teyidi,
+  matbaa ICC profili, fiziksel prova QR testi; kapak tasarımı taslak.
+- KAPAK TASARIMI (2026-09-29): ilk taslak beğenilmedi; üç üretken vektör konsept (ag/kadran/vadi, print/kapak/kapak.mjs) hazırlandı,
+  yazar "Ağ (koyu)" seçti. Arka kapak metni ve yazar tanıtımı (author_bio) kapak.json'da TASLAK, yazar onayı gerekir. ISBN görselleri
+  print/kitap/isbn/ (dış kapak, iç kapak, içindekiler, künye).
+- İNGİLİZCE SÜRÜM → KDP (2026-09-29/30, yazar kararı: Kindle + renkli paperback; TR yerel matbaa paralel): KDP yardım sayfaları
+  doğrulandı (Türkçe desteklenmiyor; paperback %60 − baskı maliyeti; 6×9 in, 0.125 in taşma, iç kenar 0.5 in; Kindle %70 2,99–12,99 $).
+  print/STYLE-GUIDE-EN.md + check_style_en.py; assemble.py/typeset.py/dizgi.sh/check.sh/check_qr.mjs/kapak.mjs/kapak.sh dil+profil
+  parametreli (TR bayt bayt aynı). EN: M01 nihai (TR'den İngilizce yeniden yazım, 0 stil sorunu), answers/M01, front/ (4), back/
+  (glossary 78 terim, bibliography, index-terms 103). Hat testi: kdp-interior.pdf + kdp-cover.pdf + kdp-ebook-cover.jpg (1706×2560)
+  üretildi, denetim geçti (QR 6/45: yalnız M01 yazıldı). Kalan: M02–M08 EN (yazar M01 onayı sonrası), Kindle EPUB hattı, kapak.en.json
+  author_bio (yazar), KDP hesabı/ISBN/listeleme (yazar).
+- EN BÖLÜM 2–8 YAZILDI VE DENETLENDİ (2026-09-30): 7 yazıcı ajan (TR blueprint + EN kaynak metin birebir + EN figür tabloları), ardından
+  4 inceleme ajanı (sayısal yeniden hesap, mantık, dil, kılavuz, TR tutarlılığı, ön/arka bölümler). Uygulanan: A 11 (mantık/olgu; 7'si TR'de de
+  vardı ve TR'de de düzeltildi: M03 gradyan adımı yuvarlamaları, M05 sıcaklık/zar ve adım-4 piksel sayısı, M06 "altı adımda model yok",
+  bağlam sıçraması, beş kutu; M08 "2,5 sütunu"; M02 "beş şekil"), B ~45 dil/netlik, C seçilmiş (demo→figure/digital version; rulebook;
+  glossary Tom; index alias temizliği; künyeye matbaa satırı). Sınav şıkları: export deterministik karışımı her bölümde aynı harf desenini
+  (d,a,a,b,c,d) veriyordu → basılı sürümde seed = soru + 10×bölüm; 16 bölüm dosyası yeniden sıralandı, cevap anahtarları export ile
+  yenilendi, 50+50 soru doğrulandı. Denetleyiciler: check_style_en.py (0 sorun; tablo satırı ve kaynak ifade istisnaları),
+  check_consistency_en.py (10 kalan fark, hepsi gerekçeli), check_verbatim_en.py + check_verbatim_diff.py (42 uyarlama, notlarda),
+  codespell temiz. Kindle: print/kindle (render_figs.sh PNG 1,8 MB, kindle.py, build.sh → AI-for-Everyone.epub, epubcheck 0 hata).
+  Yazara kalan: künye/teşekkür yer tutucuları, kapak.en.json author_bio, EDITORIAL NOTES'taki "author to review" maddeleri.
+- TR 4 AJANLI İNCELEME VE DÜZELTME TURU (2026-09-30): Bölüm 1–8 + ön/arka bölümler; her sayı yeniden hesaplandı (hesap hatası: 0 yeni;
+  M05 5.8 "iki kat" → 1.6 kat), figür↔metin eşleşmesi SVG etiketleriyle denetlendi. Uygulanan: A 17 (figürü değil ekranı anlatan
+  Kurulum'lar: 2.4 Markov, 4.4 evrişim yerleşimi/renkleri, 2.2 zincir işareti; Turing "ekle" etiketi ve bant "göz"ü; M06 blok sırası;
+  6.1 eşik 60–84; dizin terimleri), B ~45 dil/netlik, C seçilmiş ("modül"→"bölüm" basılıda; "red"→"ret"; emoji; dokun/bas politikası
+  M05'te de uygulandı). Figür düzeltmeleri (iki dil): 1.2 yön etiketi ("Sayıyı yaz"/"Write a number"), 2.4 "GEÇİŞ MATRİSİ", 3.3 lejant
+  "koyu grup"/"dark group", 5.2 "YİYECEK", 5.4 "gösterimde", 6.x uzun tireler ve "Calculator"→"hesap makinesi", 7.2 "ret", 8.4 tik
+  ondalıkları nokta; tr-baseline 11 figür için güncellendi (check_i18n temiz). Yeni denetleyiciler check_style_tr.py, check_verbatim_tr.py;
+  dijital TR↔EN yapı karşılaştırması temiz (gömülü metin farkları export çıkarımı, içerik değil). Kaynakça: Vinge genel kaynaklara,
+  Turing 1950 → Bölüm 8. Kalan (yazar): REDAKSİYON NOTLARI / EDITORIAL-NOTES'taki "yazar baksın" maddeleri; künye/teşekkür yer tutucuları.
+- ISBN (basılı TR) 978-625-00-5211-2 ve "Eylül 2026" künye/önsöz/kapak barkodu/matbaa notuna işlendi (2026-09-30). Aynı ISBN EN için
+  GEÇERSİZ: EN paperback ayrı ISBN ister (KDP ücretsiz ISBN ya da ajanstan yeni numara); Kindle'a ISBN gerekmez.
+- "YAZAR BAKSIN" MADDELERİ KAPATILDI + İNSANLAŞTIRMA GEÇİŞİ (2026-09-30): iki dilde 8 editör ajan (bölüm çiftleri + ön/arka), rapor
+  print/kitap/humanize-{tr,en}-report.md, özet humanize-ozet.md. Temizlenen kalıplar: şablon köprüler, "tam da/işte/yani/dürüst",
+  "exactly/just/really", "… budur" punchline'ları, "Ekranda…kâğıtta" çerçeveleri, slogan tekrarları, kavram tırnakları, üretim sızıntıları,
+  teknik "Ne oluyor?" tekrarları (yalnız basılıdan kırpıldı; dijitalde kalır). TR ~400, EN ~300 cümle; kaynak paragraf değişikliği TR 127,
+  EN 98 satır (bölüm dosyalarında <!-- SOURCE-CHANGES --> blokları). Dijitale aktarım: print/apply_source_changes.py üç kademeli
+  (birebir / book.json'a fuzzy + kelime-düzeyi taşıma / elle web-overrides-<dil>.md; iki dil için 2 gözden geçirme ajanı) → TR 114, EN 79
+  web kaynak satırı değişti; betikler sözdizimsel geçerli; export.py --lang tr|en + build.py yenilendi (web, store/d ×90, gated).
+  Basılıda ekran fiili kalmadı (4.2 kaydıraç, 7.2 "gösterim"); notlar print/notes_digest.py ile toplanıyor. Denetimler: style tr/en 0,
+  consistency 6 gerekçeli fark, verbatim farkları tümü gerekçeli. Çıktılar yenilendi ve check.sh geçti: TR ic-blok.pdf 256 s. (246+10 Notlar,
+  16 forma, sırt 14 mm, barkod) + kapak.pdf; EN kdp-interior.pdf 248 s. (kapak.en.json pages 258→248, sırt 14,19 mm) + kdp-cover.pdf +
+  kdp-ebook-cover.jpg + AI-for-Everyone.epub (epubcheck 0). QR 45/45 iki dilde. Yazara kalan: python3 upload_book.py + git push;
+  kırpılan teknik tekrarlar dijitalde de kırpılsın mı; kapak.json author_bio yazım hataları, kapak.en.json author_bio, EN ISBN.
