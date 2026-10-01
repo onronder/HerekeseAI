@@ -43,9 +43,9 @@ export default {
     gan: {
       target: 'HEDEF (GERÇEK GÖRÜNTÜ)',
       intro: ['Ortada dolu daire; 64 pikselin 24’ü koyu.',
-        'Her karede: üreticinin çıktısı, ayırt edicinin sahte olasılığı ve hükmü.',
+        'Her karede: üretici çıktısı, P(sahte) (sahtelik olasılığı) ve hüküm.',
         'Sahte olasılığı %50’nin üstü “Sahte!”, altı “Gerçek?”.'],
-      round: (r) => `TUR ${r}`, generator: 'üretici', fakeProb: 'sahte olasılığı',
+      round: (r) => `TUR ${r}`, generator: 'üretici', fakeProb: 'P(sahte)', // R073: uzun etiket sağ sütunda kesiliyordu
       verdict: { fake: 'Sahte!', real: 'Gerçek?' }, matching: (n) => `${n}/64 uyuşan`,
       mdTitle: 'Turlar',
       mdRule: 'p(r) = max(6, 95 − 11·r) %, piksel: rand(i) < r/8 ise hedef, değilse gürültü (tohum sin(i·12.9898+78.233)·43758.5453)',
@@ -92,10 +92,10 @@ export default {
     gan: {
       target: 'TARGET (REAL IMAGE)',
       intro: ['A filled circle in the middle; 24 of the 64 pixels are dark.',
-        'Per frame: generator output, discriminator’s fake probability, verdict.',
+        'Per frame: generator output, P(fake) (the fake probability), verdict.',
         'Fake probability above 50% means “Fake!”, below means “Real?”.'],
-      round: (r) => `ROUND ${r}`, generator: 'generator', fakeProb: 'fake prob.',
-      verdict: { fake: 'Fake!', real: 'Real?' }, matching: (n) => `${n}/64 matching`,
+      round: (r) => `ROUND ${r}`, generator: 'generator', fakeProb: 'P(fake)',
+      verdict: { fake: 'Fake!', real: 'Real?' }, matching: (n) => `${n}/64 match`,
       mdTitle: 'Rounds',
       mdRule: 'p(r) = max(6, 95 − 11·r) %, pixel: target if rand(i) < r/8, otherwise noise (seed sin(i·12.9898+78.233)·43758.5453)',
       mdHead: '| Round | Fake probability | Verdict | Matching pixels |',

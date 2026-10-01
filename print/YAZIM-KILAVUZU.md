@@ -25,7 +25,9 @@ getirildikten sonra `print/assemble.py` ile tek parça kitaba birleştirilir. Ka
 - Yabancı terim ilk geçişte Türkçe karşılığının ardından parantez içinde verilir ("yanlılık (bias)", "vektör gösterimi (embedding)"); sonra yalnız Türkçesi.
   Aynı sözcüğün farklı kavramları ayrı karşılık alır: nöron için "sabit terim (bias)", toplumsal bağlam için "yanlılık (bias)".
 - Şekil ve karşılaştırma başlıklarında "vs" yok; "ile" ya da "karşı" kullanılır ("Hedef ile niyet", "Üretici ile ayırt edici"). Kaynak metinden gelen
-  "vs"li demo başlıkları (Şekil 2.3, 2.6, 4.6) bu kurala göre uyarlanır ve REDAKSİYON NOTLARI'na yazılır.
+  "vs"li demo başlıkları (Şekil 2.3, 2.6, 4.6) bu kurala göre uyarlanır ve REDAKSİYON NOTLARI'na yazılır. Dijital sürümün bölüm/demo
+  başlıkları da aynı kurala getirildi (2026-10-01 doğrulama turu: "sezgisiz ile sezgili", "Düzenliler ve dağınıklar (neats ve scruffies)",
+  "Üretici ile ayırt edici"); `print/kitap/qa/dogrulama33.py` R095 testi dijital başlık ve etiketlerde "vs" arar.
 - Formüller kaynaktaki Unicode biçimiyle kalır: θ ← θ − η·∇L(θ). LaTeX yok.
 - Teknik metinde kaynaktaki terimler ve formüller olduğu gibi kalır; yalnız yeni eklenen cümleler doğal akar.
 

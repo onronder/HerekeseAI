@@ -31,23 +31,23 @@ The best part is that the machine follows those links and reaches facts nobody e
 **Figure 2.1 · Inference along a knowledge chain**
 ![Figure 2.1](../../figures/out/en/figure-2-1-chain.svg)
 
-*Setup.* The figure shows five boxes in a single row: Tom, Cat, Mammal, Animal, Living thing. Every arrow between two boxes means “is a”: Tom is a Cat, a Cat is a Mammal, and so on. The first arrow ties an individual to its class: Tom is an instance of the class Cat. The other arrows tie a class to a larger class: Cat is a subclass of Mammal. The figure draws both with the same arrow. These four arrows are the machine’s entire knowledge; it knows nothing else. Under the chain are four queries; for each one the machine walks the chain from the start and states its verdict.
+*Setup.* The figure shows five boxes in a single row: Tom, Cat, Mammal, Animal, Living thing. Two kinds of arrow connect the boxes. The first arrow is labeled “instance of” and ties an individual to its class: Tom is an instance of the class Cat. The other three arrows are labeled “subclass of” and tie a class to a larger class: Cat is a subclass of Mammal, Mammal of Animal, Animal of Living thing. These four arrows are the machine’s entire knowledge; it knows nothing else. Under the chain are four queries; for each one the machine walks the chain from the start and states its verdict.
 
 *Step by step.* Follow the query “Is Tom a Mammal?” first.
 
-1. The machine starts at Tom. The word it is looking for is “Mammal.” Is Tom himself a Mammal? No; but an arrow leaves Tom: Cat.
-2. It moves on to Cat. Is Cat “Mammal”? No; an arrow leaves Cat as well: Mammal.
-3. It arrives at Mammal. The word it was looking for is found. In the figure the first three boxes are shaded and the verdict reads “Yes: ‘Mammal’ found in the chain (transitivity).”
+1. The machine starts at Tom. The class name it is looking for is “Mammal.” Tom is not a class but an individual; the “instance of” arrow leaving Tom says that Tom belongs to the class Cat.
+2. It moves on to the Cat box. This box is not named “Mammal”; the “subclass of” arrow leaving Cat leads to Mammal.
+3. It arrives at the Mammal box. The name matches: Tom is an instance of Cat, and Cat is a subclass of Mammal, so Tom is a mammal. In the figure the first three boxes are shaded and the verdict reads “Yes: ‘Mammal’ found in the chain (transitivity).”
 
 It followed two arrows. Nobody wrote the sentence “Tom is a Mammal”; the machine derived it.
 
 Now the query “Is Tom a Plant?”
 
-1. Tom: not a Plant; arrow to Cat.
-2. Cat: no; arrow to Mammal.
-3. Mammal: no; arrow to Animal.
-4. Animal: no; arrow to Living thing.
-5. Living thing: no. No arrow leaves Living thing; the chain has ended. The verdict reads “Unknown: ‘Plant’ is not in the knowledge base.”
+1. Tom: an individual; the “instance of” arrow leads to Cat.
+2. Cat: the box is not named “Plant”; the “subclass of” arrow leads to Mammal.
+3. Mammal: no match; arrow to Animal.
+4. Animal: no match; arrow to Living thing.
+5. Living thing: no match. No arrow leaves Living thing; the chain has ended. The verdict reads “Unknown: ‘Plant’ is not in the knowledge base.”
 
 All four queries:
 
@@ -68,9 +68,9 @@ The verdict is “Unknown,” not “No.” The machine does not claim that Tom 
 
 In symbolic AI, knowledge is encoded via knowledge representation: semantic networks, frames, ontologies or logical propositions. Entities and their relations (e.g. is-a, has-a) are defined explicitly.
 
-Inference is the application of rules over these representations. The demonstration in Figure 2.1 uses transitivity in an is-a hierarchy. An ontology keeps two links apart: Tom is an instance of the class Cat (instance-of); Cat is a subclass of Mammal (subclass-of). If “Tom instance-of Cat” and “Cat subclass-of Mammal,” then “Tom instance-of Mammal” is derived, so Tom is a mammal. The figure draws both links as one arrow type, “is a.” This is the essence of symbolic reasoning.
+Inference is the application of rules over these representations. The demonstration in Figure 2.1 uses transitivity in an is-a hierarchy. An ontology keeps two links apart: Tom is an instance of the class Cat (instance-of); Cat is a subclass of Mammal (subclass-of). If “Tom instance-of Cat” and “Cat subclass-of Mammal,” then “Tom instance-of Mammal” is derived, so Tom is a mammal. Figure 2.1 labels the two links differently: the first arrow “instance of,” the others “subclass of.” This is the essence of symbolic reasoning.
 
-The knowledge base contains only consecutive “is-a” links. For each query the inference engine follows the chain using the transitivity rule: if the target is in the chain, “Yes”; otherwise, “Unknown.”
+The knowledge base holds one instance-of link followed by subclass-of links. For each query the inference engine follows the chain using the transitivity rule: if the target is in the chain, “Yes”; otherwise, “Unknown.”
 
 Written formally, the transitivity rule between classes reads: subclass-of(A, B) ∧ subclass-of(B, C) → subclass-of(A, C). For an instance: instance-of(a, B) ∧ subclass-of(B, C) → instance-of(a, C). The engine applies this rule over and over along the chain; on a five-node chain it either reaches the target or runs off the end within four steps.
 
@@ -326,7 +326,7 @@ This approach is called “classical” or “symbolic” AI. Logic, rules, sear
 How would you teach a machine about Tom? It cannot see him or pet him; it knows him only through the sentences you write: “Tom is a cat,” “a cat is a mammal,” “a mammal is an animal.” That is how classical AI stores knowledge: explicit symbols and the links between them. ||| How would you teach a machine about Tom? It cannot see him or pet him; it knows him only through the sentences you write: “Tom is a cat,” “a cat is a mammal,” “a mammal is an animal.” Classical AI stores knowledge in that form: explicit symbols and the links between them.
 Here is the lovely part: The machine follows those links and reaches facts nobody ever told it. It never heard the sentence “Tom is an animal”; but walking the chain link by link, it finds that out itself. Figure 2.1 asks four questions; read how the machine “thinks” there, step by step. ||| The best part is that the machine follows those links and reaches facts nobody ever told it. It never heard the sentence “Tom is an animal”; but walking the chain link by link, it finds that out itself. Figure 2.1 asks four questions; read how the machine “thinks” there, step by step.
 All the machine really holds is “what kind of thing is what”: Tom is a cat, a cat is a mammal... When you ask, it follows the chain link by link and reaches a fact nobody ever told it. And if it isn’t in the chain, it honestly says “unknown.” ||| All the machine holds is “what kind of thing is what”: Tom is a cat, a cat is a mammal... When you ask, it follows the chain link by link and reaches a fact nobody ever told it. And if it isn’t in the chain, it admits it: “unknown.”
-The knowledge base contains only consecutive “is-a” links. Pick a query; the inference engine follows the chain using the transitivity rule. If the target is in the chain: “Yes”; otherwise: “Unknown.” ||| The knowledge base contains only consecutive “is-a” links. For each query the inference engine follows the chain using the transitivity rule: if the target is in the chain, “Yes”; otherwise, “Unknown.”
+The knowledge base contains only consecutive “is-a” links. Pick a query; the inference engine follows the chain using the transitivity rule. If the target is in the chain: “Yes”; otherwise: “Unknown.” ||| The knowledge base holds one instance-of link followed by subclass-of links. For each query the inference engine follows the chain using the transitivity rule: if the target is in the chain, “Yes”; otherwise, “Unknown.”
 In the 1980s these apprentices worked everywhere, from medicine to engineering. Below is a tiny one: Switch the conditions on and off in your head; see in Figure 2.2 which rule “fires” and how the advice is born. ||| In the 1980s these apprentices worked everywhere, from medicine to engineering. Below is a tiny one: switch the conditions on and off in your head; see in Figure 2.2 which rule “fires” and how the advice is born.
 The system checks every condition that is on against its rules: whichever rule’s “IF” part holds, that rule fires and gives its advice. Look at R5: it waits for another rule’s result. That is how rules chain together. ||| The system checks every condition that is on against its rules: whichever rule’s “IF” part holds, that rule fires and gives its advice. R5 is the odd one out: it waits for another rule’s result. One rule feeding the next is chaining.
 Facts in working memory fire the production rules whose conditions match (forward chaining). R5 is a chain: it triggers only if R1 fired (umbrella) and it is windy. ||| R5 is a chain: it triggers only if R1 fired (umbrella) and it is windy.
@@ -379,4 +379,5 @@ Mathematical rigour is essential ||| Mathematical rigor is essential
 - Margin notes moved after the Simple paragraphs and before the Figure block, as in Chapter 1 and the Turkish edition.
 - 2026-10-01 correction document: R011 (learning not the successor of the symbolic collapse; “already being studied” + parallel development: 2.1 Technical, 2.6 Simple, 2.6 Technical, takeaways), R012 (instance-of / subclass-of kept apart: Setup, 2.2 Technical, formal rule, takeaways; answers/M02), R013 (BFS guarantee tied to equal edge costs: Technical[0], step 4, What is happening, takeaways; quiz 3 question narrowed to greedy search), R014 (greedy and A* separated: margin note, Step-by-step heading and table “Greedy informed”, What is happening, Technical admissibility + consistency/reopening in graph search; answers/M02), R015 (Markov: conditional independence given the present; finite/irreducible/aperiodic chain converges to a unique stationary distribution; rows sum to 1; πP = π and Σπᵢ = 1 on separate lines; margin note, Setup, Step by step, What is happening, Technical, takeaways), R016 (“in two words” → “in two ideas”; “rigour” → “rigor” in the Figure 2.5 table, the Self-test prose and answers/M02; the demo item label is listed in SOURCE-CHANGES for the digital edition), R066 (no bias/embedding usage in Chapters 1–2; nothing to do).
 - 2026-09-30 humanizing pass: report findings applied (M02 :21–:268, answers :33); "On screen … on paper" frames removed from Figures 2.4 and 2.5; "the digital version" → "the live demo"; the ✓/✗ verdict marks dropped and the figure's verdict lines quoted; Figure 2.5 hand-holding cut to the one-sentence test; "exactly", "That is why", "Notice", "Here is the lovely part", "just", "really", "we" removed; Figure 2.4 What is happening now says "the shares" (the EN figure has no bars); technical "What is happening?" trimmed where it repeated the Technical paragraphs (Figures 2.2, 2.4, 2.5). Source paragraph changes are listed in the SOURCE-CHANGES block above for the digital edition.
+- 2026-10-01 verification round (R012): Figure 2.1 shows two labeled edge types ("instance of" individual → class, "subclass of" class → superclass) in Setup, both Step-by-step queries, Technical and What is happening; the figure generator draws the labels above the arrows and the digital chain shows the same labels.
 -->

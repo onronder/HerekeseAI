@@ -48,7 +48,7 @@ Bilgi temsili üzerinde kurallar uygulayarak açıkça söylenmemiş bilgiye ula
 Searle’ün düşünce deneyi: kural kitabıyla kusursuz Çince cevaplar üreten ama tek kelime Çince anlamayan kişi. Sembol işlemenin anlamaya yetmediğini savunur; karşı görüşler de güçlüdür.
 
 **Dar yapay zekâ (narrow AI)** · Bölüm 1.6
-Belirli görevlerde çalışan, alanlar arasında aktarılabilir genel yeteneği olmayan sistem. “Dar mı?” sorusunun ölçütü kaç iş yaptığı değil, eğitildiği işlerin dışına çıkıp çıkamadığıdır. Bugünkü bütün YZ sistemleri, çok görevli sohbet modelleri dahil, bu sınıftadır; dar olmak tek bir işe sıkışmak demek değildir, çok iş yapabilmek de tek başına genel olmak demek değildir. Gündelik dilde “zayıf YZ” de denir; Searle’ün zayıf/güçlü ayrımı ise ayrı, felsefi bir sorudur. Bkz. Güçlü yapay zekâ.
+Belirli görevlerde çalışan, alanlar arasında aktarılabilir genel yeteneği olmayan sistem. “Dar mı?” sorusunun ölçütü kaç iş yaptığı değil, insan düzeyinde alanlar arası genel öğrenme ve aktarım gösterip göstermediğidir; istemdeki örneklerle yeni bir işe bir ölçüde uyum gösteren (bağlam içi uyum) bir model de dar sınıfta kalabilir. Bugünkü bütün YZ sistemleri, çok görevli sohbet modelleri dahil, bu sınıftadır; dar olmak tek bir işe sıkışmak demek değildir, çok iş yapabilmek de tek başına genel olmak demek değildir. Gündelik dilde “zayıf YZ” de denir; Searle’ün zayıf/güçlü ayrımı ise ayrı, felsefi bir sorudur. Bkz. Güçlü yapay zekâ.
 
 **Deepfake (sentetik medya)** · Bölüm 7.4
 Sentetik medya, üretken modellerle (GAN, difüzyon, ses klonlama) üretilen içeriğin genel adıdır; deepfake bunun gerçek bir kişiyi taklit eden türüdür: hiç yaşanmamış konuşma, çekilmemiş fotoğraf. Tespit bir silahlanma yarışıdır ve kesin bir “gerçek/sahte” hükmü vermez: bir ipucu incelemeye götürür, kararı bağımsız doğrulama verir. İçeriğin yapay üretilmiş olması ile anlattığı olayın doğru olması ayrı sorulardır; en sağlam savunma kaynak doğrulama ve şüpheciliktir.
@@ -75,7 +75,7 @@ Her token’ın, anlamı için dizideki hangi token’lara bakacağını öğren
 YZ’deki yöntemsel gerilim: her adımın temiz matematikle kanıtlanmasını isteyenler (neats) ile “çalışıyorsa iyidir, teorisini sonra buluruz” diyenler (scruffies). Bugünün YZ’si ikisinin karışımıdır.
 
 **Etiket (label)** · Bölüm 3.2
-Bir eğitim örneğinin doğru cevabı: “Spam” ya da “Normal”. Etiket kategorikse sınıflandırma, sayısalsa regresyon görevi doğar. Bkz. Özellik.
+Bir eğitim örneğinin doğru cevabı: “Spam” ya da “Normal”. Etiket bir kategoriyse sınıflandırma, ölçülen bir nicelikse (fiyat, sıcaklık gibi sürekli bir sayı) regresyon görevi doğar. Kategoriler sayıyla kodlanabilir (ör. 0 = Normal, 1 = Spam); bu onları regresyon hedefi yapmaz. Bkz. Özellik.
 
 **Evrişimli sinir ağı (convolutional neural network, CNN)** · Bölüm 4.5
 Küçük bir filtreyi (çekirdek) görüntü üzerinde gezdirip yerel desenleri (kenar, köşe) arayan ve bulduklarını özellik haritasına işleyen ağ. Aynı filtre her yerde kullanılır (ağırlık paylaşımı); girdi kayınca özellik haritası da kayar (ötelemeye eşdeğişkenlik). Az parametreyle öğrenir.
@@ -124,6 +124,12 @@ Kararını veren ama gerekçesini anlatamayan model. Kredi, işe alım gibi kara
 
 **Kayıp (loss)** · Bölüm 3.6
 Modelin ne kadar yanıldığının ölçüsü; ne kadar büyükse vadide o kadar yukarıdasın. Eğitim, kaybı en aza indirecek parametreleri bulmaktır.
+
+**Kaynaklarla temellendirme (grounding)** · Bölüm 6.3
+Modelin cevabını isteme eklenen kaynak metinlere (belge, veri, arama sonucu) dayandırması; böylece cevap bu kaynaklara kadar izlenebilir. RAG bunun yaygın bir yoludur. Temellendirme doğruluğu artırır ama garanti etmez; kaynak yanlış ya da eksikse cevap da yanlış olabilir. Bkz. RAG.
+
+**Koruyucu kontroller (guardrails)** · Bölüm 6.5
+Bir YZ uygulamasında istenmeyen girdi ve çıktıları süzen, araç izinlerini sınırlayan ve riskli eylemleri onaya bağlayan kurallar ve denetimler. Bkz. Orkestrasyon.
 
 **Kümeleme (clustering)** · Bölüm 3.5
 Etiketsiz veriyi benzerliğe göre kendiliğinden gruplama; kutudaki düğmeleri ayırmak gibi. k-ortalamalar (k-means) noktaları en yakın küme merkezine atar, merkezleri günceller.
@@ -201,10 +207,10 @@ Dil modelinin metni böldüğü küçük lego parçası: bazen bir kelime, bazen
 Birçok modelin tahminini birleştirerek (oylama, bagging, boosting) tek modelden daha iyi ve kararlı sonuç alma. Rastgele orman ve gradyan artırma en bilinen örnekleridir.
 
 **Transformer** · Bölüm 5.1
-Dikkat mekanizmasına dayanan mimari (2017, “Attention Is All You Need”). Eğitimde dizinin konumlarını birlikte (paralel) işler; otoregresif üretim ise token’ları sırayla ekler ve nedensel maskeyle her konum yalnız öncekileri görür. Bugünün büyük dil modellerinin temeli.
+Dikkat mekanizmasına dayanan mimari (2017, “Attention Is All You Need”). Eğitimde dizinin konumlarını birlikte (paralel) işler; otoregresif üretim ise token’ları sırayla ekler ve nedensel maskeyle her konum kendisini ve önceki konumları görür; sonrakiler maskelenir. Bugünün büyük dil modellerinin temeli.
 
 **Turing makinesi (Turing machine)** · Bölüm 1.4
-Bandı okuyan, yazan ve iki yana kayan tek bir kutucuktan oluşan soyut makine; prensipte her hesabı yapabilir. Hesaplanabilirliğin biçimsel temeli (1936).
+Bandı okuyan, yazan ve iki yana kayan tek bir kutucuktan oluşan soyut makine. Kurallarına göre belirli bir işi yapar (Şekil 1.3’teki makine yalnızca 1 ekler); evrensel Turing makinesi ise doğru program ve yeterli bant verildiğinde algoritmayla hesaplanabilen her işlemi yürütebilir. Hesaplanamayan problemler de vardır. Hesaplanabilirliğin biçimsel temeli (1936).
 
 **Turing testi (Turing test)** · Bölüm 8.2
 Turing’in taklit oyunu (1950): makine yazışmada insandan ayırt edilemiyorsa yeterli sayılır. Davranışçı bir ölçüttür; akıcı taklit, anlama ya da bilinç kanıtı değildir.
@@ -232,6 +238,9 @@ Yapay nöronların katman katman dizilmesiyle kurulan öğrenme makinesi; özün
 
 **Yapay zekâ (artificial intelligence, YZ)** · Bölüm 1.1
 İnsan zekâsı gerektiren görevleri yerine getirebilen sistemler; alanın pragmatik tanımı. Hesaplama kuramı ile zihin felsefesinin kesişiminde doğdu.
+
+**Yedek yönteme geçiş (fallback)** · Bölüm 6.5
+Bir adım başarısız olduğunda (araç hata verir, kaynak bulunamaz, model emin değildir) sistemin önceden belirlenmiş daha güvenli bir yola geçmesi: başka bir araç, kısa bir “bilmiyorum” cevabı ya da işi bir insana devretmek. Bkz. Orkestrasyon.
 
 **Yinelemeli sinir ağı (recurrent neural network, RNN)** · Bölüm 4.6
 Diziyi kelime kelime okuyup her adımda bir hafıza (gizli durum) taşıyan ağ: hₜ = tanh(Wₕ·hₜ₋₁ + Wₓ·xₜ). Aynı hücre ve aynı ağırlıklar her adımda yeniden kullanılır; “yinelemeli” (recurrent) adı buradan gelir. Ağaç yapılı “özyinelemeli” (recursive) ağlardan ayrıdır. Uzun bağımlılıklarda kaybolan gradyanla zorlanır; LSTM bunu hafifletir. Yerini büyük ölçüde Transformer aldı.

@@ -4,8 +4,9 @@
 export default {
   tr: {
     chain: {
-      kb: (n) => `BİLGİ TABANI · ${n} BAĞ (“bir …dır”)`,
-      link: 'bir',
+      kb: (n) => `BİLGİ TABANI · ${n} BAĞ · 1 “ÖRNEĞİ”, ${n - 1} “ALT SINIFI”`, // R012: instance-of ile subclass-of ayrı
+      linkInst: 'örneği',
+      linkSub: 'alt sınıfı',
       query: (k) => `SORU ${k}`,
       walked: (n) => `${n} ok izlendi`,
       walkedEnd: (n) => `${n} ok izlendi · zincir bitti`,
@@ -56,8 +57,9 @@ export default {
   },
   en: {
     chain: {
-      kb: (n) => `KNOWLEDGE BASE · ${n} LINKS (“is a …”)`,
-      link: 'is a',
+      kb: (n) => `KNOWLEDGE BASE · ${n} LINKS · 1 “INSTANCE OF”, ${n - 1} “SUBCLASS OF”`, // R012
+      linkInst: 'instance of',
+      linkSub: 'subclass of',
       query: (k) => `QUERY ${k}`,
       walked: (n) => `${n} arrows followed`,
       walkedEnd: (n) => `${n} arrows followed · chain ended`,

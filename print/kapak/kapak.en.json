@@ -1,6 +1,6 @@
 {
   "isbn": "",
-  "pages": 272,
+  "pages": 278,
   "spine_mm": 16.0,
   "paper_note": "KDP: spine = pages × 0.002252 in (standard color, white paper). Set 'pages' to the final interior page count; spine_mm is ignored when pages is set.",
   "price": "",

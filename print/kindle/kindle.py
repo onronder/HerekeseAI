@@ -30,8 +30,16 @@ def alt_fix(m):
     first = ''
     if setup:
         txt = re.sub(r'<[^>]+>', '', setup.group(1)); first = re.split(r'(?<=[.!?])\s', txt.strip())[0]
-    alt = H.escape(f'Figure {num}, {re.sub(r"<[^>]+>", "", title).strip()}. {first}'.strip(), quote=True)
-    return pre + num + ' · ' + title + fig_html.replace(f'alt="Figure {num}"', f'alt="{alt}"') + post
+    alt = H.escape(H.unescape(f'Figure {num}, {re.sub(r"<[^>]+>", "", title).strip()}. {first}'.strip()), quote=True)
+    sid = 'fig-' + num.replace('.', '-') + '-setup'
+    if setup:  # uzun açıklama: görsel, Kurulum paragrafına aria-describedby ile bağlanır (ekran okuyucu tam tarifi okur)
+        post = post.replace(setup.group(0), f'<section id="{sid}" class="setup">' + setup.group(0) + '</section>', 1)  # pandoc <p> id'sini düşürür, bölüm kabını korur
+        fig_html = fig_html.replace(f'alt="Figure {num}"', f'alt="{alt}" aria-describedby="{sid}"')
+    else:
+        fig_html = fig_html.replace(f'alt="Figure {num}"', f'alt="{alt}"')
+    fid = 'fig-' + num.replace('.', '-')
+    link = f'<p class="figdata"><a href="#{fid}-data">Figure {num} data (text version)</a></p>'
+    return pre.replace('<p>', f'<p><span id="{fid}"></span>', 1) + num + ' · ' + title + fig_html + link + post
 body = re.sub(r'(<p><strong>Figure )(\d+\.\d+) · ([^<]*)(</strong>\s*<figure>.*?</figure>\s*</p>)((?:(?!<figure>).){0,4000})', alt_fix, body, flags=re.S)
 # QR: görsel yerine bağlantı ("Live demo: [QR] url" → tek düğme)
 body = re.sub(r' ?Live demo: <span class="qr"><img src="[^"]*qr-(\d+)-(\d+)\.svg" alt="[^"]*"><span class="mono">([^<]+)</span></span>',
@@ -71,6 +79,37 @@ if i >= 0:
     head, tail = body[:i], body[i:]
     tail = re.sub(r'<p>(<strong>.*?)</p>', ix, tail, count=1, flags=re.S)
     body = head + tail
+# R099: şekil verisinin metin eşdeğeri. Her şeklin üretici çıktısı (figures/out/en/figure-N-j-*.md: tablolar, koordinatlar, sıralar)
+# okur diline arındırılıp "Figure Data" ekine konur; şekilden ek bölüme, ekten şekle bağlantı vardır (ekran okuyucu ve küçük ekran için).
+import glob, subprocess
+FIGMD = os.path.join(ROOT, 'print', 'figures', 'out', 'en')
+BAN = re.compile(r'demo-data|\bR\d{3}\b|\bprint|on-screen|screen color|emoji|KEEP_EMOJI|source code|\bweb\b|\bdemo\b|duotone|INK|EMBER', re.I)
+FIXES = [(r'answers/M0\d\.md', 'the Answer Key'), (r'U\[i mod 8\]', 'the (i mod 8)-th U value'), (r'\s*\([^()]*(?:demo-data|print/)[^()]*\)', ''),
+         (r'\| group \(screen color\) \| print \| points \|', '| group | points |'), (r'\|---\|---\|---\|(?=\n\| green)', '|---|---|'),
+         (r'\| green \| dark \(INK\) \|', '| dark |'), (r'\| orange \| accent \(EMBER\) \|', '| orange |'),
+         (r'Bar percentages \(30/70/100\) are from the source code; illustrative levels', 'Bar percentages (30/70/100) are illustrative levels'),
+         (r'(\| Intelligence type \| What it means \| AI today \| )Bar( \|)', r'\1Bar (illustrative level, not a measured score)\2')]
+def md_clean(md):
+    for a, b in FIXES: md = re.sub(a, b, md)
+    out = []
+    for l in md.split('\n')[1:]:
+        if l.startswith('|') or not l.strip(): out.append(l); continue
+        q = l.startswith('>'); body_ = l[1:].strip() if q else l.strip()
+        keep = [x for x in re.split(r'(?<=[.;])\s+', body_) if x and not BAN.search(x)]
+        if keep: out.append(('> ' if q else '') + ' '.join(keep))
+    return '\n'.join(out).strip()
+def fig_appendix():
+    files = sorted(glob.glob(os.path.join(FIGMD, 'figure-*-*-*.md')), key=lambda f: [int(x) for x in re.findall(r'figure-(\d+)-(\d+)-', f)[0]])
+    parts = ['<h1>Figure Data</h1>', '<p>Text versions of what each figure draws: the tables, coordinates and orders behind the pictures. Each entry links back to its figure.</p>']
+    for f in files:
+        a, b = re.findall(r'figure-(\d+)-(\d+)-', f)[0]; num = f'{a}.{b}'; fid = f'fig-{a}-{b}'
+        md = open(f, encoding='utf-8').read(); title = md.split('\n', 1)[0].lstrip('# ').strip()
+        h = subprocess.run(['pandoc', '-f', 'gfm', '-t', 'html'], input=md_clean(md), capture_output=True, text=True, check=True).stdout
+        parts.append(f'<h3 id="{fid}-data" class="unlisted">Figure {num} · {H.escape(title)}</h3>\n{h}<p class="figdata"><a href="#{fid}">Back to Figure {num}</a></p>')
+    return '\n'.join(parts) + '\n'
+_i = body.find('<h1>Index</h1>')
+assert _i > 0, 'Index başlığı yok'
+body = body[:_i] + fig_appendix() + body[_i:]
 # sayfa sonu ve dizin notu
 body = body.replace('<hr class="pb">', '')
 body = body.replace('Page numbers are added at typesetting.', 'Entries link to the section where the term appears.')
@@ -79,8 +118,13 @@ SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁽⁾ⁿⁱ'; SUB = '₀₁₂₃₄₅
 SUPMAP = dict(zip(SUP, '0123456789+-()ni')); SUBMAP = dict(zip(SUB, '0123456789+-()aeoxklmnpst'))
 def to_sup(m): return '<sup>' + ''.join(SUPMAP.get(c, c) for c in m.group(0)) + '</sup>'
 def to_sub(m): return '<sub>' + ''.join(SUBMAP.get(c, c) for c in m.group(0)) + '</sub>'
-body = re.sub('[' + SUP + '](?:[' + SUP + '·])*', to_sup, body)
-body = re.sub('[' + SUB + ']+', to_sub, body)
+# R099: yalnız metin düğümlerinde dönüştür; öznitelik değerleri (alt) okunur Unicode olarak kalır (eskiden alt içine ham <sup> düşüyordu)
+_parts = re.split(r'(<[^>]+>)', body)
+for _i, _p in enumerate(_parts):
+    if _p.startswith('<'): continue
+    _p = re.sub('[' + SUP + '](?:[' + SUP + '·])*', to_sup, _p)
+    _parts[_i] = re.sub('[' + SUB + ']+', to_sub, _p)
+body = ''.join(_parts)
 # bölüm kimlikleri: h1'e id ver (pandoc bölüm dosyalarını h1'de böler)
 def h1id(m):
     t = re.sub(r'<[^>]+>', '', m.group(1)); s = re.sub(r'[^a-z0-9]+', '-', t.lower()).strip('-')

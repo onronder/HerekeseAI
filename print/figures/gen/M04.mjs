@@ -40,8 +40,9 @@ function neuronFigure(demo, { lang }) {
   body.push(line(sumX + boxW, cy, actX - 2, cy, { marker: true }));
   body.push(text((sumX + boxW + actX) / 2, cy - 5, `z = ${fmt(z)}`, { font: MONO, size: 6, fill: EMBER, anchor: 'middle' }));
   body.push(rect(actX, boxY, boxW, boxH, { fill: '#fff', stroke: INK, sw: 0.9 }));
-  body.push(text(actX + boxW / 2, boxY + 16, S.phi, { font: SERIF, size: 13, italic: true, anchor: 'middle' }));
-  body.push(text(actX + boxW / 2, boxY + 27, S.actFns, { font: MONO, size: 6, fill: INK2, anchor: 'middle' })); // R082: ≥ 6
+  body.push(text(actX + boxW / 2, boxY + 14, S.phi, { font: SERIF, size: 13, italic: true, anchor: 'middle' }));
+  // R073: “sigmoid · ReLU” 6.2 punto ile 48 birimlik kutuya tek satır sığmıyor → iki satır
+  S.actFns.split(' · ').forEach((t, i) => body.push(text(actX + boxW / 2, boxY + 24 + i * 7, t, { font: MONO, size: 6, fill: INK2, anchor: 'middle' })));
   // çıktı
   const outX = 300;
   body.push(line(actX + boxW, cy, outX - 10, cy, { marker: true }));
@@ -126,7 +127,7 @@ function backpropFigure(demo, { lang }) {
     body.push(`<path d="M${f1(nx[2])} ${f1(oy + 36)} Q${f1(nx[1])} ${f1(oy + 56)} ${f1(nx[0] + 1)} ${f1(oy + 45)}" fill="none" stroke="${EMBER}" stroke-width="${f1(aw)}" marker-end="url(#arrow)"/>`);
     body.push(text(nx[1], oy + 60, S.errorArrow, { font: MONO, size: 5.5, fill: EMBER, anchor: 'middle' }));
     // çıktı çubuğu + hedef çizgisi (%80)
-    const bx = ox + 68, by = oy + 17, bw = 12, bh = 40;
+    const bx = ox + 62, by = oy + 17, bw = 12, bh = 40;  // R073: hedef etiketi (0.80) kare genişliği içinde kalır, sağ sütunda kenara değmez
     body.push(rect(bx, by, bw, bh, { fill: '#ebe6db' }));
     body.push(rect(bx, by + bh - bh * rd.out, bw, bh * rd.out, { fill: EMBER }));
     body.push(line(bx - 5, by + bh - bh * TARGET, bx + bw + 5, by + bh - bh * TARGET, { stroke: INK, sw: 0.9 }));

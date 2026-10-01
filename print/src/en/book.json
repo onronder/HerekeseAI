@@ -41,7 +41,7 @@
       "type": "intelligence",
       "title": "Explore multiple intelligences",
       "hint": "Tap a type of intelligence.",
-      "neOluyorBasit": "For Gardner, intelligence isn’t one number but eight distinct families of ability; the card you tapped is one of them. And today’s AI is great with language and logic; at anything involving the body or emotions the result depends on the task and the system, and in most of them it is still far behind.",
+      "neOluyorBasit": "For Gardner, intelligence isn’t one number but eight distinct families of ability; the card you tapped is one of them. And today’s AI is great with language and logic; at anything involving the body or emotions the result depends on the task and the system, and in most of them it is still far behind. The bars are illustrative levels, not measured scores.",
       "neOluyor": "This is one of the eight domains in Gardner’s theory: AI is strong in language and logic, weak in the bodily and social/intrapersonal domains. The bars are illustrative levels chosen for the explanation, not measured performance; the result changes with the task and the system.",
       "types": [
        {
@@ -218,7 +218,7 @@
         "label": "Consciousness question"
        }
       ],
-      "neOluyorBasit": "The rule is simple: any system that cannot step outside the jobs it was trained for is “narrow,” chatbots that write poems and code included. “General” means a machine with transferable abilities that can learn across every domain like a human, and no such machine exists yet. A conscious machine is a separate question; being general does not require consciousness.",
+      "neOluyorBasit": "The rule is simple: any system that is good at particular tasks or a limited set of them, without human-level general learning and transfer across domains, is “narrow,” chatbots that write poems and code and adapt somewhat to a new task from examples in the prompt included. “General” means a machine with transferable abilities that can learn across every domain like a human, and no such machine exists yet. A conscious machine is a separate question; being general does not require consciousness.",
       "neOluyor": "Careful: “general” (AGI, cross-domain generalization) and “strong AI” (Searle: does the machine truly understand / is it conscious?) are different questions. Even AGI carries no consciousness requirement: being general does not mean being conscious.",
       "items": [
        {
@@ -364,13 +364,13 @@
      ],
      "teknik": [
       "In symbolic AI, knowledge is encoded via knowledge representation: semantic networks, frames, ontologies or logical propositions. Entities and their relations (e.g. is-a, has-a) are defined explicitly.",
-      "Inference is the application of rules over these representations. The demo below uses transitivity in an is-a hierarchy. An ontology keeps two links apart: Tom is an instance of the class Cat (instance-of); Cat is a subclass of Mammal (subclass-of). If “Tom instance-of Cat” and “Cat subclass-of Mammal,” then “Tom instance-of Mammal” is derived, so Tom is a mammal. The demo draws both links as one arrow type, “is a.” This is the essence of symbolic reasoning."
+      "Inference is the application of rules over these representations. The demo below uses transitivity in an is-a hierarchy. An ontology keeps two links apart: Tom is an instance of the class Cat (instance-of); Cat is a subclass of Mammal (subclass-of). If “Tom instance-of Cat” and “Cat subclass-of Mammal,” then “Tom instance-of Mammal” is derived, so Tom is a mammal. The demo labels the two links differently: the first arrow “instance of,” the others “subclass of.” This is the essence of symbolic reasoning."
      ],
      "tip": "Symbolic AI’s strength: it can derive many new facts from a few rules. Its weakness: someone has to write those rules first.",
      "demo": {
       "type": "chain",
       "title": "Inference along a knowledge chain",
-      "hint": "The machine only knows “is a …” links. Ask a question; let it find the answer by following the chain.",
+      "hint": "The machine knows two kinds of link: “instance of” (individual → class) and “subclass of” (class → larger class). Ask a question; let it find the answer by following the chain.",
       "nodes": [
        "Tom",
        "Cat",
@@ -397,7 +397,7 @@
        }
       ],
       "neOluyorBasit": "All the machine holds is “what kind of thing is what”: Tom is a cat, a cat is a mammal... When you ask, it follows the chain link by link and reaches a fact nobody ever told it. And if it isn’t in the chain, it admits it: “unknown.”",
-      "neOluyor": "The knowledge base contains only consecutive “is-a” links. For each query the inference engine follows the chain using the transitivity rule: if the target is in the chain, “Yes”; otherwise, “Unknown.”"
+      "neOluyor": "The knowledge base holds one instance-of link followed by subclass-of links. For each query the inference engine follows the chain using the transitivity rule: if the target is in the chain, “Yes”; otherwise, “Unknown.”"
      }
     },
     {
@@ -530,7 +530,7 @@
     },
     {
      "id": "neat",
-     "label": "Neat vs Scruffy",
+     "label": "Neats and scruffies",
      "h2": "Neats and scruffies",
      "basit": [
       "For years, AI researchers were split into two rival camps. The “neats” wanted every step proven with clean mathematics. The “scruffies” shrugged: “If it works, it’s good; we’ll find the theory later.”",
@@ -839,9 +839,9 @@
      ],
      "teknik": [
       "Training means adjusting the parameters to minimize a loss function L(θ). Gradient descent moves against the gradient at every step: θ ← θ − η·∇L(θ), where η is the learning rate.",
-      "The learning rate is the most delicate dial: too small and convergence is slow; too large and it can oscillate around the minimum or diverge. the demo, watch descent on a convex loss curve and the overshoot a large learning rate causes. Deep-network loss surfaces are generally nonconvex, and gradient-based methods such as stochastic gradient descent are the norm in training; some models, such as linear regression, have convex losses, and some, such as tree-based methods, do not use gradients at all."
+      "The learning rate is the most delicate dial: too small and convergence is slow; too large and it can oscillate around the minimum or diverge. In the demo, watch descent on a convex loss curve and the overshoot a large learning rate causes. Deep-network loss surfaces are generally nonconvex, and gradient-based methods such as stochastic gradient descent are the norm in training; some models, such as linear regression, have convex losses, and some, such as tree-based methods, do not use gradients at all."
      ],
-     "tip": "Learning is this: ask “how wrong am I?”,, correct a little, repeat, millions of times over. Most of today’s models, neural networks above all, are trained this way, with gradients; some methods, such as decision trees, learn another way.",
+     "tip": "Learning is this: ask “how wrong am I?”, correct a little, repeat, millions of times over. Most of today’s models, neural networks above all, are trained this way, with gradients; some methods, such as decision trees, learn another way.",
      "demo": {
       "type": "descent",
       "title": "Descending the loss valley",
@@ -1180,7 +1180,7 @@
      "label": "Intro",
      "h2": "The generative era: from recognizing to creating",
      "basit": [
-      "Until now, machines stayed on the “recognizing” side: Is this spam, is this a cat, what is this house worth? Like a painter’s apprentice spending years just studying canvases. Then one day the apprentice picked up the brush: Machines began to create. They write, they paint, they generate code, they hold conversations.",
+      "So far this book has mostly shown machines on the “recognizing” side: Is this spam, is this a cat, what is this house worth? At the end of the last chapter the GAN took a first step into creating: a network that turns noise into a new image. The painter’s apprentice had spent years studying canvases and had made its first sketches; now the brush is in its hand. Machines write, they paint, they generate code, they hold conversations.",
       "One of the turning points of this leap is the Transformer architecture and the idea of “attention” at its heart. Generative models (GANs, for one) and attention mechanisms were already being studied; the Transformer made it possible to train generative language models at scale. The story starts with the smallest piece: how does a sentence look to a machine? The answer lies in small chunks of text called “tokens.” From there the chapter moves to embeddings, which turn meaning into numbers, to the attention mechanism, and to how a language model writes word by word. Then comes training, the diffusion models behind image generation, and finally the limits of these systems."
      ],
      "teknik": [
@@ -1240,7 +1240,7 @@
       "Tap a word; see how much it “attends” to the others by the depth of the color. The darker the color, the stronger the tie."
      ],
      "teknik": [
-      "Self-attention produces query (Q), key (K) and value (V) vectors for every token; weights are computed with softmax(Q·Kᵀ/√d_k), where d_k is the dimension of the key vectors, and the output is the weighted sum of the values. Unmasked self-attention lets every position reach the whole sequence regardless of distance; an autoregressive (causal) decoder masks future tokens, so each position sees only the positions before it. Training can process many positions together, while autoregressive generation adds tokens one at a time.",
+      "Self-attention produces query (Q), key (K) and value (V) vectors for every token; weights are computed with softmax(Q·Kᵀ/√d_k), where d_k is the dimension of the key vectors, and the output is the weighted sum of the values. Unmasked self-attention lets every position reach the whole sequence regardless of distance; an autoregressive (causal) decoder masks future tokens, so each position sees itself and the positions before it. Training can process many positions together, while autoregressive generation adds tokens one at a time.",
       "The Transformer does this with multiple heads: different “heads” capture different kinds of relation (syntax, coreference, and so on). Positional encoding adds order information. The cost is O(n²) in sequence length; that is the main reason context windows are limited."
      ],
      "tip": "“Attention Is All You Need” (2017): the attention mechanism removed the RNN’s one-at-a-time processing constraint. Processing every position together in training boosted both speed and understanding; generation still proceeds token by token.",
@@ -1333,7 +1333,7 @@
       "title": "The context window",
       "hint": "Press “Add word”; watch the oldest words get “forgotten” once the window fills.",
       "neOluyorBasit": "The model has a “short-term memory” and can hold only so many tokens at once. In this illustration, as you add words the window fills; once it is full, the oldest slip out one by one and the model no longer sees them. Real systems may raise an error, trim the text or summarize it at the limit; that is why long documents get trimmed or summarized.",
-      "neOluyor": "The context window is a fixed token limit; this illustration is a sliding window that keeps the last N tokens, and a real application may raise an error, truncate or summarize when the limit is reached. Because attention costs O(n²), enlarging the window is expensive; that is why long documents get truncated or summarized."
+      "neOluyor": "A real model’s context window is a fixed limit counted in tokens. This illustration simplifies it to a sliding window that keeps the last 8 words; a real application may raise an error, truncate or summarize when the limit is reached. Because attention costs O(n²), enlarging the window is expensive; that is why long documents get truncated or summarized."
      }
     },
     {
@@ -1680,7 +1680,7 @@
      "h2": "Deepfakes and disinformation",
      "basit": [
       "“I saw it with my own eyes, heard it with my own ears” used to settle things. Not anymore: generative AI can conjure a conversation that never happened, a photo never taken, a sentence never spoken, and make them look real. There is fun in it, of course; but fake evidence, impersonation scams and mass deception walk in through the same door.",
-      "Below are a few situations. For each, decide: does it look real, is it suspicious, or can it not be determined from what you have? Then see the tell and learn the ways to verify."
+      "Below are a few situations. For each, answer three separate questions: did the event really happen, how might the content have been produced, and which independent channel would you check? Then see the reasoning behind each answer and the ways to verify."
      ],
      "teknik": [
       "Synthetic media (deepfakes are one kind of it) is produced with generative models (GANs/diffusion, voice cloning, lip sync). Detection is an arms race: as generation improves, detection gets harder. Approaches: classifiers hunting generation artifacts, source verification, and content credentials. C2PA provides signed records about content provenance and editing history; watermarks can help recover those records. Neither alone proves that the content is factually true, and a missing record is not proof of forgery.",
@@ -1690,7 +1690,7 @@
      "demo": {
       "type": "df",
       "title": "Real or fake?",
-      "hint": "Read the situation and pick the recommended step: does it look real, does it need verification, or can you not tell? Then see the suspicion sign and the verification channel.",
+      "hint": "Answer three separate questions for each case: did the event really happen, how might the content have been produced, and which independent check would you do? Each question is scored on its own.",
       "neOluyorBasit": "Catching fake content is a habit: watch for inconsistencies, the source and the context. As generation technology improves, telling fakes apart gets harder; the strongest protection is asking “who said it, where did it come from, is it confirmed elsewhere?” and never treating a single image or voice as proof.",
       "neOluyor": "Telling synthetic media apart is a habit: look for inconsistency, source and context clues. Detection is an arms race that gets harder as generation improves; the strongest defense is source verification and skepticism."
      }
@@ -1705,14 +1705,18 @@
      ],
      "teknik": [
       "The EU AI Act builds a risk-based framework: unacceptable risk (e.g. social scoring under specific conditions) is banned; high risk (hiring, creditworthiness of natural persons, critical infrastructure) requires strict compliance, documentation and human oversight; limited risk (chatbots) carries transparency duties; minimal risk is largely free. The four tiers are a simplified overview; the legal classification follows the system’s intended use, the actor’s role and the relevant article or annex.",
-      "This complements personal-data regimes like GDPR, whose rules (a legal basis, purpose limitation, data minimization) apply in their own right. Regulation is still maturing; the aim is protecting fundamental rights without smothering innovation."
+      "This complements personal-data regimes like GDPR, whose rules (a legal basis, purpose limitation, data minimization) apply in their own right. Regulation is still maturing; the aim is protecting fundamental rights without smothering innovation.",
+      "This section follows the consolidated text of Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744, published in the Official Journal on 24 July 2026 and in force since 27 July 2026 (accessed 1 October 2026). Entry into force and the application dates of the obligations differ. The first Article 5 prohibitions have applied since 2 February 2025 and the Article 50 transparency rules since 2 August 2026. Systems generating synthetic audio, image, video or text that were placed on the market before 2 August 2026 must comply with the Article 50(2) marking duty by 2 December 2026 (Article 111(4)). The prohibitions added by the amendment apply from 2 December 2026: generating intimate or sexually explicit images of an identifiable person without that person’s consent, and generating child sexual abuse material (Article 5(1)(ba), (bb)). High-risk obligations start on 2 December 2027 for Annex III systems and on 2 August 2028 for systems covered by the product legislation in Annex I.",
+      "Four fine points. Annex III 5(b) covers systems that evaluate the creditworthiness of natural persons or establish their credit score; financial-fraud detection is expressly excluded from that item. An Annex III system may fall outside the high-risk class if it does not materially influence the outcome of a decision: a narrow procedural task, improving a completed human activity, detecting deviations from earlier decision patterns, or a preparatory task (Article 6(3)). But an Annex III system that profiles natural persons is always high-risk, and a provider relying on the exception must document its assessment before placing the system on the market. The prohibition in Article 5(1)(h) targets real-time remote biometric identification in publicly accessible spaces for law-enforcement purposes; limited exceptions and their conditions apply, and other purposes are not automatically free. Article 50 is not one “say you use AI” rule, and it assigns duties by role: informing people in direct interaction (50(1)) and machine-readable marking of synthetic output (50(2)) fall on the provider; informing people exposed to emotion recognition or biometric categorisation (50(3)) and disclosing deepfakes and AI-generated text published to inform the public (50(4)) fall on the deployer who uses the system. For artistic, satirical or fictional works the disclosure is limited, and text under human editorial control is outside the 50(4) text rule. None of these replaces high-risk or other legal obligations.",
+      "Under GDPR, consent is not the only basis for processing; Article 6(1) lists contract, legal obligation, vital interests, public interest and conditional legitimate interests beside it. Article 22 concerns decisions based solely on automated processing that produce legal or similarly significant effects; the exceptions for contractual necessity, legal authorization and explicit consent are conditional, and under the contract and explicit-consent exceptions the person must be able to obtain human intervention, express a view and contest the decision.",
+      "Turkey’s data-protection law (KVKK, Law No. 6698) works the same way on this point: explicit consent is not the only condition for processing, and where one of the conditions in Article 5(2) holds, data may be processed without it. Article 11(1)(g) gives the person the right to object to an outcome against them that results from analysis by automated systems alone. That provision should not be read as having the same scope and exceptions as GDPR Article 22."
      ],
      "tip": "The logic of regulation is simple: the higher the risk, the stricter the rule. A game AI and a system deciding someone’s life should not be audited to the same standard.",
      "demo": {
       "type": "reg",
       "title": "Classify the risk",
       "hint": "Place each use in a risk tier. The rule: the higher the risk, the stricter the oversight.",
-      "neOluyorBasit": "Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) carry transparency duties; minimal-risk ones are largely free under this law. Data-protection and other laws apply at every tier.",
+      "neOluyorBasit": "Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring under specific conditions) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) carry transparency duties; minimal-risk ones are largely free under this law. Data-protection and other laws apply at every tier.",
       "neOluyor": "The EU AI Act’s tier logic: banned (violates fundamental rights, e.g. social scoring under specific conditions) → high (hiring, creditworthiness of natural persons: strict compliance + human oversight) → limited (chatbots: transparency) → minimal. The same “AI” label carries very different risks; that is why regulation is tiered, not uniform. The four tiers are a simplified overview; the legal class follows intended use, role and the relevant article. GDPR-style law separately governs personal data."
      }
     },
@@ -1834,7 +1838,7 @@
      ],
      "teknik": [
       "The Turing test is a behavioral criterion: instead of defining “understanding,” it counts indistinguishable behavior as enough. Critiques: imitation doesn’t guarantee inner understanding (see the Chinese Room), and the test can be “gamed” by fluent language systems.",
-      "Some models have been indistinguishable from human participants in particular Turing-test experiments (Jones and Bergen, 2025). Results depend on the model, prompt and protocol; they do not establish consciousness or general intelligence. Rather than settling the “thinking” debate, this shifted the question to “what should the criterion be?” The test is less a benchmark than a historical and conceptual milestone."
+      "In a pre-registered experiment (Jones and Bergen, 2025), participants held five-minute text conversations with a human and an AI at the same time and decided which one was the human. GPT-4.5, run with a prompt telling it to adopt a humanlike persona, was picked as the human in 73 percent of the games; LLaMa-3.1-405B with the same prompt reached 56 percent, while GPT-4o without such a prompt stayed at 21 percent. The result is tied to these models, this prompt and this five-minute setup; a longer or differently questioned test could turn out otherwise, and it does not establish consciousness or general intelligence. Rather than settling the “thinking” debate, this shifted the question to “what should the criterion be?” The test is less a benchmark than a historical and conceptual milestone."
      ],
      "tip": "Passing the Turing test means “fluent imitation”; it does not mean “true understanding” or “consciousness.” Much of the modern debate comes from mixing the two up.",
      "demo": {
@@ -1871,19 +1875,19 @@
      "label": "Capability",
      "h2": "From narrow AI to superintelligence",
      "basit": [
-      "AI today counts as “narrow”: excellent at one job (chess, translation, images); even chat models that work across many tasks show no human-level general learning. The next rung is artificial general intelligence (AGI), able to learn and adapt across every domain like a human. Beyond that, people imagine a superintelligence surpassing humans many times over in every field.",
+      "AI today counts as “narrow”: excellent at particular jobs (chess, translation, images); even chat models that work across many tasks show no human-level general learning. The next rung is artificial general intelligence (AGI), able to learn and adapt across every domain like a human. Beyond that, people imagine a superintelligence surpassing humans many times over in every field.",
       "Tap the rungs one by one; see what each means and the answer to “does it exist today?”"
      ],
      "teknik": [
       "The capability horizon is roughly three tiers: narrow AI (task-specific), AGI (human-level generalization across domains) and superintelligence (superhuman in every cognitive field). The borders blur.",
       "Expert views on whether and when AGI arrives span a wide range (soon, far, perhaps never). Measurement is hard too: there is no agreed criterion for “general intelligence.” Treat claims that give definite dates with caution."
      ],
-     "tip": "Headlines shout “AI will surpass humans,” but careful: surpassing at one task (narrow) and at every task (general) are very different things. We are at the first today; the second is still an open question.",
+     "tip": "Headlines shout “AI will surpass humans,” but careful: surpassing at particular tasks (narrow) and in every domain (general) are very different things. We are at the first today; the second is still an open question.",
      "demo": {
       "type": "capability",
       "title": "The capability ladder",
       "hint": "Tap the rungs one by one; see what each means and whether it exists today.",
-      "neOluyorBasit": "Capability comes in three rungs: narrow AI is good at one job (we are here today); general AI (AGI) could learn any domain like a human (doesn’t exist yet; contested); superintelligence would surpass humans many times over in everything (a dream for now). Careful: “doing every job” and “being conscious” are separate things.",
+      "neOluyorBasit": "Capability comes in three rungs: narrow AI is good at particular tasks (we are here today); general AI (AGI) could learn any domain like a human (doesn’t exist yet; contested); superintelligence would surpass humans many times over in everything (a dream for now). Careful: “doing every job” and “being conscious” are separate things.",
       "neOluyor": "The capability horizon has three tiers: narrow AI (task-specific; where we are today), AGI (cross-domain, human-level generalization; contested) and superintelligence (superhuman in every cognitive field; speculative). Being “general” and being “conscious” are separate questions."
      }
     },
@@ -2047,7 +2051,7 @@
    "Massive internet text",
    "Language and the world (next-word prediction)",
    "The capital of Türkiye is Ankara, with a population of about six million. The city...",
-   "The raw model is a “completer”: it doesn’t answer the question, it continues the text.",
+   "In this example the raw model gives the fact but keeps going; raw models often complete text like this.",
    "Instruction–response pairs",
    "Following instructions (answering the question)",
    "The capital of Türkiye is Ankara.",
@@ -2065,10 +2069,10 @@
   ],
   "ctx": [
    "The window is empty. Feed it with “Add word”; it holds at most",
-   "words added, all inside the window. Everything is remembered until it fills.",
+   "words added, all inside the window. Nothing falls out until it fills; being in the window does not guarantee that the model uses every detail.",
    "The window is full! The first",
-   "word(s) are now “forgotten” (faded). The model sees only the last",
-   "words; this is why long documents get truncated or summarized."
+   "word(s) are now “forgotten” (faded). In this illustration the model sees only the last",
+   "words; real applications may raise an error, truncate the text or summarize it at the limit."
   ],
   "prompt": [
    "Suggest a weekend trip plan for me.",
@@ -2150,34 +2154,58 @@
    ". Green factors pushed toward approval, red toward decline. The contributions are illustrative, not computed SHAP values; this post-hoc explanation does not make the whole model transparent."
   ],
   "df": [
+   "Event: did what it shows really happen?",
+   "Not verified: needs checking",
+   "Origin: how might the content have been produced?",
+   "Signs of a real recording",
+   "Signs of synthesis (not proof)",
+   "Cannot tell from this",
+   "Channel: which independent check would you do?",
    "In a video, a public figure says a sentence they never said; the lip movements don’t quite match the audio.",
-   "a mismatch between the lip movements and the audio",
-   "find the original recording and the publishing outlet through an independent channel",
+   "Read the comments under the account that shared the video",
+   "Look for the same video on another social media account",
+   "Find the original recording and the publishing outlet through an independent channel",
+   "Whether the sentence was really said has not been verified; the video alone is not proof.",
+   "A lip–audio mismatch can be a deepfake trace, but poor compression or dubbing gives the same picture.",
+   "The post itself and its copies are not an independent channel; the original recording and the publisher are.",
    "On the phone, your “boss” urgently asks for a money transfer; the voice sounds just like them, but the intonation is slightly robotic.",
-   "robotic intonation consistent with voice cloning, plus urgency pressure",
-   "hold the transfer and call your boss back on a known number, or confirm in person",
+   "Keep the call going and listen to the voice more carefully",
+   "Hang up, call your boss back on a number you know, and have a second person approve the transfer",
+   "Play a recording of the voice to a friend",
+   "It has not been verified that the request really comes from your boss; the pressure of urgency is itself a warning sign.",
+   "Robotic intonation fits voice cloning but is not conclusive; even without knowing the voice’s origin the decision is the same: no money goes out unverified.",
+   "Any check inside the same call is in the caller’s hands; the independent channel is the number you already know.",
    "A news story on a newspaper’s site, also confirmed by several independent sources.",
-   "several independent sources and a traceable origin",
-   "open each source separately; whether a human or a machine wrote the text cannot be told from this",
+   "Open each source on its own page; check the primary document if there is one",
+   "Look at how many likes and shares the story got",
+   "Read the story once more on the same site",
+   "Several independent sources and a traceable origin support that the event is real.",
+   "This does not tell whether a human or an AI wrote the text; a machine-written story can still be accurate.",
+   "Likes or the same page are not verification; the sources themselves and the primary document are.",
    "In a photo, a person’s hand has six fingers and the text in the background is gibberish.",
-   "six fingers and gibberish background text",
-   "use reverse image search to find the photo’s original source",
-   "Suspicious: verify",
-   "✓ Matches the recommended step:",
-   "○ The recommended step differs:",
-   "In this fictional example the sign is",
-   "; the recommended step:",
-   "Clues justify investigation; by themselves they do not establish how the content was produced. Whether the event is real and how the content was produced are separate questions."
+   "Zoom in on the photo and look for more traces",
+   "Use reverse image search to find who published it first; check its Content Credentials (C2PA) record if there is one",
+   "Ask the person who shared the photo where they found it",
+   "It has not been verified that the moment in the photo really happened.",
+   "Six fingers and gibberish text are known traces of generative models, but editing or a real anomaly is also possible. A missing C2PA record is not proof of fakery.",
+   "Looking harder at the image produces no new evidence; finding the first publisher and the provenance record does.",
+   "Clues justify investigation; by themselves they do not establish how the content was produced. Whether the event is real and how the content was produced are separate questions; in both, the decision comes from an independent channel."
   ],
   "reg": [
    "A state system scoring citizens by behavior",
+   "Purpose: scoring people by their social behavior; actor: the state. Article 5(1)(c) bans the cases where the score leads to treatment that is unrelated to the original context or disproportionate; not every score is banned unconditionally.",
    "A system auto-screening job candidates",
+   "Purpose: filtering applications and evaluating candidates; actor: the employer using it (deployer) and the provider who built it. High-risk under Annex III 4(a); the obligations apply from 2 December 2027.",
    "A chatbot talking to customers",
+   "Purpose: talking with customers. Article 50(1) makes the provider ensure people know they are talking with an AI (unless it is obvious). Data-protection and consumer law apply on top; if the bot decides on a loan or a hire, that use is assessed separately.",
    "A spam filter in email",
+   "Purpose: sorting out unwanted email. With the information given, no Annex III high-risk category can be shown; the AI Act sets no specific duty for this use. Data-protection rules still apply, and a missed important email can affect the user.",
    "A model assessing loan applications",
+   "Purpose: evaluating the creditworthiness of natural persons or establishing their credit score; actor: the bank (deployer) and the provider. High-risk under Annex III 5(b). If the only purpose is detecting financial fraud, this item does not apply. If the system profiles people, the Article 6(3) exception cannot be used.",
    "An opponent AI inside a game",
+   "Purpose: playing an opponent in a game. With the information given, no high-risk category or Article 50 duty can be shown; minimal tier. If the game processes personal data or targets children, other rules come in.",
    "Place each use in a risk tier. The rule: the higher the risk, the stricter the oversight.",
-   "correct. Ask yourself: does this use affect someone’s life or rights?",
+   "correct. Ask yourself: what is it for, who uses it, which article or annex covers it?",
    ". The same “AI” label carries very different risks; that is why regulation is tiered, not uniform."
   ],
   "align": [
@@ -2212,7 +2240,7 @@
    "It’s three in the afternoon."
   ],
   "capability": [
-   "Very good at one task (chess, translation, vision) but unable to step outside it. All of today’s systems live here.",
+   "Very good at one task or a set of tasks (chess, translation, vision); shows no human-level general learning and transfer. Today’s systems live here.",
    "Not yet; contested",
    "A hypothetical level able to learn and adapt across every domain like a human. Whether and when it arrives is debated among experts.",
    "A wholly theoretical level surpassing humans many times over in every cognitive field. The subject of both great-opportunity and serious-risk scenarios."

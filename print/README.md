@@ -13,7 +13,7 @@ node print/figures/make.mjs        # P2: book.json → print/figures/out/{tr,en}
 - `src/<dil>/book.json` — figür üreticisinin okuduğu ham veri; her çalıştırmada yenilenir.
 - `src/<dil>/cevap-anahtari.md` (`answer-key.md`) — quiz seçenekleri ekrandaki `_order()` ile aynı deterministik sırayla karıştırılır; doğru şık harf olarak verilir. `df`, `reg`, `tur`, `responsibility` demolarının cevapları koda gömülü olduğundan elle yazılır.
 - `src/<dil>/demo-gomulu-metinler.md` (`demo-embedded-texts.md`) — `renderVals()` içinde, yalnız etkileşimden sonra görünen öğretici metinler (TR 155 parça). Basılı sürümde bunlar "Adım adım" ve tablolara taşınır.
-- `figures/make.mjs` — deterministik SVG üretici; 45 demonun tamamı için üretici var (`figures/gen/M0x.mjs`, ortak yardımcılar `figures/lib.mjs`, kurallar `figures/FIGUR-KILAVUZU.md`). Etiket ve veri dizileri iki dilde `figures/strings/M0x.mjs`; `node figures/check_i18n.mjs` kapsama denetimi (temiz). `figures/render.sh` SVG'yi PNG'ye çevirir (headless Chrome). Çıktı: `out/tr/sekil-N-j-<type>.svg`, `out/en/figure-N-j-<type>.svg`; `out/tr-baseline/` regresyon tabanı (TR çıktısı bayt bayt aynı kalmalı). Stil: siyah mürekkep + ember aksan (duotone), Space Mono etiket, Work Sans gövde.
+- `figures/make.mjs` — deterministik SVG üretici; 45 demonun tamamı için üretici var (`figures/gen/M0x.mjs`, ortak yardımcılar `figures/lib.mjs`, kurallar `figures/FIGUR-KILAVUZU.md`). Etiket ve veri dizileri iki dilde `figures/strings/M0x.mjs`; `node figures/check_i18n.mjs` kapsama denetimi (temiz); `node figures/check_fig_geom.mjs all` 90 şeklin geometri denetimi (gerçek fontlarla getBBox: metin kutusu şekil kenarına ≥ 1 birim pay bırakır, iki metin kutusu birbirine binmez; 2026-10-01'den beri temiz). `figures/render.sh` SVG'yi PNG'ye çevirir (headless Chrome). Çıktı: `out/tr/sekil-N-j-<type>.svg`, `out/en/figure-N-j-<type>.svg`; `out/tr-baseline/` regresyon tabanı (TR çıktısı bayt bayt aynı kalmalı). Stil: siyah mürekkep + ember aksan (duotone), Space Mono etiket, Work Sans gövde.
 - `figures/out/` — üretilen çıktı; git'e girmez.
 
 ## Bilinen boşluklar
@@ -48,7 +48,8 @@ Gereksinimler: Chrome (yerel), Node (`print/typeset` ve `print/kapak` altında `
 - `typeset/print.css`: `@page` 160×240 mm + 3 mm taşma, iç 20 / dış 16 mm, sayfa numarası alt orta, koşan başlıklar (sol: kitap adı,
   sağ: bölüm), bölüm açılışı sağ sayfa + ayrı açılış sayfası, ön bölümde numara yok (ama sayılır: Paged.js sol/sağ kararı sayaçtan),
   kutu/figür/tablo bölünmez, dul/yetim 2. Justify yalnız `p, li` üzerinde (body'de kalıtımla verilince Paged.js son satırları da yayıyor).
-- `typeset/dizgi.sh`: pagedjs-cli (yerel Chrome) → `boxes.mjs` (pdf-lib: BleedBox = kâğıt, TrimBox 3 mm içeri) → Ghostscript
+- `typeset/dizgi.sh`: pagedjs-cli (yerel Chrome) → `boxes.mjs` (pdf-lib: net ölçü verilir; Chrome'un sayfa ölçüsü yuvarlaması sol üst köşe sabit
+  tutularak düzeltilir → MediaBox = BleedBox tam 166 × 246 mm, TrimBox tam 160 × 240 mm; KDP 6 × 9 in) → Ghostscript
   `-dPDFX` + CMYK (`-dUseFastColor`: siyah → yalnız K) + `PDFX_def.ps` (OutputIntent; `ICC=` ile matbaa profili) → 16'nın katına otomatik
   tamamlama (Notlar sayfaları). Bağlantı ek açıklamaları (`-dPreserveAnnots=false`) PDF/X'e uymaz, düşürülür.
 - **Sayfa yerleşimi (2026-09-30, "yüzen şekil" öykünmesi):** `dizgi.sh` ilk dizgiden sonra `measure.mjs` (puppeteer; üst düzey öğe yükseklikleri) +
@@ -57,13 +58,18 @@ Gereksinimler: Chrome (yerel), Node (`print/typeset` ve `print/kapak` altında `
   (Kurulum, Adım adım, tablo…) arkasına ertelenir; seçenek kalmazsa en iyi konum kilitlenir. Bölüm/arka bölüm kuyruğu tek başına bir sayfaya
   taşıyorsa o bölümün satır aralığı / paragraf aralığı / puntosu kademeli ayarlanır (`_tighten`). Teknik derinlik kutuları sayfalar arasında
   bölünebilir; QR her şeklin altında (figcaption satırı); figür yüksekliği ≤ 120 mm. Matbaa forma katı `MULT=8` (yarım forma; `MULT=16` verilebilir).
+  **Forma ekonomisi (2026-10-01):** sayfa sayısı 16'nın katını en çok 8 sayfa aşıyorsa, boş arka sayfa + bölüm açılışıyla biten bölümlerin satır
+  aralığı yalnız sıkılaştıran kademelerle (1.47 → 1.44, paragraf 0.8 → 0.6 em) küçültülür; kuyruk geri çekilince 2 sayfa kazanılır (TR 258 → 256).
+  Tablolar (R071): ≤ 4 satırlı tablo ve matris bölünmez; uzun tablonun ikinci ve son veri satırı komşusundan ayrılmaz (başlık + tek satır yetimi
+  ya da tek son satır olmaz). Matematik (R089): `√(…)`, `f(a − b)`, `(a − b)²`, `|a − b|` terimleri `span.math` ile satır sonunda bölünmez.
 - **Metin kaybı koruması (2026-10-01, `typeset/hooks.js`, pagedjs-cli `--additional-script`):** Paged.js sayfa alanını çok sütunlu kutu olarak
   kurar; ölçümden sonra alt-piksel bir taşma (bölünen kutunun alt kenarlığı, heceli sözcüğün harf ortasından kesilmesi) Chrome'un dul/yetim kuralıyla
   bütün bir paragrafı görünmez sütuna atıyordu. `onOverflow` kesmeyi sözcük başına çeker; `renderNode` bölünen tabloya `thead`, bölünen kutuya
   "Teknik derinlik · devam" ekler (yeniden kurulan ata öğeye; `rebuildAncestors` renderNode'a gelmez); `afterRendered` görünmez sütuna düşen
   metni sayar, dizin tekrar numaralarını siler ve sonuçları PDF Keywords alanına yazar (`kitap-tasma:0 thead-tekrar:N kutu-devam:N
-  dizin-tekrar-silinen:N`). Sütun düzenini sonradan kaldırmak satırları yeniden akıtıp yapay taşma ürettiği için yapılmaz. `check.sh` iki kapı ekler: `check_text_integrity.py` (HTML gövde cümleleri
-  ⊂ pdftotext; alt/üst simgeler yok sayılır) ve `kitap-tasma:0`. Siyah: `PDFX_def.ps` başındaki `{} setblackgeneration {} setundercolorremoval`
+  dizin-tekrar-silinen:N`). Sütun düzenini sonradan kaldırmak satırları yeniden akıtıp yapay taşma ürettiği için yapılmaz. `check.sh` kapıları: `check_text_integrity.py` (HTML gövde cümleleri
+  ⊂ pdftotext; alt/üst simgeler yok sayılır), `kitap-tasma:0`, `sekil-min-pt` ≥ 6,5 ve `sekil-dusuk` yok (R082; hooks.js her SVG'nin basılı en küçük
+  puntosunu ölçer), `tablo-kucuk-bolunen:0 tablo-tek-satir:0` (R071), TrimBox kesin 160,0 × 240,0 mm. Siyah: `PDFX_def.ps` başındaki `{} setblackgeneration {} setundercolorremoval`
   RGB siyahı yalnız K'ya çevirir (inkcov ile doğrulanır). QR: 20 mm veri + 2,8 mm sessiz alan (`check_qr.mjs` ölçer).
 - `kapak/kapak.mjs`: arka + sırt + ön tek yayılım (`spine_mm` matbaadan), 5 mm taşma; ISBN girilince EAN-13 barkod (JsBarcode). Üç üretken
   konsept (`kapak.json → variant`): `ag` (koyu; ızgaradan organik ağa, ember öğrenme yolu — seçilen), `kadran`, `vadi` (eş yükselti + gradyan
@@ -89,6 +95,9 @@ sh print/typeset/check.sh en kdp                 # KDP denetimi (TrimBox 6×9, �
   (`pages` alanı sırtı belirler). TR çıktıları değişmez (assemble TR bayt bayt regresyon testi geçer).
 - Profil CSS'leri `print/typeset/profiles/{matbaa,kdp}.css`; `boxes.mjs` taşma parametresi; `check_qr.mjs <pdf> en`.
 - Kindle EPUB: `sh print/kindle/build.sh` → `print/kitap/en/AI-for-Everyone.epub` (figürler PNG `render_figs.sh`, QR yerine bağlantı, pandoc EPUB3, epubcheck).
+  Erişilebilirlik (R099): her şeklin alt metni başlık + Kurulum'un ilk cümlesi; görsel `aria-describedby` ile Kurulum'a bağlı (pandoc `<p>` id'sini
+  düşürdüğü için Kurulum `<section id>` içinde); dizinden önce **Figure Data** eki: 45 şeklin tablo/koordinat/sıra verisi (figures/out/en/*.md,
+  üretim notlarından arındırılmış), şekil ↔ ek bağlantılı. Kapsam ölçümü: `python3 print/kitap/qa/fig_coverage.py en <epub>`.
 - Denetim üçlüsü (yazım sonrası): `check_style_en.py` (stil), `check_consistency_en.py` (TR↔EN yapı/sayı), `check_verbatim_en.py` + `check_verbatim_diff.py` (kaynak metin birebir; farklar EDITORIAL NOTES'ta). Sınav şıkları basılıda bölüm bazlı karışır (export.py `order(qi + 10·n)`).
 
 ## Basılı → dijital kaynak eşitleme (P6)
@@ -111,3 +120,13 @@ python3 print/notes_digest.py tr                  # bölüm notlarını print/ki
 ```
 Ekran fiilleri (bas, sürükle, kaydıraç) dijitalde kalır; basılıda "Şekil N.j" ile karşılanır. Basılıdan kırpılan teknik "Ne oluyor?" tekrarları
 dijitalde durur (demo altında tek başına anlamlı). İnsanlaştırma raporları: `print/kitap/humanize-{tr,en}-report.md`, özet `humanize-ozet.md`.
+
+## Teslim ve doğrulama (2026-10-01)
+
+```
+python3 print/teslim/guncelle.py        # teslim klasörleri + notlardaki ölçüler ÖLÇÜMDEN (sayfa/forma, TrimBox/MediaBox, kapak, font gömme, EPUB boyutu, KDP sırtı)
+python3 print/kitap/qa/dogrulama33.py   # 2026-10-01 doğrulama raporundaki 33 açık kaydın testleri → qa/dogrulama-33.json + dogrulama-33-raporu.md
+python3 print/qa_evidence.py            # genel üretim kanıtı → qa/kanit.json (QR, renk, EAN, dizin, canlı adresler, epubcheck)
+```
+`print/teslim/guncelle.py`, `kapak.en.json → pages` iç blokla eşit değilse durur (önce `kapak.sh en kdp`).
+

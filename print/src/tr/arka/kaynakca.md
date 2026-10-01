@@ -7,7 +7,7 @@ Künye biçimi: dergi makalelerinde DOI, bildirilerde arXiv ya da kalıcı adres
 ## Metinde adı geçen çalışmalar
 
 - Gardner, H. (1983). *Frames of Mind: The Theory of Multiple Intelligences*. Basic Books. (Bölüm 1)
-- Turing, A. M. (1936). "On Computable Numbers, with an Application to the Entscheidungsproblem." *Proceedings of the London Mathematical Society*, s2-42(1), 230–265. https://doi.org/10.1112/plms/s2-42.1.230 (Bölüm 1)
+- Turing, A. M. (1936). "On Computable Numbers, with an Application to the Entscheidungsproblem." *Proceedings of the London Mathematical Society*, s2-42(1), 230–265. https://doi.org/10.1112/plms/s2-42.1.230 Cilt 1937 tarihlidir; makale 1936’da dergiye ulaşmış ve Derneğe sunulmuştur. Bu kitap, yaygın kullanıma uyarak 1936 yılını yazar. (Bölüm 1)
 - Turing, A. M. (1950). "Computing Machinery and Intelligence." *Mind*, 59(236), 433–460. https://doi.org/10.1093/mind/LIX.236.433 (Bölüm 8)
 - von Neumann, J. (1945). *First Draft of a Report on the EDVAC*. Moore School of Electrical Engineering, University of Pennsylvania. Yeniden basım: *IEEE Annals of the History of Computing*, 15(4), 27–75 (1993). https://doi.org/10.1109/85.238389 (Bölüm 1)
 - Moore, G. E. (1965). "Cramming More Components onto Integrated Circuits." *Electronics*, 38(8), 114–117. Yeniden basım: *IEEE Solid-State Circuits Society Newsletter*, 11(3), 33–35 (2006). https://doi.org/10.1109/N-SSC.2006.4785860 (Bölüm 1)
@@ -24,7 +24,7 @@ Künye biçimi: dergi makalelerinde DOI, bildirilerde arXiv ya da kalıcı adres
 - Yao, S. vd. (2023). "ReAct: Synergizing Reasoning and Acting in Language Models." *ICLR*. arXiv:2210.03629. https://doi.org/10.48550/arXiv.2210.03629 (Bölüm 6)
 - Lundberg, S. M. ve Lee, S.-I. (2017). "A Unified Approach to Interpreting Model Predictions." *NeurIPS 30*. arXiv:1705.07874. https://doi.org/10.48550/arXiv.1705.07874 (SHAP; Bölüm 7)
 - Schwartz, R. vd. (2022). *Towards a Standard for Identifying and Managing Bias in Artificial Intelligence*. NIST Special Publication 1270. https://doi.org/10.6028/NIST.SP.1270 (Yanlılık kaynakları; Bölüm 7)
-- Avrupa Parlamentosu ve Konseyi (2024). *Yapay Zekâ Tüzüğü (AI Act), (AB) 2024/1689 sayılı Tüzük*; (AB) 2026/1744 ile değişik, 27 Temmuz 2026 tarihli konsolide sürüm; Madde 5, 6, 50, 111 ve Ek III. http://data.europa.eu/eli/reg/2024/1689/oj (Bölüm 7)
+- Avrupa Parlamentosu ve Konseyi (2024). *Yapay Zekâ Tüzüğü (AI Act), (AB) 2024/1689 sayılı Tüzük*; (AB) 2026/1744 sayılı Tüzükle (AB Resmî Gazetesi, 24 Temmuz 2026; yürürlük 27 Temmuz 2026) değişik, 27 Temmuz 2026 tarihli konsolide sürüm; Madde 5, 6, 50, 111, 113 ve Ek III. Konsolide sürüm: http://data.europa.eu/eli/reg/2024/1689/2026-07-27 · Değiştiren tüzük: http://data.europa.eu/eli/reg/2026/1744/oj · İlk yayımlanan metin: http://data.europa.eu/eli/reg/2024/1689/oj (Bölüm 7)
 - Avrupa Parlamentosu ve Konseyi (2016). *Genel Veri Koruma Tüzüğü (GDPR), (AB) 2016/679 sayılı Tüzük*; Madde 6, 9 ve 22. http://data.europa.eu/eli/reg/2016/679/oj (Bölüm 7)
 - 6698 sayılı Kişisel Verilerin Korunması Kanunu (2016). *Resmî Gazete* 29677, 7 Nisan 2016; m.5, m.6, m.9 ve m.11. https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6698&MevzuatTur=1&MevzuatTertip=5 (Bölüm 7)
 - Searle, J. R. (1980). "Minds, Brains, and Programs." *Behavioral and Brain Sciences*, 3(3), 417–457. https://doi.org/10.1017/S0140525X00005756 (Çince Oda; Bölüm 8)

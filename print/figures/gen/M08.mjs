@@ -64,7 +64,7 @@ const CR_PAIRS = [
 function chineseroomFigure(demo, { lang }) {
   const S = STRINGS[lang].chineseroom;
   const W = 320, H = 134;
-  const noteX = 8, noteW = 66, roomX = 88, roomW = 146, ansX = 248, ansW = 64;
+  const noteX = 8, noteW = 66, roomX = 88, roomW = 146, ansX = 246, ansW = 68;
   const roomY = 16, roomH = H - 24, pageX = roomX + 8, pageW = roomW - 16, pageY = roomY + 16, pageH = roomH - 30;
   const rowY0 = 44, rowH = 26, boxH = 18;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
@@ -86,12 +86,18 @@ function chineseroomFigure(demo, { lang }) {
     body.push(line(noteX + noteW + 1, cy, pageX - 1, cy, { stroke: INK, sw: 0.7, marker: true }));
     // kural satırı
     body.push(text(pageX + 4, cy + 2.6, `${i + 1}`, { font: MONO, size: 6, fill: MUTED }));
-    body.push(text(pageX + 11, cy + 2.8, `${p.in} → ${p.out}`, { size: 7.2 }));
+    // R073: soru sol yaprakta, cevap sağ yaprakta; ok kat çizgisinin üstünde (çizgi metnin içinden geçmesin)
+    const fold = pageX + pageW / 2;
+    // R073 (2026-10-01): en uzun soru (7 tam genişlik karakter) okla çakışıyordu → kural kitabı satırı 7.0 pt, soru 1 birim sola
+    body.push(text(pageX + 10, cy + 2.8, p.in, { size: 7 }));
+    body.push(rect(fold - 4.5, cy - 4, 9, 8, { fill: PAPER }));
+    body.push(text(fold, cy + 2.6, '→', { size: 7, anchor: 'middle' }));
+    body.push(text(fold + 6, cy + 2.8, p.out, { size: 7 }));
     if (i < CR_PAIRS.length - 1) body.push(line(pageX + 3, y + boxH + 4, pageX + pageW - 3, y + boxH + 4, { stroke: RULE, sw: 0.5 }));
     // çıkan cevap
     body.push(line(pageX + pageW + 1, cy, ansX - 1, cy, { stroke: EMBER, sw: 0.8, marker: true }));
     body.push(rect(ansX, y, ansW, boxH, { fill: '#fff', stroke: EMBER, sw: 0.9 }));
-    body.push(text(ansX + ansW / 2, cy + 2.8, p.out, { size: 7.5, anchor: 'middle' }));
+    body.push(text(ansX + ansW / 2, cy + 2.8, p.out, { size: 7.2, anchor: 'middle' }));
   });
   const md = [S.mdTitle(demo.title), '', ...S.mdHead,
     ...CR_PAIRS.map((p, i) => `| ${i + 1} | ${p.in} | ${p.in} → ${p.out} | ${p.out} | ${S.meanings[i].in} → ${S.meanings[i].out} |`), ''].join('\n');

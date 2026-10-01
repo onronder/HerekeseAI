@@ -18,14 +18,14 @@ function descentRun(lr, n = 6) {
 
 function descentPanel(ox, oy, w, h, steps, title, S) {
   const Lf = (x) => 0.18 * (x - 5) * (x - 5) + 0.1;
-  const px = (x) => ox + 14 + (x / 10) * (w - 24), py = (l) => oy + h - 16 - (l / 4.6) * (h - 34);
+  const px = (x) => ox + 14 + (x / 10) * (w - 24), py = (l) => oy + h - 24 - (l / 4.6) * (h - 42); // R073: taban çizgisinin altında adım numaralarına yer
   const b = [caption(ox, oy + 7, title)];
   let d = ''; for (let x = 0; x <= 10; x += 0.25) d += (x === 0 ? 'M' : 'L') + f1(px(x)) + ' ' + f1(py(Lf(x))) + ' ';
   b.push(`<path d="${d.trim()}" fill="none" stroke="${INK}" stroke-width="1"/>`);
   b.push(line(px(0), py(0), px(10), py(0), { stroke: RULE }));
   b.push(line(px(5), py(0), px(5), py(0.1) - 2, { stroke: RULE, dash: '1.5 2' }));
-  b.push(text(px(5), oy + h - 5, S.descent.min, { font: MONO, size: 6, fill: MUTED, anchor: 'middle' }));
-  b.push(text(ox + 2, oy + 18, `${S.descent.loss} L(x)`, { font: MONO, size: 6, fill: MUTED }));
+  b.push(text(px(5), oy + h - 5, S.descent.min, { font: MONO, size: 6.5, fill: MUTED, anchor: 'middle' })); // R082: viewBox 332 → KDP'de ≥ 6.5 pt
+  b.push(text(ox + 2, oy + 18, `${S.descent.loss} L(x)`, { font: MONO, size: 6.5, fill: MUTED }));
   steps.forEach((s, i) => {
     if (i > 0) {
       const p = steps[i - 1];
@@ -39,23 +39,27 @@ function descentPanel(ox, oy, w, h, steps, title, S) {
   for (let x = 0; x <= 10; x += 0.2) obst.push({ x: px(x) - 1, y: py(Lf(x)) - 1, w: 2, h: 2 });
   steps.forEach((s, i) => { if (!i) return; const p = steps[i - 1], X1 = px(p.x), Y1 = py(p.L), X2 = px(s.x), Y2 = py(s.L), n = Math.ceil(Math.hypot(X2 - X1, Y2 - Y1) / 3);
     for (let k = 0; k <= n; k++) obst.push({ x: X1 + (X2 - X1) * k / n - 1, y: Y1 + (Y2 - Y1) * k / n - 1, w: 2, h: 2 }); });
-  obst.push({ x: ox + 2, y: oy + 12, w: tw(`${S.descent.loss} L(x)`, 6, true), h: 7 }); // eksen yazısı
-  obst.push({ x: ox + 14, y: oy + h - 16, w: w - 24, h: 20 }); // taban çizgisi ve en düşük nokta etiketi
-  const hit = (bx) => obst.some((o) => bx.x < o.x + o.w && bx.x + bx.w > o.x && bx.y < o.y + o.h && bx.y + bx.h > o.y);
-  const DIRS = [[-1, -1], [1, -1], [-1, 1], [1, 1], [0, -1], [-1, 0], [1, 0], [0, 1]];
+  obst.push({ x: ox + 2, y: oy + 12, w: tw(`${S.descent.loss} L(x)`, 6.5, true), h: 7.5 }); // eksen yazısı
+  obst.push({ x: ox + 14, y: py(0) - 1.2, w: w - 24, h: 2.4 }); // taban çizgisi
+  { const mw = tw(S.descent.min, 6.5, true); obst.push({ x: px(5) - mw / 2 - 2, y: oy + h - 12, w: mw + 4, h: 9 }); } // en düşük nokta etiketi
+  const hits = (bx) => obst.filter((o) => bx.x < o.x + o.w && bx.x + bx.w > o.x && bx.y < o.y + o.h && bx.y + bx.h > o.y).length;
+  // R073: 16 yön × 5 yarıçap; çakışmasız konum yoksa en az çakışan konum (eskiden sabit "üstüne" düşüyordu ve turuncu yolu kesiyordu)
+  const DIRS = [[-1, -1], [1, -1], [-1, 1], [1, 1], [0, -1], [-1, 0], [1, 0], [0, 1], [-2, -1], [2, -1], [-2, 1], [2, 1], [-1, -2], [1, -2], [-1, 2], [1, 2]].map(([a, c]) => { const d = Math.hypot(a, c); return [a / d, c / d]; });
   steps.forEach((s) => {
     const X = px(s.x), Y = py(s.L), lw = tw(String(s.i), 6.5, true), lh = 6.5;
-    let best = null;
-    for (const rad of [7, 12, 17]) {
+    let best = null, bestScore = 1e9;
+    for (const rad of [7, 11, 15, 19, 24]) {
       for (const [dx, dy] of DIRS) {
         const cx = X + dx * rad, cy = Y + dy * rad; // etiket merkezi
         const bx = { x: cx - lw / 2, y: cy - lh / 2, w: lw, h: lh };
-        if (bx.x < ox || bx.x + bx.w > ox + w || bx.y < oy + 10 || hit(bx)) continue;
-        best = { bx, cx, cy, rad }; break;
+        if (bx.x < ox || bx.x + bx.w > ox + w || bx.y < oy + 10 || bx.y + bx.h > oy + h - 1) continue;
+        // çağrı çizgisi de turuncu yolu ya da eğriyi kesmesin: çizgi boyunca örnek noktalar engel sayılır
+        let cross = 0; if (rad > 7) for (let t = 4; t <= rad - 4; t += 1.5) if (hits({ x: X + dx * t - 0.5, y: Y + dy * t - 0.5, w: 1, h: 1 })) cross++;
+        const sc = hits(bx) * 100 + cross * 40 + rad;
+        if (sc < bestScore) { bestScore = sc; best = { bx, cx, cy, rad }; }
       }
-      if (best) break;
+      if (best && bestScore < 100) break;
     }
-    if (!best) { const cx = X, cy = Y - 9; best = { bx: { x: cx - lw / 2, y: cy - lh / 2, w: lw, h: lh }, cx, cy, rad: 9 }; }
     if (best.rad > 7) { const d = Math.hypot(best.cx - X, best.cy - Y), ux = (best.cx - X) / d, uy = (best.cy - Y) / d;
       b.push(line(X + ux * 4, Y + uy * 4, X + ux * (best.rad - 4), Y + uy * (best.rad - 4), { stroke: INK2, sw: 0.4 })); }
     b.push(text(best.cx, best.cy + 2.3, s.i, { font: MONO, size: 6.5, fill: INK2, anchor: 'middle' }));
@@ -68,7 +72,7 @@ function descentFigure(demo, { lang }) {
   const S = STRINGS[lang], D = S.descent;
   const LR_HIGH = 4.6;
   const low = descentRun(0.18), high = descentRun(LR_HIGH);
-  const pw = 150, ph = 120, pad = 10, W = pad * 2 + pw * 2 + 12, H = ph + pad * 2;
+  const pw = 150, ph = 128, pad = 10, W = pad * 2 + pw * 2 + 12, H = ph + pad * 2;
   const body = [rect(0, 0, W, H, { fill: PAPER }),
     descentPanel(pad, pad, pw, ph, low, `${D.low} (η = 0.18)`, S),
     descentPanel(pad + pw + 12, pad, pw, ph, high, `${D.high} (η = ${LR_HIGH})`, S)];
@@ -191,14 +195,13 @@ function scatterFigure(demo, { lang }) {
     }
     return b.join('\n');
   };
-  const rowLabel = (ox, oy, s) => text(ox + pw - 4, oy + 8, s, { font: MONO, size: 5.5, fill: MUTED, anchor: 'end' });
   const L1 = pad, L2 = pad + pw + gap;
   body.push(caption(L1, pad + 7, C.reg), caption(L2, pad + 7, C.cls));
   const r1 = pad + cap, r2 = r1 + ph + rowGap;
-  body.push(rowLabel(L1, r1, C.raw), panel(L1, r1, 'reg', false));
-  body.push(rowLabel(L2, r1, C.raw), panel(L2, r1, 'cls', false));
-  body.push(rowLabel(L1, r2, C.bestLine), panel(L1, r2, 'reg', true));
-  body.push(rowLabel(L2, r2, C.boundary), panel(L2, r2, 'cls', true));
+  // R073 (2026-10-01): satır etiketleri ("ham veri", "en iyi doğru", "sınır") panel zemininin altında kalıp görünmüyordu (PDF'te gizli metin);
+  // üst/alt kare ayrımını Kurulum metni veriyor, etiketler kaldırıldı.
+  body.push(panel(L1, r1, 'reg', false), panel(L2, r1, 'cls', false));
+  body.push(panel(L1, r2, 'reg', true), panel(L2, r2, 'cls', true));
   // gösterge (sınıflandırma renkleri: ekranda yeşil/turuncu)
   const ly = H - 4;
   body.push(circle(L2 + 16, ly - 2, 2.4, { fill: INK }), text(L2 + 21, ly, C.groupA, { font: MONO, size: 5.5, fill: INK2 }));
@@ -222,7 +225,7 @@ const KM_ANOM = 10;
 const KM_LBL = { 0: [-4, 2, 'end'], 1: [-4, 2, 'end'], 3: [4, 6, 'start'], 5: [0, 8, 'middle'], 6: [-4, 2, 'end'] };
 function kmeansFigure(demo, { lang }) {
   const S = STRINGS[lang], K = S.kmeans;
-  const pad = 8, pw = 147, ph = 108, gap = 10, cap = 10;
+  const pad = 8, pw = 147, ph = 108, gap = 10, cap = 13;  // R073: başlık ile y ekseni "10" etiketi arasında boşluk
   const W = pad * 2 + pw * 2 + gap, H = pad + cap + ph + 14;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
   const dist = (p, c) => Math.hypot(p[0] - c[0], p[1] - c[1]);
@@ -279,7 +282,7 @@ function modelfitFigure(demo, { lang }) {
   const labelOf = (f) => (M.labelOverride && M.labelOverride[f.kind]) || f.label;
   const labels = demo.fits.map((f) => String(labelOf(f)).split('\n'));
   const capLines = Math.max(...labels.map((l) => l.length));
-  const pad = 6, n = demo.fits.length, gap = 8, pw = Math.floor((320 - pad * 2 - gap * (n - 1)) / n), ph = 74, cap = 2 + capLines * 8.5;
+  const pad = 6, n = demo.fits.length, gap = 8, pw = Math.floor((320 - pad * 2 - gap * (n - 1)) / n), ph = 74, cap = 5 + capLines * 8.5;  // R073: başlığın son satırı ile y ekseni üst etiketi arasında boşluk
   const vSize = 6.3, vLine = 8;
   const verdictOf = (f) => (M.verdictOverride && M.verdictOverride[f.kind]) || f.verdict;
   const verdicts = demo.fits.map((f) => wrap(verdictOf(f), vSize, pw - 2));

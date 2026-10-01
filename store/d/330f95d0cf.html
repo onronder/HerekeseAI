@@ -123,6 +123,7 @@
                     </div>
                     <p style="margin:10px 0 12px;font-size:15px;color:#37332a;">{{ intel.desc }}</p>
                     <div style="height:8px;background:rgba(26,26,26,0.08);"><div style="height:8px;background:{{ intel.levelColor }};width:{{ intel.bar }};transition:width .4s ease;"></div></div>
+                    <div style="margin-top:8px;font-family:'Space Mono',monospace;font-size:11px;color:#6c6555;">Çubuk temsili düzeydir; ölçülmüş başarı değildir.</div>
                   </div>
                 </sc-if>
 
@@ -204,7 +205,7 @@
                     <sc-for list="{{ chainNodes }}" as="n" hint-placeholder-count="5">
                       <span style="display:inline-flex;align-items:center;gap:6px;">
                         <span style="padding:9px 13px;border:1.5px solid {{ acc }};font-family:'Work Sans',sans-serif;font-size:14px;font-weight:600;background:{{ n.bg }};color:{{ n.fg }};transition:all .25s;">{{ n.label }}</span>
-                        <sc-if value="{{ n.arrow }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;">bir ▸</span></sc-if>
+                        <sc-if value="{{ n.arrow }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;white-space:nowrap;">{{ n.rel }} ▸</span></sc-if>
                       </span>
                     </sc-for>
                   </div>
@@ -781,22 +782,22 @@
                   </sc-if>
                 </sc-if>
 
-                <!-- DF (deepfake: şüphe işareti + bağımsız doğrulama adımı) -->
+                <!-- DF (deepfake: olay, köken ve bağımsız doğrulama kanalı ayrı sorulur ve ayrı puanlanır; R055) -->
                 <sc-if value="{{ d_df }}" hint-placeholder-val="{{ false }}">
-                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:8px;">Durum {{ dfIdxNum }} / {{ dfTotal }} · kurgu örnek · önerilen adımla eşleşen: {{ dfHits }}</div>
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:8px;">Durum {{ dfIdxNum }} / {{ dfTotal }} · kurgu örnek · eşleşen: olay {{ dfScE }} · köken {{ dfScO }} · kanal {{ dfScC }}</div>
                   <div style="padding:16px;border:1px solid rgba(26,26,26,0.14);background:#fff;font-size:15px;line-height:1.55;color:#1f1f1f;margin-bottom:16px;">{{ dfText }}</div>
-                  <sc-if value="{{ dfAnswered }}" hint-placeholder-val="{{ false }}">
-                    <div style="font-family:'Instrument Serif',serif;font-size:20px;color:{{ dfVerdictColor }};text-align:center;margin-bottom:8px;">{{ dfVerdict }}</div>
-                    <div style="padding:12px 14px;border-left:4px solid {{ acc }};background:#faf6f7;font-size:13.5px;line-height:1.55;color:#37332a;">💡 {{ dfTell }}</div>
+                  <sc-if value="{{ dfAsking }}" hint-placeholder-val="{{ true }}">
+                    <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;color:#8a8270;margin-bottom:10px;">{{ dfQNum }} / 3 · {{ dfQ }}</div>
+                    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                      <sc-for list="{{ dfOpts }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ dfDone }}" hint-placeholder-val="{{ false }}">
+                    <sc-for list="{{ dfRes }}" as="r" hint-placeholder-count="3"><div style="padding:9px 13px;margin-bottom:6px;border-left:4px solid {{ r.c }};background:#fff;font-size:13.5px;line-height:1.55;color:#37332a;"><span style="font-weight:600;color:{{ r.c }};">{{ r.head }}</span> {{ r.text }}</div></sc-for>
                     <div style="margin-top:8px;font-size:12.5px;color:#6c6555;line-height:1.5;">{{ dfNote }}</div>
                     <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;">
                       <sc-if value="{{ dfHasNext }}" hint-placeholder-val="{{ true }}"><button onClick="{{ dfNext }}" style="padding:9px 18px;border:none;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Sonraki →</button></sc-if>
                       <button onClick="{{ dfReset }}" style="padding:9px 14px;border:1px solid {{ acc }};background:none;color:{{ acc }};font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;">baştan</button>
-                    </div>
-                  </sc-if>
-                  <sc-if value="{{ dfNotAnswered }}" hint-placeholder-val="{{ true }}">
-                    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-                      <sc-for list="{{ dfOpts }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for>
                     </div>
                   </sc-if>
                 </sc-if>
@@ -811,6 +812,7 @@
                           <sc-for list="{{ u.opts }}" as="o" hint-placeholder-count="4"><button onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for>
                         </div>
                         <sc-if value="{{ u.done }}" hint-placeholder-val="{{ false }}"><div style="margin-top:7px;font-family:'Space Mono',monospace;font-size:12px;color:{{ u.markColor }};">{{ u.mark }}</div></sc-if>
+                        <sc-if value="{{ u.done }}" hint-placeholder-val="{{ false }}"><div style="margin-top:5px;font-size:12.5px;line-height:1.5;color:#4a4539;">{{ u.why }}</div></sc-if>
                       </div>
                     </sc-for>
                   </div>
@@ -1004,7 +1006,7 @@ class Component extends DCLogic {
     neuronX: [0.6, 0.3, 0.8], neuronAct: 'sigmoid', ffIn: [1, 0, 1], ffFed: false, bpRound: 0, convFilter: 'vert', convPos: 0, rnnStep: 0, ganRound: 0,
     tokEx: 0, embedPick: 0, attnQ: 3, genStep: 0, trainStage: 0, diffStep: 0, ctxCount: 0,
     promptParts: { role: false, context: false, example: false, format: false }, ragQ: 'izin', ragOn: false, agentStep: 0, archPick: 'orch', sectorPick: 'health',
-    biasVal: 0, explainPick: 0, explainShow: false, dfIdx: 0, dfAnswer: null, dfHits: 0, regAns: {}, alignPick: 0, alignShow: false,
+    biasVal: 0, explainPick: 0, explainShow: false, dfIdx: 0, dfAns: {}, dfScore: { e: 0, o: 0, c: 0 }, regAns: {}, alignPick: 0, alignShow: false,
     turIdx: 0, turAnswer: null, crIdx: 0, crSent: false, capPick: 'narrow', singPick: 'accel', respIdx: 0, respPicks: [], respShow: false,
     quizAns: {}, quizChecked: false
   };
@@ -1027,7 +1029,7 @@ class Component extends DCLogic {
   componentWillUnmount() { clearInterval(this._tick); if (this._gridTimer) clearInterval(this._gridTimer); }
 
   modules() {
-    return [{"n":"02","tag":"Klasik YZ","title":"Kuralların Çağı","subtitle":"Öğrenmeden önce: elle yazılan zekâ","acc":"#bb4d17","dot":"#bb4d17","sections":[{"id":"neat","label":"Neat vs Scruffy","h2":"Düzenliler ve dağınıklar (Neat vs Scruffy)","basit":[],"teknik":[],"demo":{"type":"classify","title":"Hangi yaklaşım?","hint":"Her ifadeyi doğru kampa ayır: Düzenli mi, Dağınık mı?","catA":{"key":"neat","label":"Düzenli (Neat)"},"catB":{"key":"scruffy","label":"Dağınık (Scruffy)"},"neOluyorBasit":"İki kamp, iki karakter: Düzenliler her adımı matematikle kanıtlamak ister; Dağınıklar “önce çalışsın, teorisi sonra gelir” der. İkisinin de haklı çıktığı yerler var; bugünün yapay zekâsı ikisinin karışımı.","neOluyor":"Bu, YZ’de yöntemsel bir gerilimdir: ilkeli/kanıtlanabilir yaklaşımlar (neat: mantık, olasılık) ile ampirik/mühendislik-odaklı yaklaşımlar (scruffy). Klasik YZ’nin duvarı: bilgi edinme darboğazı ve kırılganlık.","items":[{"label":"Her şeyi biçimsel mantıkla kanıtla","cat":"neat"},{"label":"Çalışan kısayolları kullan, teoriyi sonra düşün","cat":"scruffy"},{"label":"Matematiksel kesinlik şarttır","cat":"neat"},{"label":"Gerçek dünya dağınıktır; esnek ol","cat":"scruffy"}]}}]}];
+    return [{"n":"02","tag":"Klasik YZ","title":"Kuralların Çağı","subtitle":"Öğrenmeden önce: elle yazılan zekâ","acc":"#bb4d17","dot":"#bb4d17","sections":[{"id":"neat","label":"Düzenliler ve dağınıklar","h2":"Düzenliler ve dağınıklar (neats ve scruffies)","basit":[],"teknik":[],"demo":{"type":"classify","title":"Hangi yaklaşım?","hint":"Her ifadeyi doğru kampa ayır: Düzenli mi, Dağınık mı?","catA":{"key":"neat","label":"Düzenli (Neat)"},"catB":{"key":"scruffy","label":"Dağınık (Scruffy)"},"neOluyorBasit":"İki kamp, iki karakter: Düzenliler her adımı matematikle kanıtlamak ister; Dağınıklar “önce çalışsın, teorisi sonra gelir” der. İkisinin de haklı çıktığı yerler var; bugünün yapay zekâsı ikisinin karışımı.","neOluyor":"Bu, YZ’de yöntemsel bir gerilimdir: ilkeli/kanıtlanabilir yaklaşımlar (neat: mantık, olasılık) ile ampirik/mühendislik-odaklı yaklaşımlar (scruffy). Klasik YZ’nin duvarı: bilgi edinme darboğazı ve kırılganlık.","items":[{"label":"Her şeyi biçimsel mantıkla kanıtla","cat":"neat"},{"label":"Çalışan kısayolları kullan, teoriyi sonra düşün","cat":"scruffy"},{"label":"Matematiksel kesinlik şarttır","cat":"neat"},{"label":"Gerçek dünya dağınıktır; esnek ol","cat":"scruffy"}]}}]}];
   }
 
   upcoming() {
@@ -1039,7 +1041,7 @@ class Component extends DCLogic {
   resetDemos() {
     this._tauto = false;
     this._mkauto = false; this._descauto = false;
-    this.setState({ intelPick: 0, bits: [0,1,0,0,1,0,0,1], tu:{tape:[0,0,0,1,0,1],head:0,st:'right',start:5}, cy:{phase:0,playing:true,part:0}, cls:{}, exp:0, chainQ:-1, facts:{yagmur:true,soguk:false,ruzgar:false}, grid:{method:'bfs',explored:0,path:[],visited:[]}, mk:{cur:0,days:0,counts:[0,0,0]}, spamPick:0, scTask:'reg', scFitted:false, kmGrouped:false, descX:0.6, descN:0, descLr:'low', fitPick:1, neuronX:[0.6,0.3,0.8], neuronAct:'sigmoid', ffIn:[1,0,1], ffFed:false, bpRound:0, convFilter:'vert', convPos:0, rnnStep:0, ganRound:0, tokEx:0, embedPick:0, attnQ:3, genStep:0, trainStage:0, diffStep:0, ctxCount:0, promptParts:{role:false,context:false,example:false,format:false}, ragQ:'izin', ragOn:false, agentStep:0, archPick:'orch', sectorPick:'health', biasVal:0, explainPick:0, explainShow:false, dfIdx:0, dfAnswer:null, dfHits:0, regAns:{}, alignPick:0, alignShow:false, turIdx:0, turAnswer:null, crIdx:0, crSent:false, capPick:'narrow', singPick:'accel', respIdx:0, respPicks:[], respShow:false, quizAns:{} });
+    this.setState({ intelPick: 0, bits: [0,1,0,0,1,0,0,1], tu:{tape:[0,0,0,1,0,1],head:0,st:'right',start:5}, cy:{phase:0,playing:true,part:0}, cls:{}, exp:0, chainQ:-1, facts:{yagmur:true,soguk:false,ruzgar:false}, grid:{method:'bfs',explored:0,path:[],visited:[]}, mk:{cur:0,days:0,counts:[0,0,0]}, spamPick:0, scTask:'reg', scFitted:false, kmGrouped:false, descX:0.6, descN:0, descLr:'low', fitPick:1, neuronX:[0.6,0.3,0.8], neuronAct:'sigmoid', ffIn:[1,0,1], ffFed:false, bpRound:0, convFilter:'vert', convPos:0, rnnStep:0, ganRound:0, tokEx:0, embedPick:0, attnQ:3, genStep:0, trainStage:0, diffStep:0, ctxCount:0, promptParts:{role:false,context:false,example:false,format:false}, ragQ:'izin', ragOn:false, agentStep:0, archPick:'orch', sectorPick:'health', biasVal:0, explainPick:0, explainShow:false, dfIdx: 0, dfAns: {}, dfScore: { e: 0, o: 0, c: 0 }, regAns:{}, alignPick:0, alignShow:false, turIdx:0, turAnswer:null, crIdx:0, crSent:false, capPick:'narrow', singPick:'accel', respIdx:0, respPicks:[], respShow:false, quizAns:{} });
   }
   prevModule() { if (this.state.mi > 1) this.open(this.state.mi - 1); else this.open(0); }
   nextModule() { if (this.state.mi < this.modules().length) this.open(this.state.mi + 1); }
@@ -1319,7 +1321,7 @@ class Component extends DCLogic {
           const targetIdx = q ? demo.nodes.indexOf(q.target) : -1;
           const found = targetIdx >= 0;
           out.chainNodes = demo.nodes.map((label, i) => ({
-            label, arrow:i < demo.nodes.length-1,
+            label, arrow:i < demo.nodes.length-1, rel: i === 0 ? 'örneği' : 'alt sınıfı',
             bg: q && found && i <= targetIdx ? acc : '#fff',
             fg: q && found && i <= targetIdx ? '#f4eddb' : '#37332a'
           }));
@@ -1754,7 +1756,7 @@ class Component extends DCLogic {
         if (demo.type === 'train') {
           out.d_train = true;
           const stages = [
-            { name: '1 · Ön eğitim', data: 'Devasa internet metni', learns: 'Dili ve dünyayı (bir sonraki kelimeyi tahmin)', out: 'Türkiye’nin başkenti Ankara’dır ve nüfusu yaklaşık altı milyondur. Bu şehir...', note: 'Ham model “tamamlayıcı”dır: soruyu cevaplamaz, metni sürdürür.' },
+            { name: '1 · Ön eğitim', data: 'Devasa internet metni', learns: 'Dili ve dünyayı (bir sonraki kelimeyi tahmin)', out: 'Türkiye’nin başkenti Ankara’dır ve nüfusu yaklaşık altı milyondur. Bu şehir...', note: 'Bu örnekte ham model bilgiyi verip durmuyor, metni sürdürüyor; ham modeller çoğu zaman böyle tamamlar.' },
             { name: '2 · İnce ayar', data: 'Talimat–cevap çiftleri', learns: 'Yönergeyi izlemeyi (soruyu cevaplamayı)', out: 'Türkiye’nin başkenti Ankara’dır.', note: 'Artık soruyu doğrudan, derli toplu cevaplıyor.' },
             { name: '3 · RLHF / hizalama', data: 'İnsan tercihleri (ödül modeli)', learns: 'Yardımcı, dürüst ve güvenli olmayı', out: 'Türkiye’nin başkenti Ankara’dır. İstersen şehir hakkında birkaç ilginç bilgi de paylaşabilirim. 🙂', note: 'Aynı bilgi; ama daha yardımcı, kibar ve hizalı bir tonla.' }
           ];
@@ -1800,8 +1802,8 @@ class Component extends DCLogic {
           });
           out.ctxMax = MAX; out.ctxUsed = Math.min(n, MAX);
           out.ctxCaption = n === 0 ? 'Pencere boş. “Kelime ekle” ile metni besle; pencere en fazla ' + MAX + ' kelime tutuyor.'
-            : (forgotten === 0 ? n + ' kelime eklendi, hepsi pencerede. Pencere dolana kadar her şey hatırlanıyor.'
-            : 'Pencere doldu! İlk ' + forgotten + ' kelime artık “unutuldu” (soluk). Model yalnızca son ' + MAX + ' kelimeyi görüyor — uzun belgeler bu yüzden kırpılır ya da özetlenir.');
+            : (forgotten === 0 ? n + ' kelime eklendi, hepsi pencerede. Pencere dolana kadar hiçbir kelime dışarı düşmüyor; pencerede olmak, modelin her ayrıntıyı kullanacağı anlamına gelmez.'
+            : 'Pencere doldu! İlk ' + forgotten + ' kelime artık “unutuldu” (soluk). Bu gösterimde model yalnızca son ' + MAX + ' kelimeyi görüyor; gerçek uygulamalar sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir.');
           out.ctxAdd = () => this.setState(s => ({ ctxCount: Math.min(pool.length, s.ctxCount + 1) }));
           out.ctxReset = () => this.setState({ ctxCount: 0 });
         }
@@ -1956,43 +1958,51 @@ class Component extends DCLogic {
 
         if (demo.type === 'df') {
           out.d_df = true;
-          // Kurgu vakalar. best = önerilen adım ('real' | 'verify' | 'cannot'); ipucu = şüphe/güven işareti; dogrulama = bağımsız kanal.
-          // Kesin "gerçek/sahte" hükmü verilmez: ipucu inceleme gerekçesidir, üretim kökeninin kanıtı değildir. Puan = önerilen adımla eşleşen seçim.
-          const cases = [
-            { text: 'Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor.', best: 'verify', ipucu: 'dudak hareketleriyle ses arasındaki uyumsuzluk', dogrulama: 'konuşmanın özgün kaydını ve yayımlayan kurumu bağımsız bir kanaldan bul' },
-            { text: 'Telefonda “patronun” acil para transferi istiyor; sesi tıpkı ona benziyor ama tonlama biraz robotik.', best: 'verify', ipucu: 'ses klonlamayla uyumlu robotik tonlama ve aciliyet baskısı', dogrulama: 'transferi bekletip patronu bilinen numarasından geri ara ya da yüz yüze teyit et' },
-            { text: 'Bir gazetenin web sitesinde yayımlanan, birden çok bağımsız kaynağın da doğruladığı bir haber.', best: 'real', ipucu: 'birden çok bağımsız kaynak ve izlenebilir köken', dogrulama: 'kaynakların her birini ayrı ayrı aç; metni insanın mı makinenin mi yazdığı bu bilgiden çıkarılamaz' },
-            { text: 'Bir fotoğrafta kişinin elinde altı parmak var ve arka plandaki yazılar anlamsız harflerden oluşuyor.', best: 'verify', ipucu: 'altı parmak ve anlamsız arka plan yazısı', dogrulama: 'ters görsel aramayla fotoğrafın özgün kaynağını bul' }
-          ];
-          const opts = [{ k: 'real', label: 'Gerçek görünüyor', c: '#1d8a4f' }, { k: 'verify', label: 'Şüpheli: doğrula', c: '#c98a1a' }, { k: 'cannot', label: 'Belirlenemez', c: '#3b82c4' }];
-          const idx = this.state.dfIdx, ans = this.state.dfAnswer, c = cases[idx];
-          const lbl = {}; opts.forEach(o => lbl[o.k] = o.label);
-          out.dfText = c.text; out.dfIdxNum = idx + 1; out.dfTotal = cases.length; out.dfHits = this.state.dfHits;
-          out.dfAnswered = ans !== null; out.dfNotAnswered = ans === null;
-          out.dfOpts = opts.map(o => ({ label: o.label, pick: () => this.setState(s => ({ dfAnswer: o.k, dfHits: s.dfHits + (o.k === c.best ? 1 : 0) })),
-            style: 'padding:11px 20px;border:1.5px solid ' + o.c + ';background:#fff;color:' + o.c + ';font-family:\'Work Sans\',sans-serif;font-weight:600;font-size:14px;cursor:pointer;' }));
-          if (ans !== null) {
-            const match = ans === c.best;
-            out.dfVerdict = (match ? '✓ Önerilen adımla eşleşti: ' : '○ Önerilen adım farklı: ') + lbl[c.best];
-            out.dfVerdictColor = match ? '#1d8a4f' : '#c98a1a';
-            out.dfTell = 'Bu kurgu örnekte ' + c.ipucu + ' işareti var; önerilen adım: ' + c.dogrulama + '.';
-            out.dfNote = 'İpuçları inceleme gerekçesidir; tek başına içeriğin nasıl üretildiğinin kanıtı değildir. Olayın gerçekliği ile üretim yöntemi ayrı sorulardır.';
-          } else { out.dfVerdict = ''; out.dfTell = ''; out.dfNote = ''; }
+          // R055: üç ayrı soru, üç ayrı puan. e = olay gerçekliği, o = üretim kökeni, c = bağımsız doğrulama kanalı.
+          // Kabul edilen cevaplar listededir; ipucu kökenin kanıtı sayılmaz. Kesin "gerçek/sahte" hükmü verilmez.
+          const axes = [{"k": "e", "q": "Olay: anlatılan şey gerçekten oldu mu?", "head": "Olay", "opts": [["yes", "Doğrulanmış"], ["check", "Doğrulanmadı: kontrol gerek"], ["unk", "Belirlenemez"]]}, {"k": "o", "q": "Köken: içerik nasıl üretilmiş olabilir?", "head": "Köken", "opts": [["rec", "Gerçek kayıt izleri var"], ["trace", "Yapay üretim izi var (kanıt değil)"], ["unk", "Bu bilgiyle anlaşılmaz"]]}, {"k": "c", "q": "Kanal: hangi bağımsız doğrulamayı yaparsın?", "head": "Kanal"}];
+          const cases = [{"text": "Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor.", "e": ["check"], "o": ["trace"], "ch": [["Videoyu paylaşan hesabın altındaki yorumlara bak", false], ["Aynı videoyu başka bir sosyal medya hesabında ara", false], ["Konuşmanın özgün kaydını ve yayımlayan kurumu bağımsız bir kanaldan bul", true]], "ew": "Cümlenin gerçekten söylenip söylenmediği henüz doğrulanmadı; video tek başına kanıt değil.", "ow": "Dudak ile ses arasındaki uyumsuzluk bir deepfake izi olabilir; ama kötü sıkıştırma ya da dublaj da aynı görüntüyü verir.", "cw": "Paylaşımın kendisi ya da kopyaları bağımsız kanal değildir; özgün kayıt ve yayımlayan kurum öyledir."}, {"text": "Telefonda “patronun” acil para transferi istiyor; sesi tıpkı ona benziyor ama tonlama biraz robotik.", "e": ["check"], "o": ["trace", "unk"], "ch": [["Konuşmayı uzatıp sesi daha dikkatli dinle", false], ["Aramayı kapat, patronu kendi bildiğin numaradan geri ara; transferi ikinci bir kişiye onaylat", true], ["Sesin kaydını bir arkadaşına dinlet", false]], "ew": "İsteğin gerçekten patrondan geldiği doğrulanmadı; aciliyet baskısı başlı başına bir uyarı işaretidir.", "ow": "Robotik tonlama ses klonlamayla uyumlu ama kesin kanıt değil; sesin kökenini bilmesen de karar aynı: doğrulamadan para gönderilmez.", "cw": "Aynı aramanın içinde kalan her kontrol arayanın elindedir; bağımsız kanal, senin bildiğin numaradır."}, {"text": "Bir gazetenin web sitesinde yayımlanan, birden çok bağımsız kaynağın da doğruladığı bir haber.", "e": ["yes"], "o": ["unk"], "ch": [["Kaynakların her birini kendi sayfasında aç; varsa birincil belgeye bak", true], ["Haberin aldığı beğeni ve paylaşım sayısına bak", false], ["Haberi aynı sitede bir kez daha oku", false]], "ew": "Birden çok bağımsız kaynak ve izlenebilir köken olayın doğruluğunu destekler.", "ow": "Bu bilgiler metni insanın mı yapay zekânın mı yazdığını söylemez; yapay yazılmış doğru bir haber de olabilir.", "cw": "Beğeni sayısı ya da aynı sayfa doğrulama değildir; kaynakların kendisi ve birincil belge öyledir."}, {"text": "Bir fotoğrafta kişinin elinde altı parmak var ve arka plandaki yazılar anlamsız harflerden oluşuyor.", "e": ["check"], "o": ["trace"], "ch": [["Fotoğrafı yakınlaştırıp başka iz ara", false], ["Ters görsel aramayla ilk yayımlayanı bul; varsa içerik kimlik bilgisi (C2PA) kaydına bak", true], ["Fotoğrafı paylaşan kişiye nereden bulduğunu sor", false]], "ew": "Fotoğraftaki anın gerçekten yaşandığı doğrulanmadı.", "ow": "Altı parmak ve anlamsız yazı üretken modellerin bilinen izleri; ama düzenleme ya da gerçek bir anomali de olabilir. C2PA kaydının yokluğu sahtelik kanıtı değildir.", "cw": "Görüntüye daha çok bakmak yeni kanıt üretmez; ilk yayımlayanı bulmak ve köken kaydı bağımsız kanıttır."}];
+          const idx = this.state.dfIdx, A = this.state.dfAns || {}, c = cases[idx];
+          const step = ['e', 'o', 'c'].filter(k => A[k] !== undefined).length;
+          const sc = this.state.dfScore || { e: 0, o: 0, c: 0 };
+          out.dfText = c.text; out.dfIdxNum = idx + 1; out.dfTotal = cases.length;
+          out.dfScE = sc.e; out.dfScO = sc.o; out.dfScC = sc.c;
+          out.dfAsking = step < 3; out.dfDone = step === 3;
+          const optsFor = (ax) => ax.k === 'c' ? c.ch.map((x, i) => ({ k: 'c' + i, label: x[0] })) : ax.opts.map(o => ({ k: o[0], label: o[1] }));
+          const okFor = (ax, k) => ax.k === 'c' ? !!(c.ch[Number(k.slice(1))] || [])[1] : c[ax.k].includes(k);
+          if (step < 3) {
+            const ax = axes[step];
+            out.dfQNum = step + 1; out.dfQ = ax.q;
+            out.dfOpts = optsFor(ax).map(o => ({ label: o.label,
+              pick: () => this.setState(s => ({ dfAns: { ...(s.dfAns || {}), [ax.k]: o.k }, dfScore: { ...(s.dfScore || { e: 0, o: 0, c: 0 }), [ax.k]: ((s.dfScore || {})[ax.k] || 0) + (okFor(ax, o.k) ? 1 : 0) } })),
+              style: 'padding:11px 18px;border:1.5px solid ' + acc + ';background:#fff;color:' + acc + ';font-family:\'Work Sans\',sans-serif;font-weight:600;font-size:14px;cursor:pointer;max-width:340px;' }));
+            out.dfRes = []; out.dfNote = '';
+          } else {
+            out.dfOpts = [];
+            out.dfRes = axes.map(ax => {
+              const opts = optsFor(ax), mine = opts.find(o => o.k === A[ax.k]), ok = okFor(ax, A[ax.k]);
+              const best = opts.filter(o => okFor(ax, o.k)).map(o => o.label).join(' / ');
+              const why = ax.k === 'e' ? c.ew : ax.k === 'o' ? c.ow : c.cw;
+              return { head: (ok ? '✓ ' : '○ ') + ax.head + ':', c: ok ? '#1d8a4f' : '#c98a1a',
+                text: 'Senin cevabın: ' + (mine ? mine.label : '') + '. ' + (ok ? '' : 'Önerilen: ' + best + '. ') + why };
+            });
+            out.dfNote = "İpuçları inceleme gerekçesidir; tek başına içeriğin nasıl üretildiğinin kanıtı değildir. Olayın gerçekliği ile üretim yöntemi ayrı sorulardır; ikisinde de karar bağımsız bir kanaldan gelir.";
+          }
           out.dfHasNext = idx < cases.length - 1;
-          out.dfNext = () => this.setState(s => ({ dfIdx: Math.min(cases.length - 1, s.dfIdx + 1), dfAnswer: null }));
-          out.dfReset = () => this.setState({ dfIdx: 0, dfAnswer: null, dfHits: 0 });
+          out.dfNext = () => this.setState(s => ({ dfIdx: Math.min(cases.length - 1, s.dfIdx + 1), dfAns: {} }));
+          out.dfReset = () => this.setState({ dfIdx: 0, dfAns: {}, dfScore: { e: 0, o: 0, c: 0 } });
         }
 
         if (demo.type === 'reg') {
           out.d_reg = true;
           const levels = [{ k: 'ban', label: 'Yasak', c: '#b23b5e' }, { k: 'high', label: 'Yüksek', c: '#c98a1a' }, { k: 'limited', label: 'Sınırlı', c: '#3b82c4' }, { k: 'minimal', label: 'Minimal', c: '#1d8a4f' }];
           const uses = [
-            { id: 'r1', label: 'Vatandaşları davranışına göre puanlayan devlet sistemi', ans: 'ban' },
-            { id: 'r2', label: 'İşe alımda adayları otomatik eleyen sistem', ans: 'high' },
-            { id: 'r3', label: 'Müşteriyle konuşan sohbet botu', ans: 'limited' },
-            { id: 'r4', label: 'E-postada spam filtresi', ans: 'minimal' },
-            { id: 'r5', label: 'Kredi başvurusu değerlendiren model', ans: 'high' },
-            { id: 'r6', label: 'Oyun içindeki rakip yapay zekâ', ans: 'minimal' }
+            { id: 'r1', label: 'Vatandaşları davranışına göre puanlayan devlet sistemi', ans: 'ban' , why: "Amaç: kişileri sosyal davranışına göre puanlamak; aktör: devlet. Madde 5(1)(c), puanın bağlamından kopuk ya da orantısız olumsuz muameleye yol açtığı durumları yasaklar; her puanlama koşulsuz yasak değildir." },
+            { id: 'r2', label: 'İşe alımda adayları otomatik eleyen sistem', ans: 'high' , why: "Amaç: başvuruları süzmek ve adayları değerlendirmek; aktör: sistemi kullanan işveren (uygulayıcı) ve geliştiren sağlayıcı. Ek III 4(a) kapsamında yüksek risk; yükümlülükler 2 Aralık 2027’den itibaren uygulanır." },
+            { id: 'r3', label: 'Müşteriyle konuşan sohbet botu', ans: 'limited' , why: "Amaç: müşteriyle konuşmak. Madde 50(1), kişinin bir YZ ile konuştuğunu bilmesini sağlamayı sağlayıcıya yükler (durum açıkça belli değilse). Kişisel veri ve tüketici hukuku ayrıca geçerlidir; bot kredi ya da işe alım kararı veriyorsa o kullanım ayrıca değerlendirilir." },
+            { id: 'r4', label: 'E-postada spam filtresi', ans: 'minimal' , why: "Amaç: istenmeyen e-postayı ayıklamak. Verilen bilgilerle Ek III’teki bir yüksek-risk kategorisi gösterilemiyor; YZ Yasası bu kullanıma özel yükümlülük koymuyor. Kişisel veri kuralları yine geçerlidir; önemli bir e-postanın kaçırılması kullanıcıyı etkileyebilir." },
+            { id: 'r5', label: 'Kredi başvurusu değerlendiren model', ans: 'high' , why: "Amaç: gerçek kişilerin kredi değerliliğini değerlendirmek ya da kredi puanı belirlemek; aktör: banka (uygulayıcı) ve sağlayıcı. Ek III 5(b) kapsamında yüksek risk. Amaç yalnız finansal dolandırıcılığı tespit etmekse bu bent uygulanmaz. Sistem kişilerin profilini çıkarıyorsa Madde 6(3)’teki istisna kullanılamaz." },
+            { id: 'r6', label: 'Oyun içindeki rakip yapay zekâ', ans: 'minimal' , why: "Amaç: oyunda rakip oynamak. Verilen bilgilerle bir yüksek-risk kategorisi ya da Madde 50 yükümlülüğü gösterilemiyor; minimal kademe. Oyun kişisel veri işliyor ya da çocuklara yöneliyorsa başka kurallar devreye girer." }
           ];
           const picks = this.state.regAns;
           const lname = {}; levels.forEach(l => lname[l.k] = l.label);
@@ -2001,7 +2011,7 @@ class Component extends DCLogic {
             const done = picked !== undefined;
             const correct = picked === u.ans;
             return {
-              label: u.label, done, correct,
+              label: u.label, done, correct, why: u.why,
               opts: levels.map(l => ({ label: l.label,
                 pick: () => this.setState(s => ({ regAns: { ...s.regAns, [u.id]: l.k } })),
                 style: 'padding:5px 10px;border:1px solid ' + l.c + ';font-family:\'Work Sans\',sans-serif;font-size:11.5px;cursor:pointer;' + (picked === l.k ? 'background:' + l.c + ';color:#fff;' : 'background:#fff;color:' + l.c + ';') })),
@@ -2013,7 +2023,7 @@ class Component extends DCLogic {
           const right = uses.filter(u => picks[u.id] === u.ans).length;
           out.regScore = right; out.regAnswered = answered; out.regTotal = uses.length;
           out.regCaption = answered === 0 ? 'Her kullanımı bir risk düzeyine yerleştir. Kural: risk ne kadar yüksekse, denetim o kadar sıkı.'
-            : (answered < uses.length ? right + '/' + answered + ' doğru. Düşün: bu kullanım birinin hayatını/haklarını etkiliyor mu?'
+            : (answered < uses.length ? right + '/' + answered + ' doğru. Düşün: amaç ne, sistemi kim kullanıyor, hangi madde ya da ek kapsıyor?'
             : 'Bitti: ' + right + '/' + uses.length + '. Aynı “YZ” etiketi çok farklı riskler taşır; düzenleme de bu yüzden tek tip değil, kademeli.');
           out.regReset = () => this.setState({ regAns: {} });
         }
@@ -2081,7 +2091,7 @@ class Component extends DCLogic {
           out.d_cap = true;
           const cmap = { sky: '#3b82c4', violet: '#7a3fb0', fuchsia: '#b03fb0' };
           const tiers = [
-            { k: 'narrow', c: 'sky', cap: 30, name: 'Dar YZ', status: 'Bugün var ✓', desc: 'Tek bir görevde çok iyi (satranç, çeviri, görüntü tanıma) ama o işin dışına çıkamaz. Bugünkü tüm sistemler buradadır.' },
+            { k: 'narrow', c: 'sky', cap: 30, name: 'Dar YZ', status: 'Bugün var ✓', desc: 'Bir görevde ya da belirli bir görev kümesinde çok iyi (satranç, çeviri, görüntü tanıma); insan düzeyinde genel öğrenme ve aktarım göstermez. Bugünkü sistemler buradadır.' },
             { k: 'agi', c: 'violet', cap: 70, name: 'Genel YZ (AGI)', status: 'Henüz yok — tartışmalı', desc: 'İnsan gibi her alanda öğrenip uyum sağlayabilen, varsayımsal bir düzey. Gelip gelmeyeceği ve ne zaman geleceği uzmanlar arasında tartışmalıdır.' },
             { k: 'super', c: 'fuchsia', cap: 100, name: 'Süper Zekâ', status: 'Spekülatif', desc: 'Her bilişsel alanda insanı kat kat aşan, tümüyle kuramsal bir düzey. Hem büyük fırsat hem ciddi risk senaryolarının konusudur.' }
           ];

@@ -55,7 +55,7 @@ export default {
     },
     train: {
       stages: [
-        { name: '1 · Ön eğitim', data: 'Devasa internet metni', learns: 'Dili ve dünyayı (bir sonraki kelimeyi tahmin)', out: 'Türkiye’nin başkenti Ankara’dır ve nüfusu yaklaşık altı milyondur. Bu şehir...', note: 'Ham model “tamamlayıcı”dır: soruyu cevaplamaz, metni sürdürür.' },
+        { name: '1 · Ön eğitim', data: 'Devasa internet metni', learns: 'Dili ve dünyayı (bir sonraki kelimeyi tahmin)', out: 'Türkiye’nin başkenti Ankara’dır ve nüfusu yaklaşık altı milyondur. Bu şehir...', note: 'Bu örnekte ham model bilgiyi verip durmuyor, metni sürdürüyor; ham modeller çoğu zaman böyle tamamlar.' },
         { name: '2 · İnce ayar', data: 'Talimat–cevap çiftleri', learns: 'Yönergeyi izlemeyi (soruyu cevaplamayı)', out: 'Türkiye’nin başkenti Ankara’dır.', note: 'Artık soruyu doğrudan, derli toplu cevaplıyor.' },
         { name: '3 · RLHF / hizalama', data: 'İnsan tercihleri (tercih çiftleri)', learns: 'Yardımcı, dürüst ve güvenli olmayı', out: 'Türkiye’nin başkenti Ankara’dır. İstersen şehir hakkında birkaç ilginç bilgi de paylaşabilirim. 🙂', note: 'Aynı bilgi; ama daha yardımcı, kibar ve hizalı bir tonla.' },
       ],
@@ -149,7 +149,7 @@ export default {
     },
     train: {
       stages: [
-        { name: '1 · Pretraining', data: 'Massive internet text', learns: 'Language and the world (next-word prediction)', out: 'The capital of Türkiye is Ankara, with a population of about six million. The city...', note: 'The raw model is a “completer”: it doesn’t answer the question, it continues the text.' },
+        { name: '1 · Pretraining', data: 'Massive internet text', learns: 'Language and the world (next-word prediction)', out: 'The capital of Türkiye is Ankara, with a population of about six million. The city...', note: 'In this example the raw model gives the fact but keeps going; raw models often complete text like this.' },
         { name: '2 · Fine-tuning', data: 'Instruction–response pairs', learns: 'Following instructions (answering the question)', out: 'The capital of Türkiye is Ankara.', note: 'Now it answers directly and concisely.' },
         { name: '3 · RLHF / alignment', data: 'Human preferences (preference pairs)', learns: 'Being helpful, honest and safe', out: 'The capital of Türkiye is Ankara. If you’d like, I can also share a few interesting facts about the city. 🙂', note: 'Same fact; a more helpful, polite, aligned tone.' },
       ],

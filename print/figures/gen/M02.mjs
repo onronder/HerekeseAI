@@ -58,20 +58,20 @@ function chainFigure(demo, { lang }) {
   const N = demo.nodes, n = N.length, Q = demo.queries;
   const W = 320, pad = 12, bw = 44, bh = 18, gap = (W - 2 * pad - n * bw) / (n - 1);
   const bx = (i) => pad + i * (bw + gap);
-  const rowH = 42, rowY0 = 54, H = rowY0 + Q.length * rowH + 2;
+  const rowH = 42, rowY0 = 60, H = rowY0 + Q.length * rowH + 2;
   // uzun düğüm adları (ör. EN "Living thing") kutuya sığsın: 9 karakterden uzunsa küçült; sorgu etiketi başlığın uzunluğuna göre kayar
   const nodeSize = (label, base) => (label.length > 9 ? base - 1.3 : base);
   const qx = pad + 34 + (S.query(1).length - 6) * 5.1;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
   // ana zincir (bilgi tabanı)
   body.push(caption(pad, 10, S.kb(n - 1)));
-  const cy = 16;
+  const cy = 22; // bağ etiketleri okların üstünde, kutu sırasının üstünde (R012)
   N.forEach((label, i) => {
     body.push(rect(bx(i), cy, bw, bh, { fill: '#fff', stroke: INK, sw: 1 }));
     body.push(text(bx(i) + bw / 2, cy + bh / 2 + 2.6, label, { size: nodeSize(label, 7.5), anchor: 'middle', weight: 600 }));
     if (i < n - 1) {
       body.push(line(bx(i) + bw + 1.5, cy + bh / 2, bx(i + 1) - 1.5, cy + bh / 2, { stroke: INK, sw: 0.8, marker: true }));
-      body.push(text(bx(i) + bw + gap / 2, cy + bh / 2 - 3, S.link, { font: MONO, size: 5.5, fill: MUTED, anchor: 'middle' }));
+      body.push(text(bx(i) + bw + gap / 2, cy - 2.5, i === 0 ? S.linkInst : S.linkSub, { font: MONO, size: 5.5, fill: i === 0 ? EMBER : MUTED, anchor: 'middle' }));
     }
   });
   // sorgular
@@ -149,11 +149,11 @@ function expertFigure(demo, { lang }) {
   });
   // öneri satırı (senaryo A)
   const ay = ry + 2 + R.length * (rh + rg) + 4;
-  body.push(rect(pad, ay, cw, 16, { fill: EMBER }));
-  body.push(text(pad + 6, ay + 7, S.advice, { font: MONO, size: 6, fill: PAPER, spacing: 1.2 })); // R082: ≥ 6
-  body.push(text(pad + 6, ay + 13.5, A.advice.join(' · '), { size: 7, fill: PAPER, weight: 600 }));
+  body.push(rect(pad, ay, cw, 19, { fill: EMBER }));  // R073: iki satır arasında pay (Ş/İ üst işaretleri üst satıra değmez)
+  body.push(text(pad + 6, ay + 7.5, S.advice, { font: MONO, size: 6, fill: PAPER, spacing: 1.2 })); // R082: ≥ 6
+  body.push(text(pad + 6, ay + 16, A.advice.join(' · '), { size: 7, fill: PAPER, weight: 600 }));
   // üç senaryo tablosu (R073: öneri satırı sütun genişliğine göre sarılır; satır yüksekliği içeriğe göre)
-  const ty = ay + 30, cols = [pad, pad + 50, pad + 108, pad + 146], advW = pad + cw - cols[3] - 2, lh = 8;
+  const ty = ay + 33, cols = [pad, pad + 50, pad + 108, pad + 146], advW = pad + cw - cols[3] - 2, lh = 8;
   body.push(caption(pad, ty, S.three));
   S.cols.forEach((h, i) => body.push(text(cols[i], ty + 11, h, { font: MONO, size: 6, fill: MUTED })));
   body.push(line(pad, ty + 14, pad + cw, ty + 14, { stroke: INK, sw: 0.6 }));

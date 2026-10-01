@@ -32,7 +32,8 @@ def status(rid):
     if applied and not rest: return 'uygulandı', extra
     if any('uygulanmadı' in s for s in rest): return 'kısmen/açık', extra
     return ('kısmen' if rest else 'uygulandı'), extra
-out = ['# Düzeltme belgesi kapanış raporu — 99 kayıt', '', f"Üretildi: {__import__('datetime').date.today().isoformat()} · kanıt ölçümleri `kanit.json`, ajan günlükleri `uygulama-*.md`, kayıt tanımları `duzeltme-kayitlari.json`.", '']
+out = ['# Düzeltme belgesi kapanış raporu — 99 kayıt', '', f"Üretildi: {__import__('datetime').date.today().isoformat()} · kanıt ölçümleri `kanit.json`, ajan günlükleri `uygulama-*.md`, kayıt tanımları `duzeltme-kayitlari.json`.", '',
+       '> **2026-10-01 doğrulama turu:** bağımsız doğrulama raporunun açık bıraktığı 33 kayıt (R002, R004, R007, R012, R018, R024, R031, R033, R037, R040, R041, R043, R050, R053, R055, R056, R057, R059, R069, R071, R073, R076, R079, R080, R081, R082, R084, R085, R089, R095, R097, R098, R099) yeniden düzeltildi; kayıt başına dosya:satır, test, beklenen/gözlenen, kanıt ve kalan dış koşul `dogrulama-33-raporu.md` içinde (üretici `dogrulama33.py`). O kayıtlar için bu raporun satırları yerine o rapor geçerlidir.', '']
 if K:
     out += ['## Çıktı kimlikleri (SHA256) ve sayfa sayıları', '']
     for k, v in K.get('hash', {}).items(): out.append(f'- `{k}`: {v} · sayfa {K.get("pages", {}).get(k, "-")}')

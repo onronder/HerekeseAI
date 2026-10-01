@@ -14,7 +14,7 @@ Yapılanlar:
 Kullanım: python3 print/typeset/typeset.py [--lang tr|en] [--profile matbaa|kdp] [--pad N]
   TR/matbaa (varsayılan) → out/ic-blok.html; diğerleri → out/<lang>-<profile>/ic-blok.html
 """
-import html as H
+import math, html as H
 import json
 import os
 import re
@@ -155,12 +155,18 @@ def inline_svg(name, alt, kind, n):
         # boyut: metin genişliği (matbaa 124 mm, KDP 120 mm); uzun figürler 120 mm yüksekliğe sığdırılır (sayfa sonu boşluğu azalsın)
         vb = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg)
         W = 120.0 if PROFILE == 'kdp' else 124.0
+        minscale = 1.0
         if vb:
             vw, vh = float(vb.group(1)), float(vb.group(2))
+            # R082: en küçük figür metni basılı sayfada ≥ FIG_MIN_PT olmalı → gereken genişlik; uzun figürde yükseklik tavanı gerektiği kadar artar
+            sizes = [float(x) for x in re.findall(r'<text[^>]*font-size="([\d.]+)"', svg)]
+            w_need = FIG_MIN_PT / (min(sizes) * 72 / 25.4) * vw if sizes else 0
+            cap = max(FIG_HMAX, min(FIG_HMAX_MAX, w_need * vh / vw + 0.5))
             h = W * vh / vw
-            if h > FIG_HMAX: h = FIG_HMAX; W = h * vw / vh
+            if h > cap: h = cap; W = h * vw / vh
+            minscale = min(1.0, w_need / W) if w_need else 1.0
             svg = re.sub(r'\s(width|height)="[^"]*"', '', svg, count=2)
-            svg = svg.replace('<svg ', f'<svg style="width:{W:.1f}mm;height:{h:.1f}mm" ', 1)
+            svg = svg.replace('<svg ', f'<svg style="width:{W:.1f}mm;height:{h:.1f}mm" data-minscale="{math.ceil(minscale * 1000) / 1000:.3f}" ', 1)
         svg = svg.replace('<svg ', f'<svg class="fig" role="img" aria-label="{H.escape(alt)}" ', 1)
     else:
         svg = svg.replace('<svg ', '<svg class="qrsvg" ', 1)
@@ -264,6 +270,8 @@ def strip_emoji(body):
 
 
 FIG_HMAX = 120.0  # mm; daha uzun figürler orantılı küçültülür
+FIG_HMAX_MAX = 152.0  # mm; en küçük metni 6.5 pt'nin altına düşecek uzun figürlerde tavan buna kadar çıkar (R082)
+FIG_MIN_PT = 6.6  # basılı en küçük figür metni (pt); Chrome SVG metnini PDF'e ~%0,8 küçük yazar → PDF'te ≥ 6,5 pt kalır (pdf_fontsize.mjs ölçer)
 
 
 def live_lines(body):
@@ -338,6 +346,8 @@ def defer_figures(body, plan):
         if not m:
             print(f'  uyarı: {label} bloğu bulunamadı'); continue
         blk = body[m.start():m.end()]
+        mm_ = re.search(r'data-minscale="([\d.]+)"', blk)
+        if mm_: scale = max(scale, float(mm_.group(1)))  # R082: en küçük metin 6.5 pt'nin altına inmesin
         if scale < 0.999:  # figürü orantılı küçült (sayfa sonundaki boşluğa sığsın)
             blk = re.sub(r'style="width:([\d.]+)mm;height:([\d.]+)mm"',
                          lambda mm: f'style="width:{float(mm.group(1)) * scale:.1f}mm;height:{float(mm.group(2)) * scale:.1f}mm"', blk, count=1)
@@ -384,7 +394,42 @@ def build(pad=0, plan=None):
         return m.group(0)
     body = re.sub(r'<(ol|ul)([^>]*)>(?=((?:(?!</\1>).)*?</\1>))', short_list, body, flags=re.S)
     # ≤ 4 satırlı tablolar/matrisler bölünmez (R071); kısa formül paragrafları bölünmez (R089)
-    body = re.sub(r'<table>(?=((?:(?!</table>).)*?</table>))', lambda m: '<table class="small">' if m.group(1).count('<tr>') <= 4 else '<table>', body, flags=re.S)
+    # R071: ≤ 4 satırlı tablolar ve kısa sayısal matrisler (ör. 5 × 5 CNN haritası) bölünmez; diğer tablolarda son satır yalnız kalmaz
+    def table_class(m):
+        inner = m.group(1); rows = inner.count('<tr>')
+        cells = [re.sub(r'<[^>]+>', '', c).strip() for c in re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', inner, re.S)]
+        matrix = rows <= 8 and cells and all(len(c) <= 4 for c in cells)
+        return '<table class="small">' if rows <= 4 or matrix else '<table>'
+    body = re.sub(r'<table>(?=((?:(?!</table>).)*?</table>))', table_class, body, flags=re.S)
+    def last_row_keep(m):
+        t = m.group(0)
+        if 'class="small"' in t[:30]: return t
+        i = t.rfind('<tr>')
+        t = t[:i] + '<tr data-break-before="avoid">' + t[i + 4:] if i > 0 else t
+        # ilk veri satırı da sayfa dibinde yalnız kalmasın: ikinci veri satırı ilkinden ayrılmaz (başlık + tek satır yetimi, R071)
+        tb = t.find('<tbody>')
+        if tb > 0:
+            rows = [m.start() for m in re.finditer(r'<tr[ >]', t[tb:])]
+            if len(rows) >= 4 and t.startswith('<tr>', tb + rows[1]):
+                j = tb + rows[1]; t = t[:j] + '<tr data-break-before="avoid">' + t[j + 4:]
+        return t
+    body = re.sub(r'<table[^>]*>.*?</table>', last_row_keep, body, flags=re.S)
+    # R089: matematik ifadeleri satır sonunda terim ortasından bölünmez (√(…) ve +/− içeren kısa fonksiyon terimleri)
+    TOK = r'[\w.,·ₜₖₕₓᵀ₀-₉⁰-⁹²³ⁿ]+'
+    MATH_RX = re.compile(r'√\((?:[^()<>]|\([^()<>]*\))*\)(?:²)?|\b[\wₜₖₕₓᵀ]+\((?:[^()<>]|\([^()<>]*\))*[+−](?:[^()<>]|\([^()<>]*\))*\)'
+                         r'|\(' + TOK + r'(?: ?[+−×/] ?' + TOK + r')+\)(?:[²³]|' + TOK + r')?'   # (1 − 0.36η), (0.6 − 5), (x − xₘ)²
+                         r'|\|' + TOK + r'(?: ?[+−] ?' + TOK + r')+\|')                      # |x − 7|
+    def nobr_math(seg):
+        return MATH_RX.sub(lambda mm: f'<span class="math">{mm.group(0)}</span>' if len(mm.group(0)) <= 40 else mm.group(0), seg)
+    parts = re.split(r'(<[^>]+>)', body)
+    skip = 0
+    for i, part in enumerate(parts):
+        if part.startswith('<'):
+            if re.match(r'<(svg|style|script)\b', part): skip += 1
+            elif re.match(r'</(svg|style|script)>', part): skip = max(0, skip - 1)
+            continue
+        if not skip and ('(' in part or '|' in part): parts[i] = nobr_math(part)
+    body = ''.join(parts)
     body = re.sub(r'<p>(?=([^<]{0,220}</p>))', lambda m: '<p class="formula">' if ('=' in m.group(1) and ('√' in m.group(1) or 'Σ' in m.group(1) or '²' in m.group(1) or '(' in m.group(1))) else '<p>', body)
     body = defer_figures(body, {k: v for k, v in (plan or {}).items() if not k.startswith('_')})
     extra_css = ''

@@ -235,7 +235,7 @@ The three weak ones ask for a different material: a body, the face of the person
 
 The order of the cards is not a ranking, either. They only count separate abilities; none of them is “more intelligence” than another. The same holds for AI: being strong in language does not mean being strong in the other seven areas.
 
-*What is happening?* For Gardner, intelligence isn’t one number but eight distinct families of ability; each card in the figure is one of them. And today’s AI is great with language and logic; at anything involving the body or emotions the result depends on the task and the system, and in most of them it is still far behind.
+*What is happening?* For Gardner, intelligence isn’t one number but eight distinct families of ability; each card in the figure is one of them. And today’s AI is great with language and logic; at anything involving the body or emotions the result depends on the task and the system, and in most of them it is still far behind. The bars are illustrative levels, not measured scores.
 
 *Try it yourself.* 1) Close the book and list the eight kinds of intelligence from memory. How many did you recall, and which ones slipped your mind? 2) Think about yesterday: from morning to night, which three kinds did you use most? According to the table, in how many of those is today’s AI strong? 3) What do the three “weak” kinds in the table have in common? Live demo: [QR 1.1] https://book.onuronder.com/d/en/40ee8a0d04
 
@@ -422,7 +422,7 @@ The hypothetical system with broad, transferable abilities that can learn across
 
 After you have marked all five, count: how many cards are in each column? The fourth and fifth cards both describe something that does not exist today, but they do not ask the same question. Name the difference in one sentence and you have the main idea of the chapter.
 
-*What is happening?* The rule is simple: any system that cannot step outside the jobs it was trained for is “narrow,” chatbots that write poems and code included. “General” means a machine with transferable abilities that can learn across every domain like a human, and no such machine exists yet. A conscious machine is a separate question; being general does not require consciousness.
+*What is happening?* The rule is simple: any system that is good at particular tasks or a limited set of them, without human-level general learning and transfer across domains, is “narrow,” chatbots that write poems and code and adapt somewhat to a new task from examples in the prompt included. “General” means a machine with transferable abilities that can learn across every domain like a human, and no such machine exists yet. A conscious machine is a separate question; being general does not require consciousness.
 
 *Try it yourself.* 1) Write down three AI examples from your own daily life: navigation, translation, movie recommendations. Give each one a column. 2) Neither the fourth nor the fifth card exists today; are they the same thing? Apply the two questions in the margin note (“general” and “strong”) to each of them separately. Could a machine be general and yet not conscious? 3) What happens if you ask a chess engine for a soup recipe? Answer with a definition of narrow AI. Live demo: [QR 1.5] https://book.onuronder.com/d/en/e69cfc21ea
 
@@ -569,23 +569,23 @@ The best part is that the machine follows those links and reaches facts nobody e
 **Figure 2.1 · Inference along a knowledge chain**
 ![Figure 2.1](../../figures/out/en/figure-2-1-chain.svg)
 
-*Setup.* The figure shows five boxes in a single row: Tom, Cat, Mammal, Animal, Living thing. Every arrow between two boxes means “is a”: Tom is a Cat, a Cat is a Mammal, and so on. The first arrow ties an individual to its class: Tom is an instance of the class Cat. The other arrows tie a class to a larger class: Cat is a subclass of Mammal. The figure draws both with the same arrow. These four arrows are the machine’s entire knowledge; it knows nothing else. Under the chain are four queries; for each one the machine walks the chain from the start and states its verdict.
+*Setup.* The figure shows five boxes in a single row: Tom, Cat, Mammal, Animal, Living thing. Two kinds of arrow connect the boxes. The first arrow is labeled “instance of” and ties an individual to its class: Tom is an instance of the class Cat. The other three arrows are labeled “subclass of” and tie a class to a larger class: Cat is a subclass of Mammal, Mammal of Animal, Animal of Living thing. These four arrows are the machine’s entire knowledge; it knows nothing else. Under the chain are four queries; for each one the machine walks the chain from the start and states its verdict.
 
 *Step by step.* Follow the query “Is Tom a Mammal?” first.
 
-1. The machine starts at Tom. The word it is looking for is “Mammal.” Is Tom himself a Mammal? No; but an arrow leaves Tom: Cat.
-2. It moves on to Cat. Is Cat “Mammal”? No; an arrow leaves Cat as well: Mammal.
-3. It arrives at Mammal. The word it was looking for is found. In the figure the first three boxes are shaded and the verdict reads “Yes: ‘Mammal’ found in the chain (transitivity).”
+1. The machine starts at Tom. The class name it is looking for is “Mammal.” Tom is not a class but an individual; the “instance of” arrow leaving Tom says that Tom belongs to the class Cat.
+2. It moves on to the Cat box. This box is not named “Mammal”; the “subclass of” arrow leaving Cat leads to Mammal.
+3. It arrives at the Mammal box. The name matches: Tom is an instance of Cat, and Cat is a subclass of Mammal, so Tom is a mammal. In the figure the first three boxes are shaded and the verdict reads “Yes: ‘Mammal’ found in the chain (transitivity).”
 
 It followed two arrows. Nobody wrote the sentence “Tom is a Mammal”; the machine derived it.
 
 Now the query “Is Tom a Plant?”
 
-1. Tom: not a Plant; arrow to Cat.
-2. Cat: no; arrow to Mammal.
-3. Mammal: no; arrow to Animal.
-4. Animal: no; arrow to Living thing.
-5. Living thing: no. No arrow leaves Living thing; the chain has ended. The verdict reads “Unknown: ‘Plant’ is not in the knowledge base.”
+1. Tom: an individual; the “instance of” arrow leads to Cat.
+2. Cat: the box is not named “Plant”; the “subclass of” arrow leads to Mammal.
+3. Mammal: no match; arrow to Animal.
+4. Animal: no match; arrow to Living thing.
+5. Living thing: no match. No arrow leaves Living thing; the chain has ended. The verdict reads “Unknown: ‘Plant’ is not in the knowledge base.”
 
 All four queries:
 
@@ -606,9 +606,9 @@ The verdict is “Unknown,” not “No.” The machine does not claim that Tom 
 
 In symbolic AI, knowledge is encoded via knowledge representation: semantic networks, frames, ontologies or logical propositions. Entities and their relations (e.g. is-a, has-a) are defined explicitly.
 
-Inference is the application of rules over these representations. The demonstration in Figure 2.1 uses transitivity in an is-a hierarchy. An ontology keeps two links apart: Tom is an instance of the class Cat (instance-of); Cat is a subclass of Mammal (subclass-of). If “Tom instance-of Cat” and “Cat subclass-of Mammal,” then “Tom instance-of Mammal” is derived, so Tom is a mammal. The figure draws both links as one arrow type, “is a.” This is the essence of symbolic reasoning.
+Inference is the application of rules over these representations. The demonstration in Figure 2.1 uses transitivity in an is-a hierarchy. An ontology keeps two links apart: Tom is an instance of the class Cat (instance-of); Cat is a subclass of Mammal (subclass-of). If “Tom instance-of Cat” and “Cat subclass-of Mammal,” then “Tom instance-of Mammal” is derived, so Tom is a mammal. Figure 2.1 labels the two links differently: the first arrow “instance of,” the others “subclass of.” This is the essence of symbolic reasoning.
 
-The knowledge base contains only consecutive “is-a” links. For each query the inference engine follows the chain using the transitivity rule: if the target is in the chain, “Yes”; otherwise, “Unknown.”
+The knowledge base holds one instance-of link followed by subclass-of links. For each query the inference engine follows the chain using the transitivity rule: if the target is in the chain, “Yes”; otherwise, “Unknown.”
 
 Written formally, the transitivity rule between classes reads: subclass-of(A, B) ∧ subclass-of(B, C) → subclass-of(A, C). For an instance: instance-of(a, B) ∧ subclass-of(B, C) → instance-of(a, C). The engine applies this rule over and over along the chain; on a five-node chain it either reaches the target or runs off the end within four steps.
 
@@ -971,7 +971,7 @@ Try both yourself below. In regression you’ll find the “best line” through
 **Figure 3.3 · Two core tasks**
 ![Figure 3.3](../../figures/out/en/figure-3-3-scatter.svg)
 
-*Setup.* The figure shows the two tasks side by side. On the left, “Regression (number)”: nine points and the best line fitted to them. On the right, “Classification (category)”: five green points, five orange points and the boundary drawn between them. The top square of each panel shows the raw data; the bottom square shows the line or the boundary drawn in.
+*Setup.* The figure shows the two tasks side by side. On the left, “Regression (number)”: nine points and the best line fitted to them. On the right, “Classification (category)”: five dark points, five orange points and the boundary drawn between them. The top square of each panel shows the raw data; the bottom square shows the line or the boundary drawn in.
 
 *Step by step.*
 
@@ -979,13 +979,13 @@ Try both yourself below. In regression you’ll find the “best line” through
 2. The least-squares line comes from two means: the x values average 5, the y values 3.51. Slope m = 33 / 60 = 0.55; intercept b = 3.51 − 0.55 · 5 = 0.76. The line: y = 0.55x + 0.76.
 3. How close is the line to each point? The measure is the vertical gap at the same x: the observed y minus the y the line gives. That gap is called the residual; it is not the shortest (perpendicular) distance to the line. At x = 3 the line says 2.41, the point is 2.2; the residual is −0.21. At x = 8 the line says 5.16, the point is 5.4; the residual is +0.24. None of the nine residuals exceeds 0.25. The sum of the squared residuals is 0.22.
 4. Why is this sum the measure of “best”? Take a line drawn by eye, y = 0.5x + 1: the sum of squared vertical residuals rises to 0.37. Among all possible lines, the least-squares line is the one that makes this sum smallest.
-5. The classification data is two groups. Green: (1.5, 1.5), (2, 2.2), (2.6, 1.7), (3.1, 2.6), (1.9, 3). Orange: (6.5, 4.5), (7, 5.3), (7.6, 4.6), (6.9, 5.8), (8, 5.1).
-6. The boundary is the line through the points (1, 5.5) and (8.5, 1): y = 6.1 − 0.6x. Check: at x = 3.1 the boundary says 4.24; the green point at 2.6 is below it. At x = 6.5 it says 2.2; the orange point at 4.5 is above it. All ten points are on the right side.
-7. Two answers, two kinds. Regression gives a number: for x = 10, 0.55 · 10 + 0.76 = 6.26. Classification gives a side: below the boundary is green, above it is orange.
+5. The classification data is two groups. Dark: (1.5, 1.5), (2, 2.2), (2.6, 1.7), (3.1, 2.6), (1.9, 3). Orange: (6.5, 4.5), (7, 5.3), (7.6, 4.6), (6.9, 5.8), (8, 5.1).
+6. The boundary is the line through the points (1, 5.5) and (8.5, 1): y = 6.1 − 0.6x. Check: at x = 3.1 the boundary says 4.24; the dark point at 2.6 is below it. At x = 6.5 it says 2.2; the orange point at 4.5 is above it. All ten points are on the right side.
+7. Two answers, two kinds. Regression gives a number: for x = 10, 0.55 · 10 + 0.76 = 6.26. Classification gives a side: below the boundary is the dark group, above it the orange group.
 
 *What is happening?* Two core jobs. Regression predicts a number: the “best line” runs between the points; the best line is the one that makes the sum of the squared vertical gaps, each point’s gap at its own x, as small as possible. Classification draws a border separating one group from the other.
 
-*Try it yourself.* 1) By the line y = 0.55x + 0.76, what is the prediction for x = 6.5? 2) On which side of the boundary does the point (4.5, 3.5) fall: green or orange? And (5, 3)? 3) Add a far-off point such as (9, 9) to the regression data. Does the slope go up or down? Is it a problem that the line chases a single point? Live demo: [QR 3.3] https://book.onuronder.com/d/en/d10b8aa300
+*Try it yourself.* 1) By the line y = 0.55x + 0.76, what is the prediction for x = 6.5? 2) On which side of the boundary does the point (4.5, 3.5) fall: dark or orange? And (5, 3)? 3) Add a far-off point such as (9, 9) to the regression data. Does the slope go up or down? Is it a problem that the line chases a single point? Live demo: [QR 3.3] https://book.onuronder.com/d/en/d10b8aa300
 
 #### Technical depth
 
@@ -1106,10 +1106,10 @@ Now fit three models to the same data, like three students: the lazy one, the ba
 
 *Step by step.*
 
-1. Underfit: the line y = 3.1 − 0.18x. At x = 5 it says 2.2 against a point at 2.7; the gap is 0.5. At x = 9 it says 1.48 against 2.0. The line runs above one point and below the next; it never follows the jolts. Verdict: “Underfitting: the model is too simple to capture the pattern (high bias).”
+1. Underfit: the line y = 3.1 − 0.18x. This line is chosen for the illustration; the least-squares line through all nine points is y ≈ 3.09 − 0.16x, close to it. At x = 5 it says 2.2 against a point at 2.7; the gap is 0.5. At x = 9 it says 1.48 against 2.0. The line runs above one point and below the next; it never follows the jolts. Verdict: “Underfitting: the model is too simple to capture the pattern (high bias).”
 2. Smoother representative curve: y = 3.0 − 0.16x + 0.15·sin(0.6x). It says 2.22 at x = 5 and 1.44 at x = 9. It does not chase the zigzag; it carries only the downward trend and a slight wave. Verdict: “Bias–variance balance: neither so simple that it misses the pattern nor so complex that it memorizes the noise.” To call it a good generalizer, its error on data not used for training would have to be measured; the curve was drawn by hand, so that measurement does not exist here.
 3. Overfit: the broken line passes through all nine points; the training error is zero. But its shape gives it away: from 5 to 6 it drops by 1.0, from 6 to 7 it rises by 0.6. Those ups and downs are noise, not pattern; a fresh measurement would not repeat them. Verdict: “Overfitting: it passes through every point but memorizes the noise; it fails on new data (high variance).”
-4. The exam: hide points 5 and 7 and draw the same broken line through the remaining seven. At x = 5 the line joins (4, 2.0) to (6, 1.7) and says 1.85; the truth is 2.7, an error of 0.85. At x = 7 it says 1.55; the truth is 2.3, an error of 0.75. The simple line errs by 0.5 and 0.46 at the same two points. On an unseen question the memorizer does worse than the lazy one.
+4. The exam: hide points 5 and 7 and draw the same broken line through the remaining seven. At x = 5 the line joins (4, 2.0) to (6, 1.7) and says 1.85; the truth is 2.7, an error of 0.85. At x = 7 it says 1.55; the truth is 2.3, an error of 0.75. Do the same for the straight line: fit a line to the remaining seven points by least squares. The result is y ≈ 3.06 − 0.17x; it says 2.19 at x = 5 and 1.85 at x = 7, errors of 0.51 and 0.45. On an unseen question the memorizer does worse than the lazy one.
 5. Training error on its own misleads. A model has to be tested on data it has never seen; that is what “validation” means. A fair comparison trains every candidate on the same seven points and tests it on the same two. Here that was done for the broken line and the straight line; the middle curve, drawn by hand, never sat the exam.
 
 *What is happening?* Three different models are fitted to the same data. The too-simple one misses the pattern (underfitting); the too-complex one memorizes every point but stumbles on new data (overfitting). The best is in between: the model that also predicts examples it has never seen. These curves show the idea; which one generalizes well can only be told by the error measured on data not used for training.
@@ -1405,7 +1405,7 @@ An RNN listens word by word, refreshing its memory at every step; it moves forwa
 **Figure 4.5 · Processing with memory (real recurrence)**
 ![Figure 4.5](../../figures/out/en/figure-4-5-rnn.svg)
 
-*Setup.* The figure has eight frames, from frame 0 to frame 7. Above each frame is the seven-word sentence “The cat ran because it was scared.” Processed words are shaded dark. Below them, four bars show the hidden state, that is, the network’s memory; each is a number between −1 and 1 (a tanh output), upward positive, downward negative. Under the frame is the count of words processed. In frame 0 all four bars are zero: h₀ = 0. The numbers are computed with hₜ = tanh(Wₓxₜ + Wₕhₜ₋₁); Wₓ (4 × 5) and Wₕ (4 × 4) are fixed weights chosen for the explanation, not trained.
+*Setup.* The figure has eight frames, from frame 0 to frame 7. Above each frame is the seven-word sentence “The cat ran because it was scared.” Processed words are shaded dark. Below them, four bars show the hidden state, that is, the network’s memory; each is a number between −1 and 1 (a tanh output). The bar height shows the size of the value, |h|, and always grows upward. The bar’s color and the label above it give the sign: an orange bar is positive, a dark bar negative (e.g. −0.54). Under the frame is the count of words processed. In frame 0 all four bars are zero: h₀ = 0. The numbers are computed with hₜ = tanh(Wₓxₜ + Wₕhₜ₋₁); Wₓ (4 × 5) and Wₕ (4 × 4) are fixed weights chosen for the explanation, not trained.
 
 *Step by step.* Read the frames from left to right; work out the first two steps yourself. Each word enters as a unit vector: “The” is [1, 0, 0, 0, 0], “cat” is [0, 1, 0, 0, 0], and so on. Wₓ has five columns, so the sixth and seventh words reuse the first two. Wₓxₜ is therefore one column of Wₓ.
 
@@ -1551,7 +1551,7 @@ The networks have learned both to recognize and to create. Today’s systems tha
 
 ### 5.1 The generative era: from recognizing to creating
 
-Until now, machines stayed on the “recognizing” side: Is this spam, is this a cat, what is this house worth? Like a painter’s apprentice spending years just studying canvases. Then one day the apprentice picked up the brush: Machines began to create. They write, they paint, they generate code, they hold conversations.
+So far this book has mostly shown machines on the “recognizing” side: Is this spam, is this a cat, what is this house worth? At the end of the last chapter the GAN took a first step into creating: a network that turns noise into a new image. The painter’s apprentice had spent years studying canvases and had made its first sketches; now the brush is in its hand. Machines write, they paint, they generate code, they hold conversations.
 
 One of the turning points of this leap is the Transformer architecture and the idea of “attention” at its heart. Generative models (GANs, for one) and attention mechanisms were already being studied; the Transformer made it possible to train generative language models at scale. The story starts with the smallest piece: how does a sentence look to a machine? The answer lies in small chunks of text called “tokens.” From there the chapter moves to embeddings, which turn meaning into numbers, to the attention mechanism, and to how a language model writes word by word. Then comes training, the diffusion models behind image generation, and finally the limits of these systems.
 
@@ -1684,7 +1684,7 @@ Read the rows one at a time:
 
 Two more things. The table is not symmetric: “it” looks at the cat with 0.55, but “The cat” looks at “it” with only 0.10; looking runs one way. And distance does not matter: two units stand between “it” and “The cat,” yet the weight is the highest in the whole table. That is where the older models, which read one word after another, ran into trouble.
 
-One more distinction: the “The cat” row gives 0.30 to “ran,” which comes after it. A text-generating (autoregressive) model has no such glance; each unit sees only the units before it, and the later ones are masked. That is why this table is a bidirectional, encoder-style example.
+One more distinction: the “The cat” row gives 0.30 to “ran,” which comes after it. A text-generating (autoregressive) model has no such glance; each unit sees itself and the units before it, and the later ones are masked. That is why this table is a bidirectional, encoder-style example.
 
 *What is happening?* To make sense of a sentence, each word decides which others it should “pay attention” to. The darker the color, the stronger the bond. In this illustrative example “it” looks mostly at the cat; the weights were chosen by hand, and by themselves they do not prove that the pronoun has been resolved.
 
@@ -1692,7 +1692,7 @@ One more distinction: the “The cat” row gives 0.30 to “ran,” which comes
 
 #### Technical depth
 
-Self-attention produces query (Q), key (K) and value (V) vectors for every token; weights are computed with softmax(Q·Kᵀ/√d_k), where d_k is the dimension of the key vectors, and the output is the weighted sum of the values. Unmasked self-attention lets every position reach the whole sequence regardless of distance; an autoregressive (causal) decoder masks future tokens, so each position sees only the positions before it. Training can process many positions together, while autoregressive generation adds tokens one at a time.
+Self-attention produces query (Q), key (K) and value (V) vectors for every token; weights are computed with softmax(Q·Kᵀ/√d_k), where d_k is the dimension of the key vectors, and the output is the weighted sum of the values. Unmasked self-attention lets every position reach the whole sequence regardless of distance; an autoregressive (causal) decoder masks future tokens, so each position sees itself and the positions before it. Training can process many positions together, while autoregressive generation adds tokens one at a time.
 
 The Transformer does this with multiple heads: different “heads” capture different kinds of relation (syntax, coreference, and so on). Positional encoding adds order information. The cost is O(n²) in sequence length; that is the main reason context windows are limited.
 
@@ -1732,11 +1732,11 @@ The sampling row does two things. First it softens the probabilities with the te
 | Step | Softened probabilities (T = 1.5) | Running total | U | Chosen |
 |---|---|---|---|---|
 | 1 | now 0.36 · already 0.28 · today 0.21 · rapidly 0.16 | 0.36 · 0.64 · 0.84 · 1.00 | 0.37 | already |
-| 2 | learns 0.34 · writes 0.29 · creates 0.22 · reasons 0.16 | 0.34 · 0.63 · 0.85 · 1.00 | 0.81 | creates |
+| 2 | learns 0.34 · writes 0.29 · creates 0.22 · reasons 0.16 | 0.34 · 0.62 · 0.84 · 1.00 | 0.81 | creates |
 | 3 | fast 0.41 · well 0.26 · daily 0.19 · deeply 0.14 | 0.41 · 0.67 · 0.86 · 1.00 | 0.12 | fast |
 
 1. “already” (U = 0.37) → “AI already”: the share of “now” has dropped to 0.36; 0.37 passes that threshold by a hair, and the choice falls to the second candidate.
-2. “creates” (U = 0.81) → “AI already creates”: the first two candidates reach 0.63 together; 0.81 lands in the third candidate’s slice.
+2. “creates” (U = 0.81) → “AI already creates”: the first two candidates reach 0.62 together and the first three 0.84; 0.81 falls between those thresholds, in the third candidate’s slice.
 3. “fast” (U = 0.12) → “AI already creates fast.”: a small U picks the most likely candidate. Sampling picks the top candidate most of the time too, only not always.
 
 Both sentences are grammatical; the second takes a less expected road. Greedy decoding rolls no dice; the result is the same every time. Sampling does: change the U sequence and the sentence changes, so from the same start a different sentence can come out every time. Temperature sets the weighting of the dice: as T rises the shares move closer together, as T falls the top candidate grows. But as long as T is above zero the dice are rolled; low temperature is not the same thing as greedy decoding.
@@ -1777,9 +1777,9 @@ Read the three stages of Figure 5.5 one by one and see how the model answers the
 | Data | Massive internet text | Instruction–response pairs | Human preferences (preference pairs) |
 | What it learns | Language and the world (next-word prediction) | Following instructions (answering the question) | Being helpful, honest and safe |
 | Sample output | “The capital of Türkiye is Ankara, with a population of about six million. The city...” | “The capital of Türkiye is Ankara.” | “The capital of Türkiye is Ankara. If you’d like, I can also share a few interesting facts about the city.” |
-| Note | The raw model is a “completer”: it doesn’t answer the question, it continues the text. | Now it answers directly and concisely. | Same fact; a more helpful, polite, aligned tone. |
+| Note | In this example the raw model gives the fact but keeps going; raw models often complete text like this. | Now it answers directly and concisely. | Same fact; a more helpful, polite, aligned tone. |
 
-1. Pretraining: the answer starts with the right fact but does not stop. It adds the population and goes on with “The city...” The model does not know it has been asked a question; it writes as if continuing an encyclopedia page from the internet. The knowledge is there; the manners are not.
+1. Pretraining: the answer starts with the right fact but does not stop. It adds the population and goes on with “The city...” In this example the model writes not like someone answering a question but as if continuing an encyclopedia page from the internet. A raw model can sometimes answer a question correctly; but nobody has yet taught it where an answer ends or what shape it should take. The knowledge is there; the manners are not.
 2. Fine-tuning: the same fact, one sentence. The model has now learned the pattern “a question came, answer it, stop” from thousands of instruction–response pairs.
 3. RLHF / alignment: the same answer again, with an offer on top: would you like more? People were shown two answers and asked “which is better?”; the model was adjusted toward the preferred tone.
 
@@ -1869,7 +1869,7 @@ Try the context window yourself below: this illustration is a sliding window tha
 | 10 | hold text inside a limited window and forget | Language models |
 | 12 | inside a limited window and forget older words | Language models hold text |
 
-1. From zero to eight: the window starts empty and holds at most 8 words. Every new word finds a place; at the eighth word all 8 are inside the window. Everything is remembered until it fills.
+1. From zero to eight: the window starts empty and holds at most 8 words. Every new word finds a place; at the eighth word all 8 are inside the window. Until it fills, no word drops out; all of them are kept in the window (being in the window does not mean the model will use every detail).
 2. The ninth word: the window is full; when “and” comes in, “Language” drops out and fades. The figure’s caption marks the moment: “The window is full!” From here on the model sees only the last 8 words.
 3. The twelfth word: the first four words are gone. The text the model sees is “inside a limited window and forget older words.” The subject of the sentence, “Language models,” is no longer in the window. The model does not know what it has forgotten.
 
@@ -1885,7 +1885,7 @@ Hallucination has no single cause: there is no guarantee between the training ob
 
 Other limits: the knowledge cutoff, bias (inherited from training data), instability/non-reproducibility (sampling), and compute/energy cost. Knowing these limits is the precondition for using these tools responsibly and effectively.
 
-The context window is a fixed token limit; this illustration is a sliding window that keeps the last N tokens, and a real application may raise an error, truncate or summarize when the limit is reached. Because attention costs O(n²), enlarging the window is expensive; that is why long documents get truncated or summarized.
+A real model’s context window is a fixed limit counted in tokens. This illustration simplifies it to a sliding window that keeps the last 8 words; a real application may raise an error, truncate or summarize when the limit is reached. Because attention costs O(n²), enlarging the window is expensive; that is why long documents get truncated or summarized.
 
 The window of Figure 5.7 is a sliding queue: after n words have been added, the number forgotten is max(0, n − N), with N = 8. In real models the unit is not the word but the token. With the rule of Figure 5.1 the same sentence makes 15 tokens, so a token window fills one word earlier and starts forgetting two words earlier than a word window. The O(n²) cost comes from here: the heat map of Figure 5.3 has n × n cells for n tokens. When the window grows from 8 to 16, the cell count grows from 64 to 256, four times as many. This queue is a rule of the figure; in a real application the overflow policy (error, truncation, summarization) is the system’s choice.
 
@@ -2375,7 +2375,7 @@ First look at a loan decision; then open the lid in Figure 7.2 and see which fac
 | **Total** | **+76 → Loan approved** |
 
 1. Applicant #1 with the lid closed: “Loan declined.” No other information, and nowhere to appeal. The applicant is left alone with the result.
-2. With the lid open, the arithmetic appears. The two plus factors (+32 and +18) make +50. The debt alone is −46; taken from the pluses, +4 is left, so the debt by itself does not decline the loan. Add the −12 of the short account history and the total is −8; below zero, declined. Debt is the largest negative contribution; together with the short account history, it outweighs the positive contributions. An applicant who sees the table also knows what to do: appeal the largest item, the debt, or fix that item first.
+2. With the lid open, the arithmetic appears. The two plus factors (+32 and +18) make +50. The debt alone is −46; taken from the pluses, +4 is left, so the debt by itself does not decline the loan. Add the −12 of the short account history and the total is −8; below zero, declined. Debt is the largest negative contribution; together with the short account history, it outweighs the positive contributions. The table gives the applicant concrete grounds for an appeal: they can ask whether the data behind each item is correct (is the debt amount really this, is the account history recorded correctly) and what the decision actually rested on. The contributions show how the model arrived at this decision; they do not guarantee how changing one item would change the result.
 3. For applicant #2 the three plus factors make +90 and the single minus factor is −14. The total is +76; approved. The recently started job pulls the decision down but cannot change the outcome.
 4. Both applications follow the same arithmetic: plus factors pushed toward approval, minus factors toward decline; their total (−8 or +76) decided the outcome. Signed contributions open the lid on one decision at a time; they do not make the whole model transparent.
 
@@ -2440,7 +2440,7 @@ Place the uses below into the right risk tier. As risk rises, so do the obligati
 **Figure 7.4 · Classify the risk**
 ![Figure 7.4](../../figures/out/en/figure-7-4-reg.svg)
 
-*Setup.* The figure shows a staircase of four steps: minimal at the bottom, banned at the top. Next to each step is the rule for that tier. Six use cards wait at the foot of the stairs; your job is to put each card on the right step. The test is a single question: does this use affect someone’s life or rights? That is the book’s teaching test; the legal classification follows the system’s intended use, the actor’s role and the relevant article or annex. Each step up adds load: more documents, more audits, more human oversight.
+*Setup.* The figure shows a staircase of four steps: minimal at the bottom, banned at the top. Next to each step is the rule for that tier. Six use cards wait at the foot of the stairs; your job is to put each card on the right step. The test is three questions: what is the system used for, who uses it, and does it make a decision that shapes someone’s life or rights? The last one is the book’s teaching test; the legal classification follows the system’s intended use, the actor’s role and the relevant article or annex. Each step up adds load: more documents, more audits, more human oversight.
 
 | Tier | Rule |
 |---|---|
@@ -2460,11 +2460,11 @@ Place the uses below into the right risk tier. As risk rises, so do the obligati
 | 5 | A model assessing loan applications | ☐ | ☐ | ☐ | ☐ |
 | 6 | An opponent AI inside a game | ☐ | ☐ | ☐ | ☐ |
 
-Once all six cards are placed, the live demo closes with one sentence: “The same ‘AI’ label carries very different risks; that is why regulation is tiered, not uniform.” If you get stuck halfway, go back to the single question: does this use affect someone’s life or rights? Answers, reasons and the relevant articles are at the back of the book.
+Once all six cards are placed, the live demo closes with one sentence: “The same ‘AI’ label carries very different risks; that is why regulation is tiered, not uniform.” If you get stuck halfway, go back to the three questions: what is it for, who uses it, does it decide something about a person? Answers, reasons and the relevant articles are at the back of the book.
 
-*What is happening?* Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) carry transparency duties; minimal-risk ones are largely free under this law. Data-protection and other laws apply at every tier. The higher the risk, the tighter the rule.
+*What is happening?* Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring under specific conditions) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) carry transparency duties; minimal-risk ones are largely free under this law. Data-protection and other laws apply at every tier. The higher the risk, the tighter the rule.
 
-*Try it yourself.* 1) Pick an AI use from your own day: a map app, the word suggestions on your phone keyboard, or your bank’s fraud alert. Decide its tier and write your reason. 2) Can the same technology land on two different steps? Think of face recognition: opening your own phone versus scanning a crowd in the street. 3) First split the six uses into two sets: those that affect someone’s life or rights, and those that do not. Then compare the sets with the tiers; how many cards sit on the high step? Live demo: [QR 7.4] https://book.onuronder.com/d/en/4ea40dd2c2
+*Try it yourself.* 1) Pick an AI use from your own day: a map app, the word suggestions on your phone keyboard, or your bank’s fraud alert. Decide its tier and write your reason. 2) Can the same technology land on two different steps? Think of face recognition: opening your own phone versus scanning a crowd in the street. 3) First split the six uses into two sets: those that make a decision shaping someone’s life or rights, and those that make no such decision. Then compare the sets with the tiers; how many cards sit on the high step? Live demo: [QR 7.4] https://book.onuronder.com/d/en/4ea40dd2c2
 
 #### Technical depth
 
@@ -2472,7 +2472,9 @@ The EU AI Act builds a risk-based framework: unacceptable risk (e.g. social scor
 
 This complements personal-data regimes like GDPR, whose rules (a legal basis, purpose limitation, data minimization) apply in their own right. Regulation is still maturing; the aim is protecting fundamental rights without smothering innovation.
 
-This section follows the consolidated text of Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744, version of 27 July 2026 (accessed 1 October 2026). Entry into force and the application dates of the obligations differ: the first Article 5 prohibitions have applied since 2 February 2025 and the Article 50 transparency rules since 2 August 2026; most high-risk obligations for Annex III systems start on 2 December 2027. Three fine points. Annex III 5(b) covers systems that evaluate the creditworthiness of natural persons or establish their credit score; financial-fraud detection is expressly excluded from that item. The prohibition in Article 5(1)(h) targets real-time remote biometric identification in publicly accessible spaces for law-enforcement purposes; limited exceptions and their conditions apply, and other purposes are not automatically free. The transparency obligations of Article 50 are not one “say you use AI” rule: informing people in direct interaction, machine-readable marking of synthetic output and the disclosure of deepfakes are regulated separately, and none of them replaces high-risk or other legal obligations.
+This section follows the consolidated text of Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744, published in the Official Journal on 24 July 2026 and in force since 27 July 2026 (accessed 1 October 2026). Entry into force and the application dates of the obligations differ. The first Article 5 prohibitions have applied since 2 February 2025 and the Article 50 transparency rules since 2 August 2026. Systems generating synthetic audio, image, video or text that were placed on the market before 2 August 2026 must comply with the Article 50(2) marking duty by 2 December 2026 (Article 111(4)). The prohibitions added by the amendment apply from 2 December 2026: generating intimate or sexually explicit images of an identifiable person without that person’s consent, and generating child sexual abuse material (Article 5(1)(ba), (bb)). High-risk obligations start on 2 December 2027 for Annex III systems and on 2 August 2028 for systems covered by the product legislation in Annex I.
+
+Four fine points. Annex III 5(b) covers systems that evaluate the creditworthiness of natural persons or establish their credit score; financial-fraud detection is expressly excluded from that item. An Annex III system may fall outside the high-risk class if it does not materially influence the outcome of a decision: a narrow procedural task, improving a completed human activity, detecting deviations from earlier decision patterns, or a preparatory task (Article 6(3)). But an Annex III system that profiles natural persons is always high-risk, and a provider relying on the exception must document its assessment before placing the system on the market. The prohibition in Article 5(1)(h) targets real-time remote biometric identification in publicly accessible spaces for law-enforcement purposes; limited exceptions and their conditions apply, and other purposes are not automatically free. Article 50 is not one “say you use AI” rule, and it assigns duties by role: informing people in direct interaction (50(1)) and machine-readable marking of synthetic output (50(2)) fall on the provider; informing people exposed to emotion recognition or biometric categorisation (50(3)) and disclosing deepfakes and AI-generated text published to inform the public (50(4)) fall on the deployer who uses the system. For artistic, satirical or fictional works the disclosure is limited, and text under human editorial control is outside the 50(4) text rule. None of these replaces high-risk or other legal obligations.
 
 Under GDPR, consent is not the only basis for processing; Article 6(1) lists contract, legal obligation, vital interests, public interest and conditional legitimate interests beside it. Article 22 concerns decisions based solely on automated processing that produce legal or similarly significant effects; the exceptions for contractual necessity, legal authorization and explicit consent are conditional, and under the contract and explicit-consent exceptions the person must be able to obtain human intervention, express a view and contest the decision.
 
@@ -2619,7 +2621,7 @@ You are weighing two things as you guess: how formulaic the reply is and how per
 
 The Turing test is a behavioral criterion: instead of defining “understanding,” it counts indistinguishable behavior as enough. Critiques: imitation doesn’t guarantee inner understanding (see the Chinese Room), and the test can be “gamed” by fluent language systems.
 
-Some models have been indistinguishable from human participants in particular Turing-test experiments (Jones and Bergen, 2025). Results depend on the model, prompt and protocol; they do not establish consciousness or general intelligence. Rather than settling the “thinking” debate, this shifted the question to “what should the criterion be?” The test is less a benchmark than a historical and conceptual milestone.
+In a pre-registered experiment (Jones and Bergen, 2025), participants held five-minute text conversations with a human and an AI at the same time and decided which one was the human. GPT-4.5, run with a prompt telling it to adopt a humanlike persona, was picked as the human in 73 percent of the games; LLaMa-3.1-405B with the same prompt reached 56 percent, while GPT-4o without such a prompt stayed at 21 percent. The result is tied to these models, this prompt and this five-minute setup; a longer or differently questioned test could turn out otherwise, and it does not establish consciousness or general intelligence. Rather than settling the “thinking” debate, this shifted the question to “what should the criterion be?” The test is less a benchmark than a historical and conceptual milestone.
 
 The four tells in Figure 8.1 also show why the test wears down. Each one is a surface marker, and each one can be learned:
 
@@ -2681,11 +2683,11 @@ Set the question of understanding aside for a moment. How far can machines go? A
 
 ### 8.4 From narrow AI to superintelligence
 
-AI today counts as “narrow”: excellent at one job (chess, translation, images); even chat models that work across many tasks show no human-level general learning. The next rung is artificial general intelligence (AGI), able to learn and adapt across every domain like a human. Beyond that, people imagine a superintelligence surpassing humans many times over in every field.
+AI today counts as “narrow”: excellent at particular jobs (chess, translation, images); even chat models that work across many tasks show no human-level general learning. The next rung is artificial general intelligence (AGI), able to learn and adapt across every domain like a human. Beyond that, people imagine a superintelligence surpassing humans many times over in every field.
 
 Look at the rungs of Figure 8.3 one by one; see what each means and the answer to “does it exist today?”
 
-> **Margin note.** Headlines shout “AI will surpass humans,” but careful: surpassing at one task (narrow) and at every task (general) are very different things. We are at the first today; the second is still an open question.
+> **Margin note.** Headlines shout “AI will surpass humans,” but careful: surpassing at particular tasks (narrow) and in every domain (general) are very different things. We are at the first today; the second is still an open question.
 
 **Figure 8.3 · The capability ladder**
 ![Figure 8.3](../../figures/out/en/figure-8-3-capability.svg)
@@ -2704,7 +2706,7 @@ Only the first row is marked “Exists today,” and everything in this book, ch
 
 But a chat model writes poems and produces code, and even with fixed weights it adapts to a new task from the instructions and examples in its context (Brown et al., 2020); isn’t that “general”? This is why some experts put intermediate rungs between narrow and general; there is no universally agreed criterion for human-level general intelligence. The table has three rungs; the real world is probably a continuous slope.
 
-*What is happening?* Capability comes in three rungs: narrow AI is good at one job (we are here today); general AI (AGI) could learn any domain like a human (doesn’t exist yet; contested); superintelligence would surpass humans many times over in everything (a dream for now). Careful: “doing every job” and “being conscious” are separate things.
+*What is happening?* Capability comes in three rungs: narrow AI is good at particular tasks (we are here today); general AI (AGI) could learn any domain like a human (doesn’t exist yet; contested); superintelligence would surpass humans many times over in everything (a dream for now). Careful: “doing every job” and “being conscious” are separate things.
 
 *Try it yourself.* 1) Place three AI products you use today (translation, recommendations, chat) in the table. Did they all land in the first row? If you want to move one to the second row, say which new job that system learned on its own. 2) Which test would have to be passed before you could say “AGI has arrived”? Propose a one-sentence criterion; then say why your criterion differs from the Turing test. 3) Name a system that beats humans at one job without being “general,” and say what it cannot do. Live demo: [QR 8.3] https://book.onuronder.com/d/en/d28592636f
 
@@ -2986,9 +2988,9 @@ None of these questions closes with the chapter; they are the kind you keep. Six
 **Try it yourself.** 1) Fetch: the control unit takes the “multiply” instruction from memory (Memory). Execute: the ALU reads 7 and 6 and computes 7 × 6 = 42 (Processor). Write: the 42 is saved to a register or to memory; Input / Output goes to work only when a separate “write to the screen” instruction runs, and then 42 appears on the screen. 2) One more round, that is, three more phases: fetch “multiply the result by 2,” execute 8 × 2 = 16, write 16 to memory. For it to appear on the screen, a separate “write to the screen” line is needed; saving a result and sending it out are different jobs. 3) 3 billion × 3 = 9 billion phases.
 
 #### Figure 1.5 · Real today, or science fiction?
-**Try it yourself.** 1) Navigation, translation and movie recommendations: all three are narrow AI, left column. None of them can step outside the job it was trained for; you cannot ask the navigation app for a translation. 2) Neither exists today, but they are not the same question. The fourth card is about the “general” question: can it learn every domain with abilities that transfer across domains? The fifth card is about the “strong” question: does it truly understand, is it conscious? Yes, a machine can be general without being conscious; the definition of AGI has no consciousness requirement. 3) Nothing happens; the engine only evaluates chess positions and does not recognize “soup” as an input. Narrow AI: a system that can beat a human at one job and can do nothing outside that job.
+**Try it yourself.** 1) Navigation, translation and movie recommendations: all three are narrow AI, left column. Each is built for particular tasks and shows no human-level general learning across domains; you cannot ask the navigation app for a translation. 2) Neither exists today, but they are not the same question. The fourth card is about the “general” question: can it learn every domain with abilities that transfer across domains? The fifth card is about the “strong” question: does it truly understand, is it conscious? Yes, a machine can be general without being conscious; the definition of AGI has no consciousness requirement. 3) Nothing happens; the engine only evaluates chess positions and does not recognize “soup” as an input. Narrow AI: a system that is very good at a particular task or a limited set of tasks, but cannot learn every domain like a human and carry its abilities over to new domains in general. Handling many tasks does not by itself make it general.
 
-**Self-test.** 1 Chess engine → In use today: narrow AI; one job, chess; it knows nothing else. 2 Face recognition system → In use today: narrow AI; it matches faces and has no task beyond faces. 3 Chatbot (language model) → In use today: narrow AI; even when it writes poems and code, it cannot step outside what it was trained on and has no goals of its own. Doing many tasks is not the same as being general; this is the card people get wrong most often. 4 A machine that learns any profession like a human and has its own goals → Hypothetical: abilities that transfer across domains are the very definition of AGI; no such system has been built. 5 A self-aware, conscious AI → Consciousness question: no such system exists today, but what the card asks about is consciousness, not ability. Consciousness is a “strong AI” question and is not part of the definition of AGI; a general machine could be unconscious. That is why the card goes in its own column rather than under “Hypothetical.”
+**Self-test.** 1 Chess engine → In use today: narrow AI; one job, chess; it knows nothing else. 2 Face recognition system → In use today: narrow AI; it matches faces and has no task beyond faces. 3 Chatbot (language model) → In use today: narrow AI; it writes poems and code, and it can even adapt somewhat to a new task from examples in the prompt (in-context adaptation), but it shows no human-level general learning and transfer across domains, and it has no goals of its own. Doing many tasks is not the same as being general; this is the card people get wrong most often. 4 A machine that learns any profession like a human and has its own goals → Hypothetical: abilities that transfer across domains are the very definition of AGI; no such system has been built. 5 A self-aware, conscious AI → Consciousness question: no such system exists today, but what the card asks about is consciousness, not ability. Consciousness is a “strong AI” question and is not part of the definition of AGI; a general machine could be unconscious. That is why the card goes in its own column rather than under “Hypothetical.”
 
 #### Figure 1.6 · Feel exponential growth
 **Try it yourself.** 1) n = 14, 1999: 2ⁿ = 16,384, transistors 37,683,200 (the live demo shows “37.7 million”). n = 15, 2001: 2ⁿ = 32,768, transistors 75,366,400 (“75.4 million”). 2) The 1989 row, n = 9: 1,177,600. Eighteen years from 1971. 3) With a three-year doubling, 1971 to 1995 is 24 years = 8 doublings: 2,300 × 256 = 588,800. The two-year table gives 9,420,800 for 1995; the gap is a factor of 16. A single extra year in the doubling time makes a 16-fold difference after 24 years.
@@ -2996,7 +2998,7 @@ None of these questions closes with the chapter; they are the kind you keep. Six
 ### Chapter 2 answers
 
 #### Figure 2.1 · Inference along a knowledge chain
-**Try it yourself.** 1) Yes. The machine follows five arrows: Tom → Cat → Mammal → Animal → Living thing → Entity. A longer chain means more steps, but the rule stays the same. 2) Unknown. From Cat the chain leads on to Mammal, Animal and Living thing; Tom is never reached. That answer is right: not every cat is Tom, and an “is a” link points one way only. Tom is an instance and Cat is a class; a class cannot be filed under one of its instances. 3) The chain holds only positive “is a” links; negative knowledge needs a separate fact or rule. If, for example, the rule “Animal and Plant are disjoint classes” is added, the machine can derive “not a Plant” from “Tom is an Animal.” A system without that addition can only say “unknown.”
+**Try it yourself.** 1) Yes. The machine follows five arrows: Tom → Cat → Mammal → Animal → Living thing → Entity. A longer chain means more steps, but the rule stays the same. 2) Unknown. From Cat the chain leads on to Mammal, Animal and Living thing; Tom is never reached. That answer is right: not every cat is Tom, and “instance of” and “subclass of” links point one way only. Tom is an instance and Cat is a class; a class cannot be filed under one of its instances. 3) The chain holds only positive “instance of” and “subclass of” links; negative knowledge needs a separate fact or rule. If, for example, the rule “Animal and Plant are disjoint classes” is added, the machine can derive “not a Plant” from “Tom is an Animal.” A system without that addition can only say “unknown.”
 
 #### Figure 2.2 · A tiny expert system
 **Try it yourself.** 1) R1, R2, R3 and R5 fire; four pieces of advice: Take an umbrella · Wear a coat · Wear a scarf · Careful: the umbrella may flip! R4 stays silent, because it is raining. 2) Only R4 fires: “You can dress light.” R4 looks only at rain and cold; it never asks about wind. In windy weather this advice falls short. What is missing is a rule such as “IF it’s windy THEN take a windbreaker.” That is the blind spot of rules: a condition nobody wrote is treated as if it did not exist. 3) If R5 depended on wind alone, it would warn “the umbrella may flip” even when it is not raining and no umbrella was advised. Chaining ties the warning to the situation it belongs to: the warning only makes sense if an umbrella was advised.
@@ -3022,7 +3024,7 @@ Follow-up questions: the words “labeled” or “unlabeled” appear in tasks 
 **Try it yourself.** 1) The translation program: supervised; the human translations serve as labels. The chess program playing against itself: reinforcement; winning is the reward. Product groups from receipts: unsupervised; nobody names the groups in advance. 2) A sensible order: first “are the correct answers given?”; if yes, supervised, stop. If no, “is there a reward or penalty?”; if yes, reinforcement, if no, unsupervised. Other orders work too; what matters is that each leaf holds a single kind. 3) Example: a language model predicting the next word in a text. The label (the next word) comes from the data itself; nobody labels it by hand. It is trained like supervised learning but works on unlabeled data: self-supervised learning sits between the two columns.
 
 #### Figure 3.3 · Two core tasks
-**Try it yourself.** 1) 0.55 · 6.5 = 3.575; 3.575 + 0.76 = 4.335 ≈ 4.34. 2) (4.5, 3.5): at x = 4.5 the boundary says 6.1 − 2.7 = 3.4; 3.5 > 3.4, so the point is above the boundary, orange. (5, 3): the boundary says 6.1 − 3 = 3.1; 3 < 3.1, below, green. Both are very close to the boundary; a well-calibrated model that outputs probabilities would give these points low confidence, but not every model’s confidence number means that much. 3) The slope goes up: with ten points m ≈ 0.71 and b ≈ 0.23 (before, 0.55 and 0.76). A single far-off point pulls the line away from the previous nine; because the method squares the errors, it is sensitive to outliers. That is a problem: first you have to check whether (9, 9) is a measurement error or a real observation.
+**Try it yourself.** 1) 0.55 · 6.5 = 3.575; 3.575 + 0.76 = 4.335 ≈ 4.34. 2) (4.5, 3.5): at x = 4.5 the boundary says 6.1 − 2.7 = 3.4; 3.5 > 3.4, so the point is above the boundary, orange. (5, 3): the boundary says 6.1 − 3 = 3.1; 3 < 3.1, below, dark group. Both are very close to the boundary; a well-calibrated model that outputs probabilities would give these points low confidence, but not every model’s confidence number means that much. 3) The slope goes up: with ten points m ≈ 0.71 and b ≈ 0.23 (before, 0.55 and 0.76). A single far-off point pulls the line away from the previous nine; because the method squares the errors, it is sensitive to outliers. That is a problem: first you have to check whether (9, 9) is a measurement error or a real observation.
 
 #### Figure 3.4 · Group unlabeled data
 **Try it yourself.** 1) The new center of B: x = (7.5 + 6.5 + 7.8 + 6.8 + 8) / 5 = 7.32, y = (3.2 + 2.5 + 3.8 + 4 + 2.8) / 5 = 3.26. The move is √(0.32² + 0.26²) ≈ 0.41. 2) (4.5, 5.5): to A, √(2² + 1.5²) = 2.5; to B, √(2.5² + 2.5²) ≈ 3.54. Its nearest center is A. But the distance is 2.5, above the threshold of 2.4; by the rule it counts as an outlier, twice as far as A’s other members (at most 1.22). 3) The distance to the center and a threshold: here 2.4, roughly twice the distance of A’s farthest ordinary member (1.22). A person chose the threshold and the centers, not the data; in the figure the outlier is fixed in advance, and standard k-means would have put it in A. Clustering uses no labels; but the answer to “how far is too far?” is a human decision.
@@ -3031,7 +3033,7 @@ Follow-up questions: the words “labeled” or “unlabeled” appear in tasks 
 **Try it yourself.** 1) Slope 0.36 · (2.06 − 5) = −1.06. New x = 2.06 + 0.18 · 1.06 = 2.25. Loss 0.18 · (2.25 − 5)² + 0.1 = 1.46. 2) η = 6: step 1, x = 0.6 + 6 · 1.584 ≈ 10.10; slope 0.36 · 5.10 = 1.84; step 2, x = 10.10 − 6 · 1.837 ≈ −0.92. The distance to the floor goes 4.4 → 5.1 → 5.9: growing. The ball is moving away; divergence. (The factor is 1 − 2.16 = −1.16, whose absolute value is greater than 1.) 3) Yes: η = 1 / 0.36 ≈ 2.78. Then x − (x − 5) = 5, the floor in one step. This works only because the valley is an exact parabola; on real loss surfaces the curvature differs from place to place, and no single rate reaches the floor in one step.
 
 #### Figure 3.6 · Same data, three models
-**Try it yourself.** 1) Underfit: 3.1 − 1.8 = 1.3. Representative curve: 3.0 − 1.6 + 0.15 · sin(6) ≈ 1.36. The broken line ends at x = 9 and can say nothing about x = 10; if you extend its last segment it says 2.6, that is, it carries the random rise of the last two points into the future. 2) x = 2: the broken line, between (1, 3.2) and (3, 3.0), says 3.1; the truth is 2.4, an error of 0.7; the straight line says 2.74, an error of 0.34. x = 8: the broken line says 2.15, an error of 0.75; the straight line says 1.66, an error of 0.26. Again the memorizer loses. 3) It proves that the model remembers the training points; it does not prove that it will do well on a new point. The hide-and-test exam showed as much: with a training error of zero, the validation error was larger than the straight line’s.
+**Try it yourself.** 1) Underfit: 3.1 − 1.8 = 1.3. Representative curve: 3.0 − 1.6 + 0.15 · sin(6) ≈ 1.36. The broken line ends at x = 9 and can say nothing about x = 10; if you extend its last segment it says 2.6, that is, it carries the random rise of the last two points into the future. 2) x = 2: the broken line, between (1, 3.2) and (3, 3.0), says 3.1; the truth is 2.4, an error of 0.7; refit the straight line to the remaining seven points by least squares and you get y ≈ 3.19 − 0.15x, which says 2.88, an error of 0.48. x = 8: the broken line says 2.15, an error of 0.75; the same line says 1.95, an error of 0.55. Again the memorizer loses. 3) It proves that the model remembers the training points; it does not prove that it will do well on a new point. The hide-and-test exam showed as much: with a training error of zero, the validation error was larger than the straight line’s.
 
 ### Chapter 4 answers
 
@@ -3065,7 +3067,7 @@ Follow-up questions: the words “labeled” or “unlabeled” appear in tasks 
 **Try it yourself.** 1) Yes, all five rows sum to 1.00: The cat 0.50 + 0.30 + 0.05 + 0.10 + 0.05; ran 0.50 + 0.30 + 0.10 + 0.05 + 0.05; because 0.20 + 0.40 + 0.20 + 0.10 + 0.10; it 0.55 + 0.10 + 0.05 + 0.20 + 0.10; was scared 0.30 + 0.10 + 0.05 + 0.40 + 0.15. 2) The darkest cell would move to “the dog”: the predicate “was scared” looks for its subject, and the subject is no longer a pronoun but “the dog” directly. The share going to “The cat” would drop too, because the one who is scared is no longer the cat. 3) The “because” column stays between 0.05 and 0.20 in every row; in this illustrative table no word leans on it. A conjunction ties two events together but carries no answer of its own to who, what or where; the table was built on that intuition. No firm verdict follows: the weights were chosen by hand, and in a real model a low weight in a single attention table does not by itself settle how much meaning a word carries; another head may give the same conjunction a high weight.
 
 #### Figure 5.4 · Generate word by word
-**Try it yourself.** 1) At step 2 the running totals are 0.34 (learns) and 0.63 (writes); U = 0.50 passes the first threshold and stays under the second, so “writes” is chosen. Step 3 does not change (U = 0.12 → fast); the sentence is “AI already writes fast.” 2) Greedy: 0.42 × 0.38 × 0.50 ≈ 0.080 (8 percent). Sampled sentence: 0.28 × 0.20 × 0.50 = 0.028 (3 percent). The greedy sentence is about three times as likely; sampling opens the less likely roads as well, and it can pick the most likely sentence too. 3) Step 2: the top candidate has only 38 percent (42 in step 1, 50 in step 3). The lower that share, the more the probability is spread over the other candidates, and the less sure the model is.
+**Try it yourself.** 1) At step 2 the running totals are 0.34 (learns) and 0.62 (writes); U = 0.50 passes the first threshold and stays under the second, so “writes” is chosen. Step 3 does not change (U = 0.12 → fast); the sentence is “AI already writes fast.” 2) Greedy: 0.42 × 0.38 × 0.50 ≈ 0.080 (8 percent). Sampled sentence: 0.28 × 0.20 × 0.50 = 0.028 (3 percent). The greedy sentence is about three times as likely; sampling opens the less likely roads as well, and it can pick the most likely sentence too. 3) Step 2: the top candidate has only 38 percent (42 in step 1, 50 in step 3). The lower that share, the more the probability is spread over the other candidates, and the less sure the model is.
 
 #### Figure 5.5 · An assistant in three stages
 **Try it yourself.** 1) Stage one continues the text: an encyclopedia sentence that does not know how to stop, such as “Water boils at 100 °C at sea level, and the boiling point drops with altitude. The boiling point...” Stage two answers the question and stops: “Water boils at 100 °C at sea level.” Answers vary; the test is that the first one “continues” and the second one “answers and stops.” 2) “Right but rude” should be preferred; the “honest” goal puts truth first, and the “helpful” goal puts useful information first. Politeness is a separate gain of the third stage: the ideal answer is both right and polite, but when the two collide, truth comes first. A reward signal that preferred the wrong but polite answer would train the model toward hallucination. 3) The “Sample output” row: the fact is the same in all three columns (Ankara), and only the length and tone of the answer change. These three examples show different answer shapes for the same fact. They do not prove that fine-tuning cannot change knowledge: fine-tuning can change knowledge and task performance as well, and the example was not built to show that.
@@ -3099,7 +3101,7 @@ Follow-up questions: the words “labeled” or “unlabeled” appear in tasks 
 **Try it yourself.** 1) A = 50 + 0.4·75 = 80, B = 50 − 0.4·75 = 20; the parity gap is 60 points. 2) At 9 percent. At 8 percent the rates are 53/47 (gap 6, still “balanced”); at 9 percent they round to 54/46, the gap is 8 and the caption switches to “skewed.” 3) No. At the end of the scale (e = 100) A stays at 90 percent and B at 10 percent. Reaching the 95 and 5 percent limits would need e = 112.5, and the scale ends at 100. The limits sit in the code as a seat belt and never come into play.
 
 #### Figure 7.2 · White box: explain the decision
-**Try it yourself.** 1) Yes, it changes. The total becomes −8 + 10 = +2; it is above zero, so the loan is approved. A 10-point improvement in a single factor flips the decision, because the debt declined the loan only together with the −12, not on its own; that is the value of the open box: you can see which factor to fix and what happens when you do. The contributions are illustrative; a real model would state its base value and scale. 2) −90 or lower (a magnitude of at least 90). The plus factors add up to +40 + 28 + 22 = +90; at −90 the total is 0, the condition “greater than zero” fails and the decision flips to declined. 3) About 70 percent. Bar length is scaled to the largest absolute contribution: 32 / 46 ≈ 0.70.
+**Try it yourself.** 1) Yes, it changes. The total becomes −8 + 10 = +2; it is above zero, so the loan is approved. A 10-point improvement in a single factor flips the decision, because the debt declined the loan only together with the −12, not on its own; this question assumes a toy additive model in which a contribution adds straight into the total. In a real model, changing one input recomputes all the contributions; SHAP contributions alone do not guarantee how the result would change. The contributions are illustrative; a real model would state its base value and scale. 2) −90 or lower (a magnitude of at least 90). The plus factors add up to +40 + 28 + 22 = +90; at −90 the total is 0, the condition “greater than zero” fails and the decision flips to declined. 3) About 70 percent. Bar length is scaled to the largest absolute contribution: 32 / 46 ≈ 0.70.
 
 #### Figure 7.3 · Real or fake?
 **Self-test.** Each card is scored on two things: did you see the warning sign, and did you name an independent verification channel? How the content was produced (a genuine recording or a synthetic one) and whether the event is true are two separate axes; a tell sends you to investigate and does not by itself settle the origin. 1 Video → Suspicious: verify. Sign: the lips do not match the sound; that can be a deepfake tell, but poor compression or dubbing gives the same picture. Channel: the full recording of the speech, the person’s or institution’s official account, at least one news agency. Whether the sentence was said is verified separately from how the video was made. 2 Audio → Suspicious: verify; make no transfer. Sign: urgency pressure together with an unusual request; the voice resemblance is not evidence, and a robotic intonation is not conclusive either. Channel: hang up, call your boss back on the number you already know, have a second person confirm the transfer. Even without knowing whether the voice is real or cloned, the decision is the same: no money moves without verification. 3 Written news → Looks real; the event is confirmed. Sign: several independent sources and a traceable origin support the truth of the event. That says nothing about whether a human or an AI wrote the text; a synthetically written true story is possible. Channel: the sources’ own pages and, where there is one, the primary document. 4 Photo → Suspicious: verify. Sign: six fingers and gibberish text are known traces of generative models; but photo editing or a real anomaly is possible too. Channel: a reverse image search to find the first publisher; the content credentials (C2PA) record, if there is one. A missing record is not proof of forgery. When is “cannot determine” the right answer: no tell, no source, no channel to verify through. Then give no verdict, and do not share.
@@ -3107,7 +3109,7 @@ Follow-up questions: the words “labeled” or “unlabeled” appear in tasks 
 
 #### Figure 7.4 · Classify the risk
 **Self-test.** The tiers follow the consolidated EU AI Act text of 27 July 2026 (accessed 1 October 2026); the four steps are a teaching summary, and each example depends on purpose, actor and the relevant article. 1 A state system scoring citizens by behavior → Banned: social scoring by a public authority is prohibited under the conditions of Article 5(1)(c) (detrimental treatment that is unrelated to the context or disproportionate). Not every scoring is automatically banned; the conditions must be met. 2 A system auto-screening job candidates → High: Annex III 4(a) lists systems that screen candidates in recruitment and selection; strict compliance and human oversight are required. 3 A chatbot talking to customers → Limited: Article 50(1) requires that people are told they are interacting with an AI. That is not “transparency only”: data-protection and consumer law apply as well. 4 A spam filter in email → Minimal: with the information given, no Annex III high-risk category can be shown; the law places no specific obligation on this use. 5 A model assessing loan applications → High: Annex III 5(b) covers systems that evaluate the creditworthiness of natural persons or establish their credit score; financial-fraud detection is excluded from that item. The same step as hiring. 6 An opponent AI inside a game → Minimal: same reason as 4; this specific high-risk category cannot be shown.
-**Try it yourself.** 1) The map app and the keyboard suggestions → minimal; with the information given, no high-risk category can be shown. The bank’s fraud alert: financial-fraud detection is excluded from the Annex III 5(b) category for creditworthiness assessment. Freezing an account automatically can have serious effects on people’s rights, but that alone does not place the system in the high-risk class; intended use, other applicable provisions and data-protection obligations must be assessed separately. The book’s “does it affect someone’s life or rights?” question is an ethical ladder; it is not the same as the legal classification. 2) Yes. Face recognition that opens your own phone only verifies the identity you claim; it is separate from the remote identification of Annex III 1(a), and this specific high-risk category cannot be shown. Real-time remote biometric identification in publicly accessible spaces for law-enforcement purposes is prohibited by Article 5(1)(h); limited exceptions (targeted search, serious crime, an authorization procedure) and their conditions apply. Use outside law enforcement is not covered by that prohibition, but it is not free either: GDPR Article 9 and Annex III 1(a) come into play. Same technology, different purpose and different rule. 3) By the book’s test, affecting life or rights: 1, 2, 5; not affecting: 3, 4, 6. Of the first set, one card (1) is banned and two (2 and 5) are high; so two cards sit on the high step. Of the second set, 3 is limited, 4 and 6 are minimal. This count uses the book’s teaching test; the legal class follows the article and the annex.
+**Try it yourself.** 1) The map app and the keyboard suggestions → minimal; with the information given, no high-risk category can be shown. The bank’s fraud alert: financial-fraud detection is excluded from the Annex III 5(b) category for creditworthiness assessment. Freezing an account automatically can have serious effects on people’s rights, but that alone does not place the system in the high-risk class; intended use, other applicable provisions and data-protection obligations must be assessed separately. The book’s “does it decide something about a person?” question is a teaching ladder; it is not the same as the legal classification. 2) Yes. Face recognition that opens your own phone only verifies the identity you claim; it is separate from the remote identification of Annex III 1(a), and this specific high-risk category cannot be shown. Real-time remote biometric identification in publicly accessible spaces for law-enforcement purposes is prohibited by Article 5(1)(h); limited exceptions (targeted search, serious crime, an authorization procedure) and their conditions apply. Use outside law enforcement is not covered by that prohibition, but it is not free either: GDPR Article 9 and Annex III 1(a) come into play. Same technology, different purpose and different rule. 3) By the book’s test, deciding something about a person: 1, 2, 5; making no such decision: 3, 4, 6. The second set does not leave rights untouched: a chatbot can mislead or process personal data, and a spam filter can bury an important email; these uses still fall under transparency, data-protection and consumer rules. Of the first set, one card (1) is banned and two (2 and 5) are high; so two cards sit on the high step. Of the second set, 3 is limited, 4 and 6 are minimal. This count uses the book’s teaching test; the legal class follows the article and the annex.
 
 #### Figure 7.5 · Goal versus intent
 **Try it yourself.** 1) Example: “Put all the mess in the room into the trash can; leave none anywhere, including under the rug and inside the cupboards.” New loopholes, each meeting every clause of the instruction while breaking the intent: counting things that are not mess as mess and throwing them away; putting all the mess in the can and then leaving the full can in the middle of the room or in the hallway (every clause met, the room still unusable); dumping everything into one can with no recycling or hazardous-waste separation (an unwritten rule broken). Throwing the mess out of the window does not belong on this list: it never reached the can, so it breaks the instruction outright instead of gaming it. Every rewrite closes one loophole and leaves a new one. 2) Harmless shortcut: suggesting extra practice on each student’s weak topics. Harmful shortcut: keeping low-scoring students out of the exam, or drilling the exam questions themselves; the average rises, the learning does not. 3) Example sentence: “The system maximizes the measure you gave it, not the intent the measure was supposed to stand for.”
@@ -3236,6 +3238,9 @@ The effort to tie a model’s output to reasons a human can understand. Post-hoc
 **Exponential growth** · Section 1.7
 Growth by a constant factor at every step; doubling at regular intervals is a special case. Like the rice on the chessboard it starts innocently and gets out of control after a few doublings. The computing power that carries modern AI accumulated this way.
 
+**Fallback** · Section 6.5
+When a step fails (a tool errors, no source is found, the model is unsure), the system switches to a predefined safer path: another tool, a short “I don’t know” answer, or handing the task to a person. See Orchestration.
+
 **Feature** · Section 3.2
 A measurable clue that describes an example: in an email, “is there a link,” “does it say free.” The model learns the mapping from features to the label. See Label.
 
@@ -3257,6 +3262,12 @@ Models that do not only recognize but produce text, images and code; they learn 
 **Gradient descent** · Section 3.6
 Updating the parameters by probing the slope at every step and taking a small step in the direction that reduces the loss. Like walking down to the bottom of a foggy valley. See Learning rate.
 
+**Grounding** · Section 6.3
+Basing a model’s answer on source texts added to the prompt (documents, data, search results), so the answer can be traced back to them. RAG is a common way to do it. Grounding improves accuracy but does not guarantee it; if a source is wrong or incomplete, the answer can be wrong too. See RAG.
+
+**Guardrails** · Section 6.5
+Rules and checks in an AI application that filter unwanted inputs and outputs, limit tool permissions and require approval for risky actions. See Orchestration.
+
 **Hallucination** · Section 5.8
 A model producing information that sounds right but is wrong, without blinking. Its job is not to know the truth but to produce a likely continuation; a fluent or high-probability answer is no guarantee of truth. Grounding in sources (RAG) and verification reduce it.
 
@@ -3273,7 +3284,7 @@ The wall classical AI hit: writing every rule about the world by hand does not s
 In symbolic AI, encoding knowledge as explicit symbols and the links between them (“Tom is a cat”). Semantic networks, frames and logical propositions are its tools.
 
 **Label** · Section 3.2
-The correct answer for a training example: “Spam” or “Normal.” A categorical label gives a classification task, a numerical one a regression task. See Feature.
+The correct answer for a training example: “Spam” or “Normal.” A category label gives a classification task; a measured quantity (a continuous number such as a price or a temperature) gives a regression task. Categories can be coded as numbers (e.g. 0 = Normal, 1 = Spam); that does not make them a regression target. See Feature.
 
 **Large language model (LLM)** · Section 5.1
 A Transformer-based language model trained on enormous amounts of text. The autoregressive generative models studied in this book produce scores (logits) for the next token at every step; softmax turns those scores into a probability distribution, and the chosen token is appended to the sequence. Not every language model is autoregressive. The foundation of today’s chat assistants.
@@ -3294,7 +3305,7 @@ A probabilistic process in which, given the current state, the next state does n
 The observation that the number of transistors on a chip doubles at regular intervals: about every year in the 1965 prediction, about every two years in the 1975 revision. Not a law of nature but an empirical trend; it is slowing as transistor structures approach atomic scales. More transistors do not mean a proportional speedup for every workload.
 
 **Narrow AI** · Section 1.6
-A system that works on specific tasks and lacks broad, transferable ability across domains. The test for “Is it narrow?” is not how many tasks it does but whether it can step outside the jobs it was trained for. Every AI system today, multi-task chat models included, is in this class; being narrow does not mean being confined to one task, and doing many tasks does not by itself make a system general. In everyday speech it is also called “weak AI”; Searle’s weak/strong distinction is a separate, philosophical question. See Strong AI.
+A system that works on specific tasks and lacks broad, transferable ability across domains. The test for “Is it narrow?” is not how many tasks it does but whether it shows human-level general learning and transfer across domains; a model that adapts somewhat to a new task from examples in the prompt (in-context adaptation) can still be narrow. Every AI system today, multi-task chat models included, is in this class; being narrow does not mean being confined to one task, and doing many tasks does not by itself make a system general. In everyday speech it is also called “weak AI”; Searle’s weak/strong distinction is a separate, philosophical question. See Strong AI.
 
 **Neats and scruffies** · Section 2.6
 The methodological tension in AI: those who want every step proven with clean mathematics (neats) versus those who say “if it works, it is good; we will find the theory later” (scruffies). Today’s AI is a mix of the two.
@@ -3357,10 +3368,10 @@ The setting that sharpens or flattens the softmax(z/T) distribution during gener
 The small Lego brick into which a language model breaks text: sometimes a word, sometimes a piece broken off a word, sometimes a comma. The context window and the cost are measured in tokens.
 
 **Transformer** · Section 5.1
-The architecture built on the attention mechanism (2017, “Attention Is All You Need”). In training it processes the positions of a sequence together (in parallel); autoregressive generation adds tokens one at a time, and a causal mask lets each position see only the ones before it. The foundation of today’s large language models.
+The architecture built on the attention mechanism (2017, “Attention Is All You Need”). In training it processes the positions of a sequence together (in parallel); autoregressive generation adds tokens one at a time, and a causal mask lets each position see itself and the ones before it, while later ones are masked. The foundation of today’s large language models.
 
 **Turing machine** · Section 1.4
-An abstract machine made of a single little box that reads a tape, writes on it and slides left or right; in principle it can perform any calculation. The formal basis of computability (1936).
+An abstract machine made of a single little box that reads a tape, writes on it and slides left or right. Its rules make it do one particular job (the machine in Figure 1.3 only adds 1); a universal Turing machine, given the right program and enough tape, can carry out any algorithmically computable task. Some problems are not computable at all. The formal basis of computability (1936).
 
 **Turing test** · Section 8.2
 Turing’s imitation game (1950): if a machine cannot be told apart from a human in written conversation, that counts as passing. A behavioral criterion; fluent imitation is not proof of understanding or consciousness.
@@ -3380,7 +3391,7 @@ Entry format: a DOI for journal articles, an arXiv number or a permanent address
 ## Works named in the text
 
 - Gardner, H. (1983). *Frames of Mind: The Theory of Multiple Intelligences*. Basic Books. (Chapter 1)
-- Turing, A. M. (1936). “On Computable Numbers, with an Application to the Entscheidungsproblem.” *Proceedings of the London Mathematical Society*, s2-42(1), 230–265. https://doi.org/10.1112/plms/s2-42.1.230 (Chapter 1)
+- Turing, A. M. (1936). “On Computable Numbers, with an Application to the Entscheidungsproblem.” *Proceedings of the London Mathematical Society*, s2-42(1), 230–265. https://doi.org/10.1112/plms/s2-42.1.230 The volume is dated 1937; the paper was received and read before the Society in 1936. This book follows the common convention of citing 1936. (Chapter 1)
 - Turing, A. M. (1950). “Computing Machinery and Intelligence.” *Mind*, 59(236), 433–460. https://doi.org/10.1093/mind/LIX.236.433 (Chapter 8)
 - von Neumann, J. (1945). *First Draft of a Report on the EDVAC*. Moore School of Electrical Engineering, University of Pennsylvania. Reprinted in *IEEE Annals of the History of Computing*, 15(4), 27–75 (1993). https://doi.org/10.1109/85.238389 (Chapter 1)
 - Moore, G. E. (1965). “Cramming More Components onto Integrated Circuits.” *Electronics*, 38(8), 114–117. Reprinted in *IEEE Solid-State Circuits Society Newsletter*, 11(3), 33–35 (2006). https://doi.org/10.1109/N-SSC.2006.4785860 (Chapter 1)
@@ -3397,7 +3408,7 @@ Entry format: a DOI for journal articles, an arXiv number or a permanent address
 - Yao, S., et al. (2023). “ReAct: Synergizing Reasoning and Acting in Language Models.” *ICLR*. arXiv:2210.03629. https://doi.org/10.48550/arXiv.2210.03629 (Chapter 6)
 - Lundberg, S. M., and Lee, S.-I. (2017). “A Unified Approach to Interpreting Model Predictions.” *NeurIPS 30*. arXiv:1705.07874. https://doi.org/10.48550/arXiv.1705.07874 (SHAP; Chapter 7)
 - Schwartz, R., et al. (2022). *Towards a Standard for Identifying and Managing Bias in Artificial Intelligence*. NIST Special Publication 1270. https://doi.org/10.6028/NIST.SP.1270 (sources of bias; Chapter 7)
-- European Parliament and Council (2024). *Regulation (EU) 2024/1689 (Artificial Intelligence Act)*; consolidated text of 27 July 2026, as amended by Regulation (EU) 2026/1744; Articles 5, 6, 50, 111 and Annex III. http://data.europa.eu/eli/reg/2024/1689/oj (Chapter 7)
+- European Parliament and Council (2024). *Regulation (EU) 2024/1689 (Artificial Intelligence Act)*; consolidated text of 27 July 2026, as amended by Regulation (EU) 2026/1744 (Official Journal, 24 July 2026; in force 27 July 2026); Articles 5, 6, 50, 111, 113 and Annex III. Consolidated text: http://data.europa.eu/eli/reg/2024/1689/2026-07-27 · Amending regulation: http://data.europa.eu/eli/reg/2026/1744/oj · Original publication: http://data.europa.eu/eli/reg/2024/1689/oj (Chapter 7)
 - European Parliament and Council (2016). *Regulation (EU) 2016/679 (General Data Protection Regulation)*; Articles 6, 9 and 22. http://data.europa.eu/eli/reg/2016/679/oj (Chapter 7)
 - Law No. 6698 on the Protection of Personal Data (KVKK) (2016). *Official Gazette* 29677, 7 April 2016; Articles 5, 6, 9 and 11. https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6698&MevzuatTur=1&MevzuatTertip=5 (Chapter 7)
 - Searle, J. R. (1980). “Minds, Brains, and Programs.” *Behavioral and Brain Sciences*, 3(3), 417–457. https://doi.org/10.1017/S0140525X00005756 (Chinese Room; Chapter 8)
@@ -3480,7 +3491,7 @@ Numbers refer to chapter and section (3.6 = Chapter 3, sixth section). Page numb
 **Anomaly detection** · [3.5](#ix-3-5-5), [6.6](#ix-6-6-5)  
 **Artificial general intelligence (AGI)** · [1.6](#ix-1-6-6), [1.8](#ix-1-8-6), [8.1](#ix-8-1-6), [8.2](#ix-8-2-6), [8.4](#ix-8-4-6), [8.7](#ix-8-7-6)  
 **Artificial intelligence (AI)** · [1.1](#ix-1-1-7), [1.5](#ix-1-5-7)  
-**Artificial neural network** · [2.7](#ix-2-7-8), [4.1](#ix-4-1-8), [4.5](#ix-4-5-8), [4.8](#ix-4-8-8), [5.7](#ix-5-7-8), [5.9](#ix-5-9-8)  
+**Artificial neural network** · [4.1](#ix-4-1-8), [4.8](#ix-4-8-8), [5.7](#ix-5-7-8)  
 **Artificial neuron** · [4.1](#ix-4-1-9), [4.2](#ix-4-2-9), [4.3](#ix-4-3-9), [4.4](#ix-4-4-9), [4.6](#ix-4-6-9), [4.8](#ix-4-8-9)  
 **Attention** · [5.1](#ix-5-1-10), [5.4](#ix-5-4-10), [5.8](#ix-5-8-10), [5.9](#ix-5-9-10), [7.3](#ix-7-3-10)  
 **Babbage, Charles** · [1.1](#ix-1-1-83), [1.4](#ix-1-4-83)  
@@ -3496,7 +3507,7 @@ Numbers refer to chapter and section (3.6 = Chapter 3, sixth section). Page numb
 **Breadth-first search (BFS)** · [2.4](#ix-2-4-18)  
 **Chinese Room** · [1.6](#ix-1-6-19), [8.1](#ix-8-1-19), [8.2](#ix-8-2-19), [8.3](#ix-8-3-19), [8.7](#ix-8-7-19)  
 **Classification** · [3.2](#ix-3-2-20), [3.3](#ix-3-3-20), [3.4](#ix-3-4-20), [3.8](#ix-3-8-20), [5.1](#ix-5-1-20), [6.6](#ix-6-6-20), [7.4](#ix-7-4-20)  
-**Clustering** · [3.3](#ix-3-3-21), [3.4](#ix-3-4-21), [3.5](#ix-3-5-21), [3.8](#ix-3-8-21)  
+**Clustering** · [3.3](#ix-3-3-21), [3.5](#ix-3-5-21), [3.8](#ix-3-8-21)  
 **Computationalism** · [1.3](#ix-1-3-22)  
 **Context window** · [5.1](#ix-5-1-23), [5.2](#ix-5-2-23), [5.4](#ix-5-4-23), [5.8](#ix-5-8-23), [5.9](#ix-5-9-23), [6.2](#ix-6-2-23)  
 **Convolutional neural network (CNN)** · [4.5](#ix-4-5-24), [4.8](#ix-4-8-24)  
@@ -3511,6 +3522,7 @@ Numbers refer to chapter and section (3.6 = Chapter 3, sixth section). Page numb
 **Expert system** · [2.3](#ix-2-3-31), [2.7](#ix-2-7-31)  
 **Explainable AI (XAI)** · [7.1](#ix-7-1-32), [7.3](#ix-7-3-32)  
 **Exponential growth** · [1.7](#ix-1-7-33), [8.5](#ix-8-5-33)  
+**Fallback** · [6.5](#ix-6-5-103)  
 **Feature** · [3.2](#ix-3-2-34), [3.8](#ix-3-8-34), [4.5](#ix-4-5-34), [7.3](#ix-7-3-34)  
 **Feedforward** · [4.3](#ix-4-3-35), [4.4](#ix-4-4-35), [4.8](#ix-4-8-35)  
 **Fine-tuning** · [5.1](#ix-5-1-36), [5.6](#ix-5-6-36), [5.9](#ix-5-9-36)  
@@ -3518,7 +3530,10 @@ Numbers refer to chapter and section (3.6 = Chapter 3, sixth section). Page numb
 **GDPR / KVKK** · [7.1](#ix-7-1-37), [7.5](#ix-7-5-37)  
 **Generative adversarial network (GAN)** · [4.7](#ix-4-7-38), [4.8](#ix-4-8-38), [5.1](#ix-5-1-38), [5.7](#ix-5-7-38), [7.4](#ix-7-4-38)  
 **Generative AI** · [5.1](#ix-5-1-39), [7.4](#ix-7-4-39)  
+**GPT** · [8.2](#ix-8-2-101)  
 **Gradient descent** · [3.1](#ix-3-1-40), [3.6](#ix-3-6-40), [3.8](#ix-3-8-40), [4.4](#ix-4-4-40), [4.8](#ix-4-8-40)  
+**Grounding** · [5.8](#ix-5-8-102), [6.1](#ix-6-1-102), [6.7](#ix-6-7-102)  
+**Guardrails** · [6.5](#ix-6-5-104), [6.6](#ix-6-6-104), [6.7](#ix-6-7-104)  
 **Hallucination** · [5.1](#ix-5-1-41), [5.8](#ix-5-8-41), [5.9](#ix-5-9-41), [6.3](#ix-6-3-41), [6.7](#ix-6-7-41)  
 **Heuristic** · [2.4](#ix-2-4-42), [2.7](#ix-2-7-42)  
 **Hinton, Geoffrey** · [4.4](#ix-4-4-87)  
@@ -3548,7 +3563,7 @@ Numbers refer to chapter and section (3.6 = Chapter 3, sixth section). Page numb
 **RAG (retrieval-augmented generation)** · [5.8](#ix-5-8-61), [6.1](#ix-6-1-61), [6.3](#ix-6-3-61), [6.5](#ix-6-5-61), [6.7](#ix-6-7-61)  
 **ReAct** · [6.1](#ix-6-1-97), [6.4](#ix-6-4-97)  
 **Recurrent neural network (RNN)** · [4.6](#ix-4-6-62), [4.8](#ix-4-8-62)  
-**Regression** · [3.2](#ix-3-2-63), [3.3](#ix-3-3-63), [3.4](#ix-3-4-63), [3.6](#ix-3-6-63), [3.8](#ix-3-8-63)  
+**Regression** · [3.2](#ix-3-2-63), [3.3](#ix-3-3-63), [3.4](#ix-3-4-63), [3.6](#ix-3-6-63), [3.7](#ix-3-7-63), [3.8](#ix-3-8-63)  
 **Reinforcement learning** · [2.5](#ix-2-5-64), [3.3](#ix-3-3-64), [3.8](#ix-3-8-64)  
 **RLHF (reinforcement learning from human feedback)** · [5.1](#ix-5-1-65), [5.6](#ix-5-6-65), [5.9](#ix-5-9-65), [7.6](#ix-7-6-65)  
 **Rumelhart, David** · [4.4](#ix-4-4-88)  

@@ -121,12 +121,14 @@ function embedFigure(demo, { lang }) {
     body.push(caption(X(cx), Y(cy) - r - 3, up(f, lang), { anchor: 'middle', fill: INK2 }));  // 2026-09-30: YİYECEK
   });
   // komşu bağlantıları + uzaklık etiketi
+  const halo = (t) => t.replace('<text ', '<text stroke="#ffffff" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke" '); // R073: kesikli çizgilerin üstünde okunur kalsın
   near.forEach((o) => {
     const a = pts[pick], b = pts[o.j];
     body.push(line(X(a.x), Y(a.y), X(b.x), Y(b.y), { stroke: EMBER, sw: 0.8, dash: '2 1.5' }));
     const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
     const nx = -dy / d, ny = dx / d; // sol normal
-    body.push(text(X(mx + nx * 7), Y(my + ny * 7) + 2, o.d.toFixed(1), { font: MONO, size: 6, fill: EMBER, anchor: 'middle' }));
+    const off = 4 + Math.abs(nx) * tw(o.d.toFixed(1), MIN_TEXT, 'mono') / 2 + Math.abs(ny) * 3.5; // R073: etiket kesikli çizgiye değmesin
+    body.push(halo(text(X(mx + nx * off), Y(my + ny * off) + 2, o.d.toFixed(1), { font: MONO, size: 6, fill: EMBER, anchor: 'middle' })));
   });
   // noktalar ve etiketler
   pts.forEach((p, i) => {
@@ -135,7 +137,7 @@ function embedFigure(demo, { lang }) {
     else if (nr) body.push(circle(X(p.x), Y(p.y), 5, { fill: '#fff', stroke: EMBER, sw: 1.5 }));
     else body.push(circle(X(p.x), Y(p.y), 4, { fill: INK }));
     const below = EMBED_BELOW.has(i);
-    body.push(text(X(p.x), Y(p.y) + (below ? (nr ? 14 : 13) : -(sel ? 11 : 9)), p.l, { size: 7.5, anchor: 'middle', weight: sel ? 700 : nr ? 600 : 400, fill: sel || nr ? INK : INK2 }));
+    body.push(halo(text(X(p.x), Y(p.y) + (below ? (nr ? 14 : 13) : -(sel ? 11 : 9)), p.l, { size: 7.5, anchor: 'middle', weight: sel ? 700 : nr ? 600 : 400, fill: sel || nr ? INK : INK2 })));
   });
   let y = oy + mh + 14;
   body.push(text(ox, y + 5, S.embed.selected(pts[pick].l, near.map((o) => S.embed.neighbor(pts[o.j].l, o.d.toFixed(1))).join(', ')), { font: MONO, size: 6, fill: INK2 }));

@@ -101,6 +101,9 @@ The effort to tie a model’s output to reasons a human can understand. Post-hoc
 **Exponential growth** · Section 1.7
 Growth by a constant factor at every step; doubling at regular intervals is a special case. Like the rice on the chessboard it starts innocently and gets out of control after a few doublings. The computing power that carries modern AI accumulated this way.
 
+**Fallback** · Section 6.5
+When a step fails (a tool errors, no source is found, the model is unsure), the system switches to a predefined safer path: another tool, a short “I don’t know” answer, or handing the task to a person. See Orchestration.
+
 **Feature** · Section 3.2
 A measurable clue that describes an example: in an email, “is there a link,” “does it say free.” The model learns the mapping from features to the label. See Label.
 
@@ -122,6 +125,12 @@ Models that do not only recognize but produce text, images and code; they learn 
 **Gradient descent** · Section 3.6
 Updating the parameters by probing the slope at every step and taking a small step in the direction that reduces the loss. Like walking down to the bottom of a foggy valley. See Learning rate.
 
+**Grounding** · Section 6.3
+Basing a model’s answer on source texts added to the prompt (documents, data, search results), so the answer can be traced back to them. RAG is a common way to do it. Grounding improves accuracy but does not guarantee it; if a source is wrong or incomplete, the answer can be wrong too. See RAG.
+
+**Guardrails** · Section 6.5
+Rules and checks in an AI application that filter unwanted inputs and outputs, limit tool permissions and require approval for risky actions. See Orchestration.
+
 **Hallucination** · Section 5.8
 A model producing information that sounds right but is wrong, without blinking. Its job is not to know the truth but to produce a likely continuation; a fluent or high-probability answer is no guarantee of truth. Grounding in sources (RAG) and verification reduce it.
 
@@ -138,7 +147,7 @@ The wall classical AI hit: writing every rule about the world by hand does not s
 In symbolic AI, encoding knowledge as explicit symbols and the links between them (“Tom is a cat”). Semantic networks, frames and logical propositions are its tools.
 
 **Label** · Section 3.2
-The correct answer for a training example: “Spam” or “Normal.” A categorical label gives a classification task, a numerical one a regression task. See Feature.
+The correct answer for a training example: “Spam” or “Normal.” A category label gives a classification task; a measured quantity (a continuous number such as a price or a temperature) gives a regression task. Categories can be coded as numbers (e.g. 0 = Normal, 1 = Spam); that does not make them a regression target. See Feature.
 
 **Large language model (LLM)** · Section 5.1
 A Transformer-based language model trained on enormous amounts of text. The autoregressive generative models studied in this book produce scores (logits) for the next token at every step; softmax turns those scores into a probability distribution, and the chosen token is appended to the sequence. Not every language model is autoregressive. The foundation of today’s chat assistants.
@@ -159,7 +168,7 @@ A probabilistic process in which, given the current state, the next state does n
 The observation that the number of transistors on a chip doubles at regular intervals: about every year in the 1965 prediction, about every two years in the 1975 revision. Not a law of nature but an empirical trend; it is slowing as transistor structures approach atomic scales. More transistors do not mean a proportional speedup for every workload.
 
 **Narrow AI** · Section 1.6
-A system that works on specific tasks and lacks broad, transferable ability across domains. The test for “Is it narrow?” is not how many tasks it does but whether it can step outside the jobs it was trained for. Every AI system today, multi-task chat models included, is in this class; being narrow does not mean being confined to one task, and doing many tasks does not by itself make a system general. In everyday speech it is also called “weak AI”; Searle’s weak/strong distinction is a separate, philosophical question. See Strong AI.
+A system that works on specific tasks and lacks broad, transferable ability across domains. The test for “Is it narrow?” is not how many tasks it does but whether it shows human-level general learning and transfer across domains; a model that adapts somewhat to a new task from examples in the prompt (in-context adaptation) can still be narrow. Every AI system today, multi-task chat models included, is in this class; being narrow does not mean being confined to one task, and doing many tasks does not by itself make a system general. In everyday speech it is also called “weak AI”; Searle’s weak/strong distinction is a separate, philosophical question. See Strong AI.
 
 **Neats and scruffies** · Section 2.6
 The methodological tension in AI: those who want every step proven with clean mathematics (neats) versus those who say “if it works, it is good; we will find the theory later” (scruffies). Today’s AI is a mix of the two.
@@ -222,10 +231,10 @@ The setting that sharpens or flattens the softmax(z/T) distribution during gener
 The small Lego brick into which a language model breaks text: sometimes a word, sometimes a piece broken off a word, sometimes a comma. The context window and the cost are measured in tokens.
 
 **Transformer** · Section 5.1
-The architecture built on the attention mechanism (2017, “Attention Is All You Need”). In training it processes the positions of a sequence together (in parallel); autoregressive generation adds tokens one at a time, and a causal mask lets each position see only the ones before it. The foundation of today’s large language models.
+The architecture built on the attention mechanism (2017, “Attention Is All You Need”). In training it processes the positions of a sequence together (in parallel); autoregressive generation adds tokens one at a time, and a causal mask lets each position see itself and the ones before it, while later ones are masked. The foundation of today’s large language models.
 
 **Turing machine** · Section 1.4
-An abstract machine made of a single little box that reads a tape, writes on it and slides left or right; in principle it can perform any calculation. The formal basis of computability (1936).
+An abstract machine made of a single little box that reads a tape, writes on it and slides left or right. Its rules make it do one particular job (the machine in Figure 1.3 only adds 1); a universal Turing machine, given the right program and enough tape, can carry out any algorithmically computable task. Some problems are not computable at all. The formal basis of computability (1936).
 
 **Turing test** · Section 8.2
 Turing’s imitation game (1950): if a machine cannot be told apart from a human in written conversation, that counts as passing. A behavioral criterion; fluent imitation is not proof of understanding or consciousness.

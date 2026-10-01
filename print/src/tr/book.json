@@ -41,7 +41,7 @@
       "type": "intelligence",
       "title": "Çoklu zekâyı keşfet",
       "hint": "Bir zekâ türüne dokun.",
-      "neOluyorBasit": "Gardner’a göre zekâ tek bir sayı değil, sekiz ayrı yetenek ailesidir; dokunduğun kart bunlardan biri. Bugünkü yapay zekâ dilde ve mantıkta çok iyi; beden ve duygu işlerinde ise sonuç göreve ve sisteme bağlı, çoğunda hâlâ çok geride.",
+      "neOluyorBasit": "Gardner’a göre zekâ tek bir sayı değil, sekiz ayrı yetenek ailesidir; dokunduğun kart bunlardan biri. Bugünkü yapay zekâ dilde ve mantıkta çok iyi; beden ve duygu işlerinde ise sonuç göreve ve sisteme bağlı, çoğunda hâlâ çok geride. Çubuklar temsili düzeydir; ölçülmüş başarı değildir.",
       "neOluyor": "Asıl ders, zekânın tek boyutlu olmaması: YZ dil ve mantıkta güçlü, bedensel ve sosyal/içsel alanlarda zayıftır. Çubuklar ölçülmüş başarı değil, anlatım için seçilmiş temsili düzeylerdir; görev ve sistem değişince sonuç da değişir.",
       "types": [
        {
@@ -117,7 +117,7 @@
      "h2": "Babbage’tan Turing’e",
      "basit": [
       "İlk “bilgisayar” hayali 1800’lerde kuruldu. Charles Babbage dişlilerden ve kollardan oluşan dev bir hesap makinesi çizdi: Analitik Makine. Parası ve ömrü yetmedi; makinesini hiç göremeden öldü. Ama arkadaşı Ada Lovelace, o hayaldeki makine için ilk “tarifi” yazdı. Bu yüzden tarihin ilk programcısı sayılır.",
-      "Yaklaşık yüz yıl sonra Alan Turing hayali bir adım öteye taşıdı: Bandı okuyan, yazan ve iki yana kayan tek bir kutucuk, prensipte her hesabı yapabilir. Buna Turing makinesi denir. Aşağıda gerçek bir tanesinin nasıl düşündüğünü izle."
+      "Yaklaşık yüz yıl sonra Alan Turing hayali bir adım öteye taşıdı: Bandı okuyan, yazan ve iki yana kayan tek bir kutucuk, doğru kurallar ve yeterli bant verilirse, bir algoritmaya dökülebilen her hesabı yapabilir. Buna Turing makinesi denir. Aşağıda, yalnızca sayıya 1 ekleyen küçük bir tanesinin nasıl düşündüğünü izle."
      ],
      "teknik": [
       "Babbage’ın Analitik Makinesi (1837) bir “mill” (işlem birimi) ve “store” (bellek) içeren, delikli kartlarla programlanabilen genel amaçlı bir tasarımdı. Ada Lovelace’ın 1843 notları, Bernoulli sayılarını hesaplayan ve genelde ilk bilgisayar programı kabul edilen algoritmayı içerir.",
@@ -133,7 +133,7 @@
        15,
        22
       ],
-      "neOluyorBasit": "Makine bandın üzerinde bir karınca gibi yürüyor: önce sağa gidip sayının ucunu buluyor, sonra dönüp 1 ekliyor. Eldeyi taşıyışı, senin kâğıtta toplama yapışından farksız. Her hesap bu makine yalnızca 1 ekliyor; başka kurallarla başka hesaplar yapılır. Bir tarife dökülebilen her hesap, sonunda bu minicik hamlelere iner.",
+      "neOluyorBasit": "Makine bandın üzerinde bir karınca gibi yürüyor: önce sağa gidip sayının ucunu buluyor, sonra dönüp 1 ekliyor. Eldeyi taşıyışı, senin kâğıtta toplama yapışından farksız. Bu makine yalnızca 1 ekliyor; başka kurallarla başka hesaplar yapılır. Bir tarife dökülebilen her hesap, sonunda bu minicik hamlelere iner.",
       "neOluyor": "Makine sağa kayarak bandın sonuna gider, sonra sola dönerek ikili sayıya 1 ekler (elde mantığı): gördüğü 1’ler 0 olur, ilk 0 ise 1 olur."
      }
     },
@@ -218,7 +218,7 @@
         "label": "Bilinç sorusu"
        }
       ],
-      "neOluyorBasit": "Eğitildiği işlerin dışına çıkamayan her sistem dar sınıfına girer; şiir de kod da yazan sohbet botları bile. Genel olan, alanlar arasında aktarılabilir yetenekle insan gibi her alanda öğrenebilen makinedir ve öylesi henüz yok. Bilinçli makine ise apayrı bir soru; genel olmak bilinç gerektirmez.",
+      "neOluyorBasit": "Belirli görevlerde ya da sınırlı bir görev kümesinde iyi olup insan düzeyinde alanlar arası genel öğrenme ve aktarım göstermeyen her sistem dar sınıfına girer; şiir de kod da yazan, istemdeki örneklerle yeni bir işe bir ölçüde uyum gösteren sohbet botları bile. Genel olan, alanlar arasında aktarılabilir yetenekle insan gibi her alanda öğrenebilen makinedir ve öylesi henüz yok. Bilinçli makine ise apayrı bir soru; genel olmak bilinç gerektirmez.",
       "neOluyor": "AGI tanımında bile bilinç şartı yoktur: genel olmak, bilinçli olmak demek değildir.",
       "items": [
        {
@@ -364,13 +364,13 @@
      ],
      "teknik": [
       "Sembolik YZ’de bilgi, bilgi temsili (knowledge representation) ile kodlanır: semantik ağlar, çerçeveler (frames), ontolojiler ya da mantık önermeleri. Varlıklar ve aralarındaki ilişkiler (ör. is-a, has-a) açıkça tanımlanır.",
-      "Çıkarım (inference), bu temsiller üzerinde kuralların uygulanmasıdır. Aşağıdaki demo bir is-a hiyerarşisinde geçişliliği (transitivity) kullanır. Ontolojide iki bağ ayrılır: Tekir, Kedi sınıfının bir örneğidir (instance-of); Kedi, Memeli sınıfının alt sınıfıdır (subclass-of). “Tekir instance-of Kedi” ve “Kedi subclass-of Memeli” ise “Tekir instance-of Memeli” türetilir; bu nedenle Tekir bir memelidir. Demo iki bağı da tek ok türüyle, “bir …dır” diye gösterir. Sembolik akıl yürütmenin özü budur."
+      "Çıkarım (inference), bu temsiller üzerinde kuralların uygulanmasıdır. Aşağıdaki demo bir is-a hiyerarşisinde geçişliliği (transitivity) kullanır. Ontolojide iki bağ ayrılır: Tekir, Kedi sınıfının bir örneğidir (instance-of); Kedi, Memeli sınıfının alt sınıfıdır (subclass-of). “Tekir instance-of Kedi” ve “Kedi subclass-of Memeli” ise “Tekir instance-of Memeli” türetilir; bu nedenle Tekir bir memelidir. Demo iki bağı ayrı etiketle gösterir: ilk ok “örneği”, öbürleri “alt sınıfı”. Sembolik akıl yürütmenin özü budur."
      ],
      "tip": "Sembolik YZ’nin gücü: az sayıda kuraldan çok sayıda yeni bilgi türetebilir. Zayıflığı: önce o kuralları birinin yazması gerekir.",
      "demo": {
       "type": "chain",
       "title": "Bilgi zinciriyle çıkarım",
-      "hint": "Makine yalnızca “bir …dır” bağlarını biliyor. Bir soru sor; zinciri izleyerek cevabı kendisi bulsun.",
+      "hint": "Makine iki tür bağ biliyor: “örneği” (birey → sınıf) ve “alt sınıfı” (sınıf → üst sınıf). Bir soru sor; zinciri izleyerek cevabı kendisi bulsun.",
       "nodes": [
        "Tekir",
        "Kedi",
@@ -397,7 +397,7 @@
        }
       ],
       "neOluyorBasit": "Makine yalnızca “kim kimin türü” bilgisini tutuyor: Tekir bir kedi, kedi bir memeli... Sorunca zinciri halka halka izliyor ve kimsenin ona söylemediği bir bilgiye kendisi ulaşıyor. Zincirde yoksa da “bilinmiyor” diyor.",
-      "neOluyor": "Bilgi tabanı yalnızca ardışık “is-a” (bir …dır) bağlarını içerir. Bir sorgu seç; hedef zincirde varsa “Evet”, yoksa “Bilinmiyor”."
+      "neOluyor": "Bilgi tabanında bir instance-of (örneği) bağı ve onu izleyen subclass-of (alt sınıfı) bağları var. Bir sorgu seç; hedef zincirde varsa “Evet”, yoksa “Bilinmiyor”."
      }
     },
     {
@@ -479,7 +479,7 @@
      "tip": "Açgözlü sezgisel yöntemler hız kazandırır ama bedeli vardır: bazen en iyi çözümü kaçırabilirler. “Yeterince iyi”yi “mükemmel”e tercih ederler. A* gibi daha dikkatli yöntemler, uygun bir sezgiyle garantiyi geri alır.",
      "demo": {
       "type": "grid",
-      "title": "Yol bulma: sezgisiz vs sezgili",
+      "title": "Yol bulma: sezgisiz ile sezgili",
       "hint": "Bir yöntem seç, “Ara”ya bas; sonra diğerini de dene ve taranan kare sayısını karşılaştır.",
       "neOluyorBasit": "İki arayıcıyı yarıştırıyorsun. Sezgisiz olan her yönü sabırla tarar; her adım aynı bedeldeyse sonunda en az adımlı yolu bulur ama çok kare gezer. Açgözlü sezgisel olan hep hedefe doğru koşar; az kare gezer ama bazen en kısa yolu kaçırır. Hız ile garanti arasındaki takas bu; A* gibi yöntemler gidilen yolu da hesaba katarak garantiyi geri alır.",
       "neOluyor": "BFS (bilgisiz) bir FIFO kuyruğuyla katman katman genişler ve eş-maliyetli ızgarada en kısa yolu garanti eder. Sezgisel (açgözlü en-iyi-öncelikli) arama, hedefe Manhattan uzaklığı h(n)’yi en aza indiren düğümü seçer; çok daha az hücre açar ama en kısa yolu garanti etmez."
@@ -530,8 +530,8 @@
     },
     {
      "id": "neat",
-     "label": "Neat vs Scruffy",
-     "h2": "Düzenliler ve dağınıklar (Neat vs Scruffy)",
+     "label": "Düzenliler ve dağınıklar",
+     "h2": "Düzenliler ve dağınıklar (neats ve scruffies)",
      "basit": [
       "YZ araştırmacıları yıllarca iki kampa bölündü. “Düzenliler” (neats) her adımın temiz matematikle kanıtlanmasını istedi. “Dağınıklar” (scruffies) ise omuz silkti: “Çalışıyorsa iyidir, teorisini sonra buluruz.”",
       "Bu kavga yalnızca tarih değil; bugün de sürüyor. Aşağıdaki ifadeleri doğru kampa ayır. Sonunda anlaşılacak: klasik YZ neden duvara tosladı ve bu çarpışma, zaten araştırılan bir fikre, makinelerin “öğrenmesine”, ilgiyi nasıl artırdı?"
@@ -1096,7 +1096,7 @@
      "tip": "GAN’da iyi sahte üretmek ile sahteyi yakalamak birbirini sürekli iter. Kalpazanla dedektifin yarışı gibi; ikisi de geliştikçe sonuç giderek gerçeğe yaklaşır.",
      "demo": {
       "type": "gan",
-      "title": "Üretici vs Ayırt edici",
+      "title": "Üretici ile ayırt edici",
       "hint": "“Tur”a bas; gürültüden başlayan görüntünün, üretici ustalaştıkça gerçeğe nasıl yaklaştığını izle.",
       "neOluyorBasit": "İki ağ yarışıyor: biri (üretici) sahte görüntü üretiyor, öteki (ayırt edici) bunun sahte mi gerçek mi olduğunu yakalamaya çalışıyor. Başta kalpazan acemidir, kolayca yakalanır. Her turda üretici biraz daha iyi sahte yapmayı öğrenir ve “sahte” olasılığı düşer; kalpazanla dedektifin yarışı gibi. Bu gösterimde görüntü de yüzde de önceden belirlenmiştir; gerçek eğitimde iki ağ birlikte öğrenir ve ideal dengede ayırt edici gerçekle sahteyi ayırt edemez.",
       "neOluyor": "Başlangıç: G rastgele gürültü üretir, D bunu kolayca sahte olarak işaretler (sahte olasılığı yüksek). Üretici ustalaştıkça sahte olasılığı düşer."
@@ -1180,7 +1180,7 @@
      "label": "Giriş",
      "h2": "Üretken çağ: tanımaktan üretmeye",
      "basit": [
-      "Şimdiye dek makineler hep “tanıyan” taraftaydı: Bu spam mı, bu kedi mi, bu ev kaç para eder? Bir ressam çırağının yıllarca tablo seyretmesi gibiydi bu. Sonra bir gün çırak fırçayı eline aldı: Makineler artık üretiyor. Yazı yazıyor, resim çiziyor, kod üretiyor, sohbet ediyor.",
+      "Bu kitapta makineleri çoğunlukla “tanıyan” tarafta gördük: Bu spam mı, bu kedi mi, bu ev kaç para eder? Önceki modülün sonunda GAN ile üretime ilk adımı da attık: gürültüden yeni bir görüntü çıkaran bir ağ. Ressam çırağı yıllarca tablo seyretmiş, ilk eskizlerini de çizmişti; şimdi fırça onun elinde. Makineler yazı yazıyor, resim çiziyor, kod üretiyor, sohbet ediyor.",
       "Bu sıçramanın dönüm noktalarından biri Transformer mimarisi ve onun kalbindeki dikkat (attention) fikri. Üretken modeller (GAN gibi) ve dikkat mekanizmaları daha önce de araştırılıyordu; Transformer, üretken dil modellerinin büyük ölçekte eğitilmesini mümkün kıldı. Hikâyeye en küçük parçadan başlıyoruz: bir cümle makineye nasıl görünür? Token denen küçük metin parçaları olarak. Önce token, sonra gömü, dikkat ve kelime kelime üretim; ardından eğitim, difüzyon ve sınırlar."
      ],
      "teknik": [
@@ -1240,7 +1240,7 @@
       "Bir kelimeye dokun; o kelimenin cümledeki ötekilere ne kadar “dikkat ettiğini” rengin koyuluğundan gör. Renk ne kadar koyuysa bağ o kadar güçlü."
      ],
      "teknik": [
-      "Öz-dikkat (self-attention) her token için sorgu (Q), anahtar (K) ve değer (V) vektörleri üretir; ağırlıklar softmax(Q·Kᵀ/√d_k) ile hesaplanır (d_k anahtar vektörünün boyutu) ve çıktı bu ağırlıklarla V’lerin toplamıdır. Maskesiz öz-dikkatte her konum tüm diziye uzaklıktan bağımsız erişebilir; otoregresif (nedensel) decoder ise gelecekteki token’ları maskeler, her konum yalnız kendinden öncekileri görür. Eğitimde dizinin birçok konumu birlikte hesaplanır; otoregresif üretim token’ları sırayla ekler.",
+      "Öz-dikkat (self-attention) her token için sorgu (Q), anahtar (K) ve değer (V) vektörleri üretir; ağırlıklar softmax(Q·Kᵀ/√d_k) ile hesaplanır (d_k anahtar vektörünün boyutu) ve çıktı bu ağırlıklarla V’lerin toplamıdır. Maskesiz öz-dikkatte her konum tüm diziye uzaklıktan bağımsız erişebilir; otoregresif (nedensel) decoder ise gelecekteki token’ları maskeler: her konum kendisini ve kendinden önceki konumları görür. Eğitimde dizinin birçok konumu birlikte hesaplanır; otoregresif üretim token’ları sırayla ekler.",
       "Transformer bunu çok-başlı (multi-head) yapar: farklı “başlar” farklı ilişki türlerini (sözdizimi, eş-gönderim, vb.) yakalar. Konumsal kodlama (positional encoding) sıra bilgisini ekler. Maliyet dizi uzunluğunda O(n²)’dir; bağlam penceresi sınırının ana nedeni de budur."
      ],
      "tip": "“Attention Is All You Need” (2017): dikkat mekanizması, önceki RNN’lerin tek tek/sıralı işleme zorunluluğunu kaldırdı. Eğitimde tüm konumları birlikte işlemek hem hızı hem anlama gücünü bambaşka bir düzeye taşıdı; üretim yine token token ilerler.",
@@ -1299,7 +1299,7 @@
      "label": "Difüzyon",
      "h2": "Görsel üretimi: difüzyon",
      "basit": [
-      "Bugünün görsel üreten modellerinin çoğu bambaşka bir fikre dayanır: difüzyon; GAN gibi başka yollar da var. Buğulu bir cam düşün; arkasındaki resim seçilmiyor. Şimdi camı yavaş yavaş sil: Resim adım adım beliriyor. Difüzyon modeli bu silme işini öğrenir; yalnız o, işe amen karıncalı bir ekranla (saf gürültüyle) başlar ve her adımda biraz temizleyerek görüntüyü ortaya çıkarır.",
+      "Bugünün görsel üreten modellerinin çoğu bambaşka bir fikre dayanır: difüzyon; GAN gibi başka yollar da var. Buğulu bir cam düşün; arkasındaki resim seçilmiyor. Şimdi camı yavaş yavaş sil: Resim adım adım beliriyor. Difüzyon modeli bu silme işini öğrenir; yalnız o, işe tamamen karıncalı bir ekranla (saf gürültüyle) başlar ve her adımda biraz temizleyerek görüntüyü ortaya çıkarır.",
       "Kaydıracı sürükle: sağa gittikçe model gürültüyü temizliyor ve görsel yavaş yavaş beliriyor."
      ],
      "teknik": [
@@ -1333,7 +1333,7 @@
       "title": "Bağlam penceresi",
       "hint": "“Kelime ekle”ye bas; pencere dolunca en eski kelimelerin nasıl “unutulduğunu” gör.",
       "neOluyorBasit": "Modelin bir “kısa süreli hafızası” var ve aynı anda yalnızca belli sayıda token tutabilir. Bu gösterimde yeni kelime ekledikçe pencere dolar; sınırı aşınca en eski kelimeler dışarı düşer, yani “unutulur”. Gerçek sistemler sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir; çok uzun belgelerin kırpılması ya da özetlenmesi bu yüzden.",
-      "neOluyor": "Bu gösterim son N token’ı tutan bir kayan penceredir; gerçek bir uygulama sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir."
+      "neOluyor": "Gerçek bir modelin bağlam penceresi token cinsinden sabit bir sınırdır. Bu gösterim ise sadeleştirip son 8 kelimeyi tutan kayan bir pencere kullanır; gerçek bir uygulama sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir."
      }
     },
     {
@@ -1680,7 +1680,7 @@
      "h2": "Deepfake ve dezenformasyon",
      "basit": [
       "“Gözümle gördüm, kulağımla duydum” demek eskiden yeterdi. Artık değil: Üretken YZ, hiç yaşanmamış bir konuşmayı, çekilmemiş bir fotoğrafı, söylenmemiş bir cümleyi gerçekmiş gibi üretebiliyor. Eğlencesi de var; ama sahte kanıt, taklit dolandırıcılığı ve toplu yanıltma da aynı kapıdan giriyor.",
-      "Aşağıda birkaç durum var. Her biri için karar ver: gerçek görünüyor mu, şüpheli mi, yoksa eldeki bilgiyle belirlenemez mi? Sonra ipucunu görüp doğrulamanın yollarını öğren."
+      "Aşağıda birkaç durum var. Her biri için üç soruyu ayrı cevapla: olay gerçekten oldu mu, içerik nasıl üretilmiş olabilir, hangi bağımsız kanaldan doğrularsın? Sonra her cevabın gerekçesini ve doğrulamanın yollarını gör."
      ],
      "teknik": [
       "Sentetik medya (deepfake bunun bir türüdür), üretken modellerle (GAN/difüzyon, ses klonlama, dudak senkronu) üretilir. Tespit bir silahlanma yarışıdır: üretim iyileştikçe tespit zorlaşır. Yaklaşımlar: yapay üretim izlerini arayan sınıflandırıcılar, kaynak doğrulama ve içerik kimlik bilgisi. C2PA, içeriğin kökeni ve değişiklik geçmişiyle ilgili imzalı kayıtlar sağlar; filigranlar bu kayıtlara erişimi destekleyebilir. Hiçbiri tek başına içeriğin olgusal doğruluğunu kanıtlamaz; kayıt yokluğu da sahtelik kanıtı değildir.",
@@ -1690,7 +1690,7 @@
      "demo": {
       "type": "df",
       "title": "Gerçek mi, yapay mı?",
-      "hint": "Durumu oku ve önerilen adımı seç: gerçek görünüyor mu, doğrulama mı gerekir, yoksa belirlenemez mi? Sonra şüphe işaretini ve doğrulama kanalını gör.",
+      "hint": "Her durumda üç soruyu ayrı cevapla: anlatılan olay gerçekten oldu mu, içerik nasıl üretilmiş olabilir, hangi bağımsız doğrulamayı yaparsın? Her soru ayrı puanlanır.",
       "neOluyorBasit": "Sahte içeriği yakalamak bir alışkanlık işidir: tutarsızlıklara, kaynağa ve bağlama dikkat et. Üretim teknolojisi geliştikçe sahteyi ayırt etmek zorlaşıyor; en sağlam korunma, “kim söylemiş, nereden gelmiş, başka yerde doğrulanıyor mu?” diye sormak ve tek bir görüntüye ya da sese kanıt gözüyle bakmamaktır.",
       "neOluyor": "Sentetik medyayı ayırt etmek bir alışkanlıktır: tutarsızlık, kaynak ve bağlam ipuçlarına bak."
      }
@@ -1705,14 +1705,18 @@
      ],
      "teknik": [
       "AB YZ Yasası risk-temelli bir çerçeve kurar: kabul edilemez risk (ör. belirli koşullardaki sosyal puanlama) yasaklanır; yüksek risk (ör. işe alım, gerçek kişilerin kredi değerliliği, kritik altyapı) sıkı uyum, dokümantasyon ve insan gözetimi gerektirir; sınırlı risk (ör. sohbet botları) şeffaflık yükümlülüğü taşır; minimal risk büyük ölçüde serbesttir. Bu dört kademe öğretici bir özettir; hukuki sınıflandırma sistemin amaçlanan kullanımına, aktörün rolüne ve ilgili madde ya da eke göre yapılır.",
-      "Bu, GDPR ve KVKK gibi kişisel veri rejimlerini tamamlar; onların kuralları (hukuki dayanak, amaç sınırlaması, veri minimizasyonu) ayrıca geçerlidir. Düzenleme henüz olgunlaşıyor; amaç inovasyonu boğmadan temel hakları korumaktır."
+      "Bu, GDPR ve KVKK gibi kişisel veri rejimlerini tamamlar; onların kuralları (hukuki dayanak, amaç sınırlaması, veri minimizasyonu) ayrıca geçerlidir. Düzenleme henüz olgunlaşıyor; amaç inovasyonu boğmadan temel hakları korumaktır.",
+      "Bu bölüm, (AB) 2024/1689 sayılı Tüzüğün, 24 Temmuz 2026’da AB Resmî Gazetesi’nde yayımlanıp 27 Temmuz 2026’da yürürlüğe giren (AB) 2026/1744 sayılı Tüzükle değiştirilmiş konsolide sürümünü esas alır (erişim: 1 Ekim 2026). Yürürlüğe giriş ile yükümlülüklerin uygulanma tarihleri aynı değildir. Madde 5’teki ilk yasaklar 2 Şubat 2025’ten, Madde 50 şeffaflık kuralları 2 Ağustos 2026’dan beri uygulanıyor. 2 Ağustos 2026’dan önce piyasaya sürülmüş ve sentetik ses, görüntü, video ya da metin üreten sistemler, Madde 50(2)’deki işaretleme yükümlülüğüne 2 Aralık 2026’ya kadar uymalıdır (Madde 111(4)). Değişiklikle eklenen yeni yasaklar 2 Aralık 2026’dan itibaren uygulanır: tanınabilir bir kişinin rızası olmadan mahrem ya da cinsel içerikli görüntüsünü üretmek ve çocuk istismarı materyali üretmek (Madde 5(1)(ba), (bb)). Yüksek-risk yükümlülükleri Ek III sistemleri için 2 Aralık 2027’de, Ek I’deki ürün mevzuatı kapsamındaki sistemler için 2 Ağustos 2028’de başlar.",
+      "Dört ince nokta. Ek III 5(b), gerçek kişilerin kredi değerliliğini değerlendiren ya da kredi puanı belirleyen sistemleri kapsar; finansal dolandırıcılık tespiti bu bentten açıkça istisna edilmiştir. Ek III’teki bir sistem, karar sonucunu önemli ölçüde etkilemiyorsa yüksek riskli sayılmayabilir: dar bir usul işi, tamamlanmış bir insan işini iyileştirme, karar örüntüsündeki sapmayı yakalama ya da bir hazırlık işi (Madde 6(3)). Ama gerçek kişilerin profilini çıkaran bir Ek III sistemi her zaman yüksek risklidir ve bu istisnaya başvuran sağlayıcı değerlendirmesini piyasaya sürmeden önce belgelemelidir. Madde 5(1)(h)’deki yasak, kamuya açık alanda kolluk amacıyla gerçek zamanlı uzaktan biyometrik kimlik tespitini hedefler; sınırlı istisnaları ve koşulları vardır, başka amaçlar da otomatik serbest sayılmaz. Madde 50 tek bir “YZ kullandığını söyle” kuralı değildir ve yükümlülüğü role göre dağıtır: insanla doğrudan etkileşimde bilgilendirme (50(1)) ve sentetik çıktının makinece okunabilir işaretlenmesi (50(2)) sağlayıcının; duygu tanıma ya da biyometrik kategorizasyon sisteminin bildirilmesi (50(3)) ile deepfake’in ve kamuyu bilgilendirmek için yayımlanan yapay metnin açıklanması (50(4)) sistemi kullanan uygulayıcının yükümlülüğüdür. Sanat, hiciv ya da kurgu eserlerde açıklama sınırlıdır; insan editoryal denetiminden geçen metin 50(4)’ün metin kuralının dışında kalır. Bu yükümlülükler yüksek-risk ve diğer hukuk yükümlülüklerinin yerine geçmez.",
+      "GDPR’de rıza tek işleme dayanağı değildir; Madde 6(1) rızanın yanında sözleşme, hukuki yükümlülük, hayati çıkar, kamu yararı ve şartlı meşru menfaat dayanaklarını sayar. Madde 22, yalnızca otomatik işlemeye dayanan ve hukuki ya da benzer ölçüde önemli etki doğuran kararlarla ilgilidir; sözleşme gerekliliği, kanun yetkisi ve açık rıza istisnaları koşulludur; sözleşme ve açık rıza istisnalarında insan müdahalesi isteme, görüş bildirme ve karara itiraz güvenceleri gerekir.",
+      "6698 sayılı KVKK’da da açık rıza tek işleme şartı değildir; m.5(2)’deki şartlardan biri varsa açık rıza aranmaksızın işleme mümkündür. m.11(1)(g), verilerin yalnızca otomatik sistemlerle analiz edilmesiyle kişinin aleyhine bir sonuç doğmasına itiraz hakkını düzenler. Bu hüküm, GDPR Madde 22 ile aynı kapsam ve istisnalara sahipmiş gibi okunmamalıdır."
      ],
      "tip": "Düzenlemenin mantığı basit: risk ne kadar yüksekse, kural o kadar sıkı. Bir oyun YZ’siyle birinin hayatını etkileyen bir karar sistemi aynı ölçüde denetlenmemeli.",
      "demo": {
       "type": "reg",
       "title": "Riski sınıflandır",
       "hint": "Her kullanımı bir risk düzeyine yerleştir. Kural: risk ne kadar yüksekse, denetim o kadar sıkı.",
-      "neOluyorBasit": "Her YZ aynı riski taşımaz, o yüzden kullanımlar riske göre kademelenir: kabul edilemez olanlar (ör. sosyal puanlama) yasaklanır; yüksek riskliler (kredi, işe alım) sıkı denetim ve insan gözetimi ister; sınırlı riskliler (sohbet botu) şeffaflık yükümlülüğü taşır; minimal riskliler bu yasada büyük ölçüde serbesttir. Kişisel veri ve diğer hukuk kuralları her kademede ayrıca geçerlidir. Risk arttıkça kural da sıkılaşır.",
+      "neOluyorBasit": "Her YZ aynı riski taşımaz, o yüzden kullanımlar riske göre kademelenir: kabul edilemez olanlar (ör. belirli koşullardaki sosyal puanlama) yasaklanır; yüksek riskliler (kredi, işe alım) sıkı denetim ve insan gözetimi ister; sınırlı riskliler (sohbet botu) şeffaflık yükümlülüğü taşır; minimal riskliler bu yasada büyük ölçüde serbesttir. Kişisel veri ve diğer hukuk kuralları her kademede ayrıca geçerlidir. Risk arttıkça kural da sıkılaşır.",
       "neOluyor": "Aynı YZ etiketi çok farklı riskler taşır; düzenleme de bu yüzden kademeli."
      }
     },
@@ -1834,7 +1838,7 @@
      ],
      "teknik": [
       "Turing testi davranışçı bir ölçüttür: “anlama”yı tanımlamak yerine, ayırt edilemez davranışı yeterli sayar. Eleştiriler: taklit, içsel anlamayı garanti etmez (bkz. Çince Oda) ve test, akıcı dil üreten sistemlerle “kandırılabilir”.",
-      "Bazı modeller belirli Turing testi deneylerinde insan katılımcılardan ayırt edilemedi (Jones ve Bergen, 2025). Bu sonuç kullanılan model, istem ve deney düzenine bağlıdır; bilinç ya da genel zekâ kanıtı değildir. Bu, “düşünme” tartışmasını bitirmek yerine soruyu “ölçüt ne olmalı?”ya kaydırdı. Test bir başarım ölçütünden çok tarihsel/kavramsal bir kilometre taşıdır."
+      "Önceden kayda geçirilmiş bir deneyde (Jones ve Bergen, 2025) katılımcılar aynı anda bir insanla ve bir yapay zekâyla beşer dakikalık yazışmalar yaptı ve hangisinin insan olduğuna karar verdi. İnsan gibi bir kişiliği canlandırmasını söyleyen bir istemle çalışan GPT-4.5, oyunların yüzde 73’ünde insan diye seçildi; aynı istemle LLaMa-3.1-405B yüzde 56’ya ulaştı, böyle bir istem verilmeyen GPT-4o ise yüzde 21’de kaldı. Sonuç bu modellere, bu isteme ve beş dakikalık bu düzene bağlıdır; daha uzun ya da başka türlü sorgulanan bir testte değişebilir ve bilinç ya da genel zekâ kanıtı değildir. Bu, “düşünme” tartışmasını bitirmek yerine soruyu “ölçüt ne olmalı?”ya kaydırdı. Test bir başarım ölçütünden çok tarihsel/kavramsal bir kilometre taşıdır."
      ],
      "tip": "Turing testini geçmek “akıcı taklit” demektir; “gerçek anlama” ya da “bilinç” demek değildir. Bu iki soruyu birbirinden ayırmak, modern tartışmanın anahtarıdır.",
      "demo": {
@@ -1871,19 +1875,19 @@
      "label": "Yetenek",
      "h2": "Dar YZ’den süper zekâya",
      "basit": [
-      "Bugünkü yapay zekâ “dar” sayılır: bir işte (satranç, çeviri, görüntü) çok iyidir; birçok görevde çalışan sohbet modelleri bile insan düzeyinde genel öğrenme göstermez. Bir sonraki basamak, insan gibi her alanda öğrenip uyum sağlayabilen genel yapay zekâ (AGI). Onun da ötesinde, her alanda insanı kat kat aşan bir süper zekâ hayal ediliyor.",
+      "Bugünkü yapay zekâ “dar” sayılır: belirli işlerde (satranç, çeviri, görüntü) çok iyidir; birçok görevde çalışan sohbet modelleri bile insan düzeyinde genel öğrenme göstermez. Bir sonraki basamak, insan gibi her alanda öğrenip uyum sağlayabilen genel yapay zekâ (AGI). Onun da ötesinde, her alanda insanı kat kat aşan bir süper zekâ hayal ediliyor.",
       "Basamaklara tek tek dokun; her birinin ne anlama geldiğini ve “bugün var mı?” sorusunun cevabını gör."
      ],
      "teknik": [
       "Yetenek ufku kabaca üç kademede düşünülür: dar YZ (göreve özgü), AGI (alanlar arası, insan düzeyinde genelleme) ve süper zekâ (her bilişsel alanda insanüstü). Sınırlar bulanıktır; “genel” olmak ile “bilinçli” olmak ayrı sorulardır.",
       "AGI’nin gelip gelmeyeceği ve ne zaman geleceği konusunda uzman görüşleri geniş bir yelpazeye yayılır (yakın, uzak, belki hiç). Ölçme zorluğu da var: “genel zekâ” için üzerinde uzlaşılmış tek bir ölçüt yoktur. Bu yüzden kesin tarih veren iddialara temkinli yaklaşmak gerekir."
      ],
-     "tip": "“Yapay zekâ insanı geçecek” başlıkları sık çıkar ama dikkat: bir işte geçmek (dar) ile her işte geçmek (genel) çok farklıdır. Bugün ilkindeyiz; ikincisi hâlâ açık bir soru.",
+     "tip": "“Yapay zekâ insanı geçecek” başlıkları sık çıkar ama dikkat: belirli işlerde geçmek (dar) ile her alanda geçmek (genel) çok farklıdır. Bugün ilkindeyiz; ikincisi hâlâ açık bir soru.",
      "demo": {
       "type": "capability",
       "title": "Yetenek basamakları",
       "hint": "Basamaklara tek tek dokun; her birinin ne anlama geldiğini ve “bugün var mı?” sorusunun cevabını gör.",
-      "neOluyorBasit": "Yetenek üç basamakta düşünülür: dar YZ tek bir işte iyidir (bugün buradayız); genel YZ (AGI) insan gibi her alanda öğrenebilir (henüz yok, tartışmalı); süper zekâ ise her alanda insanı kat kat aşar (şimdilik hayal). Her işi yapabilmek ile bilinçli olmak ayrı şeylerdir.",
+      "neOluyorBasit": "Yetenek üç basamakta düşünülür: dar YZ belirli görevlerde iyidir (bugün buradayız); genel YZ (AGI) insan gibi her alanda öğrenebilir (henüz yok, tartışmalı); süper zekâ ise her alanda insanı kat kat aşar (şimdilik hayal). Her işi yapabilmek ile bilinçli olmak ayrı şeylerdir.",
       "neOluyor": "Kademeler arasında tanımlı bir eşik yoktur; ilk kademeden ikinciye geçildiğini kimse tek bir ölçütle ilan edemez."
      }
     },
@@ -2046,7 +2050,7 @@
    "Devasa internet metni",
    "Dili ve dünyayı (bir sonraki kelimeyi tahmin)",
    "Türkiye’nin başkenti Ankara’dır ve nüfusu yaklaşık altı milyondur. Bu şehir...",
-   "Ham model “tamamlayıcı”dır: soruyu cevaplamaz, metni sürdürür.",
+   "Bu örnekte ham model bilgiyi verip durmuyor, metni sürdürüyor; ham modeller çoğu zaman böyle tamamlar.",
    "Talimat–cevap çiftleri",
    "Yönergeyi izlemeyi (soruyu cevaplamayı)",
    "Türkiye’nin başkenti Ankara’dır.",
@@ -2064,10 +2068,10 @@
   ],
   "ctx": [
    "Pencere boş. “Kelime ekle” ile metni besle; pencere en fazla",
-   "kelime eklendi, hepsi pencerede. Pencere dolana kadar her şey hatırlanıyor.",
+   "kelime eklendi, hepsi pencerede. Pencere dolana kadar hiçbir kelime dışarı düşmüyor; pencerede olmak, modelin her ayrıntıyı kullanacağı anlamına gelmez.",
    "Pencere doldu! İlk",
-   "kelime artık “unutuldu” (soluk). Model yalnızca son",
-   "kelimeyi görüyor — uzun belgeler bu yüzden kırpılır ya da özetlenir."
+   "kelime artık “unutuldu” (soluk). Bu gösterimde model yalnızca son",
+   "kelimeyi görüyor; gerçek uygulamalar sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir."
   ],
   "prompt": [
    "Bana bir hafta sonu tatil planı öner.",
@@ -2146,32 +2150,58 @@
    ". Yeşil etkenler onaya, kırmızılar redde itti. Katkılar temsilidir, hesaplanmış SHAP değerleri değildir; bu sonradan açıklama modeli bütünüyle şeffaf yapmaz."
   ],
   "df": [
+   "Olay: anlatılan şey gerçekten oldu mu?",
+   "Doğrulanmadı: kontrol gerek",
+   "Köken: içerik nasıl üretilmiş olabilir?",
+   "Gerçek kayıt izleri var",
+   "Yapay üretim izi var (kanıt değil)",
+   "Bu bilgiyle anlaşılmaz",
+   "Kanal: hangi bağımsız doğrulamayı yaparsın?",
    "Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor.",
-   "dudak hareketleriyle ses arasındaki uyumsuzluk",
-   "konuşmanın özgün kaydını ve yayımlayan kurumu bağımsız bir kanaldan bul",
+   "Videoyu paylaşan hesabın altındaki yorumlara bak",
+   "Aynı videoyu başka bir sosyal medya hesabında ara",
+   "Konuşmanın özgün kaydını ve yayımlayan kurumu bağımsız bir kanaldan bul",
+   "Cümlenin gerçekten söylenip söylenmediği henüz doğrulanmadı; video tek başına kanıt değil.",
+   "Dudak ile ses arasındaki uyumsuzluk bir deepfake izi olabilir; ama kötü sıkıştırma ya da dublaj da aynı görüntüyü verir.",
+   "Paylaşımın kendisi ya da kopyaları bağımsız kanal değildir; özgün kayıt ve yayımlayan kurum öyledir.",
    "Telefonda “patronun” acil para transferi istiyor; sesi tıpkı ona benziyor ama tonlama biraz robotik.",
-   "ses klonlamayla uyumlu robotik tonlama ve aciliyet baskısı",
-   "transferi bekletip patronu bilinen numarasından geri ara ya da yüz yüze teyit et",
+   "Konuşmayı uzatıp sesi daha dikkatli dinle",
+   "Aramayı kapat, patronu kendi bildiğin numaradan geri ara; transferi ikinci bir kişiye onaylat",
+   "Sesin kaydını bir arkadaşına dinlet",
+   "İsteğin gerçekten patrondan geldiği doğrulanmadı; aciliyet baskısı başlı başına bir uyarı işaretidir.",
+   "Robotik tonlama ses klonlamayla uyumlu ama kesin kanıt değil; sesin kökenini bilmesen de karar aynı: doğrulamadan para gönderilmez.",
+   "Aynı aramanın içinde kalan her kontrol arayanın elindedir; bağımsız kanal, senin bildiğin numaradır.",
    "Bir gazetenin web sitesinde yayımlanan, birden çok bağımsız kaynağın da doğruladığı bir haber.",
-   "birden çok bağımsız kaynak ve izlenebilir köken",
-   "kaynakların her birini ayrı ayrı aç; metni insanın mı makinenin mi yazdığı bu bilgiden çıkarılamaz",
+   "Kaynakların her birini kendi sayfasında aç; varsa birincil belgeye bak",
+   "Haberin aldığı beğeni ve paylaşım sayısına bak",
+   "Haberi aynı sitede bir kez daha oku",
+   "Birden çok bağımsız kaynak ve izlenebilir köken olayın doğruluğunu destekler.",
+   "Bu bilgiler metni insanın mı yapay zekânın mı yazdığını söylemez; yapay yazılmış doğru bir haber de olabilir.",
+   "Beğeni sayısı ya da aynı sayfa doğrulama değildir; kaynakların kendisi ve birincil belge öyledir.",
    "Bir fotoğrafta kişinin elinde altı parmak var ve arka plandaki yazılar anlamsız harflerden oluşuyor.",
-   "altı parmak ve anlamsız arka plan yazısı",
-   "ters görsel aramayla fotoğrafın özgün kaynağını bul",
-   "✓ Önerilen adımla eşleşti:",
-   "○ Önerilen adım farklı:",
-   "işareti var; önerilen adım:",
-   "İpuçları inceleme gerekçesidir; tek başına içeriğin nasıl üretildiğinin kanıtı değildir. Olayın gerçekliği ile üretim yöntemi ayrı sorulardır."
+   "Fotoğrafı yakınlaştırıp başka iz ara",
+   "Ters görsel aramayla ilk yayımlayanı bul; varsa içerik kimlik bilgisi (C2PA) kaydına bak",
+   "Fotoğrafı paylaşan kişiye nereden bulduğunu sor",
+   "Fotoğraftaki anın gerçekten yaşandığı doğrulanmadı.",
+   "Altı parmak ve anlamsız yazı üretken modellerin bilinen izleri; ama düzenleme ya da gerçek bir anomali de olabilir. C2PA kaydının yokluğu sahtelik kanıtı değildir.",
+   "Görüntüye daha çok bakmak yeni kanıt üretmez; ilk yayımlayanı bulmak ve köken kaydı bağımsız kanıttır.",
+   "İpuçları inceleme gerekçesidir; tek başına içeriğin nasıl üretildiğinin kanıtı değildir. Olayın gerçekliği ile üretim yöntemi ayrı sorulardır; ikisinde de karar bağımsız bir kanaldan gelir."
   ],
   "reg": [
    "Vatandaşları davranışına göre puanlayan devlet sistemi",
+   "Amaç: kişileri sosyal davranışına göre puanlamak; aktör: devlet. Madde 5(1)(c), puanın bağlamından kopuk ya da orantısız olumsuz muameleye yol açtığı durumları yasaklar; her puanlama koşulsuz yasak değildir.",
    "İşe alımda adayları otomatik eleyen sistem",
+   "Amaç: başvuruları süzmek ve adayları değerlendirmek; aktör: sistemi kullanan işveren (uygulayıcı) ve geliştiren sağlayıcı. Ek III 4(a) kapsamında yüksek risk; yükümlülükler 2 Aralık 2027’den itibaren uygulanır.",
    "Müşteriyle konuşan sohbet botu",
+   "Amaç: müşteriyle konuşmak. Madde 50(1), kişinin bir YZ ile konuştuğunu bilmesini sağlamayı sağlayıcıya yükler (durum açıkça belli değilse). Kişisel veri ve tüketici hukuku ayrıca geçerlidir; bot kredi ya da işe alım kararı veriyorsa o kullanım ayrıca değerlendirilir.",
    "E-postada spam filtresi",
+   "Amaç: istenmeyen e-postayı ayıklamak. Verilen bilgilerle Ek III’teki bir yüksek-risk kategorisi gösterilemiyor; YZ Yasası bu kullanıma özel yükümlülük koymuyor. Kişisel veri kuralları yine geçerlidir; önemli bir e-postanın kaçırılması kullanıcıyı etkileyebilir.",
    "Kredi başvurusu değerlendiren model",
+   "Amaç: gerçek kişilerin kredi değerliliğini değerlendirmek ya da kredi puanı belirlemek; aktör: banka (uygulayıcı) ve sağlayıcı. Ek III 5(b) kapsamında yüksek risk. Amaç yalnız finansal dolandırıcılığı tespit etmekse bu bent uygulanmaz. Sistem kişilerin profilini çıkarıyorsa Madde 6(3)’teki istisna kullanılamaz.",
    "Oyun içindeki rakip yapay zekâ",
+   "Amaç: oyunda rakip oynamak. Verilen bilgilerle bir yüksek-risk kategorisi ya da Madde 50 yükümlülüğü gösterilemiyor; minimal kademe. Oyun kişisel veri işliyor ya da çocuklara yöneliyorsa başka kurallar devreye girer.",
    "Her kullanımı bir risk düzeyine yerleştir. Kural: risk ne kadar yüksekse, denetim o kadar sıkı.",
-   "doğru. Düşün: bu kullanım birinin hayatını/haklarını etkiliyor mu?",
+   "doğru. Düşün: amaç ne, sistemi kim kullanıyor, hangi madde ya da ek kapsıyor?",
    ". Aynı “YZ” etiketi çok farklı riskler taşır; düzenleme de bu yüzden tek tip değil, kademeli."
   ],
   "align": [
@@ -2207,7 +2237,7 @@
    "Saat öğleden sonra üç."
   ],
   "capability": [
-   "Tek bir görevde çok iyi (satranç, çeviri, görüntü tanıma) ama o işin dışına çıkamaz. Bugünkü tüm sistemler buradadır.",
+   "Bir görevde ya da belirli bir görev kümesinde çok iyi (satranç, çeviri, görüntü tanıma); insan düzeyinde genel öğrenme ve aktarım göstermez. Bugünkü sistemler buradadır.",
    "Henüz yok — tartışmalı",
    "İnsan gibi her alanda öğrenip uyum sağlayabilen, varsayımsal bir düzey. Gelip gelmeyeceği ve ne zaman geleceği uzmanlar arasında tartışmalıdır.",
    "Her bilişsel alanda insanı kat kat aşan, tümüyle kuramsal bir düzey. Hem büyük fırsat hem ciddi risk senaryolarının konusudur."

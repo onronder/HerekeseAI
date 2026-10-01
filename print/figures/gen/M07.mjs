@@ -1,5 +1,5 @@
 // Bölüm 7 figürleri
-import { INK, INK2, MUTED, RULE, EMBER, EMBER_SOFT, PAPER, SANS, MONO, SERIF, esc, f1, text, rect, line, circle, svg, caption, up, pct } from '../lib.mjs';
+import { INK, INK2, MUTED, RULE, EMBER, EMBER_SOFT, PAPER, SANS, MONO, SERIF, esc, f1, text, rect, line, circle, svg, caption, up, pct, tw, wrapW } from '../lib.mjs';
 import STRINGS from '../strings/M07.mjs';
 
 // Uzun metni sözcük sınırından satırlara böler (≤ max karakter/satır).
@@ -72,7 +72,7 @@ const sgn = (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v);
 const PHI0 = 0, THRESHOLD = 0;
 function explainFigure(demo, { lang }) {
   const S = STRINGS[lang].explain;
-  const pad = 10, pw = 140, gapX = 20, W = pad * 2 + pw * 2 + gapX, H = 200;
+  const pad = 10, pw = 140, gapX = 20, W = pad * 2 + pw * 2 + gapX, H = 206, ROW = 15, LAB = 7;  // R073: uzun etiket iki satır, alt not satır aralığı 9.5 (alt simge alttaki satıra değmez)
   const body = [rect(0, 0, W, H, { fill: PAPER })];
   S.apps.forEach((app, i) => {
     const x0 = pad + i * (pw + gapX), zero = x0 + 70, maxW = 50;
@@ -87,19 +87,22 @@ function explainFigure(demo, { lang }) {
     body.push(text(x0, 69, S.baseLine(PHI0, S.unit), { font: MONO, size: 6, fill: INK2 }));
     body.push(text(zero - 4, 79, S.toDecline, { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
     body.push(text(zero + 4, 79, S.toApprove, { font: MONO, size: 6, fill: MUTED }));
-    body.push(line(zero, 82, zero, 143, { stroke: INK, sw: 0.6 }));
+    body.push(line(zero, 82, zero, 82 + 4 * ROW + 3, { stroke: INK, sw: 0.6 }));
     app.feats.forEach((f, k) => {
-      const cy = 89 + k * 14, w = Math.abs(f.c) / mx * maxW, pos = f.c > 0;
+      const cy = 89 + k * ROW, w = Math.abs(f.c) / mx * maxW, pos = f.c > 0;
       if (pos) body.push(rect(zero, cy - 4, w, 8, { fill: EMBER }));
       else body.push(rect(zero - w, cy - 4, w, 8, { fill: INK2 }));
-      body.push(text(pos ? zero - 4 : zero + 4, cy + 2.5, f.label, { size: 7, anchor: pos ? 'end' : 'start' }));
+      // etiket kendi yarısına sığmazsa iki satır (sol yarı: zero−4 … x0+2; sağ yarı: zero+4 … x0+pw−2)
+      const avail = pos ? zero - 4 - (x0 + 2) : x0 + pw - 2 - (zero + 4);
+      const ls = tw(f.label, LAB) <= avail ? [f.label] : wrapW(f.label, LAB, avail);
+      ls.forEach((ln, j) => body.push(text(pos ? zero - 4 : zero + 4, cy + 2.5 + (j - (ls.length - 1) / 2) * 7.4, ln, { size: LAB, anchor: pos ? 'end' : 'start' })));
       body.push(text(pos ? zero + w + 3 : zero - w - 3, cy + 2.5, sgn(f.c), { font: MONO, size: 6.5, fill: pos ? EMBER : INK2, anchor: pos ? 'start' : 'end', weight: 700 }));
     });
-    body.push(line(x0, 145, x0 + pw, 145, { stroke: RULE }));
-    body.push(text(x0, 155, S.totalLine(sgn(sum), S.unit), { font: MONO, size: 6.5, fill: INK }));
-    body.push(text(x0, 165, S.resultLine(sgn(fx), S.unit, approved ? S.approve : S.decline), { font: MONO, size: 6.5, weight: 700, fill: approved ? EMBER : INK2 }));
+    body.push(line(x0, 149, x0 + pw, 149, { stroke: RULE }));
+    body.push(text(x0, 159, S.totalLine(sgn(sum), S.unit), { font: MONO, size: 6.5, fill: INK }));
+    body.push(text(x0, 169, S.resultLine(sgn(fx), S.unit, approved ? S.approve : S.decline), { font: MONO, size: 6.5, weight: 700, fill: approved ? EMBER : INK2 }));
   });
-  S.footer(PHI0, THRESHOLD).forEach((ln, k) => body.push(text(pad, H - 20 + k * 8, ln, { font: MONO, size: 6, fill: INK2 })));
+  S.footer(PHI0, THRESHOLD).forEach((ln, k) => body.push(text(pad, H - 26 + k * 9.5, ln, { font: MONO, size: 6, fill: INK2 })));
   const md = [`# ${demo.title}`, '', S.mdRule(PHI0, THRESHOLD, S.unit), '',
     ...S.apps.flatMap((app) => {
       const sum = app.feats.reduce((a, f) => a + f.c, 0), fx = PHI0 + sum;
@@ -164,13 +167,13 @@ function regFigure(demo, { lang }) {
   body.push(line(axx, ladderBot - 2, axx, ladderTop + 4, { stroke: INK2, sw: 0.7, marker: true }));
   body.push(`<text transform="translate(${f1(axx - 4)} ${f1(ladderBot - 4)}) rotate(-90)" font-family="${MONO}" font-size="6.2" fill="${MUTED}" letter-spacing="0.4">${esc(S.axis)}</text>`);
   // altı kullanım kartı, merdivenin dibinde
-  const cy0 = ladderBot + 22, cw = 150, chh = 46, cgap = 6;
+  const cy0 = ladderBot + 22, cw = (W - 2 * pad - 10) / 2, chh = 46, cgap = 6;  // iki sütun + 10 aralık, sağda da pad kalır (R073: sağ kart kenara yapışıyordu)
   body.push(caption(pad, cy0 - 8, S.kicker));
   S.uses.forEach((u, i) => {
     const x0 = pad + (i % 2) * (cw + 10), y0 = cy0 + Math.floor(i / 2) * (chh + cgap);
     body.push(rect(x0, y0, cw, chh, { fill: '#fff', stroke: RULE, sw: 0.8 }));
     body.push(text(x0 + 7, y0 + 15, `${i + 1}`, { font: MONO, size: 8, fill: EMBER, weight: 700 }));
-    body.push(lines(x0 + 18, y0 + 15, wrap(u, 34), {}, 9.5));
+    body.push(lines(x0 + 18, y0 + 15, wrap(u, 33), {}, 9.5));
     body.push(text(x0 + 18, y0 + chh - 7, S.tier, { font: MONO, size: 5.5, fill: MUTED, spacing: 0.8 }));
     body.push(rect(x0 + 50, y0 + chh - 15, 60, 11, { fill: 'none', stroke: INK, sw: 0.6 }));
   });

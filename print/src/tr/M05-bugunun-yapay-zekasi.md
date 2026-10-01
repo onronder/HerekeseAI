@@ -6,7 +6,7 @@
 
 ### 5.1 Üretken çağ: tanımaktan üretmeye
 
-Şimdiye dek makineler hep “tanıyan” taraftaydı: Bu spam mı, bu kedi mi, bu ev kaç para eder? Bir ressam çırağının yıllarca tablo seyretmesi gibiydi bu. Sonra bir gün çırak fırçayı eline aldı: Makineler artık üretiyor. Yazı yazıyor, resim çiziyor, kod üretiyor, sohbet ediyor.
+Bu kitapta makineleri çoğunlukla “tanıyan” tarafta gördük: Bu spam mı, bu kedi mi, bu ev kaç para eder? Önceki bölümün sonunda GAN ile üretime ilk adımı da attık: gürültüden yeni bir görüntü çıkaran bir ağ. Ressam çırağı yıllarca tablo seyretmiş, ilk eskizlerini de çizmişti; şimdi fırça onun elinde. Makineler yazı yazıyor, resim çiziyor, kod üretiyor, sohbet ediyor.
 
 Bu sıçramanın dönüm noktalarından biri Transformer mimarisi ve onun kalbindeki dikkat (attention) fikri. Üretken modeller (GAN gibi) ve dikkat mekanizmaları daha önce de araştırılıyordu; Transformer, üretken dil modellerinin büyük ölçekte eğitilmesini mümkün kıldı. Hikâyeye en küçük parçadan başlıyoruz: bir cümle makineye nasıl görünür? Token denen küçük metin parçaları olarak. Önce token, sonra gömü, dikkat ve kelime kelime üretim; ardından eğitim, difüzyon ve sınırlar.
 
@@ -141,7 +141,7 @@ Satırları tek tek oku:
 
 Tablo simetrik değil: “o” kediye 0.55 ile bakıyor, “Kedi” ise “o”ya yalnız 0.10 ile. Bakış yönlü. Uzaklık da önemsiz: “o” ile “Kedi” arasında iki kelime var; ağırlık yine de tablonun en yükseği. Kelimeleri sırayla işleyen eski modeller burada zorlanıyordu.
 
-Bir ayrım daha: “Kedi” satırı kendinden sonraki “kaçtı”ya 0.30 veriyor. Metin üreten (otoregresif) bir modelde böyle bir bakış yoktur; her kelime yalnız kendinden öncekileri görür, sonrakiler maskelenir. Bu tablo bu yüzden çift yönlü, encoder tipi bir örnektir.
+Bir ayrım daha: “Kedi” satırı kendinden sonraki “kaçtı”ya 0.30 veriyor. Metin üreten (otoregresif) bir modelde böyle bir bakış yoktur; her kelime kendisini ve kendinden öncekileri görür, sonrakiler maskelenir. Bu tablo bu yüzden çift yönlü, encoder tipi bir örnektir.
 
 *Ne oluyor?* Bir cümleyi anlamak için her kelime, ötekilerden hangilerine “dikkat etmesi” gerektiğine karar verir. Renk ne kadar koyuysa iki kelime arasındaki bağ o kadar güçlü demektir. Bu temsili örnekte “o”, en çok kediye bakıyor; ağırlıklar elle seçilmiştir ve tek başına zamirin çözüldüğünü kanıtlamaz.
 
@@ -149,7 +149,7 @@ Bir ayrım daha: “Kedi” satırı kendinden sonraki “kaçtı”ya 0.30 veri
 
 #### Teknik derinlik
 
-Öz-dikkat (self-attention) her token için sorgu (Q), anahtar (K) ve değer (V) vektörleri üretir; ağırlıklar softmax(Q·Kᵀ/√d_k) ile hesaplanır (d_k anahtar vektörünün boyutu) ve çıktı bu ağırlıklarla V’lerin toplamıdır. Maskesiz öz-dikkatte her konum tüm diziye uzaklıktan bağımsız erişebilir; otoregresif (nedensel) decoder ise gelecekteki token’ları maskeler, her konum yalnız kendinden öncekileri görür. Eğitimde dizinin birçok konumu birlikte hesaplanır; otoregresif üretim token’ları sırayla ekler.
+Öz-dikkat (self-attention) her token için sorgu (Q), anahtar (K) ve değer (V) vektörleri üretir; ağırlıklar softmax(Q·Kᵀ/√d_k) ile hesaplanır (d_k anahtar vektörünün boyutu) ve çıktı bu ağırlıklarla V’lerin toplamıdır. Maskesiz öz-dikkatte her konum tüm diziye uzaklıktan bağımsız erişebilir; otoregresif (nedensel) decoder ise gelecekteki token’ları maskeler: her konum kendisini ve kendinden önceki konumları görür. Eğitimde dizinin birçok konumu birlikte hesaplanır; otoregresif üretim token’ları sırayla ekler.
 
 Transformer bunu çok-başlı (multi-head) yapar: farklı “başlar” farklı ilişki türlerini (sözdizimi, eş-gönderim, vb.) yakalar. Konumsal kodlama (positional encoding) sıra bilgisini ekler. Maliyet dizi uzunluğunda O(n²)’dir; bağlam penceresi sınırının ana nedeni de budur.
 
@@ -191,11 +191,11 @@ Açgözlü sırada model her adımda en olası adayı alıyor:
 | Adım | Yumuşatılmış olasılıklar (T = 1.5) | Birikimli toplam | U | Seçilen |
 |---|---|---|---|---|
 | 1 | çok 0.36 · artık 0.28 · bugün 0.21 · giderek 0.16 | 0.36 · 0.64 · 0.84 · 1.00 | 0.37 | artık |
-| 2 | hızlı 0.34 · güçlü 0.29 · yaygın 0.22 · akıllı 0.16 | 0.34 · 0.63 · 0.85 · 1.00 | 0.81 | yaygın |
+| 2 | hızlı 0.34 · güçlü 0.29 · yaygın 0.22 · akıllı 0.16 | 0.34 · 0.62 · 0.84 · 1.00 | 0.81 | yaygın |
 | 3 | gelişiyor 0.41 · ilerliyor 0.26 · yayılıyor 0.19 · büyüyor 0.14 | 0.41 · 0.67 · 0.86 · 1.00 | 0.12 | gelişiyor |
 
 1. “artık” (U = 0.37) → “Yapay zekâ artık”: “çok”un payı 0.36’ya inmiş; 0.37 bu eşiği kıl payı geçiyor ve seçim ikinci adaya düşüyor.
-2. “yaygın” (U = 0.81) → “Yapay zekâ artık yaygın”: ilk iki aday birlikte 0.63’e geliyor; 0.81 üçüncü adayın dilimine düşüyor.
+2. “yaygın” (U = 0.81) → “Yapay zekâ artık yaygın”: ilk iki aday birlikte 0.62’ye, ilk üçü 0.84’e geliyor; 0.81 bu iki eşiğin arasında, yani üçüncü adayın diliminde.
 3. “gelişiyor” (U = 0.12) → “Yapay zekâ artık yaygın gelişiyor.”: küçük bir U en olası adayı seçiyor. Örnekleme de çoğu zaman en olasıyı seçer, yalnız her zaman değil.
 
 İki cümle de dilbilgisi olarak düzgün; ikincisi daha az beklenen bir yoldan gidiyor. Açgözlü seçimde zar yok; sonuç her seferinde aynı. Örneklemede zar var: U dizisi değişse cümle de değişir, aynı başlangıçla her seferinde farklı bir cümle çıkabilir. Sıcaklık zarın yüzlerini ayarlar: T yükseldikçe paylar birbirine yaklaşır, T düştükçe en olası aday büyür. Ama T sıfırdan büyük olduğu sürece zar atılır; düşük sıcaklık, açgözlü seçimle aynı şey değildir.
@@ -238,9 +238,9 @@ Bir sohbet asistanı da çocuk gibi yetişir; yaygın bir yol üç okuldan geçe
 | Veri | Devasa internet metni | Talimat–cevap çiftleri | İnsan tercihleri (tercih çiftleri) |
 | Öğrendiği | Dili ve dünyayı (bir sonraki kelimeyi tahmin) | Yönergeyi izlemeyi (soruyu cevaplamayı) | Yardımcı, dürüst ve güvenli olmayı |
 | Örnek çıktı | “Türkiye’nin başkenti Ankara’dır ve nüfusu yaklaşık altı milyondur. Bu şehir...” | “Türkiye’nin başkenti Ankara’dır.” | “Türkiye’nin başkenti Ankara’dır. İstersen şehir hakkında birkaç ilginç bilgi de paylaşabilirim.” |
-| Not | Ham model “tamamlayıcı”dır: soruyu cevaplamaz, metni sürdürür. | Artık soruyu doğrudan, derli toplu cevaplıyor. | Aynı bilgi; ama daha yardımcı, kibar ve hizalı bir tonla. |
+| Not | Bu örnekte ham model bilgiyi verip durmuyor, metni sürdürüyor; ham modeller çoğu zaman böyle tamamlar. | Artık soruyu doğrudan, derli toplu cevaplıyor. | Aynı bilgi; ama daha yardımcı, kibar ve hizalı bir tonla. |
 
-1. Ön eğitim: cevap doğru bilgiyle başlıyor ama durmuyor. Nüfus ekliyor, “Bu şehir...” diye sürüyor. Model kendisine soru sorulduğunu bilmiyor; internetteki bir ansiklopedi sayfasını sürdürür gibi yazıyor. Bilgi var, görgü yok.
+1. Ön eğitim: cevap doğru bilgiyle başlıyor ama durmuyor. Nüfus ekliyor, “Bu şehir...” diye sürüyor. Bu örnekte model, soruya cevap veren biri gibi değil, internetteki bir ansiklopedi sayfasını sürdürür gibi yazıyor. Ham bir model bazen soruyu doğru da yanıtlayabilir; ama yanıtın nerede biteceğini ve nasıl bir biçim alacağını ona henüz kimse öğretmedi. Bilgi var, görgü yok.
 2. İnce ayar: aynı bilgi, tek cümle. Model artık “soru geldi, cevap ver, dur” kalıbını binlerce talimat–cevap çiftinden öğrenmiş.
 3. RLHF / hizalama: cevap yine aynı, üstüne bir teklif: daha fazla bilgi ister misin? İnsanlara iki cevap gösterilip “hangisi daha iyi?” diye sorulmuş; model tercih edilen tona doğru ayarlanmış.
 
@@ -336,7 +336,7 @@ Bağlam penceresini aşağıda kendin dene: bu gösterim son sekiz kelimeyi tuta
 | 10 | modelleri metni sınırlı bir pencerede tutar ve eskiyi | Yapay zekâ |
 | 12 | sınırlı bir pencerede tutar ve eskiyi zamanla unutur | Yapay zekâ modelleri metni |
 
-1. Sıfırdan sekize: pencere boş başlıyor. Her yeni kelime yerini buluyor; sekizinci kelimede pencere tam doluyor, hepsi içeride. Pencere dolana kadar her şey hatırlanıyor.
+1. Sıfırdan sekize: pencere boş başlıyor. Her yeni kelime yerini buluyor; sekizinci kelimede pencere tam doluyor, hepsi içeride. Pencere dolana kadar hiçbir kelime dışarı düşmüyor; hepsi pencerede tutuluyor (pencerede olmak, modelin her ayrıntıyı kullanacağı anlamına gelmez).
 2. Dokuzuncu kelime: pencere dolu; “ve” girince “Yapay” dışarı düşüyor ve soluyor. Model artık yalnız son sekiz kelimeyi görüyor.
 3. On ikinci kelime: ilk dört kelime gitmiş. Modelin gördüğü metin “sınırlı bir pencerede tutar ve eskiyi zamanla unutur”. Cümlenin öznesi, “Yapay zekâ modelleri”, artık pencerede yok. Model neyi unuttuğunu bilmiyor; cümle kendi kaderini anlatıyor.
 
@@ -352,7 +352,7 @@ Halüsinasyonun tek bir nedeni yoktur: eğitim hedefi (olası devamı üretmek) 
 
 Diğer sınırlar: bilgi kesim tarihi (knowledge cutoff), önyargı (eğitim verisinden miras), kararsızlık/yeniden üretilemezlik (örnekleme), ve hesaplama/enerji maliyeti. Bu sınırları bilmek, bu araçları sorumlu ve etkili kullanmanın ön koşuludur.
 
-Bu gösterim son N token’ı tutan bir kayan penceredir; gerçek bir uygulama sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir.
+Gerçek bir modelin bağlam penceresi token cinsinden sabit bir sınırdır. Bu gösterim ise sadeleştirip son 8 kelimeyi tutan kayan bir pencere kullanır; gerçek bir uygulama sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir.
 
 Şekil 5.7’deki pencere kayan bir kuyruktur: n kelime eklendiğinde unutulan sayısı max(0, n − N), N = 8. Gerçek modellerde birim kelime değil token’dır; Şekil 5.1’deki kuralla aynı cümle 19 token eder; pencere kelime saymaya göre yaklaşık 1.6 kat hızlı dolar: kelime sayarken 8., token sayarken 5. kelimede. O(n²) maliyetinin kaynağı Şekil 5.3’teki ısı tablosu: n token için n × n hücre; pencere 8’den 16’ya çıkınca hücre sayısı 64’ten 256’ya, dört katına çıkar. Bu kuyruk şekle özgüdür; gerçek uygulamada taşma politikası (hata, kırpma, özetleme) sistemin seçimidir.
 
@@ -450,7 +450,7 @@ Token’lar makineye sayı olarak girer ama kuru bir kimlik numarası “anlam�
 Ünlü örnek: vektör aritmetiğiyle kral − adam + kadın ≈ kraliçe gibi analojiler ortaya çıkabilir. Aşağıdaki görselleştirme yüksek boyutlu uzayın 2B’ye indirgenmiş (PCA/t-SNE benzeri) bir temsilidir; gerçek gömüler çok daha yüksek boyutludur. ||| Ünlü örnek: vektör aritmetiğiyle kral − adam + kadın ≈ kraliçe gibi analojiler ortaya çıkabilir. Şekil 5.2’deki noktalar benzerlik fikrini göstermek için elle yerleştirilmiştir; eğitilmiş bir modelden çıkarılmış gömüler ya da PCA/t-SNE sonucu değildir. Gerçek gömüler çok daha yüksek boyutludur; iki boyutlu bir izdüşümde en yakın görünen iki nokta, asıl uzayda en benzer ikili olmayabilir.
 Her kelime, bir haritadaki noktaya dönüştürülür. Anlamca yakın kelimeler bu haritada da yan yana durur; en yakın 2 komşu, anlamca en benzer 2 kelimedir. Böylece makine “kedi” ile “köpek”in akraba, “elma”nın uzak olduğunu aradaki mesafeye bakarak anlar. ||| Her kelime, bir haritadaki noktaya dönüştürülür. Anlamca yakın kelimeler bu haritada da yan yana durur; buradaki en yakın 2 komşu, anlamca en benzer 2 kelimeyi temsil eder. Bu haritanın noktaları fikri göstermek için elle yerleştirilmiştir, eğitilmiş bir modelden alınmamıştır. Makine de “kedi” ile “köpek”in akraba, “elma”nın uzak olduğunu aradaki mesafeye bakarak anlar.
 En kısa mesafedeki 2 nokta = anlamca en benzer 2 kelime. Yakınlık = benzer anlam. ||| Bu gösterimde en kısa mesafedeki 2 nokta = anlamca en benzer 2 kelime; yakınlık = benzer anlam. Noktalar elle yerleştirilmiştir; iki boyutlu yakınlık, asıl uzaydaki en yakın komşuyu garanti etmez.
-Öz-dikkat (self-attention) her token için sorgu (Q), anahtar (K) ve değer (V) vektörleri üretir; ağırlıklar softmax(Q·Kᵀ/√d) ile hesaplanır ve çıktı bu ağırlıklarla V’lerin toplamıdır. Böylece her konum, tüm diziye uzaklıktan bağımsız erişebilir. ||| Öz-dikkat (self-attention) her token için sorgu (Q), anahtar (K) ve değer (V) vektörleri üretir; ağırlıklar softmax(Q·Kᵀ/√d_k) ile hesaplanır (d_k anahtar vektörünün boyutu) ve çıktı bu ağırlıklarla V’lerin toplamıdır. Maskesiz öz-dikkatte her konum tüm diziye uzaklıktan bağımsız erişebilir; otoregresif (nedensel) decoder ise gelecekteki token’ları maskeler, her konum yalnız kendinden öncekileri görür. Eğitimde dizinin birçok konumu birlikte hesaplanır; otoregresif üretim token’ları sırayla ekler.
+Öz-dikkat (self-attention) her token için sorgu (Q), anahtar (K) ve değer (V) vektörleri üretir; ağırlıklar softmax(Q·Kᵀ/√d) ile hesaplanır ve çıktı bu ağırlıklarla V’lerin toplamıdır. Böylece her konum, tüm diziye uzaklıktan bağımsız erişebilir. ||| Öz-dikkat (self-attention) her token için sorgu (Q), anahtar (K) ve değer (V) vektörleri üretir; ağırlıklar softmax(Q·Kᵀ/√d_k) ile hesaplanır (d_k anahtar vektörünün boyutu) ve çıktı bu ağırlıklarla V’lerin toplamıdır. Maskesiz öz-dikkatte her konum tüm diziye uzaklıktan bağımsız erişebilir; otoregresif (nedensel) decoder ise gelecekteki token’ları maskeler: her konum kendisini ve kendinden önceki konumları görür. Eğitimde dizinin birçok konumu birlikte hesaplanır; otoregresif üretim token’ları sırayla ekler.
 “Attention Is All You Need” (2017): dikkat mekanizması, önceki RNN’lerin tek tek/sıralı işleme zorunluluğunu kaldırdı. Tüm kelimelere aynı anda bakmak, hem hızı hem anlama gücünü bambaşka bir düzeye taşıdı. ||| “Attention Is All You Need” (2017): dikkat mekanizması, önceki RNN’lerin tek tek/sıralı işleme zorunluluğunu kaldırdı. Eğitimde tüm konumları birlikte işlemek hem hızı hem anlama gücünü bambaşka bir düzeye taşıdı; üretim yine token token ilerler.
 Bir cümleyi anlamak için her kelime, ötekilerden hangilerine “dikkat etmesi” gerektiğine karar verir. Renk ne kadar koyuysa iki kelime arasındaki bağ o kadar güçlü demektir. Böylece “o korkmuştu” derken “o”nun kediyi kastettiği ortaya çıkar. ||| Bir cümleyi anlamak için her kelime, ötekilerden hangilerine “dikkat etmesi” gerektiğine karar verir. Renk ne kadar koyuysa iki kelime arasındaki bağ o kadar güçlü demektir. Bu temsili örnekte “o”, en çok kediye bakıyor; ağırlıklar elle seçilmiştir ve tek başına zamirin çözüldüğünü kanıtlamaz.
 Renk ne kadar koyuysa bağ o kadar güçlü; böylece “o” gibi bir kelimenin neyi kastettiği çözülür. ||| Renk ne kadar koyuysa bağ o kadar güçlü; bu temsili ağırlıklar “o” gibi bir kelimenin kime baktığını gösterir. Dikkat ağırlığı tek başına göndergenin çözüldüğünü kanıtlamaz.
@@ -473,7 +473,7 @@ Bu modeller etkileyici ama kusursuz değil. En ünlü kusurları halüsinasyon: 
 Bağlam penceresini aşağıda kendin dene: kelime ekledikçe pencere dolar ve sınırı aşan en eski kelimeler “unutulur”. Uzun belgelerin neden kırpıldığını ya da özetlendiğini burada görebilirsin. ||| Bağlam penceresini aşağıda kendin dene: bu gösterim son sekiz kelimeyi tutan temsili bir kayan penceredir. Kelime ekledikçe pencere dolar ve en eski kelimeler dışarı düşer. Gerçek uygulamalar sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir.
 Halüsinasyon, modelin olasılıksal üretiminin doğal bir sonucudur; doğruluk garantisi yoktur. Azaltma yolları: kaynak temelli üretim (RAG), araç/doğrulama kullanımı ve daha iyi hizalama (Modül 6’da). Bağlam penceresi sabit bir token sınırıdır; dikkat maliyeti O(n²) olduğundan pencereyi büyütmek pahalıdır. ||| Halüsinasyonun tek bir nedeni yoktur: eğitim hedefi (olası devamı üretmek) ile ifadenin doğruluğu arasında garanti bulunmaz. Akıcı ya da yüksek olasılıklı bir yanıt yanlış olabilir; bu, rastgele örnekleme olmadan, açgözlü çözümlemede de olur. Azaltma yolları: kaynaklarla temellendirme (RAG), araç/doğrulama kullanımı ve daha iyi hizalama (Modül 6’da); önemli iddialar kaynakla ve görev doğrulamasıyla denetlenir. Bağlam penceresi sabit bir token sınırıdır; dikkat maliyeti O(n²) olduğundan pencereyi büyütmek pahalıdır.
 Modelin bir “kısa süreli hafızası” var ve aynı anda yalnızca belli sayıda kelimeyi tutabilir. Yeni kelime ekledikçe pencere dolar; sınırı aşınca en eski kelimeler dışarı düşer, yani “unutulur”. Bu yüzden çok uzun belgeler ya kırpılır ya da özetlenerek modele verilir. ||| Modelin bir “kısa süreli hafızası” var ve aynı anda yalnızca belli sayıda token tutabilir. Bu gösterimde yeni kelime ekledikçe pencere dolar; sınırı aşınca en eski kelimeler dışarı düşer, yani “unutulur”. Gerçek sistemler sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir; çok uzun belgelerin kırpılması ya da özetlenmesi bu yüzden.
-Model aynı anda yalnızca son N token’ı “hatırlar”; pencere dolunca en eskiler dışarı düşer, uzun belgeler bu yüzden kırpılır ya da özetlenir. ||| Bu gösterim son N token’ı tutan bir kayan penceredir; gerçek bir uygulama sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir.
+Model aynı anda yalnızca son N token’ı “hatırlar”; pencere dolunca en eskiler dışarı düşer, uzun belgeler bu yüzden kırpılır ya da özetlenir. ||| Gerçek bir modelin bağlam penceresi token cinsinden sabit bir sınırdır. Bu gösterim ise sadeleştirip son 8 kelimeyi tutan kayan bir pencere kullanır; gerçek bir uygulama sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir.
 -->
 
 <!-- REDAKSİYON NOTLARI
@@ -492,4 +492,5 @@ Model aynı anda yalnızca son N token’ı “hatırlar”; pencere dolunca en 
 - Yazar kararı (2026-09-10): kaynak metin dahil tüm "demo" sözcükleri "gösterim" ya da "Şekil N.j" yapıldı; "Aşağıdaki demo" → şekil öncesinde "Aşağıda yer alan gösterim (Şekil N.j)", sonrasında "Şekil N.j'teki gösterim".
 - Yazar kararı (2026-09-10, figürler): ekran renkleri (yeşil/kırmızı/mavi/mor) duotone baskıya göre 'koyu/gri' ve 'turuncu' yapıldı; figür düzeni tarifleri ('kendi rengi', 'yanında rolü', 'ok çekmen') figürlerle eşleştirildi.
 - 2026-09-30 insanlaştırma geçişi: humanize-tr-report bulguları uygulandı (Peki/Cevap köprüleri, "tam olarak/işte/ibaret" çivileri, altyazı alıntıları, kenar notu göndermeleri, "Bir de/İki gözlem daha" şablonları, "gösterim" enflasyonu, iki nokta sonrası küçük harf). Teknik "Ne oluyor" paragraflarının ilk teknik paragrafı tekrar eden cümleleri kırpıldı. Değişen kaynak paragraflar yukarıdaki SOURCE-CHANGES bloğunda; dijital sürüme taşınacak. 5.6/5.7 teknik "Ne oluyor" paragrafları dijitalde tek başına durduğundan oradaki karar yazara ait.
+- 2026-10-01 doğrulama turu (R033, R037, R040, R041, R043): bölüm girişi önceki bölümdeki GAN üretimini kapsar ("Önceki bölümün sonunda GAN…"); nedensel maske "kendisini ve kendinden öncekileri görür" (metin, teknik, sözlük); Şekil 5.4 ikinci adımın birikimli toplamları tam değerlerden bir kez yuvarlandı: 0,34 · 0,62 · 0,84 · 1,00 (metin, adım 2, cevaplar/M05); ham model notu yalnız bu örneğe bağlandı ("bu örnekte… çoğu zaman"), şekil ve dijital not dahil; bağlam penceresi gösterimi kelime sayar, gerçek sınır token (teknik), "pencere dolana kadar her şey hatırlanıyor" yerine "pencerede tutuluyor; her ayrıntının kullanılacağı anlamına gelmez" (adım 1 ve dijital durum satırı).
 -->

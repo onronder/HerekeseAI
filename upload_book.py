@@ -27,9 +27,19 @@ def main() -> int:
     if not url or not key:
         print("HATA: SUPABASE_URL ve SUPABASE_SERVICE_ROLE_KEY ortam değişkenleri gerekli.")
         return 1
+    # Yapıştırmada gelen boşluk ve tırnakları (düz ve kıvrık: ' " ‘ ’ “ ”) uçlardan temizle.
+    key = key.strip().strip("'\"‘’“”` ").strip()
     if len(key) < 30:
         print(f"HATA: anahtar çok kısa ({len(key)} karakter); yapıştırma boş gelmiş olabilir.")
         return 1
+    bad = [(i + 1, f"U+{ord(c):04X}") for i, c in enumerate(key) if ord(c) > 126 or ord(c) < 33]
+    if bad:
+        # Anahtarın kendisi yazdırılmaz; yalnız uzunluk ve sorunlu karakterlerin yeri/kodu.
+        print(f"HATA: anahtar {len(key)} karakter ve geçersiz karakter içeriyor: {bad[:5]}"
+              f" (ör. U+2019 = kıvrık kesme işareti). Yapıştırmaya fazladan metin karışmış;"
+              f" anahtarı Supabase panelinden yeniden kopyalayıp tek başına yapıştır.")
+        return 1
+    print(f"anahtar uzunluğu: {len(key)} karakter")
     # İki anahtar biçimi: eski service_role JWT (eyJ…) → Authorization Bearer; yeni sb_secret_… → yalnız apikey.
     headers = {"apikey": key, "Content-Type": "text/html; charset=utf-8", "x-upsert": "true"}
     if key.startswith("eyJ"):

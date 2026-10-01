@@ -99,6 +99,8 @@ for i, e in gs:
     if cur.get('locked'): continue
     hist = cur.get('hist', []) + [[cur['k'], cur['scale'], round(gap_mm, 1)]]
     ms = re.search(r'style="width:[\d.]+mm;height:([\d.]+)mm"', blk)
+    mmin = re.search(r'data-minscale="([\d.]+)"', blk)
+    fig_min = max(MIN_SCALE, float(mmin.group(1)) if mmin else 0.0)  # R082: figür başına alt sınır (en küçük metin ≥ 6.5 pt)
     svg_h = float(ms.group(1)) if ms else None
     th, fh = height(mb.group(1)), height(mb.group(2))
     bh = (th + fh) if (th and fh) else ((svg_h + 39) if svg_h else None)
@@ -106,7 +108,7 @@ for i, e in gs:
     if cur['k'] == 0 and cur['scale'] >= 0.999 and bh and svg_h:
         fixed = bh - svg_h
         s = (gap_mm - 3 - fixed) / svg_h
-        if MIN_SCALE <= s < 0.98:
+        if fig_min <= s < 0.98:
             s = round(s - 0.02, 3)
             plan[label] = {'k': 0, 'scale': s, 'hist': hist}; changed = True
             report.append(f'  s.{i} %{int(e*100)} ({gap_mm:.0f} mm) {label}: blok {bh:.0f} mm → küçült ×{s}')
@@ -121,8 +123,8 @@ for i, e in gs:
         cum += h; add += 1
         if cum >= gap_mm - TOL: break
     if add == 0:
-        if cur['scale'] > MIN_SCALE + 0.01:  # öğe kalmadı: figürü biraz küçült, aramayı baştan yap
-            s = max(MIN_SCALE, round(cur['scale'] - 0.1, 2))
+        if cur['scale'] > fig_min + 0.01:  # öğe kalmadı: figürü biraz küçült, aramayı baştan yap
+            s = max(fig_min, round(cur['scale'] - 0.1, 2))
             plan[label] = {'k': 0, 'scale': s, 'hist': hist}; changed = True
             report.append(f'  s.{i} %{int(e*100)} {label}: ertelenecek öğe kalmadı → ×{s} ile yeniden')
         else:  # denenen yerleşimlerden boşluğu en küçük olanı seç ve kilitle
@@ -172,6 +174,27 @@ for i, e in gs:
     if pos + 1 >= len(SEQ): report.append(f'  s.{i} %{int(e*100)} {sid}: kuyruk; aralık sınırda ({cur})'); continue
     tighten[sid] = SEQ[pos + 1]; changed = True
     report.append(f'  s.{i} %{int(e*100)} {sid}: bölüm kuyruğu tek başına → satır {tighten[sid][0]}, paragraf {tighten[sid][1]}em, punto ×{tighten[sid][2]}')
+# Forma ekonomisi (matbaa): sayfa sayısı 16'nın katını en çok 8 sayfa aşıyorsa yarım forma yerine tam formaya dönülmeye çalışılır.
+# Boş bir arka sayfa ve ardından bölüm açılışıyla biten bölümün satır aralığı yalnız sıkılaştıran kademelerle küçültülür; kuyruk
+# önceki sayfaya çekilince boş sayfayla birlikte 2 sayfa kazanılır. En boş kuyruktan başlanır; genişletilmiş bölüme dokunulmaz.
+TIGHT = [[1.47, .8, 1.0], [1.44, .8, 1.0], [1.47, .6, 1.0], [1.44, .6, 1.0]]
+if profile == 'matbaa' and 0 < n % 16 <= 8:
+    need = (n % 16 + 1) // 2
+    emp = dict(gs); cands = []
+    for i, e in gs:
+        if i + 2 > n or e < 0.30 or e >= 1.0 or emp.get(i + 1, 0) < 1.0 or not is_opener(page_lines(i + 2)): continue
+        sid = None
+        for p in (i, i - 1, i - 2):
+            sid = next((rh[up(l)] for l in page_lines(p) if up(l) in rh), None)
+            if sid: break
+        if sid and not sid.startswith('on-'): cands.append((e, i, sid))
+    for e, i, sid in sorted(cands, reverse=True)[:need]:
+        cur = tighten.get(sid, [1.5, .8, 1.0]); cur = [float(cur), .8, 1.0] if not isinstance(cur, list) else (cur + [1.0])[:3]
+        if cur[0] > 1.5: continue
+        pos = TIGHT.index(cur) if cur in TIGHT else -1
+        if pos + 1 >= len(TIGHT): report.append(f'  s.{i} {sid}: forma ekonomisi; aralık sınırda ({cur})'); continue
+        tighten[sid] = TIGHT[pos + 1]; changed = True
+        report.append(f'  s.{i} %{int(e*100)} {sid}: forma ekonomisi ({n} sayfa) → satır {tighten[sid][0]}, paragraf {tighten[sid][1]}em')
 out_plan = dict(plan)
 if tighten: out_plan['_tighten'] = tighten
 json.dump(out_plan, open(plan_path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

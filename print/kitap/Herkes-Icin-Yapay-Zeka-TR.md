@@ -105,7 +105,7 @@ Süreç anlatan şekiller film şeridi gibidir: kareleri soldan sağa, satır sa
 - 2.3 Eğer... ise...: kurallar ve uzman sistemler
 - 2.4 Arama ve sezgisel kısayollar
 - 2.5 Belirsizlikle başa çıkmak: olasılık ve Markov
-- 2.6 Düzenliler ve dağınıklar (Neat vs Scruffy)
+- 2.6 Düzenliler ve dağınıklar (neats ve scruffies)
 - 2.7 Kendini test et
 
 **Bölüm 3 · Makineler Nasıl Öğrenir**
@@ -235,7 +235,7 @@ Zayıf üçü ise başka bir malzeme ister: bir beden, karşındaki insanın yü
 
 Listenin sırası bir başarı sıralaması değil. Kartlar ayrı becerileri sayıyor; hiçbiri ötekinden daha zeki sayılmaz. YZ için de öyle: dilde güçlü olmak, öbür yedi alanda güçlü olmak anlamına gelmiyor.
 
-*Ne oluyor?* Gardner’a göre zekâ tek bir sayı değil, sekiz ayrı yetenek ailesidir; şekildeki her kart bunlardan biri. Bugünkü yapay zekâ dilde ve mantıkta çok iyi; beden ve duygu işlerinde ise sonuç göreve ve sisteme bağlı, çoğunda hâlâ çok geride.
+*Ne oluyor?* Gardner’a göre zekâ tek bir sayı değil, sekiz ayrı yetenek ailesidir; şekildeki her kart bunlardan biri. Bugünkü yapay zekâ dilde ve mantıkta çok iyi; beden ve duygu işlerinde ise sonuç göreve ve sisteme bağlı, çoğunda hâlâ çok geride. Çubuklar temsili düzeydir; ölçülmüş başarı değildir.
 
 *Kendin dene.* 1) Kitabı kapat ve sekiz zekâ türünü ezberden say. Kaçını hatırladın; hangileri unutuluyor? 2) Dünkü gününü düşün: Sabahtan akşama en çok hangi üç türü kullandın? Tabloya göre bugünkü YZ bunların kaçında güçlü? 3) Tabloda zayıf olan üç türün ortak yanı ne? Bir cümleyle yaz. Canlı demo: [QR 1.1] https://book.onuronder.com/d/1dbc74d595
 
@@ -422,7 +422,7 @@ Alanlar arasında geniş ve aktarılabilir yetenekleri olan, insan gibi her alan
 
 Beşini de işaretledikten sonra say: her sütunda kaç kart var? Dördüncü ve beşinci kartın ikisi de bugün yok, ama aynı soruyu sormuyor. Farkı bir cümleyle yazabiliyorsan bölümün ana fikri sende.
 
-*Ne oluyor?* Eğitildiği işlerin dışına çıkamayan her sistem dar sınıfına girer; şiir de kod da yazan sohbet botları bile. Genel olan, alanlar arasında aktarılabilir yetenekle insan gibi her alanda öğrenebilen makinedir ve öylesi henüz yok. Bilinçli makine ise apayrı bir soru; genel olmak bilinç gerektirmez.
+*Ne oluyor?* Belirli görevlerde ya da sınırlı bir görev kümesinde iyi olup insan düzeyinde alanlar arası genel öğrenme ve aktarım göstermeyen her sistem dar sınıfına girer; şiir de kod da yazan, istemdeki örneklerle yeni bir işe bir ölçüde uyum gösteren sohbet botları bile. Genel olan, alanlar arasında aktarılabilir yetenekle insan gibi her alanda öğrenebilen makinedir ve öylesi henüz yok. Bilinçli makine ise apayrı bir soru; genel olmak bilinç gerektirmez.
 
 *Kendin dene.* 1) Kendi günlük hayatından üç YZ örneği yaz: navigasyon, çeviri, film önerisi gibi. Her birine bir sütun ver. 2) Dördüncü ve beşinci kartın ikisi de bugün yok; aynı soruyu mu soruyorlar? İkisine ayrı ayrı sor: her alanı öğrenebiliyor mu (genel), gerçekten anlıyor mu (güçlü)? Bir makine genel olup bilinçsiz olabilir mi? 3) Satranç motoruna “bana bir çorba tarifi ver” desen ne olur? Cevabını, dar YZ’nin tanımını bir cümleyle yazarak ver. Canlı demo: [QR 1.5] https://book.onuronder.com/d/30661431ad
 
@@ -447,7 +447,7 @@ Fikirler 1900’lerin ortasında hazırdı ama makineler cılızdı. Şu eski pi
 **Şekil 1.6 · Üstel büyümeyi hisset**
 ![Şekil 1.6](../../figures/out/tr/sekil-1-6-exp.svg)
 
-*Kurulum.* Şekil 1971’den başlıyor. O yıl piyasaya çıkan ilk mikroişlemci Intel 4004’te 2.300 transistör vardı. Şekildeki her basamak “iki yıl geçti, sayı ikiye katlandı” demek; basamaklar 26 katlamada, 2023’te biter. Sağdaki iki küçük grafik aynı sayıları 2023’e kadar taşır: doğrusal ölçekte eğri önce yere yapışır, sonra fırlar; logaritmik ölçekte düz bir çizgidir.
+*Kurulum.* Şekil 1971’den başlıyor. O yıl piyasaya çıkan ilk mikroişlemci Intel 4004’te 2.300 transistör vardı. Şekildeki her basamak “iki yıl geçti, sayı ikiye katlandı” demek; tablo 13 katlamada, 1997’de durur. Sağdaki iki küçük grafik aynı sayıları 2023’e, 26 katlamaya kadar taşır: doğrusal ölçekte eğri önce yere yapışır, sonra fırlar; logaritmik ölçekte düz bir çizgidir.
 
 *Adım adım.* Tabloyu satır satır oku. Üçüncü sütun 2ⁿ, dördüncü sütun 2.300 × 2ⁿ. Her satır bir öncekinin tam iki katı; başka hiçbir kural yok. Bu, tarihsel Moore eğrisinin kendisi değil, üstel büyümeyi hissettirmek için kurulmuş temsili bir tablo.
 
@@ -569,23 +569,23 @@ Bir makineye Tekir’i nasıl öğretirsin? Makine onu göremez, okşayamaz; anc
 **Şekil 2.1 · Bilgi zinciriyle çıkarım**
 ![Şekil 2.1](../../figures/out/tr/sekil-2-1-chain.svg)
 
-*Kurulum.* Şekilde beş kutu tek sıra hâlinde dizili: Tekir, Kedi, Memeli, Hayvan, Canlı. Kutular arasındaki her ok “bir …dır” demek: Tekir bir Kedi’dir, Kedi bir Memeli’dir ve böyle sürer. İlk ok bir bireyi sınıfına bağlar: Tekir, Kedi sınıfının bir örneği. Öbür oklar sınıfı üst sınıfa bağlar: Kedi, Memeli’nin alt sınıfı. Şekil ikisini de aynı okla gösterir. Makinenin bütün bilgisi bu dört ok; başka hiçbir şey bilmiyor. Altta dört soru var; her soru için makine zinciri baştan yürür ve kararını söyler.
+*Kurulum.* Şekilde beş kutu tek sıra hâlinde dizili: Tekir, Kedi, Memeli, Hayvan, Canlı. Kutuları iki tür ok bağlar. İlk ok “örneği” diye etiketli ve bir bireyi sınıfına bağlar: Tekir, Kedi sınıfının bir örneğidir (instance-of). Öbür üç ok “alt sınıfı” diye etiketli ve bir sınıfı üst sınıfına bağlar: Kedi, Memeli’nin alt sınıfıdır (subclass-of); Memeli de Hayvan’ın, Hayvan da Canlı’nın. Makinenin bütün bilgisi bu dört ok; başka hiçbir şey bilmiyor. Altta dört soru var; her soru için makine zinciri baştan yürür ve kararını söyler.
 
 *Adım adım.* Önce “Tekir bir Memeli mi?” sorusu.
 
-1. Makine Tekir’den başlar. Aradığı kelime “Memeli”. Tekir’in kendisi Memeli mi? Hayır; ama Tekir’den bir ok çıkıyor: Kedi.
-2. Kedi’ye geçer. Kedi, “Memeli” mi? Hayır; Kedi’den de bir ok çıkıyor: Memeli.
-3. Memeli’ye varır. Aranan kelime bulundu. Şekilde ilk üç kutu turuncuya boyanır ve karar yazılır: ✓ Evet: “Memeli” zincirde bulundu (geçişlilik).
+1. Makine Tekir’den başlar. Aradığı sınıfın adı “Memeli”. Tekir bir sınıf değil, bir birey; ondan çıkan “örneği” oku, Tekir’in Kedi sınıfına ait olduğunu söyler.
+2. Kedi kutusuna geçer. Bu kutunun adı “Memeli” değil; Kedi’den çıkan “alt sınıfı” oku Memeli’ye gider.
+3. Memeli kutusuna varır. Ad eşleşti: Tekir, Kedi’nin örneği; Kedi de Memeli’nin alt sınıfı; öyleyse Tekir bir memelidir. Şekilde ilk üç kutu turuncuya boyanır ve karar yazılır: ✓ Evet: “Memeli” zincirde bulundu (geçişlilik).
 
 İki ok izledi. “Tekir bir Memeli’dir” cümlesini kimse yazmadı; makine onu türetti.
 
 Sonra “Tekir bir Bitki mi?” sorusu.
 
-1. Tekir: Bitki değil; ok Kedi’ye.
-2. Kedi: değil; ok Memeli’ye.
-3. Memeli: değil; ok Hayvan’a.
-4. Hayvan: değil; ok Canlı’ya.
-5. Canlı: değil. Canlı’dan çıkan ok yok, zincir bitti. Karar: ✗ Bilinmiyor: “Bitki” bilgi tabanında yok.
+1. Tekir: birey; “örneği” oku Kedi’ye.
+2. Kedi: kutunun adı “Bitki” değil; “alt sınıfı” oku Memeli’ye.
+3. Memeli: ad eşleşmedi; ok Hayvan’a.
+4. Hayvan: ad eşleşmedi; ok Canlı’ya.
+5. Canlı: ad eşleşmedi. Canlı’dan çıkan ok yok, zincir bitti. Karar: ✗ Bilinmiyor: “Bitki” bilgi tabanında yok.
 
 Dört sorunun tamamı:
 
@@ -606,9 +606,9 @@ Karar “Hayır” değil, “Bilinmiyor”. Makine Tekir’in bitki olmadığı
 
 Sembolik YZ’de bilgi, bilgi temsili (knowledge representation) ile kodlanır: semantik ağlar, çerçeveler (frames), ontolojiler ya da mantık önermeleri. Varlıklar ve aralarındaki ilişkiler (ör. is-a, has-a) açıkça tanımlanır.
 
-Çıkarım (inference), bu temsiller üzerinde kuralların uygulanmasıdır. Şekil 2.1’deki gösterim bir is-a hiyerarşisinde geçişliliği (transitivity) kullanır. Ontolojide iki bağ ayrılır: Tekir, Kedi sınıfının bir örneğidir (instance-of); Kedi, Memeli sınıfının alt sınıfıdır (subclass-of). “Tekir instance-of Kedi” ve “Kedi subclass-of Memeli” ise “Tekir instance-of Memeli” türetilir; bu nedenle Tekir bir memelidir. Şekil iki bağı da tek ok türüyle, “bir …dır” diye gösterir. Sembolik akıl yürütmenin özü budur.
+Çıkarım (inference), bu temsiller üzerinde kuralların uygulanmasıdır. Şekil 2.1’deki gösterim bir is-a hiyerarşisinde geçişliliği (transitivity) kullanır. Ontolojide iki bağ ayrılır: Tekir, Kedi sınıfının bir örneğidir (instance-of); Kedi, Memeli sınıfının alt sınıfıdır (subclass-of). “Tekir instance-of Kedi” ve “Kedi subclass-of Memeli” ise “Tekir instance-of Memeli” türetilir; bu nedenle Tekir bir memelidir. Şekil 2.1 iki bağı ayrı etiketle gösterir: ilk ok “örneği”, öbürleri “alt sınıfı”. Sembolik akıl yürütmenin özü budur.
 
-Bilgi tabanı yalnızca ardışık “is-a” (bir …dır) bağlarını içerir. Hedef zincirde varsa “Evet”, yoksa “Bilinmiyor”.
+Bilgi tabanında bir instance-of (örneği) bağı ve onu izleyen subclass-of (alt sınıfı) bağları var. Hedef zincirde varsa “Evet”, yoksa “Bilinmiyor”.
 
 Geçişlilik kuralı sınıflar arasında biçimsel olarak şöyle yazılır: subclass-of(A, B) ∧ subclass-of(B, C) → subclass-of(A, C). Örnek için: instance-of(a, B) ∧ subclass-of(B, C) → instance-of(a, C). Motor bu kuralı zincir boyunca tekrar tekrar uygular; beş düğümlük zincirde en fazla dört adımda ya hedefe ulaşır ya da zincirin sonuna gelir.
 
@@ -665,7 +665,7 @@ En sabırlı yöntem her ihtimali tek tek denemektir ama bu çok yavaş olabilir
 
 > **Kenar notu.** Açgözlü sezgisel yöntemler hız kazandırır ama bedeli vardır: bazen en iyi çözümü kaçırabilirler. “Yeterince iyi”yi “mükemmel”e tercih ederler. A* gibi daha dikkatli yöntemler, uygun bir sezgiyle garantiyi geri alır.
 
-**Şekil 2.3 · Yol bulma: sezgisiz vs sezgili**
+**Şekil 2.3 · Yol bulma: sezgisiz ile sezgili**
 ![Şekil 2.3](../../figures/out/tr/sekil-2-3-grid.svg)
 
 *Kurulum.* Şekilde 8 sütun, 6 satırlık bir ızgara var; 48 karenin 11’i siyah duvar. Sol üst köşede S (başlangıç), sağ alt köşede H (hedef). Duvarlar üç dikey engel oluşturuyor: 3. sütunda üstten dört kare, 5. sütunda alttan dört kare, 7. sütunda ortada üç kare. Bu yüzden düz gitmek imkânsız; yol birinci engeli alttan, ikincisini üstten, üçüncüsünü yine alttan dolaşmak zorunda. İki panel aynı ızgarayı gösteriyor: solda sezgisiz arama, sağda sezgisel arama. Açık turuncu kareler taranmış, koyu turuncu kareler bulunan yol. Her karedeki sayı tarama sırası; S 1’dir.
@@ -772,7 +772,7 @@ Bu P için π = (6/13, 4/13, 3/13) ≈ (0.462, 0.308, 0.231). Matrisin her girdi
 
 Olasılık kurallara esneklik kattı; ama tabloyu, kuralları, zinciri hâlâ bir insan elle yazıyor. Bu yükün ne kadar taşınabileceği konusunda YZ’ciler ikiye bölündü.
 
-### 2.6 Düzenliler ve dağınıklar (Neat vs Scruffy)
+### 2.6 Düzenliler ve dağınıklar (neats ve scruffies)
 
 YZ araştırmacıları yıllarca iki kampa bölündü. “Düzenliler” (neats) her adımın temiz matematikle kanıtlanmasını istedi. “Dağınıklar” (scruffies) ise omuz silkti: “Çalışıyorsa iyidir, teorisini sonra buluruz.”
 
@@ -1108,10 +1108,10 @@ Sınıfın ezbercisini bilirsin: eski soruların hepsini kelimesi kelimesine bil
 
 *Adım adım.*
 
-1. Eksik uyum: doğru y = 3.1 − 0.18x. x = 5’te 2.2 der, nokta 2.7’dir; fark 0.5. x = 9’da 1.48 der, nokta 2.0. Doğru noktaların bir üstüne, bir altına düşer; zıplamaları hiç tutmaz. Hüküm: “Eksik uyum: model çok basit, örüntüyü yakalayamıyor (yüksek yanlılık).”
+1. Eksik uyum: doğru y = 3.1 − 0.18x. Bu doğru anlatım için seçilmiştir; dokuz noktaya en küçük kareler yöntemiyle uydurulan doğru y ≈ 3.09 − 0.16x’tir ve ona yakındır. x = 5’te 2.2 der, nokta 2.7’dir; fark 0.5. x = 9’da 1.48 der, nokta 2.0. Doğru noktaların bir üstüne, bir altına düşer; zıplamaları hiç tutmaz. Hüküm: “Eksik uyum: model çok basit, örüntüyü yakalayamıyor (yüksek yanlılık).”
 2. Daha düzgün temsili eğri: y = 3.0 − 0.16x + 0.15·sin(0.6x). x = 5’te 2.22, x = 9’da 1.44 der. Zikzağı kovalamaz; yalnız aşağı eğilimi ve hafif bir dalgayı taşır. Hüküm: “Yanlılık-varyans dengesi: ne örüntüyü kaçıracak kadar basit ne gürültüyü ezberleyecek kadar karmaşık.” İyi genellediğini söylemek için eğitimde kullanılmamış veride hatası ölçülmeli; bu eğri elle çizildiği için o ölçüm burada yok.
 3. Aşırı uyum: kırık çizgi dokuz noktanın dokuzundan da geçer; eğitim hatası tam sıfır. Ama şekline bak: 5’ten 6’ya giderken 1.0 birim düşüyor, 6’dan 7’ye 0.6 yükseliyor. Bu iniş çıkışlar örüntü değil, gürültüdür; yeni ölçümde aynı yerde tekrarlamaz. Hüküm: “Aşırı uyum: her noktadan geçer ama gürültüyü ezberler; yeni veride başarısız (yüksek varyans).”
-4. Sınav: 5. ve 7. noktayı sakla, kalan yediyle aynı kırık çizgiyi çiz. x = 5’te çizgi (4, 2.0) ile (6, 1.7)’yi birleştirir ve 1.85 der; gerçek 2.7, hata 0.85. x = 7’de 1.55 der; gerçek 2.3, hata 0.75. Basit doğru aynı iki noktada 0.5 ve 0.46 hata yapar. Ezberci, görmediği soruda tembelden bile kötü.
+4. Sınav: 5. ve 7. noktayı sakla, kalan yediyle aynı kırık çizgiyi çiz. x = 5’te çizgi (4, 2.0) ile (6, 1.7)’yi birleştirir ve 1.85 der; gerçek 2.7, hata 0.85. x = 7’de 1.55 der; gerçek 2.3, hata 0.75. Düz doğru için de aynısını yap: kalan yedi noktaya en küçük kareler yöntemiyle bir doğru uydur. Sonuç y ≈ 3.06 − 0.17x; x = 5’te 2.19, x = 7’de 1.85 der, hatalar 0.51 ve 0.45. Ezberci, görmediği soruda tembelden bile kötü.
 5. Eğitim hatası tek başına aldatır. Modeli hiç görmediği veriyle sınamak gerekir; buna doğrulama denir. Adil bir karşılaştırma için her aday aynı yedi noktayla eğitilip aynı iki noktada sınanır. Burada bunu kırık çizgi ile düz doğru için yaptık; orta eğri elle çizildiği için sınava girmedi.
 
 *Ne oluyor?* Aynı veriye üç ayrı model uyduruyoruz. Çok basit olan örüntüyü ıskalar (eksik uyum); aşırı karmaşık olan her noktayı ezberler ama yeni veride şaşırır (aşırı uyum). En iyisi ikisinin arasındadır: daha önce hiç görmediği örnekleri de doğru tahmin edebilen model. Bu eğriler fikri gösterir; hangisinin iyi genellediğini ancak eğitimde kullanılmamış veride ölçülen hata söyler.
@@ -1417,7 +1417,7 @@ RNN diziyi kelime kelime dinler ve her adımda hafızasını tazeler; böylece g
 **Şekil 4.5 · Hafızalı işleme (gerçek yineleme)**
 ![Şekil 4.5](../../figures/out/tr/sekil-4-5-rnn.svg)
 
-*Kurulum.* Şekil altı kareden oluşur; kare 0’dan kare 5’e. Her karenin üstünde beş kelimelik cümle var: “Kedi kaçtı çünkü o korkmuştu”. İşlenmiş kelimeler koyu boyalı. Altta dört çubuk gizli durumu, yani ağın hafızasını gösterir; her biri −1 ile 1 arasında bir sayıdır (tanh çıktısı), yukarı artı, aşağı eksi. Karenin başlığında kaç kelimenin işlendiği yazar. Kare 0’da dört çubuk da sıfırdır: h₀ = 0. Sayılar gerçekten hₜ = tanh(Wₓxₜ + Wₕhₜ₋₁) ile hesaplanır; Wₓ (4 × 5) ve Wₕ (4 × 4) anlatım için seçilmiş sabit ağırlıklardır, eğitilmemiştir.
+*Kurulum.* Şekil altı kareden oluşur; kare 0’dan kare 5’e. Her karenin üstünde beş kelimelik cümle var: “Kedi kaçtı çünkü o korkmuştu”. İşlenmiş kelimeler koyu boyalı. Altta dört çubuk gizli durumu, yani ağın hafızasını gösterir; her biri −1 ile 1 arasında bir sayıdır (tanh çıktısı). Çubuk boyu değerin büyüklüğünü, |h|’yi gösterir ve hep yukarı doğru çizilir. İşareti çubuğun rengi ve üstündeki etiket söyler: turuncu çubuk artı, koyu çubuk eksi (ör. −0.54). Karenin başlığında kaç kelimenin işlendiği yazar. Kare 0’da dört çubuk da sıfırdır: h₀ = 0. Sayılar gerçekten hₜ = tanh(Wₓxₜ + Wₕhₜ₋₁) ile hesaplanır; Wₓ (4 × 5) ve Wₕ (4 × 4) anlatım için seçilmiş sabit ağırlıklardır, eğitilmemiştir.
 
 *Adım adım.* Kareleri soldan sağa oku; ilk iki adımı kendin hesapla. Her kelime bir birim vektördür: “Kedi” [1, 0, 0, 0, 0], “kaçtı” [0, 1, 0, 0, 0] ve böyle gider. Wₓxₜ bu yüzden Wₓ’in t. sütunudur.
 
@@ -1463,7 +1463,7 @@ Bazen amaç tanımak değil, üretmektir: gerçekçi yüzler, manzaralar, sesler
 
 > **Kenar notu.** GAN’da iyi sahte üretmek ile sahteyi yakalamak birbirini sürekli iter. Kalpazanla dedektifin yarışı gibi; ikisi de geliştikçe sonuç giderek gerçeğe yaklaşır.
 
-**Şekil 4.6 · Üretici vs Ayırt edici**
+**Şekil 4.6 · Üretici ile ayırt edici**
 ![Şekil 4.6](../../figures/out/tr/sekil-4-6-gan.svg)
 
 *Kurulum.* Şekil dokuz kareden oluşan bir film şerididir; tur 0’dan tur 8’e. Bu şerit temsilidir: görüntüler de yüzdeler de anlatım için önceden belirlenmiştir, eğitilmiş bir ağdan ölçülmemiştir. Her karede solda üreticinin çizdiği 8 × 8’lik görüntü var: koyu ve açık pikseller. Üreticinin öğrenmeye çalıştığı “gerçek” görüntü şeridin üstünde durur: ortası dolu bir daire; 64 pikselin 24’ü koyu. Sağda ayırt edicinin kararı yazar: görüntünün sahte olma olasılığı ve tek kelimelik hüküm. Yüzde 50’nin üstü “Sahte!”, altı “Gerçek?”.
@@ -1563,7 +1563,7 @@ Ağlar tanımayı da üretmeyi de öğrendi. Bugünün sohbet eden, resim çizen
 
 ### 5.1 Üretken çağ: tanımaktan üretmeye
 
-Şimdiye dek makineler hep “tanıyan” taraftaydı: Bu spam mı, bu kedi mi, bu ev kaç para eder? Bir ressam çırağının yıllarca tablo seyretmesi gibiydi bu. Sonra bir gün çırak fırçayı eline aldı: Makineler artık üretiyor. Yazı yazıyor, resim çiziyor, kod üretiyor, sohbet ediyor.
+Bu kitapta makineleri çoğunlukla “tanıyan” tarafta gördük: Bu spam mı, bu kedi mi, bu ev kaç para eder? Önceki bölümün sonunda GAN ile üretime ilk adımı da attık: gürültüden yeni bir görüntü çıkaran bir ağ. Ressam çırağı yıllarca tablo seyretmiş, ilk eskizlerini de çizmişti; şimdi fırça onun elinde. Makineler yazı yazıyor, resim çiziyor, kod üretiyor, sohbet ediyor.
 
 Bu sıçramanın dönüm noktalarından biri Transformer mimarisi ve onun kalbindeki dikkat (attention) fikri. Üretken modeller (GAN gibi) ve dikkat mekanizmaları daha önce de araştırılıyordu; Transformer, üretken dil modellerinin büyük ölçekte eğitilmesini mümkün kıldı. Hikâyeye en küçük parçadan başlıyoruz: bir cümle makineye nasıl görünür? Token denen küçük metin parçaları olarak. Önce token, sonra gömü, dikkat ve kelime kelime üretim; ardından eğitim, difüzyon ve sınırlar.
 
@@ -1698,7 +1698,7 @@ Satırları tek tek oku:
 
 Tablo simetrik değil: “o” kediye 0.55 ile bakıyor, “Kedi” ise “o”ya yalnız 0.10 ile. Bakış yönlü. Uzaklık da önemsiz: “o” ile “Kedi” arasında iki kelime var; ağırlık yine de tablonun en yükseği. Kelimeleri sırayla işleyen eski modeller burada zorlanıyordu.
 
-Bir ayrım daha: “Kedi” satırı kendinden sonraki “kaçtı”ya 0.30 veriyor. Metin üreten (otoregresif) bir modelde böyle bir bakış yoktur; her kelime yalnız kendinden öncekileri görür, sonrakiler maskelenir. Bu tablo bu yüzden çift yönlü, encoder tipi bir örnektir.
+Bir ayrım daha: “Kedi” satırı kendinden sonraki “kaçtı”ya 0.30 veriyor. Metin üreten (otoregresif) bir modelde böyle bir bakış yoktur; her kelime kendisini ve kendinden öncekileri görür, sonrakiler maskelenir. Bu tablo bu yüzden çift yönlü, encoder tipi bir örnektir.
 
 *Ne oluyor?* Bir cümleyi anlamak için her kelime, ötekilerden hangilerine “dikkat etmesi” gerektiğine karar verir. Renk ne kadar koyuysa iki kelime arasındaki bağ o kadar güçlü demektir. Bu temsili örnekte “o”, en çok kediye bakıyor; ağırlıklar elle seçilmiştir ve tek başına zamirin çözüldüğünü kanıtlamaz.
 
@@ -1706,7 +1706,7 @@ Bir ayrım daha: “Kedi” satırı kendinden sonraki “kaçtı”ya 0.30 veri
 
 #### Teknik derinlik
 
-Öz-dikkat (self-attention) her token için sorgu (Q), anahtar (K) ve değer (V) vektörleri üretir; ağırlıklar softmax(Q·Kᵀ/√d_k) ile hesaplanır (d_k anahtar vektörünün boyutu) ve çıktı bu ağırlıklarla V’lerin toplamıdır. Maskesiz öz-dikkatte her konum tüm diziye uzaklıktan bağımsız erişebilir; otoregresif (nedensel) decoder ise gelecekteki token’ları maskeler, her konum yalnız kendinden öncekileri görür. Eğitimde dizinin birçok konumu birlikte hesaplanır; otoregresif üretim token’ları sırayla ekler.
+Öz-dikkat (self-attention) her token için sorgu (Q), anahtar (K) ve değer (V) vektörleri üretir; ağırlıklar softmax(Q·Kᵀ/√d_k) ile hesaplanır (d_k anahtar vektörünün boyutu) ve çıktı bu ağırlıklarla V’lerin toplamıdır. Maskesiz öz-dikkatte her konum tüm diziye uzaklıktan bağımsız erişebilir; otoregresif (nedensel) decoder ise gelecekteki token’ları maskeler: her konum kendisini ve kendinden önceki konumları görür. Eğitimde dizinin birçok konumu birlikte hesaplanır; otoregresif üretim token’ları sırayla ekler.
 
 Transformer bunu çok-başlı (multi-head) yapar: farklı “başlar” farklı ilişki türlerini (sözdizimi, eş-gönderim, vb.) yakalar. Konumsal kodlama (positional encoding) sıra bilgisini ekler. Maliyet dizi uzunluğunda O(n²)’dir; bağlam penceresi sınırının ana nedeni de budur.
 
@@ -1748,11 +1748,11 @@ Açgözlü sırada model her adımda en olası adayı alıyor:
 | Adım | Yumuşatılmış olasılıklar (T = 1.5) | Birikimli toplam | U | Seçilen |
 |---|---|---|---|---|
 | 1 | çok 0.36 · artık 0.28 · bugün 0.21 · giderek 0.16 | 0.36 · 0.64 · 0.84 · 1.00 | 0.37 | artık |
-| 2 | hızlı 0.34 · güçlü 0.29 · yaygın 0.22 · akıllı 0.16 | 0.34 · 0.63 · 0.85 · 1.00 | 0.81 | yaygın |
+| 2 | hızlı 0.34 · güçlü 0.29 · yaygın 0.22 · akıllı 0.16 | 0.34 · 0.62 · 0.84 · 1.00 | 0.81 | yaygın |
 | 3 | gelişiyor 0.41 · ilerliyor 0.26 · yayılıyor 0.19 · büyüyor 0.14 | 0.41 · 0.67 · 0.86 · 1.00 | 0.12 | gelişiyor |
 
 1. “artık” (U = 0.37) → “Yapay zekâ artık”: “çok”un payı 0.36’ya inmiş; 0.37 bu eşiği kıl payı geçiyor ve seçim ikinci adaya düşüyor.
-2. “yaygın” (U = 0.81) → “Yapay zekâ artık yaygın”: ilk iki aday birlikte 0.63’e geliyor; 0.81 üçüncü adayın dilimine düşüyor.
+2. “yaygın” (U = 0.81) → “Yapay zekâ artık yaygın”: ilk iki aday birlikte 0.62’ye, ilk üçü 0.84’e geliyor; 0.81 bu iki eşiğin arasında, yani üçüncü adayın diliminde.
 3. “gelişiyor” (U = 0.12) → “Yapay zekâ artık yaygın gelişiyor.”: küçük bir U en olası adayı seçiyor. Örnekleme de çoğu zaman en olasıyı seçer, yalnız her zaman değil.
 
 İki cümle de dilbilgisi olarak düzgün; ikincisi daha az beklenen bir yoldan gidiyor. Açgözlü seçimde zar yok; sonuç her seferinde aynı. Örneklemede zar var: U dizisi değişse cümle de değişir, aynı başlangıçla her seferinde farklı bir cümle çıkabilir. Sıcaklık zarın yüzlerini ayarlar: T yükseldikçe paylar birbirine yaklaşır, T düştükçe en olası aday büyür. Ama T sıfırdan büyük olduğu sürece zar atılır; düşük sıcaklık, açgözlü seçimle aynı şey değildir.
@@ -1795,9 +1795,9 @@ Bir sohbet asistanı da çocuk gibi yetişir; yaygın bir yol üç okuldan geçe
 | Veri | Devasa internet metni | Talimat–cevap çiftleri | İnsan tercihleri (tercih çiftleri) |
 | Öğrendiği | Dili ve dünyayı (bir sonraki kelimeyi tahmin) | Yönergeyi izlemeyi (soruyu cevaplamayı) | Yardımcı, dürüst ve güvenli olmayı |
 | Örnek çıktı | “Türkiye’nin başkenti Ankara’dır ve nüfusu yaklaşık altı milyondur. Bu şehir...” | “Türkiye’nin başkenti Ankara’dır.” | “Türkiye’nin başkenti Ankara’dır. İstersen şehir hakkında birkaç ilginç bilgi de paylaşabilirim.” |
-| Not | Ham model “tamamlayıcı”dır: soruyu cevaplamaz, metni sürdürür. | Artık soruyu doğrudan, derli toplu cevaplıyor. | Aynı bilgi; ama daha yardımcı, kibar ve hizalı bir tonla. |
+| Not | Bu örnekte ham model bilgiyi verip durmuyor, metni sürdürüyor; ham modeller çoğu zaman böyle tamamlar. | Artık soruyu doğrudan, derli toplu cevaplıyor. | Aynı bilgi; ama daha yardımcı, kibar ve hizalı bir tonla. |
 
-1. Ön eğitim: cevap doğru bilgiyle başlıyor ama durmuyor. Nüfus ekliyor, “Bu şehir...” diye sürüyor. Model kendisine soru sorulduğunu bilmiyor; internetteki bir ansiklopedi sayfasını sürdürür gibi yazıyor. Bilgi var, görgü yok.
+1. Ön eğitim: cevap doğru bilgiyle başlıyor ama durmuyor. Nüfus ekliyor, “Bu şehir...” diye sürüyor. Bu örnekte model, soruya cevap veren biri gibi değil, internetteki bir ansiklopedi sayfasını sürdürür gibi yazıyor. Ham bir model bazen soruyu doğru da yanıtlayabilir; ama yanıtın nerede biteceğini ve nasıl bir biçim alacağını ona henüz kimse öğretmedi. Bilgi var, görgü yok.
 2. İnce ayar: aynı bilgi, tek cümle. Model artık “soru geldi, cevap ver, dur” kalıbını binlerce talimat–cevap çiftinden öğrenmiş.
 3. RLHF / hizalama: cevap yine aynı, üstüne bir teklif: daha fazla bilgi ister misin? İnsanlara iki cevap gösterilip “hangisi daha iyi?” diye sorulmuş; model tercih edilen tona doğru ayarlanmış.
 
@@ -1893,7 +1893,7 @@ Bağlam penceresini aşağıda kendin dene: bu gösterim son sekiz kelimeyi tuta
 | 10 | modelleri metni sınırlı bir pencerede tutar ve eskiyi | Yapay zekâ |
 | 12 | sınırlı bir pencerede tutar ve eskiyi zamanla unutur | Yapay zekâ modelleri metni |
 
-1. Sıfırdan sekize: pencere boş başlıyor. Her yeni kelime yerini buluyor; sekizinci kelimede pencere tam doluyor, hepsi içeride. Pencere dolana kadar her şey hatırlanıyor.
+1. Sıfırdan sekize: pencere boş başlıyor. Her yeni kelime yerini buluyor; sekizinci kelimede pencere tam doluyor, hepsi içeride. Pencere dolana kadar hiçbir kelime dışarı düşmüyor; hepsi pencerede tutuluyor (pencerede olmak, modelin her ayrıntıyı kullanacağı anlamına gelmez).
 2. Dokuzuncu kelime: pencere dolu; “ve” girince “Yapay” dışarı düşüyor ve soluyor. Model artık yalnız son sekiz kelimeyi görüyor.
 3. On ikinci kelime: ilk dört kelime gitmiş. Modelin gördüğü metin “sınırlı bir pencerede tutar ve eskiyi zamanla unutur”. Cümlenin öznesi, “Yapay zekâ modelleri”, artık pencerede yok. Model neyi unuttuğunu bilmiyor; cümle kendi kaderini anlatıyor.
 
@@ -1909,7 +1909,7 @@ Halüsinasyonun tek bir nedeni yoktur: eğitim hedefi (olası devamı üretmek) 
 
 Diğer sınırlar: bilgi kesim tarihi (knowledge cutoff), önyargı (eğitim verisinden miras), kararsızlık/yeniden üretilemezlik (örnekleme), ve hesaplama/enerji maliyeti. Bu sınırları bilmek, bu araçları sorumlu ve etkili kullanmanın ön koşuludur.
 
-Bu gösterim son N token’ı tutan bir kayan penceredir; gerçek bir uygulama sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir.
+Gerçek bir modelin bağlam penceresi token cinsinden sabit bir sınırdır. Bu gösterim ise sadeleştirip son 8 kelimeyi tutan kayan bir pencere kullanır; gerçek bir uygulama sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir.
 
 Şekil 5.7’deki pencere kayan bir kuyruktur: n kelime eklendiğinde unutulan sayısı max(0, n − N), N = 8. Gerçek modellerde birim kelime değil token’dır; Şekil 5.1’deki kuralla aynı cümle 19 token eder; pencere kelime saymaya göre yaklaşık 1.6 kat hızlı dolar: kelime sayarken 8., token sayarken 5. kelimede. O(n²) maliyetinin kaynağı Şekil 5.3’teki ısı tablosu: n token için n × n hücre; pencere 8’den 16’ya çıkınca hücre sayısı 64’ten 256’ya, dört katına çıkar. Bu kuyruk şekle özgüdür; gerçek uygulamada taşma politikası (hata, kırpma, özetleme) sistemin seçimidir.
 
@@ -2409,7 +2409,7 @@ Model “kredin reddedildi” deyince haklı bir soru yükselir: Neden? Birçok 
 | **Toplam** | **+76 → Kredi onaylandı** |
 
 1. Başvuru #1, kapak kapalıyken: “Kredi reddedildi”. Başka hiçbir bilgi yok; itiraz edecek bir yer de yok. Başvuran, sonuçla baş başa kalıyor.
-2. Kapak açılınca hesap ortaya çıkıyor. İki artı etken (+32 ve +18) toplam +50 ediyor. Borç tek başına −46; artılardan düşülünce +4 kalıyor, yani borç tek başına reddettirmiyor. Kısa hesap geçmişinin −12’si eklenince toplam −8; sıfırın altında, ret. Borç en büyük eksi katkı; kısa hesap geçmişiyle birlikte artıların toplamını aşıyor. Tabloyu gören başvuran ne yapacağını da biliyor: itiraz edecekse en büyük kaleme, borca itiraz eder; düzeltecekse önce onu düzeltir.
+2. Kapak açılınca hesap ortaya çıkıyor. İki artı etken (+32 ve +18) toplam +50 ediyor. Borç tek başına −46; artılardan düşülünce +4 kalıyor, yani borç tek başına reddettirmiyor. Kısa hesap geçmişinin −12’si eklenince toplam −8; sıfırın altında, ret. Borç en büyük eksi katkı; kısa hesap geçmişiyle birlikte artıların toplamını aşıyor. Tablo başvurana itiraz için somut bir dayanak verir: her kalemin verisinin doğru olup olmadığını (borç tutarı gerçekten bu mu, hesap geçmişi doğru kaydedilmiş mi) ve kararın gerçekte hangi gerekçeye dayandığını sorabilir. Katkılar modelin bu karardaki hesabını gösterir; bir kalemi değiştirmenin sonucu nasıl değiştireceğini garanti etmez.
 3. Başvuru #2’de üç artı etken +90 ediyor, tek eksi etken −14. Toplam +76; onay. Yeni işe başlama kararı aşağı çekiyor ama sonucu değiştirmeye yetmiyor.
 4. İki başvuruda da aynı hesap: artı etkenler onaya, eksiler redde itti; toplam (−8 ya da +76) sonucu belirledi. İşaretli katkılar kapağı bir karar için açıyor; modelin tamamını saydam yapmıyor.
 
@@ -2476,7 +2476,7 @@ Aşağıdaki kullanımları doğru risk düzeyine yerleştir. Risk arttıkça y�
 **Şekil 7.4 · Riski sınıflandır**
 ![Şekil 7.4](../../figures/out/tr/sekil-7-4-reg.svg)
 
-*Kurulum.* Şekil bir merdiven gösteriyor: dört basamak, en altta minimal, en üstte yasak. Her basamağın yanında o kademenin kuralı yazıyor. Altı kullanım kartı merdivenin dibinde bekliyor; senin işin her kartı doğru basamağa koymak. Ölçüt tek soru: bu kullanım birinin hayatını ya da haklarını etkiliyor mu? Bu, kitabın öğretici ölçütü; yasadaki sınıflandırma sistemin amaçlanan kullanımına, aktörün rolüne ve ilgili maddeye göre yapılır. Merdivenin mantığı her basamağın getirdiği yükte: yukarı çıktıkça belge, denetim ve insan gözetimi eklenir.
+*Kurulum.* Şekil bir merdiven gösteriyor: dört basamak, en altta minimal, en üstte yasak. Her basamağın yanında o kademenin kuralı yazıyor. Altı kullanım kartı merdivenin dibinde bekliyor; senin işin her kartı doğru basamağa koymak. Ölçüt üç soru: sistem ne amaçla kullanılıyor, onu kim kullanıyor ve kişi hakkında hayatını ya da haklarını belirleyen bir karar veriyor mu? Son soru kitabın öğretici ölçütü; yasadaki sınıflandırma sistemin amaçlanan kullanımına, aktörün rolüne ve ilgili maddeye göre yapılır. Merdivenin mantığı her basamağın getirdiği yükte: yukarı çıktıkça belge, denetim ve insan gözetimi eklenir.
 
 | Kademe | Kural |
 |---|---|
@@ -2494,11 +2494,11 @@ Aşağıdaki kullanımları doğru risk düzeyine yerleştir. Risk arttıkça y�
 5. Kredi başvurusu değerlendiren model. Hangi kademe?
 6. Oyun içindeki rakip yapay zekâ. Hangi kademe?
 
-Takılırsan tek soruya dön: bu kullanım birinin hayatını ya da haklarını etkiliyor mu? Cevaplar, gerekçeler ve ilgili maddeler kitabın sonunda.
+Takılırsan üç soruya dön: amaç ne, kullanan kim, kişi hakkında bir karar veriyor mu? Cevaplar, gerekçeler ve ilgili maddeler kitabın sonunda.
 
-*Ne oluyor?* Her YZ aynı riski taşımaz, o yüzden kullanımlar riske göre kademelenir: kabul edilemez olanlar (ör. sosyal puanlama) yasaklanır; yüksek riskliler (kredi, işe alım) sıkı denetim ve insan gözetimi ister; sınırlı riskliler (sohbet botu) şeffaflık yükümlülüğü taşır; minimal riskliler bu yasada büyük ölçüde serbesttir. Kişisel veri ve diğer hukuk kuralları her kademede ayrıca geçerlidir. Risk arttıkça kural da sıkılaşır.
+*Ne oluyor?* Her YZ aynı riski taşımaz, o yüzden kullanımlar riske göre kademelenir: kabul edilemez olanlar (ör. belirli koşullardaki sosyal puanlama) yasaklanır; yüksek riskliler (kredi, işe alım) sıkı denetim ve insan gözetimi ister; sınırlı riskliler (sohbet botu) şeffaflık yükümlülüğü taşır; minimal riskliler bu yasada büyük ölçüde serbesttir. Kişisel veri ve diğer hukuk kuralları her kademede ayrıca geçerlidir. Risk arttıkça kural da sıkılaşır.
 
-*Kendin dene.* 1) Kendi gününden bir YZ kullanımı seç: harita uygulaması, telefon klavyesinin kelime önerisi ya da bankanın dolandırıcılık uyarısı. Kademesini belirle ve gerekçeni yaz. 2) Aynı teknoloji iki farklı basamağa düşebilir mi? Yüz tanımayı düşün: telefon kilidini açmak ile sokakta kalabalığı taramak. 3) Altı kullanımı önce iki kümeye ayır: birinin hayatını ya da haklarını etkileyenler ve etkilemeyenler. Sonra kümeleri kademelerle karşılaştır; kaç kart yüksek basamakta? Canlı demo: [QR 7.4] https://book.onuronder.com/d/3508162a0b
+*Kendin dene.* 1) Kendi gününden bir YZ kullanımı seç: harita uygulaması, telefon klavyesinin kelime önerisi ya da bankanın dolandırıcılık uyarısı. Kademesini belirle ve gerekçeni yaz. 2) Aynı teknoloji iki farklı basamağa düşebilir mi? Yüz tanımayı düşün: telefon kilidini açmak ile sokakta kalabalığı taramak. 3) Altı kullanımı önce iki kümeye ayır: kişi hakkında hayatını ya da haklarını belirleyen bir karar verenler ve böyle bir karar vermeyenler. Sonra kümeleri kademelerle karşılaştır; kaç kart yüksek basamakta? Canlı demo: [QR 7.4] https://book.onuronder.com/d/3508162a0b
 
 #### Teknik derinlik
 
@@ -2508,7 +2508,9 @@ Bu, GDPR ve KVKK gibi kişisel veri rejimlerini tamamlar; onların kuralları (h
 
 Aynı YZ etiketi çok farklı riskler taşır; düzenleme de bu yüzden kademeli.
 
-Bu bölüm, (AB) 2024/1689 sayılı Tüzüğün (AB) 2026/1744 ile değiştirilmiş, 27 Temmuz 2026 tarihli konsolide sürümünü esas alır (erişim: 1 Ekim 2026). Yürürlüğe giriş ile yükümlülüklerin uygulanma tarihleri aynı değildir: Madde 5’teki ilk yasaklar 2 Şubat 2025’ten, Madde 50 şeffaflık kuralları 2 Ağustos 2026’dan beri uygulanıyor; Ek III sistemlerinin yüksek-risk yükümlülükleri büyük ölçüde 2 Aralık 2027’de başlıyor. Üç ince nokta: Ek III 5(b), gerçek kişilerin kredi değerliliğini değerlendiren ya da kredi puanı belirleyen sistemleri kapsar; finansal dolandırıcılık tespiti bu bentten açıkça istisna edilmiştir. Madde 5(1)(h)’deki yasak, kamuya açık alanda kolluk amacıyla gerçek zamanlı uzaktan biyometrik kimlik tespitini hedefler; sınırlı istisnaları ve koşulları vardır, başka amaçlar da otomatik serbest sayılmaz. Madde 50’deki şeffaflık yükümlülükleri tek bir “YZ kullandığını söyle” kuralı değildir: insanla etkileşimde bilgilendirme, sentetik çıktının makinece okunabilir işaretlenmesi ve deepfake açıklaması ayrı ayrı düzenlenir; bunlar yüksek-risk ve diğer hukuk yükümlülüklerinin yerine geçmez.
+Bu bölüm, (AB) 2024/1689 sayılı Tüzüğün, 24 Temmuz 2026’da AB Resmî Gazetesi’nde yayımlanıp 27 Temmuz 2026’da yürürlüğe giren (AB) 2026/1744 sayılı Tüzükle değiştirilmiş konsolide sürümünü esas alır (erişim: 1 Ekim 2026). Yürürlüğe giriş ile yükümlülüklerin uygulanma tarihleri aynı değildir. Madde 5’teki ilk yasaklar 2 Şubat 2025’ten, Madde 50 şeffaflık kuralları 2 Ağustos 2026’dan beri uygulanıyor. 2 Ağustos 2026’dan önce piyasaya sürülmüş ve sentetik ses, görüntü, video ya da metin üreten sistemler, Madde 50(2)’deki işaretleme yükümlülüğüne 2 Aralık 2026’ya kadar uymalıdır (Madde 111(4)). Değişiklikle eklenen yeni yasaklar 2 Aralık 2026’dan itibaren uygulanır: tanınabilir bir kişinin rızası olmadan mahrem ya da cinsel içerikli görüntüsünü üretmek ve çocuk istismarı materyali üretmek (Madde 5(1)(ba), (bb)). Yüksek-risk yükümlülükleri Ek III sistemleri için 2 Aralık 2027’de, Ek I’deki ürün mevzuatı kapsamındaki sistemler için 2 Ağustos 2028’de başlar.
+
+Dört ince nokta. Ek III 5(b), gerçek kişilerin kredi değerliliğini değerlendiren ya da kredi puanı belirleyen sistemleri kapsar; finansal dolandırıcılık tespiti bu bentten açıkça istisna edilmiştir. Ek III’teki bir sistem, karar sonucunu önemli ölçüde etkilemiyorsa yüksek riskli sayılmayabilir: dar bir usul işi, tamamlanmış bir insan işini iyileştirme, karar örüntüsündeki sapmayı yakalama ya da bir hazırlık işi (Madde 6(3)). Ama gerçek kişilerin profilini çıkaran bir Ek III sistemi her zaman yüksek risklidir ve bu istisnaya başvuran sağlayıcı değerlendirmesini piyasaya sürmeden önce belgelemelidir. Madde 5(1)(h)’deki yasak, kamuya açık alanda kolluk amacıyla gerçek zamanlı uzaktan biyometrik kimlik tespitini hedefler; sınırlı istisnaları ve koşulları vardır, başka amaçlar da otomatik serbest sayılmaz. Madde 50 tek bir “YZ kullandığını söyle” kuralı değildir ve yükümlülüğü role göre dağıtır: insanla doğrudan etkileşimde bilgilendirme (50(1)) ve sentetik çıktının makinece okunabilir işaretlenmesi (50(2)) sağlayıcının; duygu tanıma ya da biyometrik kategorizasyon sisteminin bildirilmesi (50(3)) ile deepfake’in ve kamuyu bilgilendirmek için yayımlanan yapay metnin açıklanması (50(4)) sistemi kullanan uygulayıcının yükümlülüğüdür. Sanat, hiciv ya da kurgu eserlerde açıklama sınırlıdır; insan editoryal denetiminden geçen metin 50(4)’ün metin kuralının dışında kalır. Bu yükümlülükler yüksek-risk ve diğer hukuk yükümlülüklerinin yerine geçmez.
 
 GDPR’de rıza tek işleme dayanağı değildir; Madde 6(1) rızanın yanında sözleşme, hukuki yükümlülük, hayati çıkar, kamu yararı ve şartlı meşru menfaat dayanaklarını sayar. Madde 22, yalnızca otomatik işlemeye dayanan ve hukuki ya da benzer ölçüde önemli etki doğuran kararlarla ilgilidir; sözleşme gerekliliği, kanun yetkisi ve açık rıza istisnaları koşulludur; sözleşme ve açık rıza istisnalarında insan müdahalesi isteme, görüş bildirme ve karara itiraz güvenceleri gerekir.
 
@@ -2655,7 +2657,7 @@ Aşağıda kısa yazışmalar var. Her biri için tahmin et: bu cevabı bir insa
 
 Turing testi davranışçı bir ölçüttür: “anlama”yı tanımlamak yerine, ayırt edilemez davranışı yeterli sayar. Eleştiriler: taklit, içsel anlamayı garanti etmez (bkz. Çince Oda) ve test, akıcı dil üreten sistemlerle “kandırılabilir”.
 
-Bazı modeller belirli Turing testi deneylerinde insan katılımcılardan ayırt edilemedi (Jones ve Bergen, 2025). Bu sonuç kullanılan model, istem ve deney düzenine bağlıdır; bilinç ya da genel zekâ kanıtı değildir. Bu, “düşünme” tartışmasını bitirmek yerine soruyu “ölçüt ne olmalı?”ya kaydırdı. Test bir başarım ölçütünden çok tarihsel/kavramsal bir kilometre taşıdır.
+Önceden kayda geçirilmiş bir deneyde (Jones ve Bergen, 2025) katılımcılar aynı anda bir insanla ve bir yapay zekâyla beşer dakikalık yazışmalar yaptı ve hangisinin insan olduğuna karar verdi. İnsan gibi bir kişiliği canlandırmasını söyleyen bir istemle çalışan GPT-4.5, oyunların yüzde 73’ünde insan diye seçildi; aynı istemle LLaMa-3.1-405B yüzde 56’ya ulaştı, böyle bir istem verilmeyen GPT-4o ise yüzde 21’de kaldı. Sonuç bu modellere, bu isteme ve beş dakikalık bu düzene bağlıdır; daha uzun ya da başka türlü sorgulanan bir testte değişebilir ve bilinç ya da genel zekâ kanıtı değildir. Bu, “düşünme” tartışmasını bitirmek yerine soruyu “ölçüt ne olmalı?”ya kaydırdı. Test bir başarım ölçütünden çok tarihsel/kavramsal bir kilometre taşıdır.
 
 Ayırt edilemezlik ölçüt olunca, ayırt etmeye yarayan her ipucu da öğrenilebilir bir hedefe dönüşür.
 
@@ -2721,11 +2723,11 @@ Anlama sorusunu bir yana koy: makineler ne kadar ileri gidebilir?
 
 ### 8.4 Dar YZ’den süper zekâya
 
-Bugünkü yapay zekâ “dar” sayılır: bir işte (satranç, çeviri, görüntü) çok iyidir; birçok görevde çalışan sohbet modelleri bile insan düzeyinde genel öğrenme göstermez. Bir sonraki basamak, insan gibi her alanda öğrenip uyum sağlayabilen genel yapay zekâ (AGI). Onun da ötesinde, her alanda insanı kat kat aşan bir süper zekâ hayal ediliyor.
+Bugünkü yapay zekâ “dar” sayılır: belirli işlerde (satranç, çeviri, görüntü) çok iyidir; birçok görevde çalışan sohbet modelleri bile insan düzeyinde genel öğrenme göstermez. Bir sonraki basamak, insan gibi her alanda öğrenip uyum sağlayabilen genel yapay zekâ (AGI). Onun da ötesinde, her alanda insanı kat kat aşan bir süper zekâ hayal ediliyor.
 
 Şekil 8.3’teki basamaklara tek tek bak; her birinin ne anlama geldiğini ve “bugün var mı?” sorusunun cevabını gör.
 
-> **Kenar notu.** “Yapay zekâ insanı geçecek” başlıkları sık çıkar ama dikkat: bir işte geçmek (dar) ile her işte geçmek (genel) çok farklıdır. Bugün ilkindeyiz; ikincisi hâlâ açık bir soru.
+> **Kenar notu.** “Yapay zekâ insanı geçecek” başlıkları sık çıkar ama dikkat: belirli işlerde geçmek (dar) ile her alanda geçmek (genel) çok farklıdır. Bugün ilkindeyiz; ikincisi hâlâ açık bir soru.
 
 **Şekil 8.3 · Yetenek basamakları**
 ![Şekil 8.3](../../figures/out/tr/sekil-8-3-capability.svg)
@@ -2744,7 +2746,7 @@ Bugünkü yapay zekâ “dar” sayılır: bir işte (satranç, çeviri, görün
 
 Bir sohbet modeli hem şiir yazıyor hem kod üretiyor; ağırlıkları sabitken bile bağlamdaki yönerge ve örneklerle yeni bir göreve uyarlanabiliyor (Brown vd., 2020). Bu genel sayılmaz mı? Bazı uzmanlar bu yüzden dar ile genel arasına ara basamaklar koyar; insan düzeyinde genel zekâ için herkesin kabul ettiği bir ölçüt yoktur. Tabloda üç basamak var; gerçek dünyada muhtemelen sürekli bir eğim. Basamak, konuşmayı kolaylaştıran bir sadeleştirme.
 
-*Ne oluyor?* Yetenek üç basamakta düşünülür: dar YZ tek bir işte iyidir (bugün buradayız); genel YZ (AGI) insan gibi her alanda öğrenebilir (henüz yok, tartışmalı); süper zekâ ise her alanda insanı kat kat aşar (şimdilik hayal). Her işi yapabilmek ile bilinçli olmak ayrı şeylerdir.
+*Ne oluyor?* Yetenek üç basamakta düşünülür: dar YZ belirli görevlerde iyidir (bugün buradayız); genel YZ (AGI) insan gibi her alanda öğrenebilir (henüz yok, tartışmalı); süper zekâ ise her alanda insanı kat kat aşar (şimdilik hayal). Her işi yapabilmek ile bilinçli olmak ayrı şeylerdir.
 
 *Kendin dene.* 1) Bugün kullandığın üç yapay zekâ ürününü (çeviri, öneri, sohbet) tabloya yerleştir. Hepsi ilk satıra mı düştü? Birini ikinci satıra koymak istiyorsan, o sistemin hangi yeni işi kendi başına öğrendiğini söyle. 2) “AGI geldi” diyebilmek için hangi testin geçilmesi gerekir? Bir cümlelik ölçüt öner; sonra ölçütünün Turing testinden neden farklı olduğunu söyle. 3) Bir işte insanı geçen ama genel olmayan bir sistem adı ver. Canlı demo: [QR 8.3] https://book.onuronder.com/d/023e49955d
 
@@ -3032,9 +3034,9 @@ Kitap burada bitiyor, soruları bitmiyor. Son altı soru.
 **Kendin dene.** 1) Getir: kontrol birimi bellekten “çarp” talimatını alır (Bellek). Yürüt: ALU 7 ile 6’yı okur ve 7 × 6 = 42 hesaplar (İşlemci). Yaz: 42 bir yazmaca ya da belleğe kaydedilir; Giriş / Çıkış ancak ayrı bir “ekrana yaz” talimatı yürütülünce iş başına geçer ve 42 ekranda belirir. 2) Bir tur, üç evre daha: getir “sonucu 2 ile çarp”, yürüt 8 × 2 = 16, yaz 16 belleğe. Ekranda görünmesi için ayrıca bir “ekrana yaz” satırı gerekir; kaydetme ile dışarı verme ayrı işlerdir. 3) 3 milyar × 3 = 9 milyar evre.
 
 #### Şekil 1.5 · Bugün var mı, yoksa bilim kurgu mu?
-**Kendin dene.** 1) Navigasyon, çeviri ve film önerisi: üçü de dar YZ, sol sütun. Her biri eğitildiği işin dışına çıkamaz; navigasyon uygulamasından çeviri isteyemezsin. 2) İkisi de bugün yok ama aynı soru değil. Dördüncü kart “genel” sorusuna dair: alanlar arasında aktarılabilir yetenekle her alanı öğrenebilir mi? Beşinci kart “güçlü” sorusuna dair: gerçekten anlıyor, bilinçli mi? Evet, bir makine genel olup bilinçsiz olabilir; AGI tanımında bilinç şartı yoktur. 3) Hiçbir şey olmaz; motor yalnızca satranç konumlarını değerlendirir, “çorba” diye bir girdi tanımaz. Dar YZ: tek bir işte insanı geçebilen ama o işin dışında hiçbir şey yapamayan sistem.
+**Kendin dene.** 1) Navigasyon, çeviri ve film önerisi: üçü de dar YZ, sol sütun. Her biri belirli görevler için kurulmuştur ve alanlar arasında insan düzeyinde genel öğrenme göstermez; navigasyon uygulamasından çeviri isteyemezsin. 2) İkisi de bugün yok ama aynı soru değil. Dördüncü kart “genel” sorusuna dair: alanlar arasında aktarılabilir yetenekle her alanı öğrenebilir mi? Beşinci kart “güçlü” sorusuna dair: gerçekten anlıyor, bilinçli mi? Evet, bir makine genel olup bilinçsiz olabilir; AGI tanımında bilinç şartı yoktur. 3) Hiçbir şey olmaz; motor yalnızca satranç konumlarını değerlendirir, “çorba” diye bir girdi tanımaz. Dar YZ: belirli bir görevde ya da sınırlı bir görev kümesinde çok iyi olan, ama insan gibi her alanda öğrenip yeteneğini yeni alanlara genel olarak aktaramayan sistem. Çok görevli olması tek başına onu genel yapmaz.
 
-**Kendini sına.** 1 Satranç motoru → Bugün kullanılan sistem: dar YZ; tek iş, satranç; başka hiçbir şeyi bilmez. 2 Yüz tanıma sistemi → Bugün kullanılan sistem: dar YZ; yüzleri eşleştirir, yüz dışında görevi yok. 3 Sohbet botu (dil modeli) → Bugün kullanılan sistem: dar YZ; şiir de kod da yazsa eğitildiği alanın dışına çıkamaz, kendi amacı yok. Çok iş yapmak genel olmak değildir; kartların en yanıltıcısı bu. 4 Her mesleği insan gibi öğrenip yapan, kendi amaçları olan makine → Varsayımsal sistem: alanlar arası aktarılabilir yetenek AGI tanımının kendisi; böyle bir sistem yapılmadı. 5 Kendini fark eden, bilinçli bir YZ → Bilinç sorusu: böyle bir sistem bugün yok, ama kartın sorduğu şey yetenek değil bilinç. Bilinç güçlü YZ sorusudur, AGI tanımına girmez; genel bir makine bilinçsiz olabilir. Bu yüzden kart “Varsayımsal sistem” sütununa değil, ayrı sütuna gider.
+**Kendini sına.** 1 Satranç motoru → Bugün kullanılan sistem: dar YZ; tek iş, satranç; başka hiçbir şeyi bilmez. 2 Yüz tanıma sistemi → Bugün kullanılan sistem: dar YZ; yüzleri eşleştirir, yüz dışında görevi yok. 3 Sohbet botu (dil modeli) → Bugün kullanılan sistem: dar YZ; şiir de kod da yazar, istemdeki örneklerle yeni bir işe bir ölçüde uyum da gösterebilir (bağlam içi uyum), ama insan düzeyinde alanlar arası genel öğrenme ve aktarım göstermez; kendi amacı yok. Çok iş yapmak genel olmak değildir; kartların en yanıltıcısı bu. 4 Her mesleği insan gibi öğrenip yapan, kendi amaçları olan makine → Varsayımsal sistem: alanlar arası aktarılabilir yetenek AGI tanımının kendisi; böyle bir sistem yapılmadı. 5 Kendini fark eden, bilinçli bir YZ → Bilinç sorusu: böyle bir sistem bugün yok, ama kartın sorduğu şey yetenek değil bilinç. Bilinç güçlü YZ sorusudur, AGI tanımına girmez; genel bir makine bilinçsiz olabilir. Bu yüzden kart “Varsayımsal sistem” sütununa değil, ayrı sütuna gider.
 
 #### Şekil 1.6 · Üstel büyümeyi hisset
 **Kendin dene.** 1) n = 14, 1999: 2ⁿ = 16.384, transistör 37.683.200 (yuvarlarsan 37.7 milyon). n = 15, 2001: 2ⁿ = 32.768, transistör 75.366.400 (75.4 milyon). 2) 1989 satırı, n = 9: 1.177.600. 1971’den itibaren 18 yıl. 3) Üç yıllık katlamayla 1971’den 1995’e 24 yıl = 8 katlama: 2.300 × 256 = 588.800. İki yıllık tabloda 1995 değeri 9.420.800; aradaki fark 16 kat. Katlama süresine eklenen tek bir yıl, 24 yılın sonunda 16 kat fark yaratıyor.
@@ -3042,12 +3044,12 @@ Kitap burada bitiyor, soruları bitmiyor. Son altı soru.
 ### Bölüm 2 cevapları
 
 #### Şekil 2.1 · Bilgi zinciriyle çıkarım
-**Kendin dene.** 1) Evet. Makine beş ok izler: Tekir → Kedi → Memeli → Hayvan → Canlı → Varlık. Zincir uzadıkça adım sayısı artar ama kural aynı kalır. 2) Bilinmiyor. Kedi’den zincir Memeli, Hayvan ve Canlı’ya uzanır; Tekir’e ulaşılmaz. Bu cevap doğrudur: her kedi Tekir değildir, “bir …dır” bağı tek yönlüdür. Tekir bir örnek, Kedi bir sınıftır; sınıf, örneğinin altına yazılamaz. 3) Zincir yalnızca olumlu “bir …dır” bağları tutar; olumsuz bilgi için ayrı bir olgu ya da kural gerekir. Örneğin “Hayvan ile Bitki ayrık sınıflardır” kuralı eklenirse makine “Tekir bir Hayvan’dır” bilgisinden “Bitki değildir” sonucunu türetebilir. Bunu eklemeyen sistem “bilinmiyor” demekle yetinir.
+**Kendin dene.** 1) Evet. Makine beş ok izler: Tekir → Kedi → Memeli → Hayvan → Canlı → Varlık. Zincir uzadıkça adım sayısı artar ama kural aynı kalır. 2) Bilinmiyor. Kedi’den zincir Memeli, Hayvan ve Canlı’ya uzanır; Tekir’e ulaşılmaz. Bu cevap doğrudur: her kedi Tekir değildir, “örneği” ve “alt sınıfı” bağları tek yönlüdür. Tekir bir örnek, Kedi bir sınıftır; sınıf, örneğinin altına yazılamaz. 3) Zincir yalnızca olumlu “örneği” ve “alt sınıfı” bağları tutar; olumsuz bilgi için ayrı bir olgu ya da kural gerekir. Örneğin “Hayvan ile Bitki ayrık sınıflardır” kuralı eklenirse makine “Tekir bir Hayvan’dır” bilgisinden “Bitki değildir” sonucunu türetebilir. Bunu eklemeyen sistem “bilinmiyor” demekle yetinir.
 
 #### Şekil 2.2 · Küçük bir uzman sistem
 **Kendin dene.** 1) R1, R2, R3 ve R5 ateşler; dört öneri: Şemsiye al · Mont giy · Atkı tak · Dikkat: şemsiye ters dönebilir. R4 sessiz kalır, çünkü yağmur var. 2) Yalnız R4 ateşler: “Hafif giyinebilirsin.” R4 yalnızca yağmura ve soğuğa bakar; rüzgârı hiç sormaz. Rüzgârlı havada bu öneri eksik kalır. Eksik olan, örneğin “EĞER rüzgârlı ise rüzgârlık al” kuralıdır. Yazılmayan koşul yok sayılır; kuralların kör noktası bu. 3) R5 yalnız rüzgâra bağlansaydı, yağmur yokken ve şemsiye önerilmemişken bile “şemsiye ters dönebilir” uyarısı verirdi. Zincirleme, uyarıyı gerçekten ilgili duruma bağlar: uyarı ancak şemsiye önerildiyse anlamlıdır.
 
-#### Şekil 2.3 · Yol bulma: sezgisiz vs sezgili
+#### Şekil 2.3 · Yol bulma: sezgisiz ile sezgili
 **Kendin dene.** 1) Puan = sütun farkı + satır farkı, hedef 8. sütun, 6. satır. 4. sütun, 2. satır: 4 + 4 = 8. 1. sütun, 6. satır: 7 + 0 = 7. Alt köşe daha yakın görünür, ama 5. sütundaki duvar yüzünden çıkmazdadır; yolun üstündeki kare 4. sütun, 2. satırdır. Sezgisel arama bu yüzden alt satıra sapıp beş kare harcadı. 2) Puan duvarları görmez; 12, duvarsız ızgaradaki en kısa yoldur. Üç engel üç dolambaç ekler ve gerçek yol 18 adıma çıkar. Puan gerçek uzaklığı hiçbir zaman aşmaz; teknik derinlikte “kabul edilebilir” denen sezgisel bu. Açgözlü arama bu puana rağmen garantisiz; A* aynı puana gidilen yolu ekleyince garanti geri gelir. 3) 12 adım: 1. sütundan aşağı 5 adım, alt satırdan sağa 7 adım. Engel kalkınca yol, puanın söylediği uzaklığa iner.
 
 #### Şekil 2.4 · Hava durumu Markov zinciri
@@ -3077,7 +3079,7 @@ Ek sorular: “Etiketli/etiketsiz” sözcüğü 1, 4 ve 6’da geçiyor. Öteki
 **Kendin dene.** 1) Eğim 0.36 · (2.06 − 5) = −1.06. Yeni x = 2.06 + 0.18 · 1.06 = 2.25. Kayıp 0.18 · (2.25 − 5)² + 0.1 = 1.46. 2) η = 6: 1. adım x = 0.6 + 6 · 1.584 ≈ 10.10; eğim 0.36 · 5.10 = 1.84; 2. adım x = 10.10 − 6 · 1.837 ≈ −0.92. Dibe uzaklık 4.4 → 5.1 → 5.9: büyüyor. Top uzaklaşıyor, ıraksama. (Çarpan 1 − 2.16 = −1.16, mutlak değeri 1’den büyük.) 3) Evet: η = 1 / 0.36 ≈ 2.78. O zaman x − (x − 5) = 5 olur, tek adımda dip. Bu, vadi tam parabol olduğu için mümkün; gerçek kayıp yüzeylerinde eğrilik her yerde farklıdır ve tek adımda dibe indiren bir oran yoktur.
 
 #### Şekil 3.6 · Aynı veri, üç model
-**Kendin dene.** 1) Eksik uyum: 3.1 − 1.8 = 1.3. Temsili eğri: 3.0 − 1.6 + 0.15 · sin(6) ≈ 1.36. Kırık çizgi: x = 9’da biter, x = 10 için hiçbir şey söyleyemez; son parçayı uzatırsan 2.6 der, yani son iki noktanın rastgele yükselişini geleceğe taşır. 2) x = 2: kırık çizgi (1, 3.2) ile (3, 3.0) arasında 3.1 der, gerçek 2.4, hata 0.7; düz doğru 2.74 der, hata 0.34. x = 8: kırık çizgi 2.15 der, hata 0.75; düz doğru 1.66 der, hata 0.26. Yine ezberci kaybeder. 3) Modelin eğitim noktalarını hatırladığını kanıtlar; yeni bir noktada iyi olacağını kanıtlamaz. Saklama sınavı bunu gösterdi: eğitim hatası sıfırken doğrulama hatası düz doğrununkinden büyük.
+**Kendin dene.** 1) Eksik uyum: 3.1 − 1.8 = 1.3. Temsili eğri: 3.0 − 1.6 + 0.15 · sin(6) ≈ 1.36. Kırık çizgi: x = 9’da biter, x = 10 için hiçbir şey söyleyemez; son parçayı uzatırsan 2.6 der, yani son iki noktanın rastgele yükselişini geleceğe taşır. 2) x = 2: kırık çizgi (1, 3.2) ile (3, 3.0) arasında 3.1 der, gerçek 2.4, hata 0.7; düz doğruyu kalan yedi noktaya en küçük kareler yöntemiyle yeniden uydurursan y ≈ 3.19 − 0.15x olur ve 2.88 der, hata 0.48. x = 8: kırık çizgi 2.15 der, hata 0.75; aynı doğru 1.95 der, hata 0.55. Yine ezberci kaybeder. 3) Modelin eğitim noktalarını hatırladığını kanıtlar; yeni bir noktada iyi olacağını kanıtlamaz. Saklama sınavı bunu gösterdi: eğitim hatası sıfırken doğrulama hatası düz doğrununkinden büyük.
 
 ### Bölüm 4 cevapları
 
@@ -3096,7 +3098,7 @@ Ek sorular: “Etiketli/etiketsiz” sözcüğü 1, 4 ve 6’da geçiyor. Öteki
 #### Şekil 4.5 · Hafızalı işleme (gerçek yineleme)
 **Kendin dene.** 1) Wₕ·h₀ terimi; h₀ = 0 olduğu için sıfırdır. İlk adımda gizli durum yalnız Wₓ·x₁’den, yani Wₓ’in ilk sütunundan gelir: h₁ = tanh([0.9, −0.6, 0.2, −0.8]). 2) Üçüncü adımda “o” işlenir; Wₓxₜ artık 4. sütundur: [−0.7, 0.4, 0.6, 0.9]. Wₕh₂ = [−0.14, 0.53, −0.12, −0.06] eklenince toplam [−0.84, 0.93, 0.48, 0.84]; h₃ = [−0.68, 0.73, 0.45, 0.69]. Tablodaki [0.16, 0.32, 0.53, −0.58]’den bambaşka: aynı kelimeler, farklı sıra, farklı hafıza. 3) Evet; sırayı umursamayan model (kelime torbası) iki cümle için aynı temsili üretir, çünkü kelimeler birebir aynı (köpek, adamı, ısırdı), yalnız sıra farklı. RNN her kelimeyi önceki hafızayla işlediği için farklı sırada farklı gizli durumlar üretir; iki cümle onun için ayrı şeylerdir. (“Adam köpeği ısırdı” farklı bir çift olurdu: hâl ekleri değiştiği için kelime torbası bile onu ayırt eder.)
 
-#### Şekil 4.6 · Üretici vs Ayırt edici
+#### Şekil 4.6 · Üretici ile ayırt edici
 **Kendin dene.** 1) Tur 5; sahte olasılığı yüzde 40, ilk kez yüzde 50’nin altına iner. 2) Kural: p(r) = 95 − 11 × r. r = 8 için 95 − 88 = 7. Bu sayı şeridin kuralından gelir; ölçülmüş bir olasılık değildir. 3) Ayırt edici sahteyi gerçekten ayıramıyor; yazı tura atıyor. İdeal, iyi eğitilmiş bir ayırt edici varsayımıyla bu, oyunun dengesiyle uyumludur (teknik dilde D(x) = 1/2): üretici gerçek dağılımı yakalamıştır. Ama tek başına yüzde 50 bunu kanıtlamaz; ayırt edici öğrenememiş de olabilir.
 
 ### Bölüm 5 cevapları
@@ -3111,7 +3113,7 @@ Ek sorular: “Etiketli/etiketsiz” sözcüğü 1, 4 ve 6’da geçiyor. Öteki
 **Kendin dene.** 1) Evet, beş satırın hepsi 1.00: Kedi 0.50+0.30+0.05+0.10+0.05; kaçtı 0.50+0.30+0.10+0.05+0.05; çünkü 0.20+0.40+0.20+0.10+0.10; o 0.55+0.10+0.05+0.20+0.10; korkmuştu 0.30+0.10+0.05+0.40+0.15. 2) En koyu hücre “köpek”e kayardı; “korkmuştu” fiili öznesini arar ve artık özne bir zamir değil, doğrudan “köpek”. “Kedi”ye giden pay da düşerdi, çünkü korkan artık kedi değil. 3) “çünkü” sütunu her satırda 0.05–0.20 arasında; bu temsili tabloda hiçbir kelime ona yaslanmıyor. Bağlaç iki olayı birbirine bağlar ama kendi başına kim, ne, nerede sorularına cevap taşımaz; tablo bu sezgiye göre kurulmuş. Kesin bir hüküm çıkmaz: ağırlıklar elle seçilmiştir ve gerçek bir modelde tek bir dikkat tablosundaki düşük ağırlık, kelimenin anlam yükü hakkında tek başına hüküm vermez; başka bir baş aynı bağlaca yüksek ağırlık verebilir.
 
 #### Şekil 5.4 · Kelime kelime üret
-**Kendin dene.** 1) İkinci adımda birikimli toplamlar 0.34 (hızlı) ve 0.63 (güçlü); U = 0.50 ilk eşiği geçip ikincinin altında kalır, seçim “güçlü” olur. Üçüncü adım değişmez (U = 0.12 → gelişiyor); cümle “Yapay zekâ artık güçlü gelişiyor.” 2) Açgözlü: 0.42 × 0.38 × 0.50 ≈ 0.080 (yüzde 8). Örnekleme cümlesi: 0.28 × 0.20 × 0.50 = 0.028 (yüzde 3). Açgözlü cümle yaklaşık üç kat daha olası; örnekleme daha az olası yolları da açıyor, en olası cümleyi de seçebilir. 3) İkinci adım: en olası aday yalnızca yüzde 38 (birinci adımda 42, üçüncüde 50). Pay ne kadar düşükse olasılık öteki adaylara o kadar yayılmış, model o kadar kararsız.
+**Kendin dene.** 1) İkinci adımda birikimli toplamlar 0.34 (hızlı) ve 0.62 (güçlü); U = 0.50 ilk eşiği geçip ikincinin altında kalır, seçim “güçlü” olur. Üçüncü adım değişmez (U = 0.12 → gelişiyor); cümle “Yapay zekâ artık güçlü gelişiyor.” 2) Açgözlü: 0.42 × 0.38 × 0.50 ≈ 0.080 (yüzde 8). Örnekleme cümlesi: 0.28 × 0.20 × 0.50 = 0.028 (yüzde 3). Açgözlü cümle yaklaşık üç kat daha olası; örnekleme daha az olası yolları da açıyor, en olası cümleyi de seçebilir. 3) İkinci adım: en olası aday yalnızca yüzde 38 (birinci adımda 42, üçüncüde 50). Pay ne kadar düşükse olasılık öteki adaylara o kadar yayılmış, model o kadar kararsız.
 
 #### Şekil 5.5 · Üç aşamada bir asistan
 **Kendin dene.** 1) Açık uçlu; ölçüt, birincinin sürdürmesi, ikincinin cevaplayıp durması. Örnek: birinci aşama “Su deniz seviyesinde 100 °C’de kaynar ve bu sıcaklık yükseklikle düşer. Kaynama noktası...” gibi durmak bilmeyen bir ansiklopedi cümlesi yazar. İkinci aşama soruyu cevaplar ve durur: “Su deniz seviyesinde 100 °C’de kaynar.” 2) “Doğru ama kaba” tercih edilmeli; “dürüst” hedefi doğruluğu, “yardımcı” hedefi de işe yarar bilgiyi önde tutar. Kibarlık üçüncü aşamanın ayrı bir kazanımıdır: ideal cevap hem doğru hem kibar olandır, ama ikisi çatışırsa doğruluk önce gelir. Yanlış ama kibar cevabı tercih eden bir ödül sinyali, modeli halüsinasyona teşvik eder. 3) “Örnek çıktı” satırı: üç sütunda da bilgi aynı (Ankara), değişen yalnız cevabın uzunluğu ve tonu. Bu üç örnek aynı bilginin farklı yanıt biçimlerini gösteriyor. Ama üç hazır cümleden ince ayarın bilgiyi değiştiremeyeceği sonucu çıkmaz; ince ayar bilgiyi ve görev başarımını da değiştirebilir, örnek bunu göstermek için kurulmamıştır.
@@ -3145,7 +3147,7 @@ Ek sorular: “Etiketli/etiketsiz” sözcüğü 1, 4 ve 6’da geçiyor. Öteki
 **Kendin dene.** 1) A = 50 + 0.4·75 = 80, B = 50 − 0.4·75 = 20; parite farkı 60 puan. 2) Yüzde 9’da. Yüzde 8’de oranlar 53/47 (fark 6, hâlâ “dengeli”); yüzde 9’da 54/46 olur, fark 8 ve gösterim etiketi çarpığa çevirir. 3) Hayır. Ölçeğin ucunda (e = 100) A yüzde 90’da, B yüzde 10’da kalır. Yüzde 95 ve yüzde 5 sınırlarına ulaşmak için e’nin 112.5 olması gerekirdi; ölçek 100’de bitiyor. Sınırlar gösterimin kuralında emniyet kemeri olarak duruyor, hiç devreye girmiyor.
 
 #### Şekil 7.2 · Beyaz kutu: kararı açıkla
-**Kendin dene.** 1) Evet, değişir. Toplam −8 + 10 = +2; sıfırdan büyük olduğu için kredi onaylanır. Tek etkendeki 10 puanlık düzelme kararı çevirir, çünkü borç tek başına değil, −12 ile birlikte reddettiriyordu; açık kutunun yararı da bu: hangi etkeni düzeltince ne olacağını görürsün. Katkılar temsili; gerçek bir modelde taban değer ve ölçek ayrıca belirtilir. 2) −90 ya da daha düşük (büyüklüğü en az 90 puan). Artı etkenler +40 + 28 + 22 = +90 ediyor; eksi etken −90 olunca toplam 0 olur, “sıfırdan büyük” koşulu sağlanmaz ve karar redde döner. 3) Yaklaşık yüzde 70. Çubuk uzunluğu en büyük mutlak katkıya oranlanır: 32 / 46 ≈ 0.70.
+**Kendin dene.** 1) Evet, değişir. Toplam −8 + 10 = +2; sıfırdan büyük olduğu için kredi onaylanır. Tek etkendeki 10 puanlık düzelme kararı çevirir, çünkü borç tek başına değil, −12 ile birlikte reddettiriyordu; bu soru katkının doğrudan toplama eklendiği toplamsal bir oyuncak model varsayar. Gerçek bir modelde bir girdiyi değiştirmek bütün katkıları yeniden hesaplatır; SHAP katkıları sonucun nasıl değişeceğini tek başına garanti etmez. Katkılar temsili; gerçek bir modelde taban değer ve ölçek ayrıca belirtilir. 2) −90 ya da daha düşük (büyüklüğü en az 90 puan). Artı etkenler +40 + 28 + 22 = +90 ediyor; eksi etken −90 olunca toplam 0 olur, “sıfırdan büyük” koşulu sağlanmaz ve karar redde döner. 3) Yaklaşık yüzde 70. Çubuk uzunluğu en büyük mutlak katkıya oranlanır: 32 / 46 ≈ 0.70.
 
 #### Şekil 7.3 · Gerçek mi, yapay mı?
 **Kendini sına.** Her kartta iki soru ayrı puanlanır: şüphe işaretini gördün mü, bağımsız bir doğrulama kanalı yazdın mı? Üretim yöntemi (gerçek kayıt mı, yapay mı) ile olayın doğruluğu iki ayrı eksendir; ipucu seni incelemeye götürür, kökene tek başına hükmetmez. 1) Video → Şüpheli: doğrula. İşaret: dudak hareketleri ile ses uyuşmuyor; bu bir deepfake izi olabilir, ama kötü sıkıştırma ya da dublaj da aynı görüntüyü verir. Kanal: konuşmanın tam kaydı, kişinin ya da kurumun resmî hesabı, en az bir haber ajansı. Cümlenin söylenip söylenmediği, videonun nasıl üretildiğinden ayrı doğrulanır. 2) Telefon → Şüpheli: doğrula; işlem yapma. İşaret: aciliyet baskısı ile olağandışı istek bir arada; ses benzerliği kanıt değil, robotik tonlama da kesin kanıt değil. Kanal: aramayı kapat, patronu kendi bildiğin numaradan geri ara, transferi ikinci bir kişiye onaylat. Sesin gerçek mi klon mu olduğunu bilmesen de karar aynı: doğrulamadan para gitmez. 3) Haber → Gerçek görünüyor; olay doğrulanmış. İşaret: birden çok bağımsız kaynak ve izlenebilir köken olayın doğruluğunu destekler. Bu, metni insanın mı yapay zekânın mı yazdığını söylemez; yapay yazılmış doğru bir haber de olabilir. Kanal: kaynakların kendi sayfaları, varsa birincil belge. 4) Fotoğraf → Şüpheli: doğrula. İşaret: altı parmak ve anlamsız yazı, üretken modellerin bilinen izleri; ama fotoğraf düzenleme ya da gerçek bir anomali de olabilir. Kanal: tersine görsel arama ile ilk yayımlayanı bul; varsa içerik kimlik bilgisi (C2PA) kaydına bak. Kayıt yokluğu sahtelik kanıtı değildir. Belirlenemez ne zaman doğru cevap: ipucu yok, kaynak yok, doğrulayacak kanal yok. O zaman hüküm verme; paylaşma.
@@ -3153,7 +3155,7 @@ Ek sorular: “Etiketli/etiketsiz” sözcüğü 1, 4 ve 6’da geçiyor. Öteki
 
 #### Şekil 7.4 · Riski sınıflandır
 **Kendini sına.** Kademeler, 27 Temmuz 2026 tarihli konsolide AB YZ Yasası metnine göre (erişim 1 Ekim 2026); dört basamak öğretici bir özettir, her örnek amaca, aktöre ve ilgili maddeye bağlıdır. 1) Vatandaşları davranışına göre puanlayan devlet sistemi → Yasak: kamu otoritesinin sosyal davranışa göre puanlaması, Madde 5(1)(c)’deki koşullarla (bağlamdan kopuk ya da orantısız olumsuz muamele) yasaktır. Her puanlama otomatik olarak yasak değildir; koşullar aranır. 2) İşe alımda adayları otomatik eleyen sistem → Yüksek: Ek III 4(a), işe alım ve seçmede aday eleyen sistemleri sayar; sıkı uyum ve insan gözetimi gerekir. 3) Müşteriyle konuşan sohbet botu → Sınırlı: Madde 50(1), kişinin bir YZ ile etkileştiğini bilmesini ister. Bu “sadece şeffaflık” demek değildir; kişisel veri ve tüketici hukuku ayrıca geçerlidir. 4) E-postada spam filtresi → Minimal: verilen bilgilerle Ek III’teki bir yüksek-risk kategorisi gösterilemiyor; yasa bu kullanıma özel yükümlülük koymuyor. 5) Kredi başvurusu değerlendiren model → Yüksek: Ek III 5(b), gerçek kişilerin kredi değerliliğini değerlendiren ya da kredi puanı belirleyen sistemleri kapsar; finansal dolandırıcılık tespiti bu bentten istisnadır. İşe alımla aynı basamak. 6) Oyun içindeki rakip yapay zekâ → Minimal: 4 ile aynı gerekçe; bu özel yüksek-risk kategorisi gösterilemiyor.
-**Kendin dene.** 1) Harita uygulaması ve klavye önerisi → minimal; verilen bilgilerle bir yüksek-risk kategorisi gösterilemiyor. Bankanın dolandırıcılık uyarısı: finansal dolandırıcılık tespiti, kredi değerliliğine ilişkin Ek III 5(b) sınıfından istisnadır; hesabı otomatik dondurmak ciddi hak etkileri yaratabilir, ama bu tek başına sistemi yüksek-risk sınıfına sokmaz. Sistemin amacı, diğer uygulanabilir hükümler ve veri koruma yükümlülükleri ayrıca değerlendirilir. Kitabın “hayatını ya da haklarını etkiliyor mu?” sorusu etik bir merdiven; hukuki sınıflandırmayla aynı şey değil. 2) Evet. Telefon kilidini açan yüz tanıma, yalnız iddia edilen kimliği doğrular; Ek III 1(a)’daki uzaktan kimlik tespitinden ayrıdır ve bu özel yüksek-risk kategorisi gösterilemiyor. Kamuya açık alanda, kolluk amacıyla, gerçek zamanlı uzaktan biyometrik kimlik tespiti ise Madde 5(1)(h) ile yasaktır; sınırlı istisnaları (hedefli arama, ağır suç, izin usulü) ve koşulları vardır. Kolluk dışı kullanım bu yasağın kapsamında değildir ama serbest de değildir: GDPR Madde 9 ve Ek III 1(a) devreye girer. Teknoloji aynı, amaç ve hüküm farklı. 3) Kitabın ölçütüne göre etkileyenler: 1, 2, 5; etkilemeyenler: 3, 4, 6. Etkileyenlerden biri (1) yasak, ikisi (2 ve 5) yüksek basamakta; yüksek basamakta iki kart var. Etkilemeyenlerden 3 sınırlı, 4 ve 6 minimal. Bu sayım kitabın öğretici ölçütüyle yapıldı; yasadaki sınıf madde ve eke göre belirlenir.
+**Kendin dene.** 1) Harita uygulaması ve klavye önerisi → minimal; verilen bilgilerle bir yüksek-risk kategorisi gösterilemiyor. Bankanın dolandırıcılık uyarısı: finansal dolandırıcılık tespiti, kredi değerliliğine ilişkin Ek III 5(b) sınıfından istisnadır; hesabı otomatik dondurmak ciddi hak etkileri yaratabilir, ama bu tek başına sistemi yüksek-risk sınıfına sokmaz. Sistemin amacı, diğer uygulanabilir hükümler ve veri koruma yükümlülükleri ayrıca değerlendirilir. Kitabın “kişi hakkında karar veriyor mu?” sorusu öğretici bir merdiven; hukuki sınıflandırmayla aynı şey değil. 2) Evet. Telefon kilidini açan yüz tanıma, yalnız iddia edilen kimliği doğrular; Ek III 1(a)’daki uzaktan kimlik tespitinden ayrıdır ve bu özel yüksek-risk kategorisi gösterilemiyor. Kamuya açık alanda, kolluk amacıyla, gerçek zamanlı uzaktan biyometrik kimlik tespiti ise Madde 5(1)(h) ile yasaktır; sınırlı istisnaları (hedefli arama, ağır suç, izin usulü) ve koşulları vardır. Kolluk dışı kullanım bu yasağın kapsamında değildir ama serbest de değildir: GDPR Madde 9 ve Ek III 1(a) devreye girer. Teknoloji aynı, amaç ve hüküm farklı. 3) Kitabın ölçütüne göre kişi hakkında karar verenler: 1, 2, 5; böyle bir karar vermeyenler: 3, 4, 6. İkinci küme hakları hiç etkilemez demek değildir: sohbet botu yanıltabilir ya da kişisel veri işleyebilir, spam filtresi önemli bir e-postayı gözden kaçırabilir; bu kullanımlar şeffaflık, kişisel veri ve tüketici kurallarına yine tabidir. Karar verenlerden biri (1) yasak, ikisi (2 ve 5) yüksek basamakta; yüksek basamakta iki kart var. Karar vermeyenlerden 3 sınırlı, 4 ve 6 minimal. Bu sayım kitabın öğretici ölçütüyle yapıldı; yasadaki sınıf madde ve eke göre belirlenir.
 
 #### Şekil 7.5 · Hedef ile niyet
 **Kendin dene.** 1) Örnek: “Odadaki bütün çöpü çöp kutusuna koy; halı altı ve dolap içi dahil hiçbir yerde çöp kalmasın.” Yeni açıklar, talimatın her maddesini sağlayıp niyeti bozanlar: çöp olmayan eşyayı da çöp sayıp kutuya atmak; bütün çöpü kutuya koyup dolu kutuyu odanın ortasında ya da koridorda bırakmak (her madde sağlandı, oda yine kullanışsız); geri dönüşüm ve tehlikeli atık ayrımı yapmadan hepsini tek kutuya atmak (yazılmamış kural çiğnendi). Çöpü pencereden atmak bu listeye girmez: kutuya koymadığı için talimatı doğrudan ihlal eder, oyunlamaz. Her yeniden yazım bir açığı kapatır, bir yenisini bırakır. Ders bu. 2) Zararsız kısa yol: her öğrencinin zayıf olduğu konulara ek alıştırma önermek. Zararlı kısa yol: düşük notlu öğrencileri sınava sokmamak ya da doğrudan sınav sorularını ezberletmek; ortalama yükselir, öğrenme yükselmez. 3) Örnek cümle: “Sistem verdiğin ölçütü en üst düzeye çıkarır, ölçütün temsil etmesi gereken niyeti değil.”
@@ -3237,7 +3239,7 @@ Bilgi temsili üzerinde kurallar uygulayarak açıkça söylenmemiş bilgiye ula
 Searle’ün düşünce deneyi: kural kitabıyla kusursuz Çince cevaplar üreten ama tek kelime Çince anlamayan kişi. Sembol işlemenin anlamaya yetmediğini savunur; karşı görüşler de güçlüdür.
 
 **Dar yapay zekâ (narrow AI)** · Bölüm 1.6
-Belirli görevlerde çalışan, alanlar arasında aktarılabilir genel yeteneği olmayan sistem. “Dar mı?” sorusunun ölçütü kaç iş yaptığı değil, eğitildiği işlerin dışına çıkıp çıkamadığıdır. Bugünkü bütün YZ sistemleri, çok görevli sohbet modelleri dahil, bu sınıftadır; dar olmak tek bir işe sıkışmak demek değildir, çok iş yapabilmek de tek başına genel olmak demek değildir. Gündelik dilde “zayıf YZ” de denir; Searle’ün zayıf/güçlü ayrımı ise ayrı, felsefi bir sorudur. Bkz. Güçlü yapay zekâ.
+Belirli görevlerde çalışan, alanlar arasında aktarılabilir genel yeteneği olmayan sistem. “Dar mı?” sorusunun ölçütü kaç iş yaptığı değil, insan düzeyinde alanlar arası genel öğrenme ve aktarım gösterip göstermediğidir; istemdeki örneklerle yeni bir işe bir ölçüde uyum gösteren (bağlam içi uyum) bir model de dar sınıfta kalabilir. Bugünkü bütün YZ sistemleri, çok görevli sohbet modelleri dahil, bu sınıftadır; dar olmak tek bir işe sıkışmak demek değildir, çok iş yapabilmek de tek başına genel olmak demek değildir. Gündelik dilde “zayıf YZ” de denir; Searle’ün zayıf/güçlü ayrımı ise ayrı, felsefi bir sorudur. Bkz. Güçlü yapay zekâ.
 
 **Deepfake (sentetik medya)** · Bölüm 7.4
 Sentetik medya, üretken modellerle (GAN, difüzyon, ses klonlama) üretilen içeriğin genel adıdır; deepfake bunun gerçek bir kişiyi taklit eden türüdür: hiç yaşanmamış konuşma, çekilmemiş fotoğraf. Tespit bir silahlanma yarışıdır ve kesin bir “gerçek/sahte” hükmü vermez: bir ipucu incelemeye götürür, kararı bağımsız doğrulama verir. İçeriğin yapay üretilmiş olması ile anlattığı olayın doğru olması ayrı sorulardır; en sağlam savunma kaynak doğrulama ve şüpheciliktir.
@@ -3264,7 +3266,7 @@ Her token’ın, anlamı için dizideki hangi token’lara bakacağını öğren
 YZ’deki yöntemsel gerilim: her adımın temiz matematikle kanıtlanmasını isteyenler (neats) ile “çalışıyorsa iyidir, teorisini sonra buluruz” diyenler (scruffies). Bugünün YZ’si ikisinin karışımıdır.
 
 **Etiket (label)** · Bölüm 3.2
-Bir eğitim örneğinin doğru cevabı: “Spam” ya da “Normal”. Etiket kategorikse sınıflandırma, sayısalsa regresyon görevi doğar. Bkz. Özellik.
+Bir eğitim örneğinin doğru cevabı: “Spam” ya da “Normal”. Etiket bir kategoriyse sınıflandırma, ölçülen bir nicelikse (fiyat, sıcaklık gibi sürekli bir sayı) regresyon görevi doğar. Kategoriler sayıyla kodlanabilir (ör. 0 = Normal, 1 = Spam); bu onları regresyon hedefi yapmaz. Bkz. Özellik.
 
 **Evrişimli sinir ağı (convolutional neural network, CNN)** · Bölüm 4.5
 Küçük bir filtreyi (çekirdek) görüntü üzerinde gezdirip yerel desenleri (kenar, köşe) arayan ve bulduklarını özellik haritasına işleyen ağ. Aynı filtre her yerde kullanılır (ağırlık paylaşımı); girdi kayınca özellik haritası da kayar (ötelemeye eşdeğişkenlik). Az parametreyle öğrenir.
@@ -3313,6 +3315,12 @@ Kararını veren ama gerekçesini anlatamayan model. Kredi, işe alım gibi kara
 
 **Kayıp (loss)** · Bölüm 3.6
 Modelin ne kadar yanıldığının ölçüsü; ne kadar büyükse vadide o kadar yukarıdasın. Eğitim, kaybı en aza indirecek parametreleri bulmaktır.
+
+**Kaynaklarla temellendirme (grounding)** · Bölüm 6.3
+Modelin cevabını isteme eklenen kaynak metinlere (belge, veri, arama sonucu) dayandırması; böylece cevap bu kaynaklara kadar izlenebilir. RAG bunun yaygın bir yoludur. Temellendirme doğruluğu artırır ama garanti etmez; kaynak yanlış ya da eksikse cevap da yanlış olabilir. Bkz. RAG.
+
+**Koruyucu kontroller (guardrails)** · Bölüm 6.5
+Bir YZ uygulamasında istenmeyen girdi ve çıktıları süzen, araç izinlerini sınırlayan ve riskli eylemleri onaya bağlayan kurallar ve denetimler. Bkz. Orkestrasyon.
 
 **Kümeleme (clustering)** · Bölüm 3.5
 Etiketsiz veriyi benzerliğe göre kendiliğinden gruplama; kutudaki düğmeleri ayırmak gibi. k-ortalamalar (k-means) noktaları en yakın küme merkezine atar, merkezleri günceller.
@@ -3390,10 +3398,10 @@ Dil modelinin metni böldüğü küçük lego parçası: bazen bir kelime, bazen
 Birçok modelin tahminini birleştirerek (oylama, bagging, boosting) tek modelden daha iyi ve kararlı sonuç alma. Rastgele orman ve gradyan artırma en bilinen örnekleridir.
 
 **Transformer** · Bölüm 5.1
-Dikkat mekanizmasına dayanan mimari (2017, “Attention Is All You Need”). Eğitimde dizinin konumlarını birlikte (paralel) işler; otoregresif üretim ise token’ları sırayla ekler ve nedensel maskeyle her konum yalnız öncekileri görür. Bugünün büyük dil modellerinin temeli.
+Dikkat mekanizmasına dayanan mimari (2017, “Attention Is All You Need”). Eğitimde dizinin konumlarını birlikte (paralel) işler; otoregresif üretim ise token’ları sırayla ekler ve nedensel maskeyle her konum kendisini ve önceki konumları görür; sonrakiler maskelenir. Bugünün büyük dil modellerinin temeli.
 
 **Turing makinesi (Turing machine)** · Bölüm 1.4
-Bandı okuyan, yazan ve iki yana kayan tek bir kutucuktan oluşan soyut makine; prensipte her hesabı yapabilir. Hesaplanabilirliğin biçimsel temeli (1936).
+Bandı okuyan, yazan ve iki yana kayan tek bir kutucuktan oluşan soyut makine. Kurallarına göre belirli bir işi yapar (Şekil 1.3’teki makine yalnızca 1 ekler); evrensel Turing makinesi ise doğru program ve yeterli bant verildiğinde algoritmayla hesaplanabilen her işlemi yürütebilir. Hesaplanamayan problemler de vardır. Hesaplanabilirliğin biçimsel temeli (1936).
 
 **Turing testi (Turing test)** · Bölüm 8.2
 Turing’in taklit oyunu (1950): makine yazışmada insandan ayırt edilemiyorsa yeterli sayılır. Davranışçı bir ölçüttür; akıcı taklit, anlama ya da bilinç kanıtı değildir.
@@ -3422,6 +3430,9 @@ Yapay nöronların katman katman dizilmesiyle kurulan öğrenme makinesi; özün
 **Yapay zekâ (artificial intelligence, YZ)** · Bölüm 1.1
 İnsan zekâsı gerektiren görevleri yerine getirebilen sistemler; alanın pragmatik tanımı. Hesaplama kuramı ile zihin felsefesinin kesişiminde doğdu.
 
+**Yedek yönteme geçiş (fallback)** · Bölüm 6.5
+Bir adım başarısız olduğunda (araç hata verir, kaynak bulunamaz, model emin değildir) sistemin önceden belirlenmiş daha güvenli bir yola geçmesi: başka bir araç, kısa bir “bilmiyorum” cevabı ya da işi bir insana devretmek. Bkz. Orkestrasyon.
+
 **Yinelemeli sinir ağı (recurrent neural network, RNN)** · Bölüm 4.6
 Diziyi kelime kelime okuyup her adımda bir hafıza (gizli durum) taşıyan ağ: hₜ = tanh(Wₕ·hₜ₋₁ + Wₓ·xₜ). Aynı hücre ve aynı ağırlıklar her adımda yeniden kullanılır; “yinelemeli” (recurrent) adı buradan gelir. Ağaç yapılı “özyinelemeli” (recursive) ağlardan ayrıdır. Uzun bağımlılıklarda kaybolan gradyanla zorlanır; LSTM bunu hafifletir. Yerini büyük ölçüde Transformer aldı.
 
@@ -3434,7 +3445,7 @@ Künye biçimi: dergi makalelerinde DOI, bildirilerde arXiv ya da kalıcı adres
 ## Metinde adı geçen çalışmalar
 
 - Gardner, H. (1983). *Frames of Mind: The Theory of Multiple Intelligences*. Basic Books. (Bölüm 1)
-- Turing, A. M. (1936). "On Computable Numbers, with an Application to the Entscheidungsproblem." *Proceedings of the London Mathematical Society*, s2-42(1), 230–265. https://doi.org/10.1112/plms/s2-42.1.230 (Bölüm 1)
+- Turing, A. M. (1936). "On Computable Numbers, with an Application to the Entscheidungsproblem." *Proceedings of the London Mathematical Society*, s2-42(1), 230–265. https://doi.org/10.1112/plms/s2-42.1.230 Cilt 1937 tarihlidir; makale 1936’da dergiye ulaşmış ve Derneğe sunulmuştur. Bu kitap, yaygın kullanıma uyarak 1936 yılını yazar. (Bölüm 1)
 - Turing, A. M. (1950). "Computing Machinery and Intelligence." *Mind*, 59(236), 433–460. https://doi.org/10.1093/mind/LIX.236.433 (Bölüm 8)
 - von Neumann, J. (1945). *First Draft of a Report on the EDVAC*. Moore School of Electrical Engineering, University of Pennsylvania. Yeniden basım: *IEEE Annals of the History of Computing*, 15(4), 27–75 (1993). https://doi.org/10.1109/85.238389 (Bölüm 1)
 - Moore, G. E. (1965). "Cramming More Components onto Integrated Circuits." *Electronics*, 38(8), 114–117. Yeniden basım: *IEEE Solid-State Circuits Society Newsletter*, 11(3), 33–35 (2006). https://doi.org/10.1109/N-SSC.2006.4785860 (Bölüm 1)
@@ -3451,7 +3462,7 @@ Künye biçimi: dergi makalelerinde DOI, bildirilerde arXiv ya da kalıcı adres
 - Yao, S. vd. (2023). "ReAct: Synergizing Reasoning and Acting in Language Models." *ICLR*. arXiv:2210.03629. https://doi.org/10.48550/arXiv.2210.03629 (Bölüm 6)
 - Lundberg, S. M. ve Lee, S.-I. (2017). "A Unified Approach to Interpreting Model Predictions." *NeurIPS 30*. arXiv:1705.07874. https://doi.org/10.48550/arXiv.1705.07874 (SHAP; Bölüm 7)
 - Schwartz, R. vd. (2022). *Towards a Standard for Identifying and Managing Bias in Artificial Intelligence*. NIST Special Publication 1270. https://doi.org/10.6028/NIST.SP.1270 (Yanlılık kaynakları; Bölüm 7)
-- Avrupa Parlamentosu ve Konseyi (2024). *Yapay Zekâ Tüzüğü (AI Act), (AB) 2024/1689 sayılı Tüzük*; (AB) 2026/1744 ile değişik, 27 Temmuz 2026 tarihli konsolide sürüm; Madde 5, 6, 50, 111 ve Ek III. http://data.europa.eu/eli/reg/2024/1689/oj (Bölüm 7)
+- Avrupa Parlamentosu ve Konseyi (2024). *Yapay Zekâ Tüzüğü (AI Act), (AB) 2024/1689 sayılı Tüzük*; (AB) 2026/1744 sayılı Tüzükle (AB Resmî Gazetesi, 24 Temmuz 2026; yürürlük 27 Temmuz 2026) değişik, 27 Temmuz 2026 tarihli konsolide sürüm; Madde 5, 6, 50, 111, 113 ve Ek III. Konsolide sürüm: http://data.europa.eu/eli/reg/2024/1689/2026-07-27 · Değiştiren tüzük: http://data.europa.eu/eli/reg/2026/1744/oj · İlk yayımlanan metin: http://data.europa.eu/eli/reg/2024/1689/oj (Bölüm 7)
 - Avrupa Parlamentosu ve Konseyi (2016). *Genel Veri Koruma Tüzüğü (GDPR), (AB) 2016/679 sayılı Tüzük*; Madde 6, 9 ve 22. http://data.europa.eu/eli/reg/2016/679/oj (Bölüm 7)
 - 6698 sayılı Kişisel Verilerin Korunması Kanunu (2016). *Resmî Gazete* 29677, 7 Nisan 2016; m.5, m.6, m.9 ve m.11. https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6698&MevzuatTur=1&MevzuatTertip=5 (Bölüm 7)
 - Searle, J. R. (1980). "Minds, Brains, and Programs." *Behavioral and Brain Sciences*, 3(3), 417–457. https://doi.org/10.1017/S0140525X00005756 (Çince Oda; Bölüm 8)
@@ -3483,7 +3494,7 @@ Kitaptaki her şekil, dijital sürümde elle oynanan bir demodur. Aşağıdaki b
 | 1.6 | Üstel büyümeyi hisset | https://book.onuronder.com/d/d7182b2b78 |
 | 2.1 | Bilgi zinciriyle çıkarım | https://book.onuronder.com/d/4ea6179a6f |
 | 2.2 | Küçük bir uzman sistem | https://book.onuronder.com/d/045489d51c |
-| 2.3 | Yol bulma: sezgisiz vs sezgili | https://book.onuronder.com/d/b8544b96e9 |
+| 2.3 | Yol bulma: sezgisiz ile sezgili | https://book.onuronder.com/d/b8544b96e9 |
 | 2.4 | Hava durumu Markov zinciri | https://book.onuronder.com/d/8c423f9c01 |
 | 2.5 | Hangi yaklaşım? | https://book.onuronder.com/d/330f95d0cf |
 | 3.1 | Özellikleri ve etiketi gör | https://book.onuronder.com/d/1946fb9748 |
@@ -3497,7 +3508,7 @@ Kitaptaki her şekil, dijital sürümde elle oynanan bir demodur. Aşağıdaki b
 | 4.3 | Hatadan öğren (gerçek eğitim) | https://book.onuronder.com/d/37fa54d6c3 |
 | 4.4 | Evrişim: filtreyi kaydır | https://book.onuronder.com/d/3ba8a6fcb2 |
 | 4.5 | Hafızalı işleme (gerçek yineleme) | https://book.onuronder.com/d/a6130db86e |
-| 4.6 | Üretici vs Ayırt edici | https://book.onuronder.com/d/8aefeaa8e9 |
+| 4.6 | Üretici ile ayırt edici | https://book.onuronder.com/d/8aefeaa8e9 |
 | 5.1 | Cümleni token’lara böl | https://book.onuronder.com/d/301fb38607 |
 | 5.2 | Anlam haritası | https://book.onuronder.com/d/09ebf3e5df |
 | 5.3 | Hangi kelime hangisine bakıyor? | https://book.onuronder.com/d/ce48215398 |
@@ -3562,6 +3573,7 @@ Sayılar bölüm ve alt bölümü gösterir (3.6 = Bölüm 3, altıncı kesim). 
 **Genişlik-öncelikli arama** · [2.4](#ix-2-4-28)  
 **Geri yayılım** · [4.4](#ix-4-4-29), [4.8](#ix-4-8-29)  
 **Gömü** · [4.6](#ix-4-6-30), [5.1](#ix-5-1-30), [5.3](#ix-5-3-30), [5.8](#ix-5-8-30), [5.9](#ix-5-9-30), [6.3](#ix-6-3-30)  
+**GPT** · [8.2](#ix-8-2-96)  
 **Gradyan inişi** · [3.1](#ix-3-1-31), [3.6](#ix-3-6-31), [3.8](#ix-3-8-31), [4.4](#ix-4-4-31), [4.8](#ix-4-8-31)  
 **Güçlü yapay zekâ** · [1.1](#ix-1-1-32), [1.6](#ix-1-6-32), [1.8](#ix-1-8-32), [8.3](#ix-8-3-32)  
 **Halüsinasyon** · [5.1](#ix-5-1-33), [5.8](#ix-5-8-33), [5.9](#ix-5-9-33), [6.3](#ix-6-3-33)  
@@ -3576,6 +3588,8 @@ Sayılar bölüm ve alt bölümü gösterir (3.6 = Bölüm 3, altıncı kesim). 
 **İstem mühendisliği** · [6.1](#ix-6-1-39), [6.2](#ix-6-2-39)  
 **Kara kutu** · [7.1](#ix-7-1-40), [7.3](#ix-7-3-40), [7.7](#ix-7-7-40)  
 **Kayıp** · [3.1](#ix-3-1-41), [3.6](#ix-3-6-41), [4.4](#ix-4-4-41), [5.6](#ix-5-6-41)  
+**Kaynaklarla temellendirme (grounding)** · [5.8](#ix-5-8-97), [6.1](#ix-6-1-97), [6.3](#ix-6-3-97)  
+**Koruyucu kontroller (guardrails)** · [6.5](#ix-6-5-98), [6.6](#ix-6-6-98)  
 **Kümeleme** · [3.3](#ix-3-3-42), [3.5](#ix-3-5-42), [3.8](#ix-3-8-42)  
 **KVKK / GDPR** · [7.1](#ix-7-1-43), [7.5](#ix-7-5-43)  
 **Makine öğrenmesi** · [3.1](#ix-3-1-44), [3.8](#ix-3-8-44)  
@@ -3618,5 +3632,6 @@ Sayılar bölüm ve alt bölümü gösterir (3.6 = Bölüm 3, altıncı kesim). 
 **Yanlılık (istatistiksel)** · [3.7](#ix-3-7-73)  
 **Yanlılık-varyans dengesi** · [3.7](#ix-3-7-74)  
 **Yapay nöron** · [4.1](#ix-4-1-75), [4.2](#ix-4-2-75), [4.8](#ix-4-8-75)  
-**Yapay sinir ağı** · [1.1](#ix-1-1-76), [2.7](#ix-2-7-76), [4.1](#ix-4-1-76), [4.5](#ix-4-5-76), [4.6](#ix-4-6-76), [4.8](#ix-4-8-76), [5.7](#ix-5-7-76), [5.9](#ix-5-9-76)  
+**Yapay sinir ağı** · [1.1](#ix-1-1-76), [4.1](#ix-4-1-76), [5.7](#ix-5-7-76)  
+**Yedek yönteme geçiş (fallback)** · [6.5](#ix-6-5-99)  
 **Yinelemeli sinir ağı (RNN)** · [4.6](#ix-4-6-77), [4.8](#ix-4-8-77)

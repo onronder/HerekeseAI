@@ -187,6 +187,32 @@ def qr_html_marker(md):
     return re.sub(L['live_marker'] + r': \[QR (\d+)\.(\d+)\]', L['live_marker'] + r': {{QR \1.\2}}', md)
 
 
+
+def ix_bind(body):
+    """R076: dizin çapası ile terimin kendisi aynı satırda/sayfada kalsın: çapa grubunu ve ardından gelen terimi (en uzun data-l kadar
+    görünür karakter) bölünmez bir span içine alır. Terimin içinde başka etiket varsa (çapa dışında) sarmaz."""
+    out, i = [], 0
+    rx = re.compile(r'(?:<a id="ix-[\w-]+" data-l="\d+"></a>)+')
+    for m in rx.finditer(body):
+        if m.start() < i: continue
+        L_ = max(int(x) for x in re.findall(r'data-l="(\d+)"', m.group(0)))
+        j, n, ok = m.end(), 0, True
+        while n < L_ and j < len(body):
+            if body[j] == '<':
+                t = re.match(r'<a id="ix-[\w-]+" data-l="\d+"></a>', body[j:])
+                if not t: ok = False; break
+                j += t.end(); continue
+            if body[j] == '&':
+                e = body.find(';', j); j = e + 1 if 0 < e - j < 9 else j + 1
+            else: j += 1
+            n += 1
+        out.append(body[i:m.start()])
+        out.append(f'<span class="ixw">{body[m.start():j]}</span>' if ok and n == L_ else body[m.start():m.end()])
+        i = j if ok and n == L_ else m.end()
+    out.append(body[i:])
+    return re.sub(r' data-l="\d+"', '', ''.join(out))
+
+
 def build_index(chapter_mds):
     """Terim → alt bölüm dizini. Kaynak: arka/dizin-terimler.yaml ("Terim: [takma adlar]")."""
     path = os.path.join(SRC, L['back'], L['index_terms'])
@@ -252,14 +278,14 @@ def build_index(chapter_mds):
                     if not ms: continue
                     for m in ms:
                         if safe_line(body, start + m.start()):
-                            found = start + m.start(); break
+                            found = start + m.start(); flen = m.end() - m.start(); break
                     if found is None:
                         continue  # yalnız tablo/kenar notu/şekilde geçiyor → bu alt bölüm dizine girmez (R076)
                     break
                 if found is None: continue
                 aid = f'{label.replace(".", "-")}-{ti}'
                 if found >= 0:
-                    inserts[ci][found] = inserts[ci].get(found, '') + f'IXANCHOR{{{aid}}}'  # aynı konumda birden çok terim olabilir
+                    inserts[ci][found] = inserts[ci].get(found, '') + f'IXANCHOR{{{aid}|{flen}}}'  # aynı konumda birden çok terim olabilir; |uzunluk: çapa terimle birlikte sarılır (R076)
                     hits.append((label, f'#ix-{aid}'))
                 else:
                     hits.append((label, f'#sec-{label.replace(".", "-")}'))
@@ -441,11 +467,12 @@ def build():
                                               live_demos(), index_md]
     md = '\n\n'.join(p.strip() for p in pieces) + '\n'
     md_path = os.path.join(OUT, L['out_base'] + '.md')
-    open(md_path, 'w', encoding='utf-8').write(re.sub(r'IXANCHOR\{[\w-]+\}', '', qr_md(md)))
+    open(md_path, 'w', encoding='utf-8').write(re.sub(r'IXANCHOR\{[\w-]+(?:\|\d+)?\}', '', qr_md(md)))
 
     body = box_technical(md_to_html(qr_html_marker(strip_comments(md))))
     body = body.replace(*L['fig_fix'])
-    body = re.sub(r'IXANCHOR\{([\w-]+)\}', r'<a id="ix-\1"></a>', body)  # dizin çapaları
+    body = re.sub(r'IXANCHOR\{([\w-]+)\|(\d+)\}', r'<a id="ix-\1" data-l="\2"></a>', body)  # dizin çapaları
+    body = ix_bind(body)
     doc = (f'<!doctype html>\n<html lang="{L["html_lang"]}"><head><meta charset="utf-8"><title>{L["html_title"]}</title>'
            '<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">'
            f'<style>{CSS}</style></head><body><div class="page">\n{body}\n</div></body></html>\n')

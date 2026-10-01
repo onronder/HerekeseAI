@@ -4,7 +4,7 @@
 HERE="$(cd "$(dirname "$0")" && pwd)"; ROOT="$(cd "$HERE/../.." && pwd)"; K="$ROOT/print/kitap"
 LANG_="${1:-tr}"; PROFILE="${2:-matbaa}"
 if [ "$LANG_" = tr ] && [ "$PROFILE" = matbaa ]; then IN="$K/ic-blok.pdf"; CV="$K/kapak.pdf"; else IN="$K/$LANG_/$PROFILE-interior.pdf"; CV="$K/$LANG_/$PROFILE-cover.pdf"; fi
-if [ "$PROFILE" = kdp ]; then MULT=2; TRIM_RX="TrimBox: *9.00 *9.00 *441.0[0-9] *657.0[0-9]"; TRIM_TXT="TrimBox 6×9 in, taşma 0.125 in"; else MULT="${MULT:-8}"; TRIM_RX="TrimBox: *8.50 *8.50 *462.3[0-9] *688.4[0-9]"; TRIM_TXT="TrimBox 160×240 mm, taşma 3 mm"; fi
+if [ "$PROFILE" = kdp ]; then MULT=2; TRIM_RX="TrimBox: *9.00 *9.00 *441.0[0-9] *657.0[0-9]"; TRIM_TXT="TrimBox 6×9 in, taşma 0.125 in"; else MULT="${MULT:-8}"; TRIM_RX="TrimBox: *8.50 *8.50 *462.0[0-9] *688.8[0-9]"; TRIM_TXT="TrimBox 160,0×240,0 mm (kesin), taşma 3 mm"; fi
 fail=0
 chk() { if [ "$1" = ok ]; then echo "  ✔ $2"; else echo "  ✘ $2"; fail=1; fi; }
 for F in ic-blok kapak; do
@@ -41,6 +41,15 @@ if python3 "$HERE/check_text_integrity.py" "$HX" "$IN" "$LANG_"; then chk ok "ka
 RGBPDF="$(dirname "$HX")/ic-blok-rgb.pdf"
 kw=$(pdfinfo "$RGBPDF" 2>/dev/null | sed -n 's/^Keywords: *//p')
 case "$kw" in *kitap-tasma:0*) chk ok "sayfa alanı taşması yok ($kw)";; *kitap-tasma:*) chk bad "sayfa alanı taşıyor: $kw";; *) chk bad "taşma ölçümü yok (hooks.js çalışmadı?)";; esac
+# R082: şekil metni dizgide en az 6,5 pt; R071: kısa tablo/matris bölünmez, bölünen tablonun hiçbir parçasında tek veri satırı kalmaz
+fmin=$(printf '%s' "$kw" | sed -n 's/.*sekil-min-pt:\([0-9.]*\).*/\1/p')
+if [ -n "$fmin" ] && python3 -c "import sys; sys.exit(0 if float('$fmin') >= 6.58 else 1)"; then chk ok "şekil metni dizgide ≥ 6,58 pt (DOM ölçümü, en küçük $fmin pt; hedef 6,6)"; else chk bad "şekil metni dizgide 6,58 pt altında ya da ölçülmedi (${fmin:-yok})"; fi
+# PDF düzeyinde bağımsız ölçüm (Tf × Tm × CTM): üst/alt simge (< 5,5 pt) ve Type 3 yedek glifler dışında 6,5 pt altı metin olmamalı
+pf=$(node "$HERE/../kitap/qa/pdf_fontsize.mjs" "$IN" 2>/dev/null | tail -1)
+band=$(printf '%s' "$pf" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['band_5_5_to_lim'], d['normal_min_ge55'], d['sup_sub_lt55'], d['type3_fallback'])" 2>/dev/null)
+set -- $band
+if [ "${1:-x}" = 0 ]; then chk ok "PDF metni ≥ 6,5 pt (en küçük $2 pt; üst/alt simge $3 gösterim, Type 3 yedek glif $4 ayrı)"; else chk bad "PDF'te 5,5–6,5 pt arası metin: ${1:-ölçülemedi} ($pf)"; fi
+case "$kw" in *tablo-kucuk-bolunen:0\ tablo-tek-satir:0*) chk ok "kısa tablo bölünmüyor, tek satır kalan tablo parçası yok";; *tablo-kucuk-bolunen:*) chk bad "tablo kuralı ihlali: $kw";; *) chk bad "tablo ölçümü yok";; esac
 echo "== QR"; node "$HERE/check_qr.mjs" "$IN" "$LANG_" || fail=1
 echo; [ $fail -eq 0 ] && echo "SONUÇ: tüm denetimler geçti" || echo "SONUÇ: hata var"
 exit $fail

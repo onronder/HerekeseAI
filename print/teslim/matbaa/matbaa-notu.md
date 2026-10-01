@@ -4,14 +4,14 @@ Teslim dosyaları (bu klasörün bir üstünde, `print/kitap/`):
 
 | Dosya | İçerik | Standart |
 |---|---|---|
-| `ic-blok.pdf` | İç blok, 256 sayfa, tek sayfa sırası (impozisyon matbaada) | PDF 1.3, PDF/X-1a uyumlu (Ghostscript pdfwrite; OutputIntent gömülü), tüm fontlar gömülü (alt küme; Type 3 kaynaklar hariç), saydamlık yok, tümü vektör |
+| `ic-blok.pdf` | İç blok, 256 sayfa, tek sayfa sırası (impozisyon matbaada) | PDF 1.3, PDF/X-1a uyumlu (Ghostscript pdfwrite; OutputIntent gömülü; bağımsız preflight matbaada), tüm fontlar gömülü (59 font: 44 metin fontu alt küme olarak, 15 Type 3 yedek font tam gömülü; pdffonts), saydamlık yok, tümü vektör |
 | `kapak.pdf` | Kapak yayılımı: arka + sırt + ön, tek sayfa | Aynı standart |
 
 ## Ölçüler
-- **Net ebat:** 160 × 240 mm (TrimBox; dosyada 160,1 × 239,9 mm — Paged.js px→pt yuvarlaması, ±0,1 mm). **Taşma:** 3 mm her kenar (MediaBox = BleedBox ≈ 166,1 × 245,9 mm).
+- **Net ebat:** 160 × 240 mm (TrimBox ölçümü 160,00 × 240,00 mm). **Taşma:** 3 mm her kenar (MediaBox = BleedBox 166,00 × 246,00 mm).
 - **Kenar boşlukları:** üst 20 mm, alt 20 mm, iç (sırt tarafı) 20 mm, dış 16 mm. Sayfa numarası alt ortada, koşan başlık üstte.
-- **Forma:** 256 sayfa = tam 16 forma (16'lık); yarım forma yok. Son 5 sayfa "Notlar" (8'in katına tamamlama, aynı zamanda 16'nın katı). †
-- **Kapak:** net 334,2 × 240 mm (160 + **14,2 mm sırt** + 160), taşma 5 mm. **Sırt genişliği geçicidir:** kâğıt seçilince matbaanın verdiği değerle `print/kapak/kapak.json → spine_mm` güncellenip kapak yeniden üretilir (`sh print/kapak/kapak.sh`).
+- **Forma:** 256 sayfa = tam 16 forma (16'lık); yarım forma yok. Tamamlama sayfası ("Notlar") yok; metin forma sınırında biter. †
+- **Kapak:** net 334,2 × 240,0 mm (TrimBox ölçümü 334,20 × 240,00 mm; 160 + **14,2 mm sırt** + 160), taşma 5 mm (MediaBox 344,20 × 250,00 mm). **Sırt genişliği geçicidir:** kâğıt seçilince matbaanın verdiği değerle `print/kapak/kapak.json → spine_mm` güncellenip kapak yeniden üretilir (`sh print/kapak/kapak.sh`).
 
 ## Renk
 - İç blok **tam renk (CMYK 4/4)**; siyah metin, QR ve EAN yalnız K kalıbında (zengin siyah yok; `print/typeset/color_ops.py` ve inkcov ile ölçüldü). Figürlerdeki aksan rengi RGB #e85d3a'dan çevrildi (yaklaşık C0 M60 Y75 K9). Saydam öğeler düzleştirildi.

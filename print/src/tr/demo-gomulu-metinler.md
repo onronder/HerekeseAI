@@ -1,7 +1,7 @@
 # Demolara gömülü öğretici metinler
 
 <!-- Bu dosya print/export.py tarafından üretildi (2026-10-01); elle düzenlenmez. -->
-_176 parça · 10992 karakter_
+_202 parça · 14302 karakter_
 
 ## Şekil 1.1 — Çoklu zekâyı keşfet (`intelligence`)
 
@@ -38,7 +38,7 @@ _176 parça · 10992 karakter_
 
 —
 
-## Şekil 2.3 — Yol bulma: sezgisiz vs sezgili (`grid`)
+## Şekil 2.3 — Yol bulma: sezgisiz ile sezgili (`grid`)
 
 —
 
@@ -97,7 +97,7 @@ _176 parça · 10992 karakter_
 
 - hₜ = tanh(Wₓ xₜ + Wₕ hₜ₋₁) · xₜ = kelimenin one-hot kodu · çubuk = |h|, turuncu = negatif
 
-## Şekil 4.6 — Üretici vs Ayırt edici (`gan`)
+## Şekil 4.6 — Üretici ile ayırt edici (`gan`)
 
 —
 
@@ -132,7 +132,7 @@ _176 parça · 10992 karakter_
 - Devasa internet metni
 - Dili ve dünyayı (bir sonraki kelimeyi tahmin)
 - Türkiye’nin başkenti Ankara’dır ve nüfusu yaklaşık altı milyondur. Bu şehir...
-- Ham model “tamamlayıcı”dır: soruyu cevaplamaz, metni sürdürür.
+- Bu örnekte ham model bilgiyi verip durmuyor, metni sürdürüyor; ham modeller çoğu zaman böyle tamamlar.
 - Talimat–cevap çiftleri
 - Yönergeyi izlemeyi (soruyu cevaplamayı)
 - Türkiye’nin başkenti Ankara’dır.
@@ -152,10 +152,10 @@ _176 parça · 10992 karakter_
 ## Şekil 5.7 — Bağlam penceresi (`ctx`)
 
 - Pencere boş. “Kelime ekle” ile metni besle; pencere en fazla
-- kelime eklendi, hepsi pencerede. Pencere dolana kadar her şey hatırlanıyor.
+- kelime eklendi, hepsi pencerede. Pencere dolana kadar hiçbir kelime dışarı düşmüyor; pencerede olmak, modelin her ayrıntıyı kullanacağı anlamına gelmez.
 - Pencere doldu! İlk
-- kelime artık “unutuldu” (soluk). Model yalnızca son
-- kelimeyi görüyor — uzun belgeler bu yüzden kırpılır ya da özetlenir.
+- kelime artık “unutuldu” (soluk). Bu gösterimde model yalnızca son
+- kelimeyi görüyor; gerçek uygulamalar sınıra gelince hata verebilir, metni kırpabilir ya da özetleyebilir.
 
 ## Şekil 6.1 — Bir istem inşa et (`prompt`)
 
@@ -242,33 +242,59 @@ _176 parça · 10992 karakter_
 
 ## Şekil 7.3 — Gerçek mi, yapay mı? (`df`)
 
+- Olay: anlatılan şey gerçekten oldu mu?
+- Doğrulanmadı: kontrol gerek
+- Köken: içerik nasıl üretilmiş olabilir?
+- Gerçek kayıt izleri var
+- Yapay üretim izi var (kanıt değil)
+- Bu bilgiyle anlaşılmaz
+- Kanal: hangi bağımsız doğrulamayı yaparsın?
 - Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor.
-- dudak hareketleriyle ses arasındaki uyumsuzluk
-- konuşmanın özgün kaydını ve yayımlayan kurumu bağımsız bir kanaldan bul
+- Videoyu paylaşan hesabın altındaki yorumlara bak
+- Aynı videoyu başka bir sosyal medya hesabında ara
+- Konuşmanın özgün kaydını ve yayımlayan kurumu bağımsız bir kanaldan bul
+- Cümlenin gerçekten söylenip söylenmediği henüz doğrulanmadı; video tek başına kanıt değil.
+- Dudak ile ses arasındaki uyumsuzluk bir deepfake izi olabilir; ama kötü sıkıştırma ya da dublaj da aynı görüntüyü verir.
+- Paylaşımın kendisi ya da kopyaları bağımsız kanal değildir; özgün kayıt ve yayımlayan kurum öyledir.
 - Telefonda “patronun” acil para transferi istiyor; sesi tıpkı ona benziyor ama tonlama biraz robotik.
-- ses klonlamayla uyumlu robotik tonlama ve aciliyet baskısı
-- transferi bekletip patronu bilinen numarasından geri ara ya da yüz yüze teyit et
+- Konuşmayı uzatıp sesi daha dikkatli dinle
+- Aramayı kapat, patronu kendi bildiğin numaradan geri ara; transferi ikinci bir kişiye onaylat
+- Sesin kaydını bir arkadaşına dinlet
+- İsteğin gerçekten patrondan geldiği doğrulanmadı; aciliyet baskısı başlı başına bir uyarı işaretidir.
+- Robotik tonlama ses klonlamayla uyumlu ama kesin kanıt değil; sesin kökenini bilmesen de karar aynı: doğrulamadan para gönderilmez.
+- Aynı aramanın içinde kalan her kontrol arayanın elindedir; bağımsız kanal, senin bildiğin numaradır.
 - Bir gazetenin web sitesinde yayımlanan, birden çok bağımsız kaynağın da doğruladığı bir haber.
-- birden çok bağımsız kaynak ve izlenebilir köken
-- kaynakların her birini ayrı ayrı aç; metni insanın mı makinenin mi yazdığı bu bilgiden çıkarılamaz
+- Kaynakların her birini kendi sayfasında aç; varsa birincil belgeye bak
+- Haberin aldığı beğeni ve paylaşım sayısına bak
+- Haberi aynı sitede bir kez daha oku
+- Birden çok bağımsız kaynak ve izlenebilir köken olayın doğruluğunu destekler.
+- Bu bilgiler metni insanın mı yapay zekânın mı yazdığını söylemez; yapay yazılmış doğru bir haber de olabilir.
+- Beğeni sayısı ya da aynı sayfa doğrulama değildir; kaynakların kendisi ve birincil belge öyledir.
 - Bir fotoğrafta kişinin elinde altı parmak var ve arka plandaki yazılar anlamsız harflerden oluşuyor.
-- altı parmak ve anlamsız arka plan yazısı
-- ters görsel aramayla fotoğrafın özgün kaynağını bul
-- ✓ Önerilen adımla eşleşti:
-- ○ Önerilen adım farklı:
-- işareti var; önerilen adım:
-- İpuçları inceleme gerekçesidir; tek başına içeriğin nasıl üretildiğinin kanıtı değildir. Olayın gerçekliği ile üretim yöntemi ayrı sorulardır.
+- Fotoğrafı yakınlaştırıp başka iz ara
+- Ters görsel aramayla ilk yayımlayanı bul; varsa içerik kimlik bilgisi (C2PA) kaydına bak
+- Fotoğrafı paylaşan kişiye nereden bulduğunu sor
+- Fotoğraftaki anın gerçekten yaşandığı doğrulanmadı.
+- Altı parmak ve anlamsız yazı üretken modellerin bilinen izleri; ama düzenleme ya da gerçek bir anomali de olabilir. C2PA kaydının yokluğu sahtelik kanıtı değildir.
+- Görüntüye daha çok bakmak yeni kanıt üretmez; ilk yayımlayanı bulmak ve köken kaydı bağımsız kanıttır.
+- İpuçları inceleme gerekçesidir; tek başına içeriğin nasıl üretildiğinin kanıtı değildir. Olayın gerçekliği ile üretim yöntemi ayrı sorulardır; ikisinde de karar bağımsız bir kanaldan gelir.
 
 ## Şekil 7.4 — Riski sınıflandır (`reg`)
 
 - Vatandaşları davranışına göre puanlayan devlet sistemi
+- Amaç: kişileri sosyal davranışına göre puanlamak; aktör: devlet. Madde 5(1)(c), puanın bağlamından kopuk ya da orantısız olumsuz muameleye yol açtığı durumları yasaklar; her puanlama koşulsuz yasak değildir.
 - İşe alımda adayları otomatik eleyen sistem
+- Amaç: başvuruları süzmek ve adayları değerlendirmek; aktör: sistemi kullanan işveren (uygulayıcı) ve geliştiren sağlayıcı. Ek III 4(a) kapsamında yüksek risk; yükümlülükler 2 Aralık 2027’den itibaren uygulanır.
 - Müşteriyle konuşan sohbet botu
+- Amaç: müşteriyle konuşmak. Madde 50(1), kişinin bir YZ ile konuştuğunu bilmesini sağlamayı sağlayıcıya yükler (durum açıkça belli değilse). Kişisel veri ve tüketici hukuku ayrıca geçerlidir; bot kredi ya da işe alım kararı veriyorsa o kullanım ayrıca değerlendirilir.
 - E-postada spam filtresi
+- Amaç: istenmeyen e-postayı ayıklamak. Verilen bilgilerle Ek III’teki bir yüksek-risk kategorisi gösterilemiyor; YZ Yasası bu kullanıma özel yükümlülük koymuyor. Kişisel veri kuralları yine geçerlidir; önemli bir e-postanın kaçırılması kullanıcıyı etkileyebilir.
 - Kredi başvurusu değerlendiren model
+- Amaç: gerçek kişilerin kredi değerliliğini değerlendirmek ya da kredi puanı belirlemek; aktör: banka (uygulayıcı) ve sağlayıcı. Ek III 5(b) kapsamında yüksek risk. Amaç yalnız finansal dolandırıcılığı tespit etmekse bu bent uygulanmaz. Sistem kişilerin profilini çıkarıyorsa Madde 6(3)’teki istisna kullanılamaz.
 - Oyun içindeki rakip yapay zekâ
+- Amaç: oyunda rakip oynamak. Verilen bilgilerle bir yüksek-risk kategorisi ya da Madde 50 yükümlülüğü gösterilemiyor; minimal kademe. Oyun kişisel veri işliyor ya da çocuklara yöneliyorsa başka kurallar devreye girer.
 - Her kullanımı bir risk düzeyine yerleştir. Kural: risk ne kadar yüksekse, denetim o kadar sıkı.
-- doğru. Düşün: bu kullanım birinin hayatını/haklarını etkiliyor mu?
+- doğru. Düşün: amaç ne, sistemi kim kullanıyor, hangi madde ya da ek kapsıyor?
 - . Aynı “YZ” etiketi çok farklı riskler taşır; düzenleme de bu yüzden tek tip değil, kademeli.
 
 ## Şekil 7.5 — Hedef ile niyet (`align`)
@@ -308,7 +334,7 @@ _176 parça · 10992 karakter_
 
 ## Şekil 8.3 — Yetenek basamakları (`capability`)
 
-- Tek bir görevde çok iyi (satranç, çeviri, görüntü tanıma) ama o işin dışına çıkamaz. Bugünkü tüm sistemler buradadır.
+- Bir görevde ya da belirli bir görev kümesinde çok iyi (satranç, çeviri, görüntü tanıma); insan düzeyinde genel öğrenme ve aktarım göstermez. Bugünkü sistemler buradadır.
 - Henüz yok — tartışmalı
 - İnsan gibi her alanda öğrenip uyum sağlayabilen, varsayımsal bir düzey. Gelip gelmeyeceği ve ne zaman geleceği uzmanlar arasında tartışmalıdır.
 - Her bilişsel alanda insanı kat kat aşan, tümüyle kuramsal bir düzey. Hem büyük fırsat hem ciddi risk senaryolarının konusudur.

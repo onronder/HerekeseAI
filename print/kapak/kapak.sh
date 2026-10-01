@@ -11,12 +11,8 @@ else H="kapak-$LANG_-$PROFILE.html"; mkdir -p "$ROOT/print/kitap/$LANG_"; FINAL=
 node kapak.mjs --lang "$LANG_" --profile "$PROFILE"
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu --no-pdf-header-footer \
   --print-to-pdf="$HERE/out/kapak-rgb.pdf" "file://$HERE/out/$H" >/dev/null 2>&1
-B_MM="$B_MM" node - <<'EOJ'
-const fs=require('fs'); const {PDFDocument}=require(process.cwd()+'/../typeset/node_modules/pdf-lib');
-(async()=>{const d=await PDFDocument.load(fs.readFileSync('out/kapak-rgb.pdf')); const B=Number(process.env.B_MM)*72/25.4;
-for(const p of d.getPages()){const {x,y,width,height}=p.getMediaBox(); p.setBleedBox(x,y,width,height); p.setTrimBox(x+B,y+B,width-2*B,height-2*B);}
-fs.writeFileSync('out/kapak-boxed.pdf', await d.save());})();
-EOJ
+read NW NH < out/size.txt
+(cd ../typeset && node boxes.mjs "$HERE/out/kapak-rgb.pdf" "$HERE/out/kapak-boxed.pdf" "$B_MM" "$NW" "$NH")
 GSICC="$(find /opt/homebrew /usr/local /usr/share -name default_cmyk.icc 2>/dev/null | head -1)"
 if [ -n "$ICC" ]; then PROF="$ICC"; COND="$(basename "$ICC" .icc)"; CID="FOGRA39"; else PROF="$GSICC"; COND="Ghostscript default CMYK (printer profile pending)"; CID="Custom"; fi
 TITLE_HEX=$(python3 -c 'import sys; print(sys.argv[1].encode("utf-16-be").hex().upper())' "$TITLE")

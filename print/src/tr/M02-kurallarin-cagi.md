@@ -31,23 +31,23 @@ Bir makineye Tekir’i nasıl öğretirsin? Makine onu göremez, okşayamaz; anc
 **Şekil 2.1 · Bilgi zinciriyle çıkarım**
 ![Şekil 2.1](../../figures/out/tr/sekil-2-1-chain.svg)
 
-*Kurulum.* Şekilde beş kutu tek sıra hâlinde dizili: Tekir, Kedi, Memeli, Hayvan, Canlı. Kutular arasındaki her ok “bir …dır” demek: Tekir bir Kedi’dir, Kedi bir Memeli’dir ve böyle sürer. İlk ok bir bireyi sınıfına bağlar: Tekir, Kedi sınıfının bir örneği. Öbür oklar sınıfı üst sınıfa bağlar: Kedi, Memeli’nin alt sınıfı. Şekil ikisini de aynı okla gösterir. Makinenin bütün bilgisi bu dört ok; başka hiçbir şey bilmiyor. Altta dört soru var; her soru için makine zinciri baştan yürür ve kararını söyler.
+*Kurulum.* Şekilde beş kutu tek sıra hâlinde dizili: Tekir, Kedi, Memeli, Hayvan, Canlı. Kutuları iki tür ok bağlar. İlk ok “örneği” diye etiketli ve bir bireyi sınıfına bağlar: Tekir, Kedi sınıfının bir örneğidir (instance-of). Öbür üç ok “alt sınıfı” diye etiketli ve bir sınıfı üst sınıfına bağlar: Kedi, Memeli’nin alt sınıfıdır (subclass-of); Memeli de Hayvan’ın, Hayvan da Canlı’nın. Makinenin bütün bilgisi bu dört ok; başka hiçbir şey bilmiyor. Altta dört soru var; her soru için makine zinciri baştan yürür ve kararını söyler.
 
 *Adım adım.* Önce “Tekir bir Memeli mi?” sorusu.
 
-1. Makine Tekir’den başlar. Aradığı kelime “Memeli”. Tekir’in kendisi Memeli mi? Hayır; ama Tekir’den bir ok çıkıyor: Kedi.
-2. Kedi’ye geçer. Kedi, “Memeli” mi? Hayır; Kedi’den de bir ok çıkıyor: Memeli.
-3. Memeli’ye varır. Aranan kelime bulundu. Şekilde ilk üç kutu turuncuya boyanır ve karar yazılır: ✓ Evet: “Memeli” zincirde bulundu (geçişlilik).
+1. Makine Tekir’den başlar. Aradığı sınıfın adı “Memeli”. Tekir bir sınıf değil, bir birey; ondan çıkan “örneği” oku, Tekir’in Kedi sınıfına ait olduğunu söyler.
+2. Kedi kutusuna geçer. Bu kutunun adı “Memeli” değil; Kedi’den çıkan “alt sınıfı” oku Memeli’ye gider.
+3. Memeli kutusuna varır. Ad eşleşti: Tekir, Kedi’nin örneği; Kedi de Memeli’nin alt sınıfı; öyleyse Tekir bir memelidir. Şekilde ilk üç kutu turuncuya boyanır ve karar yazılır: ✓ Evet: “Memeli” zincirde bulundu (geçişlilik).
 
 İki ok izledi. “Tekir bir Memeli’dir” cümlesini kimse yazmadı; makine onu türetti.
 
 Sonra “Tekir bir Bitki mi?” sorusu.
 
-1. Tekir: Bitki değil; ok Kedi’ye.
-2. Kedi: değil; ok Memeli’ye.
-3. Memeli: değil; ok Hayvan’a.
-4. Hayvan: değil; ok Canlı’ya.
-5. Canlı: değil. Canlı’dan çıkan ok yok, zincir bitti. Karar: ✗ Bilinmiyor: “Bitki” bilgi tabanında yok.
+1. Tekir: birey; “örneği” oku Kedi’ye.
+2. Kedi: kutunun adı “Bitki” değil; “alt sınıfı” oku Memeli’ye.
+3. Memeli: ad eşleşmedi; ok Hayvan’a.
+4. Hayvan: ad eşleşmedi; ok Canlı’ya.
+5. Canlı: ad eşleşmedi. Canlı’dan çıkan ok yok, zincir bitti. Karar: ✗ Bilinmiyor: “Bitki” bilgi tabanında yok.
 
 Dört sorunun tamamı:
 
@@ -68,9 +68,9 @@ Karar “Hayır” değil, “Bilinmiyor”. Makine Tekir’in bitki olmadığı
 
 Sembolik YZ’de bilgi, bilgi temsili (knowledge representation) ile kodlanır: semantik ağlar, çerçeveler (frames), ontolojiler ya da mantık önermeleri. Varlıklar ve aralarındaki ilişkiler (ör. is-a, has-a) açıkça tanımlanır.
 
-Çıkarım (inference), bu temsiller üzerinde kuralların uygulanmasıdır. Şekil 2.1’deki gösterim bir is-a hiyerarşisinde geçişliliği (transitivity) kullanır. Ontolojide iki bağ ayrılır: Tekir, Kedi sınıfının bir örneğidir (instance-of); Kedi, Memeli sınıfının alt sınıfıdır (subclass-of). “Tekir instance-of Kedi” ve “Kedi subclass-of Memeli” ise “Tekir instance-of Memeli” türetilir; bu nedenle Tekir bir memelidir. Şekil iki bağı da tek ok türüyle, “bir …dır” diye gösterir. Sembolik akıl yürütmenin özü budur.
+Çıkarım (inference), bu temsiller üzerinde kuralların uygulanmasıdır. Şekil 2.1’deki gösterim bir is-a hiyerarşisinde geçişliliği (transitivity) kullanır. Ontolojide iki bağ ayrılır: Tekir, Kedi sınıfının bir örneğidir (instance-of); Kedi, Memeli sınıfının alt sınıfıdır (subclass-of). “Tekir instance-of Kedi” ve “Kedi subclass-of Memeli” ise “Tekir instance-of Memeli” türetilir; bu nedenle Tekir bir memelidir. Şekil 2.1 iki bağı ayrı etiketle gösterir: ilk ok “örneği”, öbürleri “alt sınıfı”. Sembolik akıl yürütmenin özü budur.
 
-Bilgi tabanı yalnızca ardışık “is-a” (bir …dır) bağlarını içerir. Hedef zincirde varsa “Evet”, yoksa “Bilinmiyor”.
+Bilgi tabanında bir instance-of (örneği) bağı ve onu izleyen subclass-of (alt sınıfı) bağları var. Hedef zincirde varsa “Evet”, yoksa “Bilinmiyor”.
 
 Geçişlilik kuralı sınıflar arasında biçimsel olarak şöyle yazılır: subclass-of(A, B) ∧ subclass-of(B, C) → subclass-of(A, C). Örnek için: instance-of(a, B) ∧ subclass-of(B, C) → instance-of(a, C). Motor bu kuralı zincir boyunca tekrar tekrar uygular; beş düğümlük zincirde en fazla dört adımda ya hedefe ulaşır ya da zincirin sonuna gelir.
 
@@ -127,7 +127,7 @@ En sabırlı yöntem her ihtimali tek tek denemektir ama bu çok yavaş olabilir
 
 > **Kenar notu.** Açgözlü sezgisel yöntemler hız kazandırır ama bedeli vardır: bazen en iyi çözümü kaçırabilirler. “Yeterince iyi”yi “mükemmel”e tercih ederler. A* gibi daha dikkatli yöntemler, uygun bir sezgiyle garantiyi geri alır.
 
-**Şekil 2.3 · Yol bulma: sezgisiz vs sezgili**
+**Şekil 2.3 · Yol bulma: sezgisiz ile sezgili**
 ![Şekil 2.3](../../figures/out/tr/sekil-2-3-grid.svg)
 
 *Kurulum.* Şekilde 8 sütun, 6 satırlık bir ızgara var; 48 karenin 11’i siyah duvar. Sol üst köşede S (başlangıç), sağ alt köşede H (hedef). Duvarlar üç dikey engel oluşturuyor: 3. sütunda üstten dört kare, 5. sütunda alttan dört kare, 7. sütunda ortada üç kare. Bu yüzden düz gitmek imkânsız; yol birinci engeli alttan, ikincisini üstten, üçüncüsünü yine alttan dolaşmak zorunda. İki panel aynı ızgarayı gösteriyor: solda sezgisiz arama, sağda sezgisel arama. Açık turuncu kareler taranmış, koyu turuncu kareler bulunan yol. Her karedeki sayı tarama sırası; S 1’dir.
@@ -234,7 +234,7 @@ Bu P için π = (6/13, 4/13, 3/13) ≈ (0.462, 0.308, 0.231). Matrisin her girdi
 
 Olasılık kurallara esneklik kattı; ama tabloyu, kuralları, zinciri hâlâ bir insan elle yazıyor. Bu yükün ne kadar taşınabileceği konusunda YZ’ciler ikiye bölündü.
 
-### 2.6 Düzenliler ve dağınıklar (Neat vs Scruffy)
+### 2.6 Düzenliler ve dağınıklar (neats ve scruffies)
 
 YZ araştırmacıları yıllarca iki kampa bölündü. “Düzenliler” (neats) her adımın temiz matematikle kanıtlanmasını istedi. “Dağınıklar” (scruffies) ise omuz silkti: “Çalışıyorsa iyidir, teorisini sonra buluruz.”
 
@@ -324,7 +324,7 @@ Bu yaklaşıma “klasik” ya da “sembolik” YZ denir. Mantık, kurallar, ar
 Bir makineye Tekir’i nasıl öğretirsin? Makine onu göremez, okşayamaz; ancak senin yazdığın cümlelerden tanır: “Tekir bir kedidir”, “kedi bir memelidir”, “memeli bir hayvandır”. Klasik YZ bilgiyi işte böyle saklar: açık semboller ve aralarındaki bağlar. ||| Bir makineye Tekir’i nasıl öğretirsin? Makine onu göremez, okşayamaz; ancak senin yazdığın cümlelerden tanır: “Tekir bir kedidir”, “kedi bir memelidir”, “memeli bir hayvandır”. Klasik YZ bilgiyi böyle saklar: açık semboller ve aralarındaki bağlar.
 İşin güzel yanı şu: Makine bu bağları izleyip kimsenin söylemediği bilgiye kendisi ulaşır. “Tekir bir hayvandır” cümlesini hiç duymadı; ama zinciri halka halka izleyince bunu kendisi bulur. Şekil 2.1’de dört soru var; makinenin “düşünüşünü” orada adım adım oku. ||| İşin güzel yanı, makinenin bu bağları izleyip kimsenin söylemediği bilgiye kendisinin ulaşması. “Tekir bir hayvandır” cümlesini hiç duymadı; ama zinciri halka halka izleyince bunu kendisi bulur. Şekil 2.1’de dört soru var; makinenin düşünüşünü orada adım adım oku.
 Makine aslında yalnızca “kim kimin türü” bilgisini tutuyor: Tekir bir kedi, kedi bir memeli... Sorunca zinciri halka halka izliyor ve kimsenin ona söylemediği bir bilgiye kendisi ulaşıyor. Zincirde yoksa da dürüstçe “bilinmiyor” diyor. ||| Makine yalnızca “kim kimin türü” bilgisini tutuyor: Tekir bir kedi, kedi bir memeli... Sorunca zinciri halka halka izliyor ve kimsenin ona söylemediği bir bilgiye kendisi ulaşıyor. Zincirde yoksa da “bilinmiyor” diyor.
-Bilgi tabanı yalnızca ardışık “is-a” (bir …dır) bağlarını içerir. Bir sorgu verildiğinde çıkarım motoru zinciri geçişlilik (transitivity) kuralıyla takip eder. Hedef zincirde varsa “Evet”, yoksa “Bilinmiyor”. ||| Bilgi tabanı yalnızca ardışık “is-a” (bir …dır) bağlarını içerir. Hedef zincirde varsa “Evet”, yoksa “Bilinmiyor”.
+Bilgi tabanı yalnızca ardışık “is-a” (bir …dır) bağlarını içerir. Bir sorgu verildiğinde çıkarım motoru zinciri geçişlilik (transitivity) kuralıyla takip eder. Hedef zincirde varsa “Evet”, yoksa “Bilinmiyor”. ||| Bilgi tabanında bir instance-of (örneği) bağı ve onu izleyen subclass-of (alt sınıfı) bağları var. Hedef zincirde varsa “Evet”, yoksa “Bilinmiyor”.
 1980’lerde bu çıraklar tıptan mühendisliğe her yerde çalıştı. Aşağıda minik bir tanesi var: Koşulları kâğıtta aç kapa; hangi kuralın “ateşlendiğini”, önerinin nasıl doğduğunu Şekil 2.2’de gör. ||| 1980’lerde bu çıraklar tıptan mühendisliğe her yerde çalıştı. Aşağıda minik bir tanesi var: koşulları sen aç kapa; hangi kuralın ateşlendiğini, önerinin nasıl doğduğunu Şekil 2.2’de gör.
 Çalışma belleğindeki olgular, koşulları eşleşen üretim kurallarını ateşler (ileri zincirleme, forward chaining). R5 zincirlemedir: yalnızca R1 ateşlediyse (şemsiye) ve rüzgâr varsa tetiklenir. ||| R5 zincirlemedir: yalnızca R1 ateşlediyse (şemsiye) ve rüzgâr varsa tetiklenir.
 En sabırlı yöntem her ihtimali tek tek denemektir ama bu çok yavaş olabilir. Sezgisel yöntem (heuristic) kestirmeden gider: “Hangi yön daha umut verici?” diye tahmin yürütür. Şekil 2.3’te ikisini yarıştırdık: Sezgisiz olan her yeri tarar, sezgisel olan burnunu hedefe çevirir. ||| En sabırlı yöntem her ihtimali tek tek denemektir ama bu çok yavaş olabilir. Sezgisel yöntem (heuristic) kestirmeden gider: “Hangi yön daha umut verici?” diye tahmin yürütür. Şekil 2.3’te ikisini yarıştırdık: sezgisiz olan her yeri tarar, sezgisel olan burnunu hedefe çevirir.
@@ -370,4 +370,5 @@ Klasik sembolik YZ iki temel sınıra çarptı: bilgi edinme darboğazı (tüm k
 - Yazar kararı (2026-09-10): kaynak metin dahil tüm "demo" sözcükleri "gösterim" ya da "Şekil N.j" yapıldı; "Aşağıdaki demo" → şekil öncesinde "Aşağıda yer alan gösterim (Şekil N.j)", sonrasında "Şekil N.j'teki gösterim".
 - 2026-10-01 düzeltme belgesi: R011 (öğrenme, sembolik çöküşün ardılı değil; "zaten araştırılan" + paralel gelişim: 2.1 teknik, 2.6 basit, 2.6 teknik, kalanlar), R012 (instance-of / subclass-of ayrımı: Kurulum, 2.2 teknik, biçimsel kural, kalanlar; cevaplar/M02), R013 (BFS garantisi eş kenar maliyetine bağlandı: teknik[0], Adım 4, Ne oluyor, kalanlar; sınav 3 sorusu açgözlü aramaya daraltıldı), R014 (greedy ile A* ayrıldı: kenar notu, Adım adım başlığı/tablo "Açgözlü sezgisel", Ne oluyor, teknik kabul edilebilirlik + graf aramasında tutarlılık/yeniden açma; cevaplar/M02), R015 (Markov: mevcut duruma koşullu bağımsızlık; sonlu/indirgenemez/periyodik olmayan zincir tek kararlı dağılıma yakınsar; satır toplamı 1; πP = π ve Σπᵢ = 1 ayrı satırlarda; kenar notu, Kurulum, Adım adım, Ne oluyor, teknik, kalanlar), R016 (yalnız EN: "in two words" → "in two ideas", rigour → rigor; TR'de değişiklik gerekmedi), R066 (Bölüm 1–2'de bias/embedding geçmiyor; işlem yok).
 - 2026-09-30 insanlaştırma geçişi: humanize-tr-report.md bulguları uygulandı; "Peki/Sıradaki bölüm …-yor" köprüleri, "işte/tam olarak" çivileri, punchline'lar, "Ekranda … kâğıtta …" cümleleri (2.4, 2.5 Kurulum), "aslında/yani/dürüst/harika/yolculuk" sözcükleri, Şekil 2.5 ipucu şişkinliği (cevap dağılımını ele veren cümle dahil) ve kavram tırnakları temizlendi. Teknik "Ne oluyor" paragraflarında ilk teknik paragrafı tekrar eden cümleler kırpıldı (2.2, 2.3, 2.5; 2.6'daki paragraf tamamen tekrar olduğu için basılı sürümden çıkarıldı; dijital sürüm tam hâlini koruyabilir). Kaynak paragraf değişiklikleri yukarıdaki SOURCE-CHANGES bloğunda.
+- 2026-10-01 doğrulama turu (R012, R095): Şekil 2.1 iki ok türü ayrı etiketli ("örneği" birey → sınıf, "alt sınıfı" sınıf → üst sınıf): Kurulum, iki sorunun Adım adım anlatımı, teknik ve Ne oluyor; şekil üreticisi okların üstüne etiket yazar; dijital zincir aynı iki etiketi gösterir. Dijital başlıklarda "vs" kalktı ("sezgisiz ile sezgili", "Düzenliler ve dağınıklar (neats ve scruffies)").
 -->

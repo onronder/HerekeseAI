@@ -199,7 +199,7 @@ if (digits.length === 13) {
   const JsBarcode = require('jsbarcode');
   const doc = new DOMImplementation().createDocument('http://www.w3.org/1999/xhtml', 'html', null);
   const svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  JsBarcode(svg, digits, { xmlDocument: doc, format: 'EAN13', width: 2, height: 139, fontSize: 14, margin: 6, /* çubuk ≈ 23,4 mm: GS1 nominal 22,85 mm × (0,336/0,330) (R079) */ background: '#ffffff', lineColor: '#000000' });
+  JsBarcode(svg, digits, { xmlDocument: doc, format: 'EAN13', width: 2, height: 139, fontSize: 14, textMargin: 3, margin: 6, /* koruma çubukları height + fontSize/2 + textMargin = +10 birim = 5X aşağı uzar (GS1 §5.2.3.2; R079) */ /* çubuk ≈ 23,4 mm: GS1 nominal 22,85 mm × (0,336/0,330) (R079) */ background: '#ffffff', lineColor: '#000000' });
   barcode = `<div class="isbn"><div class="isbn-no">ISBN ${cfg.isbn}</div>${new XMLSerializer().serializeToString(svg)}</div>`;
 }
 const fonts = fs.readFileSync(path.join(ROOT, 'store', 'assets', 'fonts.css'), 'utf8')
@@ -259,4 +259,5 @@ ${KDP ? '.back .seller { margin-bottom: 4mm; }' : ''}
 fs.mkdirSync(path.join(HERE, 'out'), { recursive: true });
 const outName = pos[1] || (LANG === 'tr' && !KDP ? 'kapak.html' : `kapak-${LANG}-${PROFILE}.html`);
 fs.writeFileSync(path.join(HERE, 'out', outName), html);
+fs.writeFileSync(path.join(HERE, 'out', 'size.txt'), `${(TW - 2 * BLEED).toFixed(4)} ${(TH - 2 * BLEED).toFixed(4)}\n`);  // R084: net ölçü → kapak.sh kutuları
 console.log(`out/${outName} · ${VARIANT} · ${LANG}/${PROFILE} · ${f2(TW)}×${f2(TH)} mm (sırt ${f2(SP)} mm) · barkod: ${digits.length === 13 ? 'EAN-13' : (KDP ? 'KDP basar' : 'yer tutucu')}`);

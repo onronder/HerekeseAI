@@ -51,7 +51,8 @@ TITLE_HEX=$(python3 -c 'import sys; print(sys.argv[1].encode("utf-16-be").hex().
 sed -e "s|ICCPROFILE|($PROF)|" -e "s|OUTPUTCONDITIONID|$CID|" -e "s|OUTPUTCONDITION|$COND|" -e "s|TITLEHEX|$TITLE_HEX|" PDFX_def.ps > "$O/PDFX_def.ps"
 
 # Sayfa kutuları: MediaBox = kâğıt (net + taşma, Paged.js); BleedBox = MediaBox; TrimBox = taşma kadar içeri (pdf-lib).
-node boxes.mjs "$O/ic-blok-rgb.pdf" "$O/ic-blok-boxed.pdf" "$BLEED_MM"
+if [ "$PROFILE" = kdp ]; then TRIM="152.4 228.6"; else TRIM="160 240"; fi  # net ölçü (mm): kutular kesin değere getirilir (R084)
+node boxes.mjs "$O/ic-blok-rgb.pdf" "$O/ic-blok-boxed.pdf" "$BLEED_MM" $TRIM
 gs -q -dBATCH -dNOPAUSE -dNOSAFER -dPDFX -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress \
    -sColorConversionStrategy=CMYK -dUseFastColor=true -dProcessColorModel=/DeviceCMYK \
    -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompatibilityLevel=1.3 \

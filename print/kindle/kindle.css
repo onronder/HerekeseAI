@@ -20,3 +20,6 @@ code { font-family: monospace; font-size: .9em; }
 sup, sub { font-size: .75em; line-height: 0; }
 ul, ol { margin: 0 0 .9em 1.2em; padding: 0; }
 li { margin: .2em 0; }
+
+/* R099: şekil → metin verisi bağlantısı */
+p.figdata { font-size: 0.85em; margin: 0.2em 0 0.8em; }

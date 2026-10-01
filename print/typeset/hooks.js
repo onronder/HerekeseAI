@@ -86,8 +86,27 @@ class KitapHooks extends Paged.Handler {
       if (hidden) { over++; overPages.push(pg.dataset.pageNumber); }
     });
     console.log(`hooks: dizin tekrar sayfa numarası kaldırıldı: ${removed}`);
+    // R082: figürlerin basılı en küçük metin puntosu (sayfada gerçek genişlik / viewBox × font-size; 1 CSS px = 0,75 pt)
+    let figMin = 99; const figLow = [];
+    document.querySelectorAll('svg.fig').forEach(svg => {
+      const vb = svg.viewBox && svg.viewBox.baseVal; const w = svg.getBoundingClientRect().width;
+      if (!vb || !vb.width || !w) return;
+      let mn = 99;
+      svg.querySelectorAll('text').forEach(t => { const fs = parseFloat(t.getAttribute('font-size') || getComputedStyle(t).fontSize); if (fs && !t.closest('[data-sup]')) mn = Math.min(mn, fs); });
+      const pt = mn * (w / vb.width) * 0.75;
+      figMin = Math.min(figMin, pt);
+      if (pt < 6.58) { /* DOM vekili; Chrome PDF'e ~%1 küçük yazar, asıl kapı PDF ölçümü (≥ 6,5) */ const lab = (svg.getAttribute('aria-label') || '').slice(0, 12); figLow.push(lab.replace(/\s+/g, '_') + '=' + pt.toFixed(2)); }
+    });
+    // R071: bölünmemesi gereken kısa tablo/matris bölündü mü; bölünen tablonun bir parçasında tek veri satırı kaldı mı (sayaçlar Keywords'e)
+    let smallSplit = 0, loneRow = 0; const tabPages = [];
+    document.querySelectorAll('table[data-split-from], table[data-split-to]').forEach(t => {
+      const pg = t.closest('.pagedjs_page'); const pno = pg ? pg.dataset.pageNumber : '?';
+      if (t.classList.contains('small')) { smallSplit++; tabPages.push('k' + pno); }
+      const rows = [...t.querySelectorAll('tr')].filter(r => !r.closest('thead')).length;
+      if (rows === 1) { loneRow++; tabPages.push('t' + pno); }
+    });
     const m = document.createElement('meta'); m.name = 'keywords';
-    m.content = `kitap-tasma:${over}` + (overPages.length ? ` sayfa ${overPages.join(' ')}` : '') + ` thead-tekrar:${document.querySelectorAll('thead.thead-repeat').length} kutu-devam:${document.querySelectorAll('.h4box > .cont').length} dizin-tekrar-silinen:${removed} dizin-cozulmeyen:${unresolved}`;
+    m.content = `kitap-tasma:${over}` + (overPages.length ? ` sayfa ${overPages.join(' ')}` : '') + ` thead-tekrar:${document.querySelectorAll('thead.thead-repeat').length} kutu-devam:${document.querySelectorAll('.h4box > .cont').length} dizin-tekrar-silinen:${removed} dizin-cozulmeyen:${unresolved} tablo-kucuk-bolunen:${smallSplit} tablo-tek-satir:${loneRow}${tabPages.length ? ' tablo-sayfa ' + tabPages.join(' ') : ''} sekil-min-pt:${figMin.toFixed(2)}` + (figLow.length ? ` sekil-dusuk:${figLow.join(',')}` : '');
     document.head.appendChild(m);
   }
 }

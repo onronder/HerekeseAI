@@ -757,3 +757,18 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   EPUB epubcheck 0; iki dilde 0 kayıp cümle, 45/45 QR (sessiz alan ≥ 3,73 mm), EAN 23,37 mm, siyah yalnız K, 90/90 canlı demo URL.
   Metin düzeltmelerle %15 büyüdü (46,2 bin → 53,4 bin kelime). Teslim klasörleri yenilendi. Yazara kalan: upload_book.py + git push
   (dijital demo/metin değişiklikleri), künye matbaa satırı, EN ISBN, matbaadan sırt/ICC/zengin siyah kararı.
+- DOĞRULAMA TURU (2026-10-01 gece; yazarın "99 Düzeltme Doğrulama Raporu" docx'i, açık 33 kayıt): kayıt başına kanıt
+  print/kitap/qa/dogrulama33.py → dogrulama-33.json + dogrulama-33-raporu.md (dosya:satır, test, beklenen/gözlenen, dış koşul, hash).
+  İçerik: dar YZ "tek iş" genellemesi M01/M08/cevaplar/sözlük/dijitalde "belirli görevler + alanlar arası genel öğrenme yok"; Şekil 7.3 dijital
+  alıştırma olay/köken/kanal üç ayrı puan (giriş paragrafı dijitale özgü, web-overrides'ta sabit); risk demosunda amaç/aktör/madde gerekçeleri;
+  GDPR/KVKK ayrı dijital paragraflar; SHAP cevabı nedensellik iddiasız; bağlam penceresi "pencerede tutuluyor"; dizin: Fallback takma adı,
+  "Yapay sinir ağı" çeldirici/CNN/RNN dışlamaları. Dizgi: TrimBox/MediaBox kesin (boxes.mjs net ölçü), forma ekonomisi (TR 258 → 256, Notlar yok),
+  tablo ikinci/son satır kuralı, matematik terimleri bölünmez, şekil hedefi 6,6 pt + PDF içerik akışı ölçümü (pdf_fontsize.mjs; Chrome SVG metnini
+  ~%0,8 küçük yazar), QA sayaçları teslim PDF meta verisinden silinir. Şekil geometri denetimi check_fig_geom.mjs (90/90 temiz; 3.3 gizli etiketler,
+  3.4/3.6 başlık payı, 4.3, 7.2, 7.4, 8.2, 2.2 düzeltildi). Kindle: Figure Data eki, aria-describedby → <section id>, Kindle Previewer 4 CLI
+  dönüşümü başarılı (Türkçe yerel ayar hatası: JAVA_TOOL_OPTIONS=-Duser.language=en). Teslim notları ölçümden: print/teslim/guncelle.py.
+  SON (2026-10-02): TR 256 s. (tam 16 forma, Notlar yok; TrimBox 160,00 × 240,00 mm), EN KDP 278 s. (kapak.en.json pages 278), EPUB
+  epubcheck 0 + Kindle Previewer 4 Success/0/0; iki dilde check.sh "tüm denetimler geçti" (0 kayıp cümle, QR 45/45, PDF şekil metni ≥ 6,51 pt);
+  dogrulama33.py 33/33; qa_evidence: 90/90 canlı URL, dizin HTML = PDF. Açık dış koşullar: matbaa ICC + bağımsız preflight (R080), künye
+  matbaa satırı + EN ISBN (R081), EAN doğrulayıcı (R079), fiziksel prova/sırt (R082, R084), ekran okuyucu + cihaz (R099). Yazara:
+  python3 upload_book.py + git push (dijital değişiklikler; print/ ve BASKI.md push edilmez).

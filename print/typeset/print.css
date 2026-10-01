@@ -27,7 +27,9 @@ section.front { page: front; break-before: right; line-height: 1.38; font-size: 
 section.front p { margin-bottom: .6em; hyphens: manual; } /* künyede e-posta/adres kırılmasın */
 ol.short, table.small { break-inside: avoid; } /* sınav şıkları ve ≤ 4 satırlı tablolar/matrisler bölünmez (R071) */
 .cont { font-family: 'Space Mono', monospace; font-size: 7pt; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 .4em; } /* bölünen teknik kutu: devam etiketi (R083) */
-p.formula { break-inside: avoid; } /* formül paragrafı sayfa sonunda bölünmez (R089) */ /* ön bölüm biraz sıkı: "Nasıl okumalı" tek sayfaya sığsın */
+p.formula { break-inside: avoid; }
+span.math { white-space: nowrap; hyphens: none; }
+span.ixw { white-space: nowrap; hyphens: none; } /* R076: dizin çapası terimle aynı satırda/sayfada */ /* R089: formül terimi satır sonunda bölünmez */ /* formül paragrafı sayfa sonunda bölünmez (R089) */ /* ön bölüm biraz sıkı: "Nasıl okumalı" tek sayfaya sığsın */
 section.title { break-before: auto; }
 section.title h1 { font-size: 34pt; margin-top: 40mm; }
 section.title h1 + h2 { font-size: 18pt; }

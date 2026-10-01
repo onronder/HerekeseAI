@@ -7,7 +7,7 @@ Entry format: a DOI for journal articles, an arXiv number or a permanent address
 ## Works named in the text
 
 - Gardner, H. (1983). *Frames of Mind: The Theory of Multiple Intelligences*. Basic Books. (Chapter 1)
-- Turing, A. M. (1936). “On Computable Numbers, with an Application to the Entscheidungsproblem.” *Proceedings of the London Mathematical Society*, s2-42(1), 230–265. https://doi.org/10.1112/plms/s2-42.1.230 (Chapter 1)
+- Turing, A. M. (1936). “On Computable Numbers, with an Application to the Entscheidungsproblem.” *Proceedings of the London Mathematical Society*, s2-42(1), 230–265. https://doi.org/10.1112/plms/s2-42.1.230 The volume is dated 1937; the paper was received and read before the Society in 1936. This book follows the common convention of citing 1936. (Chapter 1)
 - Turing, A. M. (1950). “Computing Machinery and Intelligence.” *Mind*, 59(236), 433–460. https://doi.org/10.1093/mind/LIX.236.433 (Chapter 8)
 - von Neumann, J. (1945). *First Draft of a Report on the EDVAC*. Moore School of Electrical Engineering, University of Pennsylvania. Reprinted in *IEEE Annals of the History of Computing*, 15(4), 27–75 (1993). https://doi.org/10.1109/85.238389 (Chapter 1)
 - Moore, G. E. (1965). “Cramming More Components onto Integrated Circuits.” *Electronics*, 38(8), 114–117. Reprinted in *IEEE Solid-State Circuits Society Newsletter*, 11(3), 33–35 (2006). https://doi.org/10.1109/N-SSC.2006.4785860 (Chapter 1)
@@ -24,7 +24,7 @@ Entry format: a DOI for journal articles, an arXiv number or a permanent address
 - Yao, S., et al. (2023). “ReAct: Synergizing Reasoning and Acting in Language Models.” *ICLR*. arXiv:2210.03629. https://doi.org/10.48550/arXiv.2210.03629 (Chapter 6)
 - Lundberg, S. M., and Lee, S.-I. (2017). “A Unified Approach to Interpreting Model Predictions.” *NeurIPS 30*. arXiv:1705.07874. https://doi.org/10.48550/arXiv.1705.07874 (SHAP; Chapter 7)
 - Schwartz, R., et al. (2022). *Towards a Standard for Identifying and Managing Bias in Artificial Intelligence*. NIST Special Publication 1270. https://doi.org/10.6028/NIST.SP.1270 (sources of bias; Chapter 7)
-- European Parliament and Council (2024). *Regulation (EU) 2024/1689 (Artificial Intelligence Act)*; consolidated text of 27 July 2026, as amended by Regulation (EU) 2026/1744; Articles 5, 6, 50, 111 and Annex III. http://data.europa.eu/eli/reg/2024/1689/oj (Chapter 7)
+- European Parliament and Council (2024). *Regulation (EU) 2024/1689 (Artificial Intelligence Act)*; consolidated text of 27 July 2026, as amended by Regulation (EU) 2026/1744 (Official Journal, 24 July 2026; in force 27 July 2026); Articles 5, 6, 50, 111, 113 and Annex III. Consolidated text: http://data.europa.eu/eli/reg/2024/1689/2026-07-27 · Amending regulation: http://data.europa.eu/eli/reg/2026/1744/oj · Original publication: http://data.europa.eu/eli/reg/2024/1689/oj (Chapter 7)
 - European Parliament and Council (2016). *Regulation (EU) 2016/679 (General Data Protection Regulation)*; Articles 6, 9 and 22. http://data.europa.eu/eli/reg/2016/679/oj (Chapter 7)
 - Law No. 6698 on the Protection of Personal Data (KVKK) (2016). *Official Gazette* 29677, 7 April 2016; Articles 5, 6, 9 and 11. https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6698&MevzuatTur=1&MevzuatTertip=5 (Chapter 7)
 - Searle, J. R. (1980). “Minds, Brains, and Programs.” *Behavioral and Brain Sciences*, 3(3), 417–457. https://doi.org/10.1017/S0140525X00005756 (Chinese Room; Chapter 8)

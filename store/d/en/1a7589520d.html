@@ -123,6 +123,7 @@
                     </div>
                     <p style="margin:10px 0 12px;font-size:15px;color:#37332a;">{{ intel.desc }}</p>
                     <div style="height:8px;background:rgba(26,26,26,0.08);"><div style="height:8px;background:{{ intel.levelColor }};width:{{ intel.bar }};transition:width .4s ease;"></div></div>
+                    <div style="margin-top:8px;font-family:'Space Mono',monospace;font-size:11px;color:#6c6555;">The bar is an illustrative level, not a measured score.</div>
                   </div>
                 </sc-if>
 
@@ -204,7 +205,7 @@
                     <sc-for list="{{ chainNodes }}" as="n" hint-placeholder-count="5">
                       <span style="display:inline-flex;align-items:center;gap:6px;">
                         <span style="padding:9px 13px;border:1.5px solid {{ acc }};font-family:'Work Sans',sans-serif;font-size:14px;font-weight:600;background:{{ n.bg }};color:{{ n.fg }};transition:all .25s;">{{ n.label }}</span>
-                        <sc-if value="{{ n.arrow }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;">one ▸</span></sc-if>
+                        <sc-if value="{{ n.arrow }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;white-space:nowrap;">{{ n.rel }} ▸</span></sc-if>
                       </span>
                     </sc-for>
                   </div>
@@ -781,22 +782,22 @@
                   </sc-if>
                 </sc-if>
 
-                <!-- DF (deepfake: suspicion sign + independent verification step) -->
+                <!-- DF (deepfake: event, origin and independent verification channel are asked and scored separately; R055) -->
                 <sc-if value="{{ d_df }}" hint-placeholder-val="{{ false }}">
-                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:8px;">Case {{ dfIdxNum }} / {{ dfTotal }} · fictional example · matched the recommended step: {{ dfHits }}</div>
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:8px;">Case {{ dfIdxNum }} / {{ dfTotal }} · fictional example · matched: event {{ dfScE }} · origin {{ dfScO }} · channel {{ dfScC }}</div>
                   <div style="padding:16px;border:1px solid rgba(26,26,26,0.14);background:#fff;font-size:15px;line-height:1.55;color:#1f1f1f;margin-bottom:16px;">{{ dfText }}</div>
-                  <sc-if value="{{ dfAnswered }}" hint-placeholder-val="{{ false }}">
-                    <div style="font-family:'Instrument Serif',serif;font-size:20px;color:{{ dfVerdictColor }};text-align:center;margin-bottom:8px;">{{ dfVerdict }}</div>
-                    <div style="padding:12px 14px;border-left:4px solid {{ acc }};background:#faf6f7;font-size:13.5px;line-height:1.55;color:#37332a;">💡 {{ dfTell }}</div>
+                  <sc-if value="{{ dfAsking }}" hint-placeholder-val="{{ true }}">
+                    <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;color:#8a8270;margin-bottom:10px;">{{ dfQNum }} / 3 · {{ dfQ }}</div>
+                    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                      <sc-for list="{{ dfOpts }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ dfDone }}" hint-placeholder-val="{{ false }}">
+                    <sc-for list="{{ dfRes }}" as="r" hint-placeholder-count="3"><div style="padding:9px 13px;margin-bottom:6px;border-left:4px solid {{ r.c }};background:#fff;font-size:13.5px;line-height:1.55;color:#37332a;"><span style="font-weight:600;color:{{ r.c }};">{{ r.head }}</span> {{ r.text }}</div></sc-for>
                     <div style="margin-top:8px;font-size:12.5px;color:#6c6555;line-height:1.5;">{{ dfNote }}</div>
                     <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;">
                       <sc-if value="{{ dfHasNext }}" hint-placeholder-val="{{ true }}"><button onClick="{{ dfNext }}" style="padding:9px 18px;border:none;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Next →</button></sc-if>
                       <button onClick="{{ dfReset }}" style="padding:9px 14px;border:1px solid {{ acc }};background:none;color:{{ acc }};font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;">restart</button>
-                    </div>
-                  </sc-if>
-                  <sc-if value="{{ dfNotAnswered }}" hint-placeholder-val="{{ true }}">
-                    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-                      <sc-for list="{{ dfOpts }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for>
                     </div>
                   </sc-if>
                 </sc-if>
@@ -811,6 +812,7 @@
                           <sc-for list="{{ u.opts }}" as="o" hint-placeholder-count="4"><button onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for>
                         </div>
                         <sc-if value="{{ u.done }}" hint-placeholder-val="{{ false }}"><div style="margin-top:7px;font-family:'Space Mono',monospace;font-size:12px;color:{{ u.markColor }};">{{ u.mark }}</div></sc-if>
+                        <sc-if value="{{ u.done }}" hint-placeholder-val="{{ false }}"><div style="margin-top:5px;font-size:12.5px;line-height:1.5;color:#4a4539;">{{ u.why }}</div></sc-if>
                       </div>
                     </sc-for>
                   </div>
@@ -1004,7 +1006,7 @@ class Component extends DCLogic {
     neuronX: [0.6, 0.3, 0.8], neuronAct: 'sigmoid', ffIn: [1, 0, 1], ffFed: false, bpRound: 0, convFilter: 'vert', convPos: 0, rnnStep: 0, ganRound: 0,
     tokEx: 0, embedPick: 0, attnQ: 3, genStep: 0, trainStage: 0, diffStep: 0, ctxCount: 0,
     promptParts: { role: false, context: false, example: false, format: false }, ragQ: 'izin', ragOn: false, agentStep: 0, archPick: 'orch', sectorPick: 'health',
-    biasVal: 0, explainPick: 0, explainShow: false, dfIdx: 0, dfAnswer: null, dfHits: 0, regAns: {}, alignPick: 0, alignShow: false,
+    biasVal: 0, explainPick: 0, explainShow: false, dfIdx: 0, dfAns: {}, dfScore: { e: 0, o: 0, c: 0 }, regAns: {}, alignPick: 0, alignShow: false,
     turIdx: 0, turAnswer: null, crIdx: 0, crSent: false, capPick: 'narrow', singPick: 'accel', respIdx: 0, respPicks: [], respShow: false,
     quizAns: {}, quizChecked: false
   };
@@ -1027,7 +1029,7 @@ class Component extends DCLogic {
   componentWillUnmount() { clearInterval(this._tick); if (this._gridTimer) clearInterval(this._gridTimer); }
 
   modules() {
-    return [{"n":"07","tag":"Society","title":"AI and Society","subtitle":"From bias to regulation, deepfakes to alignment","acc":"#b03a52","dot":"#b03a52","sections":[{"id":"deepfake","label":"Deepfakes","h2":"Deepfakes and disinformation","basit":[],"teknik":[],"demo":{"type":"df","title":"Real or fake?","hint":"Read the situation and pick the recommended step: does it look real, does it need verification, or can you not tell? Then see the suspicion sign and the verification channel.","neOluyorBasit":"Catching fake content is a habit: watch for inconsistencies, the source and the context. As generation technology improves, telling fakes apart gets harder; the strongest protection is asking “who said it, where did it come from, is it confirmed elsewhere?” and never treating a single image or voice as proof.","neOluyor":"Telling synthetic media apart is a habit: look for inconsistency, source and context clues. Detection is an arms race that gets harder as generation improves; the strongest defense is source verification and skepticism."}}]}];
+    return [{"n":"07","tag":"Society","title":"AI and Society","subtitle":"From bias to regulation, deepfakes to alignment","acc":"#b03a52","dot":"#b03a52","sections":[{"id":"deepfake","label":"Deepfakes","h2":"Deepfakes and disinformation","basit":[],"teknik":[],"demo":{"type":"df","title":"Real or fake?","hint":"Answer three separate questions for each case: did the event really happen, how might the content have been produced, and which independent check would you do? Each question is scored on its own.","neOluyorBasit":"Catching fake content is a habit: watch for inconsistencies, the source and the context. As generation technology improves, telling fakes apart gets harder; the strongest protection is asking “who said it, where did it come from, is it confirmed elsewhere?” and never treating a single image or voice as proof.","neOluyor":"Telling synthetic media apart is a habit: look for inconsistency, source and context clues. Detection is an arms race that gets harder as generation improves; the strongest defense is source verification and skepticism."}}]}];
   }
 
   upcoming() {
@@ -1039,7 +1041,7 @@ class Component extends DCLogic {
   resetDemos() {
     this._tauto = false;
     this._mkauto = false; this._descauto = false;
-    this.setState({ intelPick: 0, bits: [0,1,0,0,1,0,0,1], tu:{tape:[0,0,0,1,0,1],head:0,st:'right',start:5}, cy:{phase:0,playing:true,part:0}, cls:{}, exp:0, chainQ:-1, facts:{yagmur:true,soguk:false,ruzgar:false}, grid:{method:'bfs',explored:0,path:[],visited:[]}, mk:{cur:0,days:0,counts:[0,0,0]}, spamPick:0, scTask:'reg', scFitted:false, kmGrouped:false, descX:0.6, descN:0, descLr:'low', fitPick:1, neuronX:[0.6,0.3,0.8], neuronAct:'sigmoid', ffIn:[1,0,1], ffFed:false, bpRound:0, convFilter:'vert', convPos:0, rnnStep:0, ganRound:0, tokEx:0, embedPick:0, attnQ:3, genStep:0, trainStage:0, diffStep:0, ctxCount:0, promptParts:{role:false,context:false,example:false,format:false}, ragQ:'izin', ragOn:false, agentStep:0, archPick:'orch', sectorPick:'health', biasVal:0, explainPick:0, explainShow:false, dfIdx:0, dfAnswer:null, dfHits:0, regAns:{}, alignPick:0, alignShow:false, turIdx:0, turAnswer:null, crIdx:0, crSent:false, capPick:'narrow', singPick:'accel', respIdx:0, respPicks:[], respShow:false, quizAns:{} });
+    this.setState({ intelPick: 0, bits: [0,1,0,0,1,0,0,1], tu:{tape:[0,0,0,1,0,1],head:0,st:'right',start:5}, cy:{phase:0,playing:true,part:0}, cls:{}, exp:0, chainQ:-1, facts:{yagmur:true,soguk:false,ruzgar:false}, grid:{method:'bfs',explored:0,path:[],visited:[]}, mk:{cur:0,days:0,counts:[0,0,0]}, spamPick:0, scTask:'reg', scFitted:false, kmGrouped:false, descX:0.6, descN:0, descLr:'low', fitPick:1, neuronX:[0.6,0.3,0.8], neuronAct:'sigmoid', ffIn:[1,0,1], ffFed:false, bpRound:0, convFilter:'vert', convPos:0, rnnStep:0, ganRound:0, tokEx:0, embedPick:0, attnQ:3, genStep:0, trainStage:0, diffStep:0, ctxCount:0, promptParts:{role:false,context:false,example:false,format:false}, ragQ:'izin', ragOn:false, agentStep:0, archPick:'orch', sectorPick:'health', biasVal:0, explainPick:0, explainShow:false, dfIdx: 0, dfAns: {}, dfScore: { e: 0, o: 0, c: 0 }, regAns:{}, alignPick:0, alignShow:false, turIdx:0, turAnswer:null, crIdx:0, crSent:false, capPick:'narrow', singPick:'accel', respIdx:0, respPicks:[], respShow:false, quizAns:{} });
   }
   prevModule() { if (this.state.mi > 1) this.open(this.state.mi - 1); else this.open(0); }
   nextModule() { if (this.state.mi < this.modules().length) this.open(this.state.mi + 1); }
@@ -1319,7 +1321,7 @@ class Component extends DCLogic {
           const targetIdx = q ? demo.nodes.indexOf(q.target) : -1;
           const found = targetIdx >= 0;
           out.chainNodes = demo.nodes.map((label, i) => ({
-            label, arrow:i < demo.nodes.length-1,
+            label, arrow:i < demo.nodes.length-1, rel: i === 0 ? 'instance of' : 'subclass of',
             bg: q && found && i <= targetIdx ? acc : '#fff',
             fg: q && found && i <= targetIdx ? '#f4eddb' : '#37332a'
           }));
@@ -1754,7 +1756,7 @@ class Component extends DCLogic {
         if (demo.type === 'train') {
           out.d_train = true;
           const stages = [
-            { name: '1 · Pretraining', data: 'Massive internet text', learns: 'Language and the world (next-word prediction)', out: 'The capital of Türkiye is Ankara, with a population of about six million. The city...', note: 'The raw model is a “completer”: it doesn’t answer the question, it continues the text.' },
+            { name: '1 · Pretraining', data: 'Massive internet text', learns: 'Language and the world (next-word prediction)', out: 'The capital of Türkiye is Ankara, with a population of about six million. The city...', note: 'In this example the raw model gives the fact but keeps going; raw models often complete text like this.' },
             { name: '2 · Fine-tuning', data: 'Instruction–response pairs', learns: 'Following instructions (answering the question)', out: 'The capital of Türkiye is Ankara.', note: 'Now it answers directly and concisely.' },
             { name: '3 · RLHF / alignment', data: 'Human preferences (a reward model)', learns: 'Being helpful, honest and safe', out: 'The capital of Türkiye is Ankara. If you’d like, I can also share a few interesting facts about the city. 🙂', note: 'Same fact; a more helpful, polite, aligned tone.' }
           ];
@@ -1800,8 +1802,8 @@ class Component extends DCLogic {
           });
           out.ctxMax = MAX; out.ctxUsed = Math.min(n, MAX);
           out.ctxCaption = n === 0 ? 'The window is empty. Feed it with “Add word”; it holds at most ' + MAX + ' words.'
-            : (forgotten === 0 ? n + ' words added, all inside the window. Everything is remembered until it fills.'
-            : 'The window is full! The first ' + forgotten + ' word(s) are now “forgotten” (faded). The model sees only the last ' + MAX + ' words; this is why long documents get truncated or summarized.');
+            : (forgotten === 0 ? n + ' words added, all inside the window. Nothing falls out until it fills; being in the window does not guarantee that the model uses every detail.'
+            : 'The window is full! The first ' + forgotten + ' word(s) are now “forgotten” (faded). In this illustration the model sees only the last ' + MAX + ' words; real applications may raise an error, truncate the text or summarize it at the limit.');
           out.ctxAdd = () => this.setState(s => ({ ctxCount: Math.min(pool.length, s.ctxCount + 1) }));
           out.ctxReset = () => this.setState({ ctxCount: 0 });
         }
@@ -1956,43 +1958,51 @@ class Component extends DCLogic {
 
         if (demo.type === 'df') {
           out.d_df = true;
-          // Fictional cases. best = recommended step ('real' | 'verify' | 'cannot'); ipucu = suspicion/trust sign; dogrulama = independent channel.
-          // No definitive "real/fake" verdict: a sign justifies investigation, it does not prove how content was produced. Score = picks matching the recommended step.
-          const cases = [
-            { text: 'In a video, a public figure says a sentence they never said; the lip movements don’t quite match the audio.', best: 'verify', ipucu: 'a mismatch between the lip movements and the audio', dogrulama: 'find the original recording and the publishing outlet through an independent channel' },
-            { text: 'On the phone, your “boss” urgently asks for a money transfer; the voice sounds just like them, but the intonation is slightly robotic.', best: 'verify', ipucu: 'robotic intonation consistent with voice cloning, plus urgency pressure', dogrulama: 'hold the transfer and call your boss back on a known number, or confirm in person' },
-            { text: 'A news story on a newspaper’s site, also confirmed by several independent sources.', best: 'real', ipucu: 'several independent sources and a traceable origin', dogrulama: 'open each source separately; whether a human or a machine wrote the text cannot be told from this' },
-            { text: 'In a photo, a person’s hand has six fingers and the text in the background is gibberish.', best: 'verify', ipucu: 'six fingers and gibberish background text', dogrulama: 'use reverse image search to find the photo’s original source' }
-          ];
-          const opts = [{ k: 'real', label: 'Looks real', c: '#1d8a4f' }, { k: 'verify', label: 'Suspicious: verify', c: '#c98a1a' }, { k: 'cannot', label: 'Cannot tell', c: '#3b82c4' }];
-          const idx = this.state.dfIdx, ans = this.state.dfAnswer, c = cases[idx];
-          const lbl = {}; opts.forEach(o => lbl[o.k] = o.label);
-          out.dfText = c.text; out.dfIdxNum = idx + 1; out.dfTotal = cases.length; out.dfHits = this.state.dfHits;
-          out.dfAnswered = ans !== null; out.dfNotAnswered = ans === null;
-          out.dfOpts = opts.map(o => ({ label: o.label, pick: () => this.setState(s => ({ dfAnswer: o.k, dfHits: s.dfHits + (o.k === c.best ? 1 : 0) })),
-            style: 'padding:11px 20px;border:1.5px solid ' + o.c + ';background:#fff;color:' + o.c + ';font-family:\'Work Sans\',sans-serif;font-weight:600;font-size:14px;cursor:pointer;' }));
-          if (ans !== null) {
-            const match = ans === c.best;
-            out.dfVerdict = (match ? '✓ Matches the recommended step: ' : '○ The recommended step differs: ') + lbl[c.best];
-            out.dfVerdictColor = match ? '#1d8a4f' : '#c98a1a';
-            out.dfTell = 'In this fictional example the sign is ' + c.ipucu + '; the recommended step: ' + c.dogrulama + '.';
-            out.dfNote = 'Clues justify investigation; by themselves they do not establish how the content was produced. Whether the event is real and how the content was produced are separate questions.';
-          } else { out.dfVerdict = ''; out.dfTell = ''; out.dfNote = ''; }
+          // R055: üç ayrı soru, üç ayrı puan. e = olay gerçekliği, o = üretim kökeni, c = bağımsız doğrulama kanalı.
+          // Kabul edilen cevaplar listededir; ipucu kökenin kanıtı sayılmaz. Kesin "gerçek/sahte" hükmü verilmez.
+          const axes = [{"k": "e", "q": "Event: did what it shows really happen?", "head": "Event", "opts": [["yes", "Verified"], ["check", "Not verified: needs checking"], ["unk", "Cannot tell"]]}, {"k": "o", "q": "Origin: how might the content have been produced?", "head": "Origin", "opts": [["rec", "Signs of a real recording"], ["trace", "Signs of synthesis (not proof)"], ["unk", "Cannot tell from this"]]}, {"k": "c", "q": "Channel: which independent check would you do?", "head": "Channel"}];
+          const cases = [{"text": "In a video, a public figure says a sentence they never said; the lip movements don’t quite match the audio.", "e": ["check"], "o": ["trace"], "ch": [["Read the comments under the account that shared the video", false], ["Look for the same video on another social media account", false], ["Find the original recording and the publishing outlet through an independent channel", true]], "ew": "Whether the sentence was really said has not been verified; the video alone is not proof.", "ow": "A lip–audio mismatch can be a deepfake trace, but poor compression or dubbing gives the same picture.", "cw": "The post itself and its copies are not an independent channel; the original recording and the publisher are."}, {"text": "On the phone, your “boss” urgently asks for a money transfer; the voice sounds just like them, but the intonation is slightly robotic.", "e": ["check"], "o": ["trace", "unk"], "ch": [["Keep the call going and listen to the voice more carefully", false], ["Hang up, call your boss back on a number you know, and have a second person approve the transfer", true], ["Play a recording of the voice to a friend", false]], "ew": "It has not been verified that the request really comes from your boss; the pressure of urgency is itself a warning sign.", "ow": "Robotic intonation fits voice cloning but is not conclusive; even without knowing the voice’s origin the decision is the same: no money goes out unverified.", "cw": "Any check inside the same call is in the caller’s hands; the independent channel is the number you already know."}, {"text": "A news story on a newspaper’s site, also confirmed by several independent sources.", "e": ["yes"], "o": ["unk"], "ch": [["Open each source on its own page; check the primary document if there is one", true], ["Look at how many likes and shares the story got", false], ["Read the story once more on the same site", false]], "ew": "Several independent sources and a traceable origin support that the event is real.", "ow": "This does not tell whether a human or an AI wrote the text; a machine-written story can still be accurate.", "cw": "Likes or the same page are not verification; the sources themselves and the primary document are."}, {"text": "In a photo, a person’s hand has six fingers and the text in the background is gibberish.", "e": ["check"], "o": ["trace"], "ch": [["Zoom in on the photo and look for more traces", false], ["Use reverse image search to find who published it first; check its Content Credentials (C2PA) record if there is one", true], ["Ask the person who shared the photo where they found it", false]], "ew": "It has not been verified that the moment in the photo really happened.", "ow": "Six fingers and gibberish text are known traces of generative models, but editing or a real anomaly is also possible. A missing C2PA record is not proof of fakery.", "cw": "Looking harder at the image produces no new evidence; finding the first publisher and the provenance record does."}];
+          const idx = this.state.dfIdx, A = this.state.dfAns || {}, c = cases[idx];
+          const step = ['e', 'o', 'c'].filter(k => A[k] !== undefined).length;
+          const sc = this.state.dfScore || { e: 0, o: 0, c: 0 };
+          out.dfText = c.text; out.dfIdxNum = idx + 1; out.dfTotal = cases.length;
+          out.dfScE = sc.e; out.dfScO = sc.o; out.dfScC = sc.c;
+          out.dfAsking = step < 3; out.dfDone = step === 3;
+          const optsFor = (ax) => ax.k === 'c' ? c.ch.map((x, i) => ({ k: 'c' + i, label: x[0] })) : ax.opts.map(o => ({ k: o[0], label: o[1] }));
+          const okFor = (ax, k) => ax.k === 'c' ? !!(c.ch[Number(k.slice(1))] || [])[1] : c[ax.k].includes(k);
+          if (step < 3) {
+            const ax = axes[step];
+            out.dfQNum = step + 1; out.dfQ = ax.q;
+            out.dfOpts = optsFor(ax).map(o => ({ label: o.label,
+              pick: () => this.setState(s => ({ dfAns: { ...(s.dfAns || {}), [ax.k]: o.k }, dfScore: { ...(s.dfScore || { e: 0, o: 0, c: 0 }), [ax.k]: ((s.dfScore || {})[ax.k] || 0) + (okFor(ax, o.k) ? 1 : 0) } })),
+              style: 'padding:11px 18px;border:1.5px solid ' + acc + ';background:#fff;color:' + acc + ';font-family:\'Work Sans\',sans-serif;font-weight:600;font-size:14px;cursor:pointer;max-width:340px;' }));
+            out.dfRes = []; out.dfNote = '';
+          } else {
+            out.dfOpts = [];
+            out.dfRes = axes.map(ax => {
+              const opts = optsFor(ax), mine = opts.find(o => o.k === A[ax.k]), ok = okFor(ax, A[ax.k]);
+              const best = opts.filter(o => okFor(ax, o.k)).map(o => o.label).join(' / ');
+              const why = ax.k === 'e' ? c.ew : ax.k === 'o' ? c.ow : c.cw;
+              return { head: (ok ? '✓ ' : '○ ') + ax.head + ':', c: ok ? '#1d8a4f' : '#c98a1a',
+                text: 'Your answer: ' + (mine ? mine.label : '') + '. ' + (ok ? '' : 'Recommended: ' + best + '. ') + why };
+            });
+            out.dfNote = "Clues justify investigation; by themselves they do not establish how the content was produced. Whether the event is real and how the content was produced are separate questions; in both, the decision comes from an independent channel.";
+          }
           out.dfHasNext = idx < cases.length - 1;
-          out.dfNext = () => this.setState(s => ({ dfIdx: Math.min(cases.length - 1, s.dfIdx + 1), dfAnswer: null }));
-          out.dfReset = () => this.setState({ dfIdx: 0, dfAnswer: null, dfHits: 0 });
+          out.dfNext = () => this.setState(s => ({ dfIdx: Math.min(cases.length - 1, s.dfIdx + 1), dfAns: {} }));
+          out.dfReset = () => this.setState({ dfIdx: 0, dfAns: {}, dfScore: { e: 0, o: 0, c: 0 } });
         }
 
         if (demo.type === 'reg') {
           out.d_reg = true;
           const levels = [{ k: 'ban', label: 'Banned', c: '#b23b5e' }, { k: 'high', label: 'High', c: '#c98a1a' }, { k: 'limited', label: 'Limited', c: '#3b82c4' }, { k: 'minimal', label: 'Minimal', c: '#1d8a4f' }];
           const uses = [
-            { id: 'r1', label: 'A state system scoring citizens by behavior', ans: 'ban' },
-            { id: 'r2', label: 'A system auto-screening job candidates', ans: 'high' },
-            { id: 'r3', label: 'A chatbot talking to customers', ans: 'limited' },
-            { id: 'r4', label: 'A spam filter in email', ans: 'minimal' },
-            { id: 'r5', label: 'A model assessing loan applications', ans: 'high' },
-            { id: 'r6', label: 'An opponent AI inside a game', ans: 'minimal' }
+            { id: 'r1', label: 'A state system scoring citizens by behavior', ans: 'ban' , why: "Purpose: scoring people by their social behavior; actor: the state. Article 5(1)(c) bans the cases where the score leads to treatment that is unrelated to the original context or disproportionate; not every score is banned unconditionally." },
+            { id: 'r2', label: 'A system auto-screening job candidates', ans: 'high' , why: "Purpose: filtering applications and evaluating candidates; actor: the employer using it (deployer) and the provider who built it. High-risk under Annex III 4(a); the obligations apply from 2 December 2027." },
+            { id: 'r3', label: 'A chatbot talking to customers', ans: 'limited' , why: "Purpose: talking with customers. Article 50(1) makes the provider ensure people know they are talking with an AI (unless it is obvious). Data-protection and consumer law apply on top; if the bot decides on a loan or a hire, that use is assessed separately." },
+            { id: 'r4', label: 'A spam filter in email', ans: 'minimal' , why: "Purpose: sorting out unwanted email. With the information given, no Annex III high-risk category can be shown; the AI Act sets no specific duty for this use. Data-protection rules still apply, and a missed important email can affect the user." },
+            { id: 'r5', label: 'A model assessing loan applications', ans: 'high' , why: "Purpose: evaluating the creditworthiness of natural persons or establishing their credit score; actor: the bank (deployer) and the provider. High-risk under Annex III 5(b). If the only purpose is detecting financial fraud, this item does not apply. If the system profiles people, the Article 6(3) exception cannot be used." },
+            { id: 'r6', label: 'An opponent AI inside a game', ans: 'minimal' , why: "Purpose: playing an opponent in a game. With the information given, no high-risk category or Article 50 duty can be shown; minimal tier. If the game processes personal data or targets children, other rules come in." }
           ];
           const picks = this.state.regAns;
           const lname = {}; levels.forEach(l => lname[l.k] = l.label);
@@ -2001,7 +2011,7 @@ class Component extends DCLogic {
             const done = picked !== undefined;
             const correct = picked === u.ans;
             return {
-              label: u.label, done, correct,
+              label: u.label, done, correct, why: u.why,
               opts: levels.map(l => ({ label: l.label,
                 pick: () => this.setState(s => ({ regAns: { ...s.regAns, [u.id]: l.k } })),
                 style: 'padding:5px 10px;border:1px solid ' + l.c + ';font-family:\'Work Sans\',sans-serif;font-size:11.5px;cursor:pointer;' + (picked === l.k ? 'background:' + l.c + ';color:#fff;' : 'background:#fff;color:' + l.c + ';') })),
@@ -2013,7 +2023,7 @@ class Component extends DCLogic {
           const right = uses.filter(u => picks[u.id] === u.ans).length;
           out.regScore = right; out.regAnswered = answered; out.regTotal = uses.length;
           out.regCaption = answered === 0 ? 'Place each use in a risk tier. The rule: the higher the risk, the stricter the oversight.'
-            : (answered < uses.length ? right + '/' + answered + ' correct. Ask yourself: does this use affect someone’s life or rights?'
+            : (answered < uses.length ? right + '/' + answered + ' correct. Ask yourself: what is it for, who uses it, which article or annex covers it?'
             : 'Done: ' + right + '/' + uses.length + '. The same “AI” label carries very different risks; that is why regulation is tiered, not uniform.');
           out.regReset = () => this.setState({ regAns: {} });
         }
@@ -2081,7 +2091,7 @@ class Component extends DCLogic {
           out.d_cap = true;
           const cmap = { sky: '#3b82c4', violet: '#7a3fb0', fuchsia: '#b03fb0' };
           const tiers = [
-            { k: 'narrow', c: 'sky', cap: 30, name: 'Narrow AI', status: 'Exists today ✓', desc: 'Very good at one task (chess, translation, vision) but unable to step outside it. All of today’s systems live here.' },
+            { k: 'narrow', c: 'sky', cap: 30, name: 'Narrow AI', status: 'Exists today ✓', desc: 'Very good at one task or a set of tasks (chess, translation, vision); shows no human-level general learning and transfer. Today’s systems live here.' },
             { k: 'agi', c: 'violet', cap: 70, name: 'General AI (AGI)', status: 'Not yet; contested', desc: 'A hypothetical level able to learn and adapt across every domain like a human. Whether and when it arrives is debated among experts.' },
             { k: 'super', c: 'fuchsia', cap: 100, name: 'Superintelligence', status: 'Speculative', desc: 'A wholly theoretical level surpassing humans many times over in every cognitive field. The subject of both great-opportunity and serious-risk scenarios.' }
           ];
