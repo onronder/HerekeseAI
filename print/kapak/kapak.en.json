@@ -1,8 +1,7 @@
 {
   "isbn": "",
   "pages": 236,
-  "spine_mm": 16.0,
-  "paper_note": "KDP: spine = pages × 0.002252 in (standard color, white paper). Set 'pages' to the final interior page count; spine_mm is ignored when pages is set.",
+  "paper_note": "For --lang en --profile kdp (standard color, white paper). Set 'pages' to the final interior PDF page count: it is the sole spine input for this config. kapak.mjs (SP) computes the spine; no duplicate spine_mm value is stored. See print/README.md, English KDP workflow. Other profiles, or KDP without pages, require an explicit spine_mm.",
   "price": "",
   "variant": "ag",
   "subtitle": "Eight chapters, forty-five experiments: step by step on paper, live on your phone.",

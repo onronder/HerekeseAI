@@ -1,6 +1,7 @@
 // Kapak yayılımı (arka + sırt + ön) → out/kapak.html. kapak.json: ölçü, metin, variant ("ag" | "kadran" | "vadi").
 // Tüm çizimler vektör SVG, düz renk (saydamlık yok → PDF/X). node kapak.mjs [variant] [outName] [--lang tr|en] [--profile matbaa|kdp]
-//   EN metinleri kapak.en.json'dan; kdp profili 6×9 in + 0.125 in taşma, sırt = sayfa × 0.002252 in (kapak.json → spine_mm ya da pages).
+//   EN yapılandırması kapak.en.json'dan; kdp profili 6×9 in + 0.125 in taşma. Sırt hesabının tek kaynağı aşağıdaki SP:
+//   KDP'de seçilen yapılandırmanın pages değeri varsa önceliklidir; diğer durumlarda spine_mm kullanılır.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

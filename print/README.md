@@ -73,12 +73,18 @@ python3 print/export.py --lang en                # book.json, answer-key.md (EN)
 python3 print/check_style_en.py                  # STYLE-GUIDE-EN.md §6 denetimi (em dash, yasak sözler, ekran fiili, >30 kelime, figür/QR sayısı)
 python3 print/assemble.py --lang en              # print/kitap/en/AI-for-Everyone-EN.{md,html}
 sh print/typeset/dizgi.sh --lang en --profile kdp   # print/kitap/en/kdp-interior.pdf (6×9 in, 0.125 in taşma, çift sayfa)
-sh print/kapak/kapak.sh en kdp                   # print/kitap/en/kdp-cover.pdf (sırt = sayfa × 0.002252 in) + kdp-ebook-cover.jpg
+sh print/kapak/kapak.sh en kdp                   # print/kitap/en/kdp-cover.pdf (sırt: kapak.en.json → pages) + kdp-ebook-cover.jpg
 sh print/typeset/check.sh en kdp                 # KDP denetimi (TrimBox 6×9, çift sayfa, ≤ 600, fontlar, PDF/X, 45 QR /d/en/)
 ```
 - Kaynaklar `print/src/en/`: `M0N-*.md` (İngilizce yeniden yazım; kural: `STYLE-GUIDE-EN.md`), `front/` (title, acknowledgments, preface,
   how-to-read), `back/` (glossary, bibliography, index-terms.yaml), `answers/M0N.md`. Kapak metinleri `print/kapak/kapak.en.json`
   (`pages` alanı sırtı belirler). TR çıktıları değişmez (assemble TR bayt bayt regresyon testi geçer).
+- **KDP sırtının tek girdisi:** [`kapak/kapak.en.json`](kapak/kapak.en.json) içindeki `pages`, nihai iç blok PDF'sinin toplam sayfa sayısıdır;
+  dizgi değiştiğinde bu alan güncellenir ve kapak yeniden üretilir. Hesabın tek uygulaması [`kapak/kapak.mjs`](kapak/kapak.mjs) içindeki
+  `SP` ifadesidir (standart renkli, beyaz kâğıt). İngilizce KDP yapılandırmasında ikinci bir `spine_mm` değeri tutulmaz.
+  KDP'de `pages` varsa `spine_mm` yok sayılır; `pages` yoksa veya profil `matbaa` ise açık bir `spine_mm` gerekir.
+  Kâğıt türü için bir JSON ayarı yoktur: farklı kâğıt hesabı kodda değişiklik gerektirir. Eski QA/ilerleme notlarındaki sayfa ve sırt ölçüleri
+  o tarihteki çıktılara aittir; güncel üretimin girdisi olarak kullanılmaz.
 - Profil CSS'leri `print/typeset/profiles/{matbaa,kdp}.css`; `boxes.mjs` taşma parametresi; `check_qr.mjs <pdf> en`.
 - Kindle EPUB: `sh print/kindle/build.sh` → `print/kitap/en/AI-for-Everyone.epub` (figürler PNG `render_figs.sh`, QR yerine bağlantı, pandoc EPUB3, epubcheck).
 - Denetim üçlüsü (yazım sonrası): `check_style_en.py` (stil), `check_consistency_en.py` (TR↔EN yapı/sayı), `check_verbatim_en.py` + `check_verbatim_diff.py` (kaynak metin birebir; farklar EDITORIAL NOTES'ta). Sınav şıkları basılıda bölüm bazlı karışır (export.py `order(qi + 10·n)`).
