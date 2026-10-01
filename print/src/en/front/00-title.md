@@ -18,13 +18,13 @@ Print edition ISBN: [ISBN]
 
 Interactive digital edition ISBN: 978-625-00-5299-0
 
-First edition: [month, year]
+First edition: September 2026
 
 Cover and interior design: Onur Önder
 
 Copy editing: Onur Önder
 
-Printing and binding: [printer name, address, certificate no.]
+Printed on demand by Amazon KDP.
 
 Sales and contact: Fittechs Yazılım Anonim Şirketi, Gayrettepe Mah. Yıldız Posta Cad. No: 8/34, Istanbul, Türkiye. Email: support@fittechs.com. Web: onuronder.com
 

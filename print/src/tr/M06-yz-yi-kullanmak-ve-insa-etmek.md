@@ -287,39 +287,39 @@ Atölyenin aletleri yerine oturdu mu? Altı soruyla sına.
 *Cevaplar kitabın sonunda.*
 
 1. İstem mühendisliğinde bir cevabı iyileştiren nedir?
-   a) Daha kısa yazmak
+   a) Rol, bağlam, örnek ve net format eklemek
    b) Modeli yeniden eğitmek
    c) Daha pahalı GPU
-   d) Rol, bağlam, örnek ve net format eklemek
+   d) Daha kısa yazmak
 
 2. RAG temelde ne yapar?
-   a) İlgili kaynağı bulup modele vererek cevabı kaynağa dayandırır
-   b) Görsel üretir
+   a) Görsel üretir
+   b) Veriyi siler
    c) Modeli hızlandırır
-   d) Veriyi siler
+   d) İlgili kaynağı bulup modele vererek cevabı kaynağa dayandırır
 
 3. Bir “ajanı” sohbet botundan ayıran nedir?
-   a) Araç kullanıp adım adım eyleme geçmesi
+   a) Renkli arayüzü
    b) Daha hızlı yazması
-   c) Renkli arayüzü
+   c) Araç kullanıp adım adım eyleme geçmesi
    d) İnternetsiz çalışması
 
 4. Tipik bir YZ uygulamasında “orkestrasyon” katmanı ne yapar?
-   a) Yalnızca ekranı çizer
-   b) İstem, araç ve RAG çağrılarını koordine eder
-   c) Modeli eğitir
-   d) Sadece veriyi saklar
+   a) Modeli eğitir
+   b) Sadece veriyi saklar
+   c) İstem, araç ve RAG çağrılarını koordine eder
+   d) Yalnızca ekranı çizer
 
 5. Halüsinasyonu azaltmanın pratik bir yolu nedir?
-   a) Sıcaklığı sonuna kadar açmak
-   b) RAG ile cevabı kaynağa dayandırmak
-   c) Modeli kapatmak
-   d) Daha uzun istem yazmak
+   a) Daha uzun istem yazmak
+   b) Modeli kapatmak
+   c) RAG ile cevabı kaynağa dayandırmak
+   d) Sıcaklığı sonuna kadar açmak
 
 6. En başarılı YZ uygulamaları genelde nasıldır?
-   a) Yalnızca en büyük modeli kullanan
+   a) Hiç değerlendirme gerektirmeyen
    b) İnsanı tamamen dışlayan
-   c) Hiç değerlendirme gerektirmeyen
+   c) Yalnızca en büyük modeli kullanan
    d) İnsanı güçlendiren (yardımcı pilot) tasarımlar
 
 ### Bu bölümden kalanlar

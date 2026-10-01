@@ -278,40 +278,40 @@ Yanlılık-varyans dengesi: eksik uyum örüntüyü kaçırır, aşırı uyum g�
 
 *Cevaplar kitabın sonunda.*
 1. Makine öğrenmesinin klasik YZ’den temel farkı nedir?
-   a) Hiç hata yapmaz
-   b) Daha hızlı çalışır
-   c) İnternet gerektirir
-   d) Kuralları elle yazmak yerine veriden öğrenir
+   a) Kuralları elle yazmak yerine veriden öğrenir
+   b) Hiç hata yapmaz
+   c) Daha hızlı çalışır
+   d) İnternet gerektirir
 
 2. Bir örneğin “doğru cevabına” ne denir?
-   a) Özellik
+   a) Etiket
    b) Gradyan
-   c) Etiket
+   c) Özellik
    d) Model
 
 3. Etiketsiz veriyi gruplara ayırma görevi hangisidir?
-   a) Regresyon
-   b) Kümeleme (denetimsiz)
-   c) Sınıflandırma
-   d) Pekiştirmeli
+   a) Kümeleme (denetimsiz)
+   b) Sınıflandırma
+   c) Pekiştirmeli
+   d) Regresyon
 
 4. Gradyan inişi ne yapar?
    a) Etiketleri üretir
-   b) Modeli yavaşlatır
-   c) Kaybı azaltacak yönde parametreleri adım adım günceller
-   d) Veriyi siler
+   b) Veriyi siler
+   c) Modeli yavaşlatır
+   d) Kaybı azaltacak yönde parametreleri adım adım günceller
 
 5. Aşırı uyum (overfitting) nedir?
-   a) Eğitim verisini ezberleyip yeni veride başarısız olmak
-   b) Veriyi sıkıştırmak
-   c) Çok hızlı öğrenmek
-   d) Hiç öğrenmemek
+   a) Hiç öğrenmemek
+   b) Çok hızlı öğrenmek
+   c) Eğitim verisini ezberleyip yeni veride başarısız olmak
+   d) Veriyi sıkıştırmak
 
 6. Pekiştirmeli öğrenmede ajan nasıl öğrenir?
-   a) Etiketli örneklerle
-   b) Kuralları ezberleyerek
-   c) Veriyi kümeleyerek
-   d) Ödül ve cezayla, deneme-yanılmayla
+   a) Ödül ve cezayla, deneme-yanılmayla
+   b) Etiketli örneklerle
+   c) Kuralları ezberleyerek
+   d) Veriyi kümeleyerek
 
 ### Bu bölümden kalanlar
 

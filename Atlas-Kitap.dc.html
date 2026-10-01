@@ -1196,7 +1196,7 @@ class Component extends DCLogic {
             demo:{ type:'classify', title:'Hangi yaklaşım?', hint:'Her ifadeyi doğru kampa ayır: Düzenli mi, Dağınık mı?',
               catA:{key:'neat',label:'Düzenli (Neat)'}, catB:{key:'scruffy',label:'Dağınık (Scruffy)'},
               neOluyorBasit:'İki kamp, iki karakter: Düzenliler her adımı matematikle kanıtlamak ister; Dağınıklar “önce çalışsın, teorisi sonra gelir” der. İkisinin de haklı çıktığı yerler var; bugünün yapay zekâsı ikisinin karışımı.',
-              neOluyor:'(basılı sürümde silindi: 2.6 teknik[0] ve teknik[1] aynı içeriği zaten taşıyor; dijital sürümde kalabilir)',
+              neOluyor:'Bu, YZ\u2019de yöntemsel bir gerilimdir: ilkeli/kanıtlanabilir yaklaşımlar (neat: mantık, olasılık) ile ampirik/mühendislik-odaklı yaklaşımlar (scruffy). Klasik YZ\u2019nin duvarı: bilgi edinme darboğazı ve kırılganlık.',
               items:[{label:'Her şeyi biçimsel mantıkla kanıtla',cat:'neat'},{label:'Çalışan kısayolları kullan, teoriyi sonra düşün',cat:'scruffy'},{label:'Matematiksel kesinlik şarttır',cat:'neat'},{label:'Gerçek dünya dağınıktır; esnek ol',cat:'scruffy'}] } },
           { id:'quiz', label:'Quiz', h2:'Kendini test et', basit:[], teknik:[],
             quiz:[
@@ -2628,7 +2628,7 @@ class Component extends DCLogic {
         out.quizChecked = checked; out.quizTotal = sec.quiz.length;
         // shuffle deterministically per question by id but keep correct = index 0 in data
         out.quiz = sec.quiz.map((q, qi) => {
-          const order = this._order(qi, q.opts.length);
+          const order = this._order(qi * 7 + 13 * mi + 5, q.opts.length); // bölüme göre değişen karışım (basılı anahtarla aynı)
           return {
             num: qi+1, q: q.q,
             opts: order.map((oi) => {

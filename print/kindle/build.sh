@@ -7,7 +7,7 @@ sh render_figs.sh
 python3 kindle.py
 COVER="$ROOT/print/kitap/en/kdp-ebook-cover.jpg"; [ -f "$COVER" ] || { echo "kapak yok: önce sh print/kapak/kapak.sh en kdp"; exit 1; }
 OUTE="$ROOT/print/kitap/en/AI-for-Everyone.epub"
-pandoc out/book.html -o "$OUTE" --from html --to epub3 --split-level=1 --toc --toc-depth=2 --css kindle.css \
+pandoc out/book.html -o "$OUTE" --from html --to epub3 --split-level=1 --toc --toc-depth=3 --css kindle.css \
   --epub-cover-image="$COVER" --resource-path=out \
   --metadata title="AI for Everyone" --metadata subtitle="From rules to deep learning" --metadata author="Onur Önder" \
   --metadata lang=en-US --metadata rights="© 2026 Onur Önder" --metadata publisher="Onur Önder" \

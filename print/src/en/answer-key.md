@@ -6,77 +6,119 @@
 
 ### 01 · Minds and Machines
 
-1.8 / 1: **d** — That intelligence has many kinds, not one
-1.8 / 2: **c** — 0 and 1
-1.8 / 3: **a** — In principle any computation, via simple rules
-1.8 / 4: **b** — Keeping program and data in the same memory
-1.8 / 5: **c** — Narrow AI
-1.8 / 6: **d** — Transistor count ~doubles every 2 years
+1.8 / 1: **b** · That intelligence has many kinds, not one
+
+1.8 / 2: **d** · 0 and 1
+
+1.8 / 3: **b** · In principle any computation, via simple rules
+
+1.8 / 4: **b** · Keeping program and data in the same memory
+
+1.8 / 5: **b** · Narrow AI
+
+1.8 / 6: **c** · Transistor count ~doubles every 2 years
 
 ### 02 · The Age of Rules
 
-2.7 / 1: **d** — With explicit symbols and rules
-2.7 / 2: **c** — A rule (IF-THEN)
-2.7 / 3: **a** — They speed up the search but don’t guarantee the best
-2.7 / 4: **a** — Only the current state
-2.7 / 5: **b** — Hand-writing all rules, and the messiness of the world
-2.7 / 6: **d** — Two approaches in AI research
+2.7 / 1: **c** · With explicit symbols and rules
+
+2.7 / 2: **c** · A rule (IF-THEN)
+
+2.7 / 3: **d** · They speed up the search but don’t guarantee the best
+
+2.7 / 4: **a** · Only the current state
+
+2.7 / 5: **a** · Hand-writing all rules, and the messiness of the world
+
+2.7 / 6: **a** · Two approaches in AI research
 
 ### 03 · How Machines Learn
 
-3.8 / 1: **d** — It learns from data instead of hand-written rules
-3.8 / 2: **c** — Label
-3.8 / 3: **b** — Clustering (unsupervised)
-3.8 / 4: **c** — Updates parameters step by step to reduce loss
-3.8 / 5: **a** — Memorizing training data and failing on new data
-3.8 / 6: **d** — By reward and penalty, trial and error
+3.8 / 1: **a** · It learns from data instead of hand-written rules
+
+3.8 / 2: **a** · Label
+
+3.8 / 3: **a** · Clustering (unsupervised)
+
+3.8 / 4: **d** · Updates parameters step by step to reduce loss
+
+3.8 / 5: **c** · Memorizing training data and failing on new data
+
+3.8 / 6: **a** · By reward and penalty, trial and error
 
 ### 04 · The Artificial Brain
 
-4.8 / 1: **d** — A weighted sum of inputs + bias, then an activation
-4.8 / 2: **a** — Many hidden layers
-4.8 / 3: **b** — The network would collapse into one linear function
-4.8 / 4: **c** — Spreads the error backward and updates weights to reduce it
-4.8 / 5: **a** — Images
-4.8 / 6: **d** — Generator and Discriminator
+4.8 / 1: **b** · A weighted sum of inputs + bias, then an activation
+
+4.8 / 2: **b** · Many hidden layers
+
+4.8 / 3: **b** · The network would collapse into one linear function
+
+4.8 / 4: **b** · Spreads the error backward and updates weights to reduce it
+
+4.8 / 5: **d** · Images
+
+4.8 / 6: **c** · Generator and Discriminator
 
 ### 05 · Today’s AI
 
-5.9 / 1: **d** — A small piece of text the model processes
-5.9 / 2: **a** — Semantically similar words land near each other
-5.9 / 3: **a** — Each word “looking at” the others with weights
-5.9 / 4: **c** — Predicts the next token
-5.9 / 5: **a** — Pretraining → fine-tuning → RLHF
-5.9 / 6: **d** — Starting from noise and cleaning it step by step
-5.9 / 7: **b** — The model producing confident but wrong information
-5.9 / 8: **b** — How many tokens the model attends to at once
+5.9 / 1: **d** · A small piece of text the model processes
+
+5.9 / 2: **c** · Semantically similar words land near each other
+
+5.9 / 3: **c** · Each word “looking at” the others with weights
+
+5.9 / 4: **a** · Predicts the next token
+
+5.9 / 5: **a** · Pretraining → fine-tuning → RLHF
+
+5.9 / 6: **d** · Starting from noise and cleaning it step by step
+
+5.9 / 7: **a** · The model producing confident but wrong information
+
+5.9 / 8: **a** · How many tokens the model attends to at once
 
 ### 06 · Using and Building AI
 
-6.7 / 1: **d** — Adding role, context, examples and a clear format
-6.7 / 2: **a** — Finds the relevant source and grounds the answer on it
-6.7 / 3: **a** — Using tools and taking action step by step
-6.7 / 4: **b** — Coordinates prompts, tools and RAG calls
-6.7 / 5: **b** — Grounding the answer in a source via RAG
-6.7 / 6: **d** — Designs that strengthen people (copilots)
+6.7 / 1: **a** · Adding role, context, examples and a clear format
+
+6.7 / 2: **d** · Finds the relevant source and grounds the answer on it
+
+6.7 / 3: **c** · Using tools and taking action step by step
+
+6.7 / 4: **c** · Coordinates prompts, tools and RAG calls
+
+6.7 / 5: **c** · Grounding the answer in a source via RAG
+
+6.7 / 6: **d** · Designs that strengthen people (copilots)
 
 ### 07 · AI and Society
 
-7.7 / 1: **d** — Skewed or incomplete training data
-7.7 / 2: **b** — Its decisions’ reasons are hard to understand
-7.7 / 3: **c** — Questioning and verifying the source
-7.7 / 4: **a** — Risk level
-7.7 / 5: **b** — The stated goal diverging from the true intent
-7.7 / 6: **d** — Screening job candidates
+7.7 / 1: **b** · Skewed or incomplete training data
+
+7.7 / 2: **b** · Its decisions’ reasons are hard to understand
+
+7.7 / 3: **d** · Questioning and verifying the source
+
+7.7 / 4: **b** · Risk level
+
+7.7 / 5: **b** · The stated goal diverging from the true intent
+
+7.7 / 6: **c** · Screening job candidates
 
 ### 08 · Philosophy and the Future
 
-8.7 / 1: **d** — Imitating a human indistinguishably in writing
-8.7 / 2: **b** — Whether symbol processing alone yields “understanding”
-8.7 / 3: **c** — Narrow AI
-8.7 / 4: **a** — Uncertain; neither certain nor impossible
-8.7 / 5: **c** — People and institutions (developer/operator/user)
-8.7 / 6: **d** — Open and contested
+8.7 / 1: **c** · Imitating a human indistinguishably in writing
+
+8.7 / 2: **c** · Whether symbol processing alone yields “understanding”
+
+8.7 / 3: **d** · Narrow AI
+
+8.7 / 4: **d** · Uncertain; neither certain nor impossible
+
+8.7 / 5: **a** · People and institutions (developer/operator/user)
+
+8.7 / 6: **a** · Open and contested
 
 ## Self-test demos
 

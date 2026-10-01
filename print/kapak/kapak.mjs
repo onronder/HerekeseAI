@@ -213,20 +213,23 @@ html, body { margin: 0; padding: 0; }
 body { width: ${TW}mm; height: ${TH}mm; background: ${art.backBg}; color: ${art.backFg}; font-family: 'Work Sans', sans-serif; position: relative; overflow: hidden; }
 svg.art { position: absolute; left: 0; top: 0; width: ${TW}mm; height: ${TH}mm; }
 .panel { position: absolute; top: 0; height: ${TH}mm; box-sizing: border-box; }
-.back  { left: 0; width: ${BLEED + W}mm; padding: ${BLEED + 20}mm 16mm ${BLEED + 16}mm ${BLEED + 18}mm; }
+.back  { left: 0; width: ${BLEED + W}mm; padding: ${BLEED + 20}mm 16mm ${KDP ? BLEED + 14 + 30.5 + 4 : BLEED + 16}mm ${BLEED + 18}mm; }
 .spine { left: ${BLEED + W}mm; width: ${SP}mm; background: ${art.spineBg}; color: ${art.spineFg}; }
 .front { left: ${FX}mm; width: ${W + BLEED}mm; padding: ${BLEED + 20}mm ${BLEED + 16}mm ${BLEED + 16}mm 16mm; background: ${art.bg}; color: ${art.titleColor}; }
 .eyebrow { font-family: 'Space Mono', monospace; font-size: 8pt; letter-spacing: .22em; text-transform: uppercase; color: ${art.eyebrowColor}; }
 .front h1 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 52pt; line-height: .98; margin: 9mm 0 5mm; letter-spacing: -.01em; }
 .front .sub { font-family: 'Instrument Serif', serif; font-size: 15.5pt; font-style: italic; color: ${art.sub}; margin: 0; }
 .front .author { position: absolute; bottom: ${BLEED + 13}mm; left: 16mm; font-family: 'Space Mono', monospace; font-size: 10.5pt; letter-spacing: .2em; text-transform: uppercase; }
-.spine .t { position: absolute; top: ${BLEED + 12}mm; left: 50%; transform: translateX(-50%) rotate(90deg); transform-origin: left top; white-space: nowrap; font-family: 'Instrument Serif', serif; font-size: ${Math.min(15, SP * 0.95)}pt; }
-.spine .a { position: absolute; bottom: ${BLEED + 12}mm; left: 50%; transform: translateX(-50%) rotate(90deg); transform-origin: left bottom; white-space: nowrap; font-family: 'Space Mono', monospace; font-size: ${Math.min(7.5, SP * 0.5)}pt; letter-spacing: .16em; text-transform: uppercase; }
-.back .eyebrow { margin-top: 30mm; }
-.back .lead { font-family: 'Instrument Serif', serif; font-size: 16pt; line-height: 1.25; margin: 5mm 0 6mm; }
-.back p { font-size: 9.6pt; line-height: 1.55; margin: 0 0 .8em; text-align: left; }
-.back .bio { font-size: 8.3pt; color: ${dark ? RULE : '#37332a'}; margin-top: 7mm; border-top: .5pt solid ${dark ? '#5a554a' : MUTED}; padding-top: 3mm; }
-.back .bottom { position: absolute; bottom: ${BLEED + 14}mm; left: ${BLEED + 18}mm; right: 16mm; display: flex; justify-content: space-between; align-items: flex-end; }
+.spine .t { position: absolute; top: ${BLEED + 12}mm; left: 50%; transform: translateX(-50%); writing-mode: vertical-rl; white-space: nowrap; font-family: 'Instrument Serif', serif; font-size: ${Math.min(15, SP * 0.95)}pt; }
+.spine .a { position: absolute; bottom: ${BLEED + 12}mm; left: 50%; transform: translateX(-50%); writing-mode: vertical-rl; white-space: nowrap; font-family: 'Space Mono', monospace; font-size: ${Math.min(7.5, SP * 0.5)}pt; letter-spacing: .16em; text-transform: uppercase; }
+.back .eyebrow { margin-top: ${KDP ? 20 : 30}mm; }
+.back .lead { font-family: 'Instrument Serif', serif; font-size: ${KDP ? 14 : 16}pt; line-height: 1.25; margin: ${KDP ? '4mm 0 5mm' : '5mm 0 6mm'}; }
+.back p { font-size: ${KDP ? 9 : 9.6}pt; line-height: ${KDP ? 1.5 : 1.55}; margin: 0 0 .8em; text-align: left; }
+.back .bio { font-size: ${KDP ? 7.6 : 8.3}pt; color: ${dark ? RULE : '#37332a'}; margin-top: ${KDP ? 5 : 7}mm; border-top: .5pt solid ${dark ? '#5a554a' : MUTED}; padding-top: 3mm; }
+.back .bio p { font-size: inherit; line-height: ${KDP ? 1.45 : 1.5}; margin: 0 0 .55em; }
+.back .bio p:last-child { margin-bottom: 0; }
+.back .bottom { position: absolute; bottom: ${BLEED + (KDP ? 6.35 : 9)}mm; left: ${BLEED + 18}mm; right: ${KDP ? BLEED + 6.35 : 16}mm; display: flex; justify-content: space-between; align-items: flex-end; } /* KDP barkodu kesimden 0.25 in içeride basar; beyaz alan onunla çakışır */
+${KDP ? '.back .seller { margin-bottom: 4mm; }' : ''}
 .back .seller { font-family: 'Space Mono', monospace; font-size: 6.8pt; color: ${dark ? RULE : '#37332a'}; max-width: 64mm; line-height: 1.5; }
 .isbn, .isbn-ph { background: #fff; color: ${INK}; padding: 2mm; border: .4pt solid ${MUTED}; font-family: 'Space Mono', monospace; font-size: 7pt; text-align: center; }
 .isbn-ph { width: 40mm; height: 24mm; display: flex; flex-direction: column; justify-content: center; color: ${MUTED}; }
@@ -241,7 +244,7 @@ svg.art { position: absolute; left: 0; top: 0; width: ${TW}mm; height: ${TH}mm; 
   <div class="eyebrow">${T.eyebrow}</div>
   <div class="lead">${cfg.back_lead}</div>
   ${paras}
-  <div class="bio">${cfg.author_bio}</div>
+  <div class="bio">${Array.isArray(cfg.author_bio) ? cfg.author_bio.map(p => `<p>${p}</p>`).join('') : cfg.author_bio}</div>
   <div class="bottom"><div class="seller">${cfg.seller}${cfg.price ? ` · ${cfg.price}` : ''}</div>${barcode}</div>
 </div>
 <div class="panel spine" style="background:none"><div class="t">${T.spine}</div><div class="a">${T.author}</div></div>

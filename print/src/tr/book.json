@@ -538,7 +538,7 @@
        "label": "Dağınık (Scruffy)"
       },
       "neOluyorBasit": "İki kamp, iki karakter: Düzenliler her adımı matematikle kanıtlamak ister; Dağınıklar “önce çalışsın, teorisi sonra gelir” der. İkisinin de haklı çıktığı yerler var; bugünün yapay zekâsı ikisinin karışımı.",
-      "neOluyor": "(basılı sürümde silindi: 2.6 teknik[0] ve teknik[1] aynı içeriği zaten taşıyor; dijital sürümde kalabilir)",
+      "neOluyor": "Bu, YZ’de yöntemsel bir gerilimdir: ilkeli/kanıtlanabilir yaklaşımlar (neat: mantık, olasılık) ile ampirik/mühendislik-odaklı yaklaşımlar (scruffy). Klasik YZ’nin duvarı: bilgi edinme darboğazı ve kırılganlık.",
       "items": [
        {
         "label": "Her şeyi biçimsel mantıkla kanıtla",

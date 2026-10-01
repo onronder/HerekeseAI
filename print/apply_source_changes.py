@@ -103,7 +103,7 @@ for f in sorted(glob.glob(os.path.join(ROOT, 'print', 'src', lang, 'M0*-*.md')))
             if '|||' not in line: continue
             old, new = [x.strip() for x in line.split('|||', 1)]
             if not old: continue
-            if new.strip('[] ').upper() in ('SİL', 'SIL', 'DELETE', 'REMOVE'):
+            if re.match(r'^\[(SİL|SIL|DELETE|REMOVE)\]', new.strip(), re.I) or new.strip('[] ').upper() in ('SİL', 'SIL', 'DELETE', 'REMOVE'):  # "[SİL] (not…)" da silmedir; dijitale uygulanmaz
                 skipped += 1; continue
             old, new = PREFIX.sub('', old), PREFIX.sub('', new)
             if overridden(old): continue  # elle yazılmış web sürümü uygulandı

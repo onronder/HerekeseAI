@@ -283,9 +283,9 @@ Fikirler 1900’lerin ortasında hazırdı ama makineler cılızdı. Şu eski pi
 | 12 | 1995 | 4.096 | 9.420.800 |
 | 13 | 1997 | 8.192 | 18.841.600 |
 
-İlk satırlar uslu: 2.300, 4.600, 9.200. On yılda sayı 32 katına çıkıyor ama hâlâ on binlerde. 1989’da bir milyon eşiği aşılıyor: 1.177.600, yuvarlarsan 1,2 milyon. 1997’de 18,8 milyon. Tablo 13 katlamada, 26 yılda duruyor; şekildeki basamaklar 26 katlamaya kadar gidiyor.
+İlk satırlar uslu: 2.300, 4.600, 9.200. On yılda sayı 32 katına çıkıyor ama hâlâ on binlerde. 1989’da bir milyon eşiği aşılıyor: 1.177.600, yuvarlarsan 1.2 milyon. 1997’de 18.8 milyon. Tablo 13 katlamada, 26 yılda duruyor; şekildeki basamaklar 26 katlamaya kadar gidiyor.
 
-Devam etsen ne olur? 20 katlamada, 2011’de, 2ⁿ = 1.048.576 ve sayı 2.411.724.800, kabaca 2,4 milyar. 26 katlamada, 2023’te, 2ⁿ = 67.108.864 ve sayı 154.350.387.200, kabaca 154,4 milyar. 1971 ile 2023 arasında, 26 katlamada, 67 milyon kat fark var. Pirinç masalında ambarlar tahtanın 32. karesinde doluyordu; çipler 26. kareye 2023’te vardı.
+Devam etsen ne olur? 20 katlamada, 2011’de, 2ⁿ = 1.048.576 ve sayı 2.411.724.800, kabaca 2.4 milyar. 26 katlamada, 2023’te, 2ⁿ = 67.108.864 ve sayı 154.350.387.200, kabaca 154.4 milyar. 1971 ile 2023 arasında, 26 katlamada, 67 milyon kat fark var. Pirinç masalında ambarlar tahtanın 32. karesinde doluyordu; çipler 26. kareye 2023’te vardı.
 
 *Ne oluyor?* Her satır “iki yıl geçti, güç ikiye katlandı” demek. Birkaç satırda sayı kontrolden çıkıyor; üstel büyüme böyle bir şey. Bilgisayarlar onlarca yıl bu hızla güçlendi; bugünkü yapay zekâyı mümkün kılan birikim de bu.
 
@@ -307,40 +307,40 @@ Zekâ, ikili kod, algoritma, Turing makinesi, depolanmış program, dar ile gene
 
 *Cevaplar kitabın sonunda.*
 1. Howard Gardner ne öne sürdü?
-   a) Zekânın IQ ile tam ölçüldüğünü
-   b) Beynin bir bilgisayar olduğunu
-   c) Makinelerin asla düşünemeyeceğini
-   d) Zekânın tek değil, birçok türü olduğunu
+   a) Beynin bir bilgisayar olduğunu
+   b) Zekânın tek değil, birçok türü olduğunu
+   c) Zekânın IQ ile tam ölçüldüğünü
+   d) Makinelerin asla düşünemeyeceğini
 
 2. İkili kod hangi sembollerden oluşur?
    a) A’dan Z’ye
    b) Noktalar ve çizgiler
-   c) 0 ve 1
-   d) 0–9 arası
+   c) 0–9 arası
+   d) 0 ve 1
 
 3. Turing makinesi temelde ne yapabilir?
-   a) Basit kurallarla prensipte her hesaplamayı
-   b) Sadece toplama yapar
-   c) Yalnızca satranç oynar
+   a) Yalnızca satranç oynar
+   b) Basit kurallarla prensipte her hesaplamayı
+   c) Sadece toplama yapar
    d) Yalnızca metin saklar
 
 4. Von Neumann mimarisinin temel fikri?
    a) İnterneti icat etmek
    b) Program ve veriyi aynı bellekte tutmak
-   c) Ondalık yerine ikili kullanmak
-   d) Her iş için kabloları yeniden bağlamak
+   c) Her iş için kabloları yeniden bağlamak
+   d) Ondalık yerine ikili kullanmak
 
 5. Bugünkü yapay zekâlar hangi türdedir?
-   a) Genel YZ (AGI)
-   b) Bilinçli YZ
-   c) Dar (narrow) YZ
-   d) Güçlü YZ
+   a) Güçlü YZ
+   b) Dar (narrow) YZ
+   c) Genel YZ (AGI)
+   d) Bilinçli YZ
 
 6. Moore yasası ne der?
    a) İnternet hızı sabittir
-   b) Bilgisayarlar her yıl ucuzlar
-   c) YZ insanı geçecek
-   d) Transistör sayısı ~her 2 yılda ikiye katlanır
+   b) YZ insanı geçecek
+   c) Transistör sayısı ~her 2 yılda ikiye katlanır
+   d) Bilgisayarlar her yıl ucuzlar
 
 ### Bu bölümden kalanlar
 
@@ -391,7 +391,7 @@ Bir kâğıdı 42 kez katlayabilseydin kalınlığı Ay’a ulaşırdı. Üstel 
 - Kâğıda uyarlandı (2026-09-30; ekran fiilleri kaynak metinde de çözüldü): Şekil 1.1 Ne oluyor "dokunduğun kart bunlardan biri"; Şekil 1.6 Ne oluyor "Her basış 'iki yıl geçti…'" ve "Birkaç basışta"; 1.4 teknik "Aşağıdaki simülasyon" (Şekil 1.3 artık bu paragrafın üstünde).
 - Kurulum'larda kaynak hint'ler ekran fiillerinden arındırıldı ("dokun", "bas", "⏸", "Otomatik" yok).
 - Şekil 1.5 (classify) "Kendini sına" demosu: Adım adım yerine işaretleme tablosu; gerekçeler cevaplar/M01.md'de.
-- Sayı biçimi: tablolarda binlik ayracı kaynak teknik metindeki gibi nokta (2.300, 17.500); düzyazıda demonun yuvarlaması virgülle ("1,2 milyon"). Kılavuz §1 "tablolarda ondalık nokta" kuralı ondalık için; teknik formülde 1.5 × 10¹¹ ondalık noktayla.
+- Sayı biçimi: tablolarda binlik ayracı kaynak teknik metindeki gibi nokta (2.300, 17.500); düzyazıda demonun yuvarlaması virgülle ("1.2 milyon"). Kılavuz §1 "tablolarda ondalık nokta" kuralı ondalık için; teknik formülde 1.5 × 10¹¹ ondalık noktayla.
 - Yazar kararı (2026-09-10): kaynak metin dahil tüm "demo" sözcükleri "gösterim" ya da "Şekil N.j" yapıldı; "Aşağıdaki demo" → şekil öncesinde "Aşağıda yer alan gösterim (Şekil N.j)", sonrasında "Şekil N.j'teki gösterim".
 - 2026-09-30 insanlaştırma geçişi: humanize-tr-report.md bulguları uygulandı; "Peki/Cevap/Sıradaki bölüm" köprüleri, "tam olarak/işte/ibaret" çivileri, punchline'lar, "Ekranda … kâğıtta …" cümleleri, "kenar notundaki" göndermeleri, "aslında/yani" dolguları, "büyü/devrim" sözcükleri ve kavram tırnakları temizlendi. Teknik "Ne oluyor" paragraflarında ilk teknik paragrafı tekrar eden cümleler kırpıldı (1.2, 1.4, 1.5, 1.6, 1.7; kâğıtta bitişik durdukları için; dijital sürüm tam hâlini koruyabilir). Kaynak paragraf değişiklikleri yukarıdaki SOURCE-CHANGES bloğunda.
 -->

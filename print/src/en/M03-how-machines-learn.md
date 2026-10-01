@@ -270,40 +270,40 @@ One idea ran through this chapter: grasp the pattern instead of memorizing the e
 
 *Answers are at the back of the book.*
 1. What is the core difference between ML and classical AI?
-   a) It never makes mistakes
-   b) It runs faster
-   c) It needs the internet
-   d) It learns from data instead of hand-written rules
+   a) It learns from data instead of hand-written rules
+   b) It never makes mistakes
+   c) It runs faster
+   d) It needs the internet
 
 2. What is an example’s “correct answer” called?
-   a) Feature
+   a) Label
    b) Gradient
-   c) Label
+   c) Feature
    d) Model
 
 3. Which task groups unlabeled data?
-   a) Regression
-   b) Clustering (unsupervised)
-   c) Classification
-   d) Reinforcement
+   a) Clustering (unsupervised)
+   b) Classification
+   c) Reinforcement
+   d) Regression
 
 4. What does gradient descent do?
    a) Generates labels
-   b) Slows the model
-   c) Updates parameters step by step to reduce loss
-   d) Deletes data
+   b) Deletes data
+   c) Slows the model
+   d) Updates parameters step by step to reduce loss
 
 5. What is overfitting?
-   a) Memorizing training data and failing on new data
-   b) Compressing data
-   c) Learning too fast
-   d) Not learning at all
+   a) Not learning at all
+   b) Learning too fast
+   c) Memorizing training data and failing on new data
+   d) Compressing data
 
 6. How does an agent learn in reinforcement learning?
-   a) From labeled examples
-   b) By memorizing rules
-   c) By clustering data
-   d) By reward and penalty, trial and error
+   a) By reward and penalty, trial and error
+   b) From labeled examples
+   c) By memorizing rules
+   d) By clustering data
 
 ### What to keep from this chapter
 

@@ -713,5 +713,30 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   Basılıda ekran fiili kalmadı (4.2 kaydıraç, 7.2 "gösterim"); notlar print/notes_digest.py ile toplanıyor. Denetimler: style tr/en 0,
   consistency 6 gerekçeli fark, verbatim farkları tümü gerekçeli. Çıktılar yenilendi ve check.sh geçti: TR ic-blok.pdf 256 s. (246+10 Notlar,
   16 forma, sırt 14 mm, barkod) + kapak.pdf; EN kdp-interior.pdf 248 s. (kapak.en.json pages 258→248, sırt 14,19 mm) + kdp-cover.pdf +
-  kdp-ebook-cover.jpg + AI-for-Everyone.epub (epubcheck 0). QR 45/45 iki dilde. Yazara kalan: python3 upload_book.py + git push;
-  kırpılan teknik tekrarlar dijitalde de kırpılsın mı; kapak.json author_bio yazım hataları, kapak.en.json author_bio, EN ISBN.
+  kdp-ebook-cover.jpg + AI-for-Everyone.epub (epubcheck 0). QR 45/45 iki dilde. upload_book.py + git push yapıldı (yazar, 2026-09-30).
+  YAZAR KARARI: basılıdan kırpılan teknik "Ne oluyor?" tekrarları dijitalde OLDUĞU GİBİ KALIR (demo altında tek başına anlamlı; kesin).
+- KAPAK METİNLERİ (2026-09-30): yazar kapak.json author_bio'yu 5 paragraf yazdı (yazım hataları düzeltildi: "Önümüzdeki", "karşılaşabileceğimiz",
+  "sürümünü", "Soru çok eski"); kapak.en.json aynı yapıda İngilizce; kapak.mjs dizi biçimini paragraf basar, KDP arka panel sıkılaştırıldı (barkod
+  alanına taşma yok); sırt yazısı vertical-rl (kesilmiyor), barkod 5 mm aşağı. TR sırt 232 sayfa için 13 mm (matbaa teyit edecek).
+- BASILI SAYFA YERLEŞİMİ (2026-09-30, yazar: "boş sayfa, sıkışma, atlama, yersiz QR olmasın"): tarama araçları (sayfa metni + 30 dpi render ile
+  alt boşluk ölçümü) TR'de 60, EN'de 45 sayfada %18+ boşluk buldu; nedenleri: bölünmez Teknik derinlik kutuları (%40–70 boşluk), sığmayan şekil
+  blokları, QR satırının sayfa başına düşmesi, bölüm kuyruklarının 1–3 satırla yeni sayfaya taşması, ön bölüm taşması. Çözüm (print/typeset):
+  kutular bölünebilir; QR her şeklin altında (figcaption satırı: "Şekil N.j · Canlı demo: url [QR 20 mm]"); figür yüksekliği ≤ 120 mm;
+  etiket satırı (Adım adım.) listesinden kopmaz; "yüzen şekil" öykünmesi: measure.mjs (puppeteer öğe yükseklikleri) + gapplan.py (sayfa
+  sonu boşlukları) → out/defer.json planı → yeniden dizgi (≤ 24 tur): sığmayan şekil ≤ %20 küçültülür ya da boşluğu dolduracak kadar izleyen
+  öğenin arkasına ertelenir, seçenek bitince en iyi konum kilitlenir; bölüm/arka bölüm kuyrukları satır/paragraf aralığı ve punto kademeleriyle
+  (_tighten) çekilir; ön bölüm CSS ile sıkı. Matbaa forma katı MULT=8 (yarım forma; 16 seçilebilir). Bulunan hata: figure p içinde olduğundan
+  DOM'da ayrışıyordu (ölçüm 8 mm çıkıyordu) → p.figtitle + figure. Disk doldu (geçici renderlar silinmiyordu) → temizlendi, rmtree eklendi.
+  SONUÇ TR: 226 içerik + 6 Notlar = 232 sayfa; bölüm içi boşluk kalmadı; tek başına kalan kuyruk sayfası yok; boş sayfalar yalnız bölüm açılışı
+  öncesi versolar; QR 45/45; check.sh geçti. SONUÇ EN: 228 sayfa (çift; 248'den), kapak.en.json pages 228 (sırt 13,04 mm), kdp-cover.pdf,
+  kdp-ebook-cover.jpg, AI-for-Everyone.epub (epubcheck 0), check.sh geçti. Kalan (yazar): kapak.en.json ISBN; matbaa: 8'lik forma kabulü ve
+  sırt teyidi. Not: Mac diski dolu (~3 GB boş); dizgi her turda ~200 MB geçici alan kullanır.
+- KAPSAMLI 5 AJANLI KALİTE DENETİMİ (2026-09-30/10-01; raporlar print/kitap/qa/, özet OZET.md): A bulguları (dijital TR'de sızan
+  redaksiyon notu; sırt başlığı iki kapakta sırt dışında; KDP koşan başlık/folyo güvenli alan ihlali; künye/önsöz yer tutucuları;
+  Kindle cevap anahtarı/dizin/TOC/künye) ve B bulguları (dizin sayfa numaraları terim çapasına, sol sayfa koşan başlığı, cevap anahtarı
+  paragrafları, sınav karışım tohumu qi·7+13n+5 iki dilde + dijitalde, TR ondalık, Şekil 2.4/7.1 metinleri, kadran→ağ, ekran fiilleri,
+  PDF meta UTF-16, ol.short, KDP barkod alanı) giderildi. Bulunup geri alınan: bölünmez kısa tablolar (boşluk üretti), Paged.js'te
+  kenar kutusu yeniden tanımında content kaybı (KDP folyo/başlık), çapanın şekil başlığına girmesi, gapplan kenar ölçüleri.
+  SON: TR 232 s. (226+6) sırt 13 mm; EN KDP 236 s. sırt 13,5 mm (başlık 0.54 in, folyo 0.50 in); EPUB epubcheck 0; dijital build güncel.
+  Yazara kalan: TR teşekkür isimleri + matbaa künye satırı; EN teşekkür isimleri (paperback + Kindle'da görünüyor); EN ISBN; KDP listeleme
+  alanları (qa/kdp-paperback.md ve kindle.md sonunda); upload_book.py + git push (dijital sınav karışımı ve 2.5 düzeltmesi için).

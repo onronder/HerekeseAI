@@ -15,6 +15,7 @@ Kullanım: python3 print/typeset/typeset.py [--lang tr|en] [--profile matbaa|kdp
   TR/matbaa (varsayılan) → out/ic-blok.html; diğerleri → out/<lang>-<profile>/ic-blok.html
 """
 import html as H
+import json
 import os
 import re
 import sys
@@ -151,6 +152,15 @@ def inline_svg(name, alt, kind, n):
         svg = flatten_alpha(svg)
         svg = svg_subsup(svg)
         svg = svg.replace("'Helvetica Neue', Arial, sans-serif", "'Arial Unicode MS', sans-serif").replace("Georgia, serif", "'Arial Unicode MS', serif")
+        # boyut: metin genişliği (matbaa 124 mm, KDP 120 mm); uzun figürler 120 mm yüksekliğe sığdırılır (sayfa sonu boşluğu azalsın)
+        vb = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg)
+        W = 120.0 if PROFILE == 'kdp' else 124.0
+        if vb:
+            vw, vh = float(vb.group(1)), float(vb.group(2))
+            h = W * vh / vw
+            if h > FIG_HMAX: h = FIG_HMAX; W = h * vw / vh
+            svg = re.sub(r'\s(width|height)="[^"]*"', '', svg, count=2)
+            svg = svg.replace('<svg ', f'<svg style="width:{W:.1f}mm;height:{h:.1f}mm" ', 1)
         svg = svg.replace('<svg ', f'<svg class="fig" role="img" aria-label="{H.escape(alt)}" ', 1)
     else:
         svg = svg.replace('<svg ', '<svg class="qrsvg" ', 1)
@@ -236,7 +246,7 @@ def index_pages(body):
         for e in entries:
             if not e.strip():
                 continue
-            e = re.sub(r'<a href="(#sec-[\w-]+)">[\d.]+</a>', r'<a class="ix" href="\1"></a>', e)
+            e = re.sub(r'<a href="(#(?:sec|ix)-[\w-]+)">[\d.]+</a>', r'<a class="ix" href="\1"></a>', e)
             e = e.replace(' · ', ' ')
             items.append(f'<div class="ix-e">{e}</div>')
         ix = ix[:m.start()] + '<div class="ix-list">' + ''.join(items) + '</div>' + ix[m.end():]
@@ -253,9 +263,95 @@ def strip_emoji(body):
     return body
 
 
+FIG_HMAX = 120.0  # mm; daha uzun figürler orantılı küçültülür
+
+
 def live_lines(body):
     """'Live demo: [QR]' kısmı kendi satırına (sola yaslı): aksi hâlde QR kutusu alt satıra taşınca üstteki satır yayılıyor."""
     return re.sub(r' ?((?:Live demo|Canlı demo): <span class="qr">)', r'</p><p class="live">\1', body)
+
+
+def live_into_figure(body):
+    """Canlı demo QR'ı, ait olduğu şeklin altına (figcaption satırına) taşınır: 'her şeklin altındaki QR kod'.
+    Böylece QR hiçbir zaman şekilden kopup sayfa başına düşmez; figür bloğu (break-inside: avoid) onu da taşır."""
+    moved = [0]
+
+    def mv(m):
+        live = m.group(1)
+        start = m.start()
+        i = body.rfind('<figcaption>', 0, start)
+        j = body.find('</figcaption>', i)
+        assert i >= 0 and j > i and 'class="live"' not in body[i:j], 'canlı demo satırının şekli bulunamadı'
+        cap = body[i + len('<figcaption>'):j]
+        pieces.append((i, j + len('</figcaption>'), f'<figcaption><span class="cap">{cap}</span><span class="live">{live}</span></figcaption>'))
+        moved[0] += 1
+        return ''
+    pieces = []
+    out = re.sub(r'<p class="live">(.*?)</p>', mv, body, flags=re.S)
+    # figcaption değişimlerini (konumlar orijinal gövdeye göre) uygula: sondan başa
+    for i, j, rep in sorted(pieces, reverse=True):
+        # out içinde aynı figcaption metni; orijinal konumu değil metni eşle (p.live silindiğinden konum kaydı)
+        old = body[i:j]
+        k = out.find(old)
+        assert k >= 0
+        out = out[:k] + rep + out[k + len(old):]
+    return out
+
+
+TOP_TAGS = ('p', 'table', 'ol', 'ul', 'blockquote', 'div', 'aside', 'h2', 'h3', 'h4', 'section', 'hr', 'figure')
+STOP_RX = re.compile(r'<(h2|h3|h4|section|hr)[ >]|<p class="figtitle">')  # teknik kutu geçilebilir (son çare), sonraki şekil/başlık geçilemez
+
+
+def top_elements(body, start, limit=12):
+    """start konumundan itibaren üst düzey blok öğelerini (başlangıç, bitiş) olarak sayar; durdurucu öğede kesilir."""
+    els = []
+    i = start
+    while len(els) < limit:
+        m = re.compile(r'\s*<(' + '|'.join(TOP_TAGS) + r')(?=[ >])').match(body, i)
+        if not m: break
+        tag = m.group(1)
+        s = m.end() - len(tag) - 1
+        if STOP_RX.match(body, s): break
+        close = f'</{tag}>'
+        e = body.find(close, s)
+        if e < 0: break
+        e += len(close)
+        els.append((s, e))
+        i = e
+    return els
+
+
+def fig_blocks(body):
+    """<p><strong>Şekil N.j · …</strong> <figure>…</figure></p> → <p class="figtitle">…</p><figure>…</figure>
+    (tarayıcı p içinde figure'a izin vermez; DOM'da zaten böyle ayrışır, artık boş <p> de kalmaz)."""
+    return re.sub(r'<p><strong>((?:Şekil|Figure) \d+\.\d+ ·[^<]*)</strong>\s*(<figure>.*?</figure>)\s*</p>',
+                  r'<p class="figtitle"><strong>\1</strong></p>\n\2', body, flags=re.S)
+
+
+def defer_figures(body, plan):
+    """Sayfa sonunda sığmayan şekil bloğunu (başlık + figür + altındaki QR) izleyen k blok öğesinin arkasına taşır
+    (dizgide 'sayfa üstüne yüzen şekil' davranışı). plan: {'Şekil 1.4': k}. Öğeler h3/h4/kutu/sonraki şekle kadar sayılır."""
+    for label, v in plan.items():
+        k, scale = (v.get('k', 0), v.get('scale', 1.0)) if isinstance(v, dict) else (v, 1.0)
+        if not k and scale >= 0.999: continue
+        m = re.search(r'<p class="figtitle"><strong>' + re.escape(label) + r' ·.*?</figure>', body, re.S)
+        if not m:
+            print(f'  uyarı: {label} bloğu bulunamadı'); continue
+        blk = body[m.start():m.end()]
+        if scale < 0.999:  # figürü orantılı küçült (sayfa sonundaki boşluğa sığsın)
+            blk = re.sub(r'style="width:([\d.]+)mm;height:([\d.]+)mm"',
+                         lambda mm: f'style="width:{float(mm.group(1)) * scale:.1f}mm;height:{float(mm.group(2)) * scale:.1f}mm"', blk, count=1)
+        if k < 0:  # -1: bloğu alt bölüm başlığının (h3) hemen altına al ("sayfa üstüne yüzen şekil")
+            h = body.rfind('</h3>', 0, m.start())
+            if h < 0: print(f'  uyarı: {label} için h3 yok'); continue
+            h += len('</h3>')
+            body = body[:h] + '\n' + blk + body[h:m.start()] + body[m.end():]
+            continue
+        els = top_elements(body, m.end())
+        k = min(k, len(els))
+        ins = els[k - 1][1] if k else m.end()
+        body = body[:m.start()] + body[m.end():ins] + ('\n' if k else '') + blk + body[ins:]
+    return body
 
 
 def live_table(body):
@@ -268,21 +364,40 @@ def notes_pages(n):
     return ''.join(f'<section class="back notes"><span class="rh">{L["notes"]}</span><h1>{L["notes"]}</h1>{lines}</section>\n' for _ in range(n))
 
 
-def build(pad=0):
+def build(pad=0, plan=None):
     doc = open(SRC, encoding='utf-8').read()
     body = doc.split('<div class="page">', 1)[1].rsplit('</div></body>', 1)[0]
     body = inline_images(body)
+    body = fig_blocks(body)
     body = sectionize(body)
     body = toc_links(body)
     body = index_pages(body)
     body = live_table(body)
     body = live_lines(body)
+    body = live_into_figure(body)
+    # sınav şıkları gibi kısa listeler (≤ 5 madde, ≤ 400 karakter) sayfa sonunda bölünmesin; tablolar bölünebilir
+    # (bölünmez tablo sayfa sonlarında boşluk yaratıyordu; yerleşim motoru yalnız şekil bloklarını taşıyabiliyor)
+    def short_list(m):
+        inner = m.group(3)
+        if m.group(1) == 'ol' and 'class=' not in m.group(2) and inner.count('<li>') <= 5 and len(re.sub(r'<[^>]+>', '', inner)) <= 400:
+            return f'<{m.group(1)}{m.group(2)} class="short">'
+        return m.group(0)
+    body = re.sub(r'<(ol|ul)([^>]*)>(?=((?:(?!</\1>).)*?</\1>))', short_list, body, flags=re.S)
+    body = defer_figures(body, {k: v for k, v in (plan or {}).items() if not k.startswith('_')})
+    extra_css = ''
+    for sid, v in (plan or {}).get('_tighten', {}).items():  # bölüm kuyruğu tek başına sayfaya taşıyorsa satır/paragraf aralığını ayarla
+        vals = [1.5, .8, 1.0]
+        for j, x in enumerate(v if isinstance(v, list) else [v]): vals[j] = x
+        lh, pm, fs = vals
+        body = re.sub(r'<section([^>]*id="' + re.escape(sid) + r'"[^>]*)>', lambda m: f'<section{m.group(1)} style="line-height:{lh};font-size:{fs}em">', body, count=1)
+        extra_css += f'section#{sid} p {{ margin-bottom: {pm}em; }}\n'
     body = strip_emoji(body)
     body += notes_pages(pad)
     css = open(os.path.join(HERE, 'print.css'), encoding='utf-8').read()
     prof = os.path.join(HERE, 'profiles', PROFILE + '.css')
     css += '\n' + (open(prof, encoding='utf-8').read() if os.path.exists(prof) else '')
-    css += '\nbody { string-set: book "' + TITLE + '"; }\n'
+    css = css.replace('string(book)', '"' + TITLE.replace('"', '\\"') + '"')  # sol sayfa koşan başlığı: body string-set Paged.js'te işlenmiyor, sabit metin (CSS dizgisi; \\u kaçışı yok)
+    css += '\nbody { string-set: book "' + TITLE + '"; }\n' + extra_css
     out = (f'<!doctype html>\n<html lang="{L["lang"]}"><head><meta charset="utf-8">'
            f'<title>{TITLE}</title>\n<style>\n{fonts_css()}\n</style>\n<style>\n{css}\n</style></head>\n'
            f'<body>\n{body}\n</body></html>\n')
@@ -301,4 +416,9 @@ if __name__ == '__main__':
     lang = sys.argv[sys.argv.index('--lang') + 1] if '--lang' in sys.argv else 'tr'
     profile = sys.argv[sys.argv.index('--profile') + 1] if '--profile' in sys.argv else 'matbaa'
     set_lang(lang, profile)
-    build(pad)
+    plan = {}
+    if '--defer' in sys.argv:
+        pth = sys.argv[sys.argv.index('--defer') + 1]
+        if os.path.exists(pth):
+            plan = json.load(open(pth, encoding='utf-8'))
+    build(pad, plan)

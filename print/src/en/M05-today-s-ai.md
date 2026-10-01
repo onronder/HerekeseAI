@@ -349,46 +349,46 @@ The chapter’s stack is complete: token, embedding, attention, generation, trai
    d) A small piece of text the model processes
 
 2. What is true of the embedding space?
-   a) Semantically similar words land near each other
-   b) Every word is at the same point
-   c) Words are placed randomly
-   d) Only numbers are stored, no meaning
+   a) Words are placed randomly
+   b) Only numbers are stored, no meaning
+   c) Semantically similar words land near each other
+   d) Every word is at the same point
 
 3. What does the attention mechanism provide?
-   a) Each word “looking at” the others with weights
-   b) Enlarging images
-   c) Deleting data
-   d) Slowing the model
+   a) Enlarging images
+   b) Slowing the model
+   c) Each word “looking at” the others with weights
+   d) Deleting data
 
 4. What does an LLM fundamentally do?
-   a) Applies hand-written rules
-   b) Queries a database
-   c) Predicts the next token
+   a) Predicts the next token
+   b) Applies hand-written rules
+   c) Queries a database
    d) Searches the internet
 
 5. The correct order of the training pipeline?
    a) Pretraining → fine-tuning → RLHF
-   b) RLHF → pretraining → fine-tuning
-   c) Pretraining only
-   d) Fine-tuning → pretraining → RLHF
+   b) Pretraining only
+   c) Fine-tuning → pretraining → RLHF
+   d) RLHF → pretraining → fine-tuning
 
 6. How does a diffusion model create an image?
-   a) Downloading it from the internet
-   b) Copying it in one shot
-   c) Leaving pixels random
+   a) Leaving pixels random
+   b) Downloading it from the internet
+   c) Copying it in one shot
    d) Starting from noise and cleaning it step by step
 
 7. What is hallucination?
-   a) Running faster
-   b) The model producing confident but wrong information
+   a) The model producing confident but wrong information
+   b) Generating an image
    c) The model crashing
-   d) Generating an image
+   d) Running faster
 
 8. What does the context window limit?
-   a) Screen resolution
-   b) How many tokens the model attends to at once
-   c) Internet speed
-   d) Disk size
+   a) How many tokens the model attends to at once
+   b) Disk size
+   c) Screen resolution
+   d) Internet speed
 
 ### What to keep from this chapter
 

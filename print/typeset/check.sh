@@ -4,7 +4,7 @@
 HERE="$(cd "$(dirname "$0")" && pwd)"; ROOT="$(cd "$HERE/../.." && pwd)"; K="$ROOT/print/kitap"
 LANG_="${1:-tr}"; PROFILE="${2:-matbaa}"
 if [ "$LANG_" = tr ] && [ "$PROFILE" = matbaa ]; then IN="$K/ic-blok.pdf"; CV="$K/kapak.pdf"; else IN="$K/$LANG_/$PROFILE-interior.pdf"; CV="$K/$LANG_/$PROFILE-cover.pdf"; fi
-if [ "$PROFILE" = kdp ]; then MULT=2; TRIM_RX="TrimBox: *9.00 *9.00 *441.0[0-9] *657.0[0-9]"; TRIM_TXT="TrimBox 6×9 in, taşma 0.125 in"; else MULT=16; TRIM_RX="TrimBox: *8.50 *8.50 *462.3[0-9] *688.4[0-9]"; TRIM_TXT="TrimBox 160×240 mm, taşma 3 mm"; fi
+if [ "$PROFILE" = kdp ]; then MULT=2; TRIM_RX="TrimBox: *9.00 *9.00 *441.0[0-9] *657.0[0-9]"; TRIM_TXT="TrimBox 6×9 in, taşma 0.125 in"; else MULT="${MULT:-8}"; TRIM_RX="TrimBox: *8.50 *8.50 *462.3[0-9] *688.4[0-9]"; TRIM_TXT="TrimBox 160×240 mm, taşma 3 mm"; fi
 fail=0
 chk() { if [ "$1" = ok ]; then echo "  ✔ $2"; else echo "  ✘ $2"; fail=1; fi; }
 for F in ic-blok kapak; do

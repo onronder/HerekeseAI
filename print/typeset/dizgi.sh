@@ -12,20 +12,32 @@ cd "$HERE"
 LANG_=tr; PROFILE=matbaa; ARGS=""
 while [ $# -gt 0 ]; do case "$1" in
   --lang) LANG_="$2"; shift 2 ;; --profile) PROFILE="$2"; shift 2 ;; *) ARGS="$ARGS $1"; shift ;; esac; done
-if [ "$LANG_" = tr ] && [ "$PROFILE" = matbaa ]; then O="out"; FINAL="$ROOT/print/kitap/ic-blok.pdf"; TITLE="Herkes İçin Yapay Zekâ"; BLEED_MM=3; MULT=16
-else O="out/$LANG_-$PROFILE"; mkdir -p "$ROOT/print/kitap/$LANG_"; FINAL="$ROOT/print/kitap/$LANG_/$PROFILE-interior.pdf"; BLEED_MM=3; MULT=16
+# MULT: matbaa 8 (yarım forma; 16 istenirse MULT=16 sh dizgi.sh …), KDP 2 (çift sayfa). TEXT_W: metin genişliği (mm), ölçüm için.
+if [ "$LANG_" = tr ] && [ "$PROFILE" = matbaa ]; then O="out"; FINAL="$ROOT/print/kitap/ic-blok.pdf"; TITLE="Herkes İçin Yapay Zekâ"; BLEED_MM=3; MULT="${MULT:-8}"; TEXT_W=124
+else O="out/$LANG_-$PROFILE"; mkdir -p "$ROOT/print/kitap/$LANG_"; FINAL="$ROOT/print/kitap/$LANG_/$PROFILE-interior.pdf"; BLEED_MM=3; MULT="${MULT:-8}"; TEXT_W=124
   [ "$LANG_" = en ] && TITLE="AI for Everyone" || TITLE="Herkes İçin Yapay Zekâ"
-  [ "$PROFILE" = kdp ] && { BLEED_MM=3.175; MULT=2; }
+  [ "$PROFILE" = kdp ] && { BLEED_MM=3.175; MULT=2; TEXT_W=123; }
 fi
 mkdir -p "$O"
 render() { npx pagedjs-cli "$O/ic-blok.html" -o "$O/ic-blok-rgb.pdf" --timeout 600000 2>&1 | grep -E "Rendering|rror" || true; }
+PLAN="$O/defer.json"; rm -f "$PLAN" "$O/heights.json"
 python3 typeset.py --lang "$LANG_" --profile "$PROFILE" $ARGS
 render
+# sayfa sonu boşlukları: sığmayan şekil blokları izleyen metnin arkasına ertelenir (yüzen şekil); en çok 4 tur
+i=0
+while [ $i -lt 24 ]; do
+  [ -f "$O/heights.json" ] || node measure.mjs "$O/ic-blok.html" "$TEXT_W" "$O/heights.json"
+  rc=0; python3 gapplan.py "$O/ic-blok-rgb.pdf" "$O/ic-blok.html" "$O/heights.json" "$LANG_" "$PROFILE" "$PLAN" || rc=$?
+  [ "$rc" -eq 3 ] || break
+  python3 typeset.py --lang "$LANG_" --profile "$PROFILE" --defer "$PLAN" $ARGS
+  render
+  i=$((i + 1))
+done
 # forma: matbaa 16'nın katı, KDP çift sayfa; eksik "Notlar" sayfalarıyla tamamlanır (--pad verilmişse dokunulmaz)
 case " $ARGS " in *" --pad "*) ;; *)
   pages=$(pdfinfo "$O/ic-blok-rgb.pdf" | awk '/^Pages/{print $2}')
   pad=$(( (MULT - pages % MULT) % MULT ))
-  if [ "$pad" -gt 0 ]; then echo "sayfa $pages → $((pages + pad)) (Notlar ×$pad)"; python3 typeset.py --lang "$LANG_" --profile "$PROFILE" --pad "$pad"; render; fi ;;
+  if [ "$pad" -gt 0 ]; then echo "sayfa $pages → $((pages + pad)) (Notlar ×$pad)"; python3 typeset.py --lang "$LANG_" --profile "$PROFILE" --defer "$PLAN" --pad "$pad"; render; fi ;;
 esac
 
 GSICC="$(find /opt/homebrew /usr/local /usr/share -name default_cmyk.icc 2>/dev/null | head -1)"
@@ -35,7 +47,8 @@ else
   PROF="$GSICC"; COND="Ghostscript default CMYK (matbaa profili ile değiştirilecek)"; CID="Custom"
 fi
 [ -f "$PROF" ] || { echo "ICC profili bulunamadı: $PROF"; exit 1; }
-sed -e "s|ICCPROFILE|($PROF)|" -e "s|OUTPUTCONDITIONID|$CID|" -e "s|OUTPUTCONDITION|$COND|" -e "s|Herkes İçin Yapay Zekâ)|$TITLE)|" PDFX_def.ps > "$O/PDFX_def.ps"
+TITLE_HEX=$(python3 -c 'import sys; print(sys.argv[1].encode("utf-16-be").hex().upper())' "$TITLE")  # PDF metin dizgisi UTF-16BE (Türkçe karakterler)
+sed -e "s|ICCPROFILE|($PROF)|" -e "s|OUTPUTCONDITIONID|$CID|" -e "s|OUTPUTCONDITION|$COND|" -e "s|TITLEHEX|$TITLE_HEX|" PDFX_def.ps > "$O/PDFX_def.ps"
 
 # Sayfa kutuları: MediaBox = kâğıt (net + taşma, Paged.js); BleedBox = MediaBox; TrimBox = taşma kadar içeri (pdf-lib).
 node boxes.mjs "$O/ic-blok-rgb.pdf" "$O/ic-blok-boxed.pdf" "$BLEED_MM"

@@ -208,28 +208,57 @@ def build_index(chapter_mds):
                 if len(piece) >= 3:
                     pats.add(piece)
         terms.append((name, sorted(pats, key=len, reverse=True)))
-    # bölüm metinleri
-    sections = []  # (label 'N.k', text)
-    for md in chapter_mds:
-        body = strip_comments(md)
-        body = re.sub(r'!\[[^\]]*\]\([^)]*\)', '', body)  # görsel yolları (demo tipi adları) dizine girmesin
-        parts = re.split(r'^### (\d+\.\d+) ', body, flags=re.M)
-        for i in range(1, len(parts), 2):
-            sections.append((parts[i], L['lower'](parts[i + 1])))
+    # bölüm metinleri: her terim için alt bölümdeki ilk geçiş yerine çapa konur (IXANCHOR{…} → html'de <a id="ix-…">),
+    # böylece dizin sayfa numarası alt bölüm başını değil terimin geçtiği sayfayı gösterir. chapter_mds yerinde güncellenir.
+    def safe_line(text, pos):
+        ls = text.rfind('\n', 0, pos) + 1
+        line = text[ls:text.find('\n', pos) if text.find('\n', pos) >= 0 else len(text)]
+        return not (line.startswith('#') or line.startswith('!') or line.startswith('<') or '[QR ' in line or 'IXANCHOR{' in line[:pos - ls]
+                    or re.match(r'\*\*(Şekil|Figure) \d', line))  # şekil başlığı satırına çapa konmaz (dizgi bloğu bozulur)
     out = ['# ' + L['h_index'], '', L['index_intro'], '']
     entries = []
-    for name, pats in terms:
+    inserts = [dict() for _ in chapter_mds]  # ci → {offset: token}
+    lowered = []
+    for ci, md in enumerate(chapter_mds):
+        body = strip_comments(md)
+        chapter_mds[ci] = body
+        low = L['lower'](body)
+        assert len(low) == len(body), 'küçük harf dönüşümü uzunluğu değiştirdi'
+        secs = [(m.group(1), m.start()) for m in re.finditer(r'^### (\d+\.\d+) ', body, flags=re.M)]
+        lowered.append((body, low, secs))
+    for ti, (name, pats) in enumerate(terms):
         hits = []
-        for label, text in sections:
-            for pat in pats:
-                rx = r'(?<![\wâîû])' + re.escape(L['lower'](pat)) + r'(?![\wâîû])'
-                if re.search(rx, text):
-                    hits.append(label)
+        for ci, (body, low, secs) in enumerate(lowered):
+            for si, (label, start) in enumerate(secs):
+                end = secs[si + 1][1] if si + 1 < len(secs) else len(body)
+                seg = low[start:end]
+                seg_clean = re.sub(r'!\[[^\]]*\]\([^)]*\)', lambda m: ' ' * len(m.group(0)), seg)  # görsel yolları eşleşmesin
+                found = None
+                for pat in pats:
+                    rx = r'(?<![\wâîû])' + re.escape(L['lower'](pat)) + r'(?![\wâîû])'
+                    ms = list(re.finditer(rx, seg_clean))
+                    if not ms: continue
+                    for m in ms:
+                        if safe_line(body, start + m.start()):
+                            found = start + m.start(); break
+                    if found is None: found = -1  # geçiyor ama güvenli satır yok → bölüm çapası
                     break
+                if found is None: continue
+                aid = f'{label.replace(".", "-")}-{ti}'
+                if found >= 0:
+                    inserts[ci][found] = inserts[ci].get(found, '') + f'IXANCHOR{{{aid}}}'  # aynı konumda birden çok terim olabilir
+                    hits.append((label, f'#ix-{aid}'))
+                else:
+                    hits.append((label, f'#sec-{label.replace(".", "-")}'))
         if hits:
             entries.append((name, hits))
+    for ci, ins in enumerate(inserts):
+        body = chapter_mds[ci]
+        for off in sorted(ins, reverse=True):
+            body = body[:off] + ins[off] + body[off:]
+        chapter_mds[ci] = body
     for name, hits in sorted(entries, key=lambda e: L['key'](e[0])):
-        refs = ', '.join(f'[{h}](#sec-{h.replace(".", "-")})' for h in hits)
+        refs = ', '.join(f'[{h}]({href})' for h, href in hits)
         out.append(f'**{name}** · {refs}  ')
     out.append('')
     return '\n'.join(out) + '\n'
@@ -394,14 +423,16 @@ def build():
     fronts = [read(f) for f in sorted(glob.glob(os.path.join(SRC, L['front'], '*.md')))]
     chaps = chapters()
     bib = os.path.join(SRC, L['back'], L['biblio_file'])
+    index_md = build_index(chaps)  # chaps yerinde güncellenir (dizin çapaları); pieces'tan ÖNCE çağrılmalı
     pieces = fronts + [toc(chaps)] + chaps + [answer_key(), glossary(), read(bib) if os.path.exists(bib) else '# ' + L['h_biblio'] + '\n\n[To be added]\n',
-                                              live_demos(), build_index(chaps)]
+                                              live_demos(), index_md]
     md = '\n\n'.join(p.strip() for p in pieces) + '\n'
     md_path = os.path.join(OUT, L['out_base'] + '.md')
-    open(md_path, 'w', encoding='utf-8').write(qr_md(md))
+    open(md_path, 'w', encoding='utf-8').write(re.sub(r'IXANCHOR\{[\w-]+\}', '', qr_md(md)))
 
     body = box_technical(md_to_html(qr_html_marker(strip_comments(md))))
     body = body.replace(*L['fig_fix'])
+    body = re.sub(r'IXANCHOR\{([\w-]+)\}', r'<a id="ix-\1"></a>', body)  # dizin çapaları
     doc = (f'<!doctype html>\n<html lang="{L["html_lang"]}"><head><meta charset="utf-8"><title>{L["html_title"]}</title>'
            '<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">'
            f'<style>{CSS}</style></head><body><div class="page">\n{body}\n</div></body></html>\n')

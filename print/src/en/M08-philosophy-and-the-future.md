@@ -237,40 +237,40 @@ None of these questions closes with the chapter; they are the kind you keep. Six
 
 *Answers are at the back of the book.*
 1. What does the Turing test fundamentally measure?
-   a) Amount of memory
-   b) Processing speed
-   c) Real consciousness
-   d) Imitating a human indistinguishably in writing
+   a) Real consciousness
+   b) Amount of memory
+   c) Imitating a human indistinguishably in writing
+   d) Processing speed
 
 2. What does the Chinese Room argument question?
    a) Internet security
-   b) Whether symbol processing alone yields “understanding”
-   c) Computer speed
+   b) Computer speed
+   c) Whether symbol processing alone yields “understanding”
    d) The difficulty of Chinese
 
 3. What level is today’s AI at?
    a) AGI
-   b) Superintelligence
-   c) Narrow AI
-   d) Conscious AI
+   b) Conscious AI
+   c) Superintelligence
+   d) Narrow AI
 
 4. The most balanced stance on the singularity?
-   a) Uncertain; neither certain nor impossible
-   b) Completely impossible
-   c) It already happened
-   d) Definitely happening tomorrow
+   a) It already happened
+   b) Definitely happening tomorrow
+   c) Completely impossible
+   d) Uncertain; neither certain nor impossible
 
 5. When an AI causes harm, responsibility today usually falls on?
-   a) Only the AI itself
-   b) The internet
-   c) People and institutions (developer/operator/user)
-   d) No one
+   a) People and institutions (developer/operator/user)
+   b) Only the AI itself
+   c) No one
+   d) The internet
 
 6. The question of AI’s moral status (rights) today is?
-   a) A meaningless question
+   a) Open and contested
    b) Banned by law
    c) Definitively settled
-   d) Open and contested
+   d) A meaningless question
 
 ### What to keep from this chapter
 

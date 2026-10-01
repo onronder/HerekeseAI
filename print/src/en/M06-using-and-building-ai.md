@@ -279,39 +279,39 @@ Six fields, five skills, one skeleton. Six questions follow.
 *Answers are at the back of the book.*
 
 1. What improves an answer in prompt engineering?
-   a) Writing shorter
+   a) Adding role, context, examples and a clear format
    b) Retraining the model
    c) A pricier GPU
-   d) Adding role, context, examples and a clear format
+   d) Writing shorter
 
 2. What does RAG fundamentally do?
-   a) Finds the relevant source and grounds the answer on it
-   b) Generates images
+   a) Generates images
+   b) Deletes data
    c) Speeds up the model
-   d) Deletes data
+   d) Finds the relevant source and grounds the answer on it
 
 3. What separates an “agent” from a chatbot?
-   a) Using tools and taking action step by step
+   a) A colorful interface
    b) Typing faster
-   c) A colorful interface
+   c) Using tools and taking action step by step
    d) Working offline
 
 4. What does the “orchestration” layer do in a typical AI app?
-   a) Only draws the screen
-   b) Coordinates prompts, tools and RAG calls
-   c) Trains the model
-   d) Only stores data
+   a) Trains the model
+   b) Only stores data
+   c) Coordinates prompts, tools and RAG calls
+   d) Only draws the screen
 
 5. A practical way to reduce hallucination?
-   a) Maxing out the temperature
-   b) Grounding the answer in a source via RAG
-   c) Turning the model off
-   d) Writing a longer prompt
+   a) Writing a longer prompt
+   b) Turning the model off
+   c) Grounding the answer in a source via RAG
+   d) Maxing out the temperature
 
 6. What are the most successful AI applications usually like?
-   a) Ones that just use the biggest model
+   a) Ones needing no evaluation
    b) Ones that exclude people entirely
-   c) Ones needing no evaluation
+   c) Ones that just use the biggest model
    d) Designs that strengthen people (copilots)
 
 ### What to keep from this chapter

@@ -14,4 +14,4 @@ I have tried to explain what everyone who talks about artificial intelligence ne
 
 Onur Önder
 
-[place, date]
+Istanbul, September 2026

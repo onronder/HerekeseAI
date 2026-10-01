@@ -58,7 +58,7 @@ Algorithmic bias mostly comes from data: historical prejudice, under-representat
 
 Fairness is not a single definition; metrics like demographic parity, equality of opportunity and calibration can conflict. Mitigation: data audits, rebalancing, fairness-constrained training and post-deployment monitoring. Figure 7.1 shows how data bias alone produces a decision gap despite identical merit.
 
-The model behind the figure: A = min(95, 50 + 0.4·e), B = max(5, 50 − 0.4·e), gap = A − B. Demographic parity is the condition P(approve | A) = P(approve | B); every value other than gap = 0 violates it. The figure attaches the label “balanced” to gap ≤ 6; that is a tolerance choice, not a definition of fairness.
+The model behind the figure: A = round(min(95, 50 + 0.4·e)), B = round(max(5, 50 − 0.4·e)), gap = A − B. Demographic parity is the condition P(approve | A) = P(approve | B); every value other than gap = 0 violates it. The figure attaches the label “balanced” to gap ≤ 6; that is a tolerance choice, not a definition of fairness.
 
 Bias can be measured. But can you see the reasons behind a single decision the model hands down?
 
@@ -235,10 +235,10 @@ That is as far as anyone can answer the five questions today. Six questions foll
 
 *Answers are at the back of the book.*
 1. Where does algorithmic bias mostly come from?
-   a) Slow hardware
-   b) The internet connection
-   c) Screen color
-   d) Skewed or incomplete training data
+   a) Screen color
+   b) Skewed or incomplete training data
+   c) The internet connection
+   d) Slow hardware
 
 2. What does a “black box” model mean?
    a) It is very fast
@@ -248,27 +248,27 @@ That is as far as anyone can answer the five questions today. Six questions foll
 
 3. The strongest personal defense against deepfakes?
    a) Faster internet
-   b) A pricier phone
-   c) Questioning and verifying the source
-   d) Never sharing anything
+   b) Never sharing anything
+   c) A pricier phone
+   d) Questioning and verifying the source
 
 4. The EU AI Act sorts uses by what?
-   a) Risk level
-   b) Company size
-   c) Programming language
-   d) Color code
+   a) Company size
+   b) Risk level
+   c) Color code
+   d) Programming language
 
 5. What is the alignment problem?
-   a) The model being slow
+   a) A small screen
    b) The stated goal diverging from the true intent
-   c) A small screen
+   c) The model being slow
    d) Having little data
 
 6. An example of a high-risk AI use?
-   a) An email spam filter
+   a) A weather widget
    b) A game-opponent AI
-   c) A weather widget
-   d) Screening job candidates
+   c) Screening job candidates
+   d) An email spam filter
 
 ### What to keep from this chapter
 

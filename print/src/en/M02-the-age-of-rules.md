@@ -174,7 +174,7 @@ Search assumed that the world is certain: a wall is a wall, and the goal stays w
 
 Strict rules stumble in the real world, because the world is uncertain. “If it rains, take an umbrella” is easy to say; but will it rain? Nobody knows for certain. At best, you can name the odds.
 
-Classical AI found an elegant answer: move from state to state by probability. The Markov chain is the most famous example: a weather game played with a loaded die. Figure 2.4 holds a seven-day example: follow the weather there as it changes according to its odds.
+Classical AI found an elegant answer: move from state to state by probability. The Markov chain is the most famous example: a weather game played with a loaded die. The table under Figure 2.4 holds a seven-day example: follow the weather there as it changes according to its odds.
 
 > **Margin note.** The Markov property: “the future depends only on the present; how you got here doesn’t matter.” It looks simple, yet it is everywhere, from weather to Google search.
 
@@ -271,40 +271,40 @@ The quarrel proved both camps partly right; the next chapter tells how. First, s
 
 *Answers are at the back of the book.*
 1. How does classical (symbolic) AI represent knowledge?
-   a) Only with images
-   b) By learning from data
-   c) By random guessing
-   d) With explicit symbols and rules
+   a) By learning from data
+   b) Only with images
+   c) With explicit symbols and rules
+   d) By random guessing
 
 2. What is “if it’s raining, take an umbrella”?
-   a) A dataset
-   b) A probability
+   a) A probability
+   b) A neural network
    c) A rule (IF-THEN)
-   d) A neural network
+   d) A dataset
 
 3. Key property of heuristic methods?
-   a) They speed up the search but don’t guarantee the best
+   a) They always guarantee the optimal solution
    b) They guess at random
-   c) They always guarantee the optimal solution
-   d) They learn from data
+   c) They learn from data
+   d) They speed up the search but don’t guarantee the best
 
 4. In a Markov chain, the next state depends on?
    a) Only the current state
-   b) Nothing
+   b) The entire history
    c) The future
-   d) The entire history
+   d) Nothing
 
 5. Classical AI’s biggest challenge was?
-   a) Being too cheap
-   b) Hand-writing all rules, and the messiness of the world
-   c) Being too fast
-   d) Depending on the internet
+   a) Hand-writing all rules, and the messiness of the world
+   b) Being too fast
+   c) Depending on the internet
+   d) Being too cheap
 
 6. What do “Neat” and “Scruffy” describe?
-   a) Two programming languages
+   a) Two approaches in AI research
    b) Two robot types
-   c) Two computer brands
-   d) Two approaches in AI research
+   c) Two programming languages
+   d) Two computer brands
 
 ### What to keep from this chapter
 

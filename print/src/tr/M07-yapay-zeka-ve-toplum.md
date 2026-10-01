@@ -241,10 +241,10 @@ Beş başlık bitti; altı soru kaldı.
 
 *Cevaplar kitabın sonunda.*
 1. Algoritmik önyargı çoğunlukla nereden gelir?
-   a) Yavaş donanımdan
-   b) İnternet bağlantısından
-   c) Ekran renginden
-   d) Çarpık/eksik eğitim verisinden
+   a) Ekran renginden
+   b) Çarpık/eksik eğitim verisinden
+   c) İnternet bağlantısından
+   d) Yavaş donanımdan
 
 2. “Kara kutu” model ne demektir?
    a) Çok hızlı olması
@@ -254,27 +254,27 @@ Beş başlık bitti; altı soru kaldı.
 
 3. Deepfake’e karşı en sağlam bireysel savunma?
    a) Daha hızlı internet
-   b) Daha pahalı telefon
-   c) Kaynağı sorgulamak ve doğrulamak
-   d) Hiçbir şey paylaşmamak
+   b) Hiçbir şey paylaşmamak
+   c) Daha pahalı telefon
+   d) Kaynağı sorgulamak ve doğrulamak
 
 4. AB YZ Yasası kullanımları neye göre ayırır?
-   a) Risk düzeyine
-   b) Şirket büyüklüğüne
-   c) Programlama diline
-   d) Renk koduna
+   a) Şirket büyüklüğüne
+   b) Risk düzeyine
+   c) Renk koduna
+   d) Programlama diline
 
 5. Hizalama (alignment) sorunu nedir?
-   a) Modelin yavaş olması
+   a) Ekranın küçük olması
    b) Belirtilen hedef ile gerçek niyetin ayrışması
-   c) Ekranın küçük olması
+   c) Modelin yavaş olması
    d) Verinin az olması
 
 6. Yüksek riskli bir YZ kullanımına örnek?
-   a) E-posta spam filtresi
+   a) Hava durumu widget’ı
    b) Oyun rakibi YZ
-   c) Hava durumu widget’ı
-   d) İşe alımda aday eleme
+   c) İşe alımda aday eleme
+   d) E-posta spam filtresi
 
 ### Bu bölümden kalanlar
 

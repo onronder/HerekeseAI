@@ -222,7 +222,7 @@ def module_md(lang, mod, mi, emb):
             L.append('')
             for qi, q in enumerate(sec['quiz']):
                 L.append(f"{qi + 1}. {q['q']}")
-                for pos, oi in enumerate(order(qi + 10 * int(mod['n']), len(q['opts']))):
+                for pos, oi in enumerate(order(qi * 7 + 13 * int(mod["n"]) + 5, len(q["opts"]))):
                     L.append(f"   {chr(97 + pos)}) {q['opts'][oi]}")
                 L.append('')
             continue
@@ -294,10 +294,10 @@ def answer_key_md(lang, data):
             L.append(f"### {mod['n']} · {mod['title']}")
             L.append('')
             for qi, q in enumerate(sec['quiz']):
-                o = order(qi + 10 * int(mod['n']), len(q['opts']))
+                o = order(qi * 7 + 13 * int(mod["n"]) + 5, len(q["opts"]))
                 letter = chr(97 + o.index(0))
-                L.append(f"{n}.{si + 1} / {qi + 1}: **{letter}** — {q['opts'][0]}")
-            L.append('')
+                L.append(f"{n}.{si + 1} / {qi + 1}: **{letter}** · {q['opts'][0]}")
+                L.append('')  # her cevap ayrı paragraf (uzun tire yok: stil kılavuzu)
     L.append(f"## {t['key_self']}")
     L.append('')
     for mod in data:

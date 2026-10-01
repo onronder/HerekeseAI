@@ -180,9 +180,9 @@ Aşağıdaki senaryolara bak: zekâ zamanla nasıl ilerleyebilir? “Hızlanan�
 
 1. **Hızlanan.** Özyinelemeli özgelişim: zekâ kendini besleyerek patlar. Lehte argüman, geri besleme döngülerine dayanır. Tabloda ilk yarıda neredeyse kıpırdamıyor; son çeyrekte 4’ten 10’a fırlıyor.
 2. **Yavaşlayan.** Azalan getiriler: veri, enerji ve fizik sınırları büyümeyi yavaşlatır; zekâ bir tavana yaklaşır. İlk çeyrekte 7’ye yaklaşıyor, sonra tavana yaslanıyor. Hızlı başlayan her teknoloji bir gün bu eğriye benzer.
-3. **Belirsiz.** Açık cevap: bilmiyoruz. Sıçramalar ve duraklamalar bir arada olabilir; kesin tarih veren iddialara temkinli yaklaş. Eğri 8’e yaklaşıp 3,6’ya iniyor, sonra yine yükseliyor. Yönü var, ritmi yok.
+3. **Belirsiz.** Açık cevap: bilmiyoruz. Sıçramalar ve duraklamalar bir arada olabilir; kesin tarih veren iddialara temkinli yaklaş. Eğri 8’e yaklaşıp 3.6’ya iniyor, sonra yine yükseliyor. Yönü var, ritmi yok.
 
-Tabloda 2,5 satırına bak. Yavaşlayan eğri o noktada 6,8; hızlanan eğri 0,2. Bugünkü hızlı ilerleme, yavaşlayan eğrinin dik başlangıcı da olabilir, hızlanan eğrinin sakin ilk yarısı da. Aynı gözlem iki hikâyeye birden uyar. Hangi eğride olduğun ancak geriye bakınca belli olur; tartışmanın bitmemesinin sebebi bu.
+Tabloda 2.5 satırına bak. Yavaşlayan eğri o noktada 6.8; hızlanan eğri 0.2. Bugünkü hızlı ilerleme, yavaşlayan eğrinin dik başlangıcı da olabilir, hızlanan eğrinin sakin ilk yarısı da. Aynı gözlem iki hikâyeye birden uyar. Hangi eğride olduğun ancak geriye bakınca belli olur; tartışmanın bitmemesinin sebebi bu.
 
 *Ne oluyor?* Fikir şu: bir YZ kendini geliştirebilirse daha iyi bir sürümünü yapar, o daha da iyisini… ve zekâ birden patlayarak öngörülemez bir noktaya (“tekillik”) ulaşır. Kimi bunu yakın görür, kimi abartılı bir mit sayar; veri, enerji ve fizik sınırları bunu yavaşlatabilir.
 
@@ -245,40 +245,40 @@ Kitap burada bitiyor, soruları bitmiyor. Son altı soru.
 
 *Cevaplar kitabın sonunda.*
 1. Turing testi temelde neyi ölçer?
-   a) Hafıza miktarını
-   b) İşlem hızını
-   c) Gerçek bilinci
-   d) Yazışmada insanı ayırt edilemez biçimde taklit edebilmeyi
+   a) Gerçek bilinci
+   b) Hafıza miktarını
+   c) Yazışmada insanı ayırt edilemez biçimde taklit edebilmeyi
+   d) İşlem hızını
 
 2. Çince Oda argümanı neyi sorgular?
    a) İnternetin güvenliğini
-   b) Sembol işlemenin tek başına “anlama” doğurup doğurmadığını
-   c) Bilgisayar hızını
+   b) Bilgisayar hızını
+   c) Sembol işlemenin tek başına “anlama” doğurup doğurmadığını
    d) Çince’nin zorluğunu
 
 3. Bugünkü yapay zekâ hangi düzeydedir?
    a) AGI
-   b) Süper zekâ
-   c) Dar YZ
-   d) Bilinçli YZ
+   b) Bilinçli YZ
+   c) Süper zekâ
+   d) Dar YZ
 
 4. Tekillik için en dengeli duruş hangisidir?
-   a) Belirsiz; ne kesin ne imkânsız
-   b) Tamamen imkânsız
-   c) Zaten oldu
-   d) Kesinlikle yarın olacak
+   a) Zaten oldu
+   b) Kesinlikle yarın olacak
+   c) Tamamen imkânsız
+   d) Belirsiz; ne kesin ne imkânsız
 
 5. Bir YZ zarar verdiğinde sorumluluk bugün genelde kime atfedilir?
-   a) Yalnızca yapay zekânın kendisine
-   b) İnternete
-   c) İnsanlara ve kurumlara (geliştirici/işleten/kullanıcı)
-   d) Hiç kimseye
+   a) İnsanlara ve kurumlara (geliştirici/işleten/kullanıcı)
+   b) Yalnızca yapay zekânın kendisine
+   c) Hiç kimseye
+   d) İnternete
 
 6. YZ’nin ahlaki statüsü (haklar) sorusu bugün nasıldır?
-   a) Anlamsız bir soru
+   a) Açık ve tartışmalı
    b) Yasayla yasaklanmış
    c) Kesin olarak çözülmüş
-   d) Açık ve tartışmalı
+   d) Anlamsız bir soru
 
 ### Bu bölümden kalanlar
 

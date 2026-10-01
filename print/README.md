@@ -51,6 +51,12 @@ Gereksinimler: Chrome (yerel), Node (`print/typeset` ve `print/kapak` altında `
 - `typeset/dizgi.sh`: pagedjs-cli (yerel Chrome) → `boxes.mjs` (pdf-lib: BleedBox = kâğıt, TrimBox 3 mm içeri) → Ghostscript
   `-dPDFX` + CMYK (`-dUseFastColor`: siyah → yalnız K) + `PDFX_def.ps` (OutputIntent; `ICC=` ile matbaa profili) → 16'nın katına otomatik
   tamamlama (Notlar sayfaları). Bağlantı ek açıklamaları (`-dPreserveAnnots=false`) PDF/X'e uymaz, düşürülür.
+- **Sayfa yerleşimi (2026-09-30, "yüzen şekil" öykünmesi):** `dizgi.sh` ilk dizgiden sonra `measure.mjs` (puppeteer; üst düzey öğe yükseklikleri) +
+  `gapplan.py` (30 dpi render → sayfa sonu boşlukları) ile bir plan üretir (`out/defer.json`) ve yeniden dizer (en çok 24 tur, değişmeyince durur):
+  sığmayan şekil bloğu (başlık + figür + altındaki QR satırı) ya %20'ye kadar küçültülür ya da boşluğu dolduracak kadar izleyen öğenin
+  (Kurulum, Adım adım, tablo…) arkasına ertelenir; seçenek kalmazsa en iyi konum kilitlenir. Bölüm/arka bölüm kuyruğu tek başına bir sayfaya
+  taşıyorsa o bölümün satır aralığı / paragraf aralığı / puntosu kademeli ayarlanır (`_tighten`). Teknik derinlik kutuları sayfalar arasında
+  bölünebilir; QR her şeklin altında (figcaption satırı); figür yüksekliği ≤ 120 mm. Matbaa forma katı `MULT=8` (yarım forma; `MULT=16` verilebilir).
 - `kapak/kapak.mjs`: arka + sırt + ön tek yayılım (`spine_mm` matbaadan), 5 mm taşma; ISBN girilince EAN-13 barkod (JsBarcode). Üç üretken
   konsept (`kapak.json → variant`): `ag` (koyu; ızgaradan organik ağa, ember öğrenme yolu — seçilen), `kadran`, `vadi` (eş yükselti + gradyan
   inişi). Metinler (`subtitle`, `back_lead`, `back_text`, `author_bio`, `seller`) kapak.json'da; önizleme `out/onizleme/`.

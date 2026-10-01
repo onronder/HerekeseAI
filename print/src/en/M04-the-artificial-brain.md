@@ -318,40 +318,40 @@ The networks have learned both to recognize and to create. Today’s systems tha
 
 *Answers are at the back of the book.*
 1. What does an artificial neuron compute?
-   a) It copies the inputs as-is
-   b) Just the average of the inputs
+   a) Just the average of the inputs
+   b) A weighted sum of inputs + bias, then an activation
    c) A random number
-   d) A weighted sum of inputs + bias, then an activation
+   d) It copies the inputs as-is
 
 2. What makes a neural network “deep”?
-   a) Many hidden layers
-   b) Having a single neuron
-   c) Running very fast
+   a) Running very fast
+   b) Many hidden layers
+   c) Having a single neuron
    d) Being connected to the internet
 
 3. What if there were no activation function at all?
-   a) The network would get stronger
+   a) The network would get faster
    b) The network would collapse into one linear function
    c) Nothing would change
-   d) The network would get faster
+   d) The network would get stronger
 
 4. What does backpropagation do?
-   a) Enlarges the image
-   b) Adds new layers
-   c) Spreads the error backward and updates weights to reduce it
+   a) Adds new layers
+   b) Spreads the error backward and updates weights to reduce it
+   c) Enlarges the image
    d) Deletes the data
 
 5. What data are CNNs especially strong at?
-   a) Images
+   a) A single number
    b) Passwords
    c) Tables
-   d) A single number
+   d) Images
 
 6. Which two networks compete in a GAN?
    a) Input and Output
    b) CNN and RNN
-   c) Teacher and Student
-   d) Generator and Discriminator
+   c) Generator and Discriminator
+   d) Teacher and Student
 
 ### What to keep from this chapter
 

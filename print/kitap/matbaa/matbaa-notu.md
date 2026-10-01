@@ -4,14 +4,14 @@ Teslim dosyaları (bu klasörün bir üstünde, `print/kitap/`):
 
 | Dosya | İçerik | Standart |
 |---|---|---|
-| `ic-blok.pdf` | İç blok, 256 sayfa, tek sayfa sırası (impozisyon matbaada) | PDF 1.3, PDF/X-1a uyumlu (Ghostscript pdfwrite; OutputIntent gömülü), tüm fontlar gömülü ve alt küme, saydamlık yok, tümü vektör |
+| `ic-blok.pdf` | İç blok, 232 sayfa, tek sayfa sırası (impozisyon matbaada) | PDF 1.3, PDF/X-1a uyumlu (Ghostscript pdfwrite; OutputIntent gömülü), tüm fontlar gömülü ve alt küme, saydamlık yok, tümü vektör |
 | `kapak.pdf` | Kapak yayılımı: arka + sırt + ön, tek sayfa | Aynı standart |
 
 ## Ölçüler
 - **Net ebat:** 160 × 240 mm (TrimBox). **Taşma:** 3 mm her kenar (MediaBox = BleedBox = 166 × 246 mm).
 - **Kenar boşlukları:** üst 20 mm, alt 20 mm, iç (sırt tarafı) 20 mm, dış 16 mm. Sayfa numarası alt ortada, koşan başlık üstte.
-- **Forma:** 256 sayfa = 16 forma (16'lık). Sayfa sayısı değişirse `--pad N` ile "Notlar" sayfaları eklenir; tekrar 16'nın katına getirilir.
-- **Kapak:** net 334 × 240 mm (160 + **14 mm sırt** + 160), taşma 5 mm. **Sırt genişliği geçicidir:** kâğıt seçilince matbaanın verdiği değerle `print/kapak/kapak.json → spine_mm` güncellenip kapak yeniden üretilir (`sh print/kapak/kapak.sh`).
+- **Forma:** 232 sayfa = 14 forma (16'lık) + 1 yarım forma (8). Dosya 8'in katına tamamlanmıştır (son 6 sayfa "Notlar"); matbaa 16'nın katı isterse `MULT=16 sh print/typeset/dizgi.sh` ile 240 sayfa üretilir (14 Notlar sayfası). †
+- **Kapak:** net 333 × 240 mm (160 + **13 mm sırt** + 160), taşma 5 mm. **Sırt genişliği geçicidir:** kâğıt seçilince matbaanın verdiği değerle `print/kapak/kapak.json → spine_mm` güncellenip kapak yeniden üretilir (`sh print/kapak/kapak.sh`).
 
 ## Renk
 - İç blok **tam renk (CMYK 4/4)**; siyah metin %100 K (zengin siyah değil). Figürlerdeki aksan rengi RGB #e85d3a'dan çevrildi (yaklaşık C0 M60 Y75 K9). Saydam öğeler düzleştirildi.
@@ -20,7 +20,7 @@ Teslim dosyaları (bu klasörün bir üstünde, `print/kitap/`):
 
 ## Kâğıt (öneri, matbaa teyidi †)
 - İç blok: 80–90 g/m² krem ya da doğal beyaz kitap kâğıdı (Enso/ Holmen; kuşe değil, figürler vektör olduğundan kuşe gerekmez).
-- Kapak: 300 g/m² Amerikan bristol ya da 250–300 g/m² kuşe, mat selofan. Amerikan cilt (yapıştırma) ya da iplik dikiş (256 sayfa için iplik dikiş daha dayanıklı). †
+- Kapak: 300 g/m² Amerikan bristol ya da 250–300 g/m² kuşe, mat selofan. Amerikan cilt (yapıştırma) ya da iplik dikiş (232 sayfa için iplik dikiş daha dayanıklı). †
 
 ## QR kodlar
 - 45 QR kod, her biri 22 mm kare + 1,5 mm beyaz sessiz alan, hata düzeltme M, siyah/beyaz vektör. Prova baskıda en az 10 kod üç farklı telefonla okutulmalı.

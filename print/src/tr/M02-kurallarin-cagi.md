@@ -174,7 +174,7 @@ Arama, dünyanın kesin olduğunu varsaydı: duvar duvardır, hedef yerinde duru
 
 Katı kurallar gerçek dünyada tökezler, çünkü dünya belirsizdir. “Yağmur yağarsa şemsiye al” demesi kolay; peki yağacak mı? Kimse kesin bilemez. Olsa olsa ihtimalini söyleriz.
 
-Klasik YZ buna zarif bir çözüm buldu: durumdan duruma olasılıkla geçmek. Markov zinciri bunun en ünlüsüdür; hileli bir zarla oynanan hava durumu oyunu gibi. Şekil 2.4’te yedi günlük bir örnek var; havanın olasılıklara göre değişimini orada takip et.
+Klasik YZ buna zarif bir çözüm buldu: durumdan duruma olasılıkla geçmek. Markov zinciri bunun en ünlüsüdür; hileli bir zarla oynanan hava durumu oyunu gibi. Şekil 2.4’ün altındaki tabloda yedi günlük bir örnek var; havanın olasılıklara göre değişimini orada takip et.
 
 > **Kenar notu.** Markov özelliği: “gelecek, yalnızca şimdiye bağlıdır; nasıl geldiğin önemli değil.” Basit görünür ama hava durumundan Google aramasına kadar her yerde.
 
@@ -267,40 +267,40 @@ Kavga iki kampı da kısmen haklı çıkardı; nasıl olduğu sıradaki bölümd
 
 *Cevaplar kitabın sonunda.*
 1. Klasik (sembolik) YZ bilgiyi nasıl temsil eder?
-   a) Sadece görsellerle
-   b) Verilerden öğrenerek
-   c) Rastgele tahminle
-   d) Açık semboller ve kurallarla
+   a) Verilerden öğrenerek
+   b) Sadece görsellerle
+   c) Açık semboller ve kurallarla
+   d) Rastgele tahminle
 
 2. “Yağmur yağıyorsa şemsiye al” ifadesi nedir?
-   a) Bir veri kümesi
-   b) Bir olasılık
+   a) Bir olasılık
+   b) Bir sinir ağı
    c) Bir kural (IF-THEN)
-   d) Bir sinir ağı
+   d) Bir veri kümesi
 
 3. Sezgisel (heuristic) yöntemlerin temel özelliği?
-   a) Çözümü hızlandırır ama en iyiyi garanti etmez
+   a) Her zaman en iyi çözümü garanti eder
    b) Rastgele tahmin eder
-   c) Her zaman en iyi çözümü garanti eder
-   d) Veriden öğrenir
+   c) Veriden öğrenir
+   d) Çözümü hızlandırır ama en iyiyi garanti etmez
 
 4. Markov zincirinde bir sonraki durum neye bağlıdır?
    a) Yalnızca şu anki duruma
-   b) Hiçbir şeye
+   b) Tüm geçmişe
    c) Geleceğe
-   d) Tüm geçmişe
+   d) Hiçbir şeye
 
 5. Klasik YZ’nin en büyük zorluğu neydi?
-   a) Çok ucuz olması
-   b) Tüm kuralları elle yazmak ve dünyanın dağınıklığı
-   c) Çok hızlı olması
-   d) İnternete bağımlı olması
+   a) Tüm kuralları elle yazmak ve dünyanın dağınıklığı
+   b) Çok hızlı olması
+   c) İnternete bağımlı olması
+   d) Çok ucuz olması
 
 6. “Neat” ve “Scruffy” neyi tanımlar?
-   a) İki programlama dilini
+   a) YZ araştırmasında iki farklı yaklaşımı
    b) İki robot türünü
-   c) İki bilgisayar markasını
-   d) YZ araştırmasında iki farklı yaklaşımı
+   c) İki programlama dilini
+   d) İki bilgisayar markasını
 
 ### Bu bölümden kalanlar
 

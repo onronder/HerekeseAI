@@ -2,7 +2,7 @@
 
 Kitap sekiz bölüm. Her bölüm bir dönemi ve o dönemin ana fikrini anlatıyor; sırayla okunmak üzere yazıldı. Yine de her bölüm kendi başına ayakta durur; ilgini çeken yerden de başlayabilirsin.
 
-**İki derinlik.** Ana metin sade bir dille yazıldı ve tek başına eksiksizdir. Bazı alt bölümlerin sonunda **Teknik derinlik** başlıklı kutular var. Bunlar aynı fikri formülüyle, terimiyle ve matematiğiyle yeniden anlatır. Kutular atlanabilir; ana metin onlara dayanmaz. Kapaktaki kadran bunu anlatır: aynı fikir, iki derinlik.
+**İki derinlik.** Ana metin sade bir dille yazıldı ve tek başına eksiksizdir. Bazı alt bölümlerin sonunda **Teknik derinlik** başlıklı kutular var. Bunlar aynı fikri formülüyle, terimiyle ve matematiğiyle yeniden anlatır. Kutular atlanabilir; ana metin onlara dayanmaz. Kapaktaki ızgara ve ağ da bunu anlatır: aynı fikir, iki derinlik.
 
 **Kenar notları.** Sayfa kenarındaki kısa notlar, konunun bugünle bağını ya da ilk bakışta görünmeyen bir ayrıntıyı verir.
 

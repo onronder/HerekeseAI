@@ -65,7 +65,7 @@ Her token artık bir sayı kimliği taşıyor. Ama bir kimlik numarası, “kedi
 
 Token’lar makineye sayı olarak girer ama kuru bir kimlik numarası “anlam” taşımaz. Gömü (embedding) burada sahneye çıkar: Her kelime, kocaman bir şehirde bir adrese yerleştirilir. O adres, kelimenin anlamını taşıyan bir sayı listesidir.
 
-Bu şehirde anlamca benzeşen kelimeler aynı mahalleye taşınır. “Kedi” ile “köpek” kapı komşusudur; “kral” ile “kraliçe” de öyle. Şekil 5.2’de bir kelime seç, komşularını gör.
+Bu şehirde anlamca benzeşen kelimeler aynı mahalleye taşınır. “Kedi” ile “köpek” kapı komşusudur; “kral” ile “kraliçe” de öyle. Şekil 5.2’de bir kelimeye bak, komşularını gör.
 
 > **Kenar notu.** Gömüler yalnızca kelimeler için değil: cümleler, görseller, sesler de aynı uzaya gömülebilir. Çok-kipli (multimodal) modellerin ve anlamsal aramanın (semantic search) temeli budur.
 
@@ -112,7 +112,7 @@ Her kelimenin bir adresi var. Ama cümle içinde bir kelime, o an hangi komşusu
 
 Şu cümleyi oku: “Kedi kaçtı çünkü o korkmuştu.” Buradaki “o” kim? Sen farkında bile olmadan dönüp “kedi”ye baktın. Dikkat (attention) mekanizması, makineye bu dönüp bakmayı öğretir: Her kelime, anlamı için hangi kelimelere “bakacağını” öğrenir.
 
-Şekil 5.3’te bir kelime seç; o kelimenin cümledeki ötekilere ne kadar “dikkat ettiğini” rengin koyuluğundan gör. Renk ne kadar koyuysa bağ o kadar güçlü.
+Şekil 5.3’te bir kelime al; o kelimenin cümledeki ötekilere ne kadar “dikkat ettiğini” rengin koyuluğundan gör. Renk ne kadar koyuysa bağ o kadar güçlü.
 
 > **Kenar notu.** “Attention Is All You Need” (2017): dikkat mekanizması, önceki RNN’lerin tek tek/sıralı işleme zorunluluğunu kaldırdı. Tüm kelimelere aynı anda bakmak, hem hızı hem anlama gücünü bambaşka bir düzeye taşıdı.
 
@@ -361,46 +361,46 @@ Token, gömü, dikkat, üretim, eğitim, difüzyon, sınırlar: bölüm bu kadar
    d) Metnin model tarafından işlenen küçük parçası
 
 2. Gömü (embedding) uzayında ne doğrudur?
-   a) Anlamca benzer kelimeler birbirine yakın olur
-   b) Her kelime aynı noktadadır
-   c) Kelimeler rastgele dağılır
-   d) Yalnızca sayılar saklanır, anlam yoktur
+   a) Kelimeler rastgele dağılır
+   b) Yalnızca sayılar saklanır, anlam yoktur
+   c) Anlamca benzer kelimeler birbirine yakın olur
+   d) Her kelime aynı noktadadır
 
 3. Dikkat (attention) mekanizması ne sağlar?
-   a) Her kelimenin diğer kelimelere ağırlıklı “bakması”
-   b) Görüntüleri büyütmek
-   c) Veriyi silmek
-   d) Modeli yavaşlatmak
+   a) Görüntüleri büyütmek
+   b) Modeli yavaşlatmak
+   c) Her kelimenin diğer kelimelere ağırlıklı “bakması”
+   d) Veriyi silmek
 
 4. Bir LLM özünde ne yapar?
-   a) Kuralları elle uygular
-   b) Veritabanı sorgular
-   c) Bir sonraki token’ı tahmin eder
+   a) Bir sonraki token’ı tahmin eder
+   b) Kuralları elle uygular
+   c) Veritabanı sorgular
    d) İnterneti arar
 
 5. Eğitim hattının doğru sırası?
    a) Ön eğitim → ince ayar → RLHF
-   b) RLHF → ön eğitim → ince ayar
-   c) Yalnızca ön eğitim
-   d) İnce ayar → ön eğitim → RLHF
+   b) Yalnızca ön eğitim
+   c) İnce ayar → ön eğitim → RLHF
+   d) RLHF → ön eğitim → ince ayar
 
 6. Difüzyon modeli görseli nasıl üretir?
-   a) İnternetten indirerek
-   b) Tek seferde kopyalayarak
-   c) Pikselleri rastgele bırakarak
+   a) Pikselleri rastgele bırakarak
+   b) İnternetten indirerek
+   c) Tek seferde kopyalayarak
    d) Gürültüden başlayıp adım adım temizleyerek
 
 7. Halüsinasyon nedir?
-   a) Daha hızlı çalışması
-   b) Modelin emin tonda yanlış bilgi üretmesi
+   a) Modelin emin tonda yanlış bilgi üretmesi
+   b) Görüntü üretmesi
    c) Modelin çökmesi
-   d) Görüntü üretmesi
+   d) Daha hızlı çalışması
 
 8. Bağlam penceresi neyi sınırlar?
-   a) Ekran çözünürlüğünü
-   b) Modelin aynı anda dikkate aldığı token sayısını
-   c) İnternet hızını
-   d) Disk boyutunu
+   a) Modelin aynı anda dikkate aldığı token sayısını
+   b) Disk boyutunu
+   c) Ekran çözünürlüğünü
+   d) İnternet hızını
 
 ### Bu bölümden kalanlar
 

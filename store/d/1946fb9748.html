@@ -2077,7 +2077,7 @@ class Component extends DCLogic {
         out.quizChecked = checked; out.quizTotal = sec.quiz.length;
         // shuffle deterministically per question by id but keep correct = index 0 in data
         out.quiz = sec.quiz.map((q, qi) => {
-          const order = this._order(qi, q.opts.length);
+          const order = this._order(qi * 7 + 13 * mi + 5, q.opts.length); // bölüme göre değişen karışım (basılı anahtarla aynı)
           return {
             num: qi+1, q: q.q,
             opts: order.map((oi) => {

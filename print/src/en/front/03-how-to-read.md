@@ -2,7 +2,7 @@
 
 The book has eight chapters. Each chapter covers one era and the main idea of that era, and the chapters were written to be read in order. Still, every chapter stands on its own; you can also start wherever your curiosity takes you.
 
-**Two depths.** The main text is written in plain language and is complete on its own. At the end of some sections there are boxes headed **Technical depth**. They retell the same idea with its formula, its terms and its math. The boxes can be skipped; the main text does not depend on them. It is the paper version of the dial on the cover, which switches one idea between two depths.
+**Two depths.** The main text is written in plain language and is complete on its own. At the end of some sections there are boxes headed **Technical depth**. They retell the same idea with its formula, its terms and its math. The boxes can be skipped; the main text does not depend on them. The grid and the web on the cover tell the same story: one idea, two depths.
 
 **Margin notes.** The short notes beside the text give the link between a topic and today, or a detail that is easy to miss at first glance.
 

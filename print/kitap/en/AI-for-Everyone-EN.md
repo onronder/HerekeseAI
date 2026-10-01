@@ -18,13 +18,13 @@ Print edition ISBN: [ISBN]
 
 Interactive digital edition ISBN: 978-625-00-5299-0
 
-First edition: [month, year]
+First edition: September 2026
 
 Cover and interior design: Onur Önder
 
 Copy editing: Onur Önder
 
-Printing and binding: [printer name, address, certificate no.]
+Printed on demand by Amazon KDP.
 
 Sales and contact: Fittechs Yazılım Anonim Şirketi, Gayrettepe Mah. Yıldız Posta Cad. No: 8/34, Istanbul, Türkiye. Email: support@fittechs.com. Web: onuronder.com
 
@@ -60,13 +60,13 @@ I have tried to explain what everyone who talks about artificial intelligence ne
 
 Onur Önder
 
-[place, date]
+Istanbul, September 2026
 
 # How to Read This Book
 
 The book has eight chapters. Each chapter covers one era and the main idea of that era, and the chapters were written to be read in order. Still, every chapter stands on its own; you can also start wherever your curiosity takes you.
 
-**Two depths.** The main text is written in plain language and is complete on its own. At the end of some sections there are boxes headed **Technical depth**. They retell the same idea with its formula, its terms and its math. The boxes can be skipped; the main text does not depend on them. It is the paper version of the dial on the cover, which switches one idea between two depths.
+**Two depths.** The main text is written in plain language and is complete on its own. At the end of some sections there are boxes headed **Technical depth**. They retell the same idea with its formula, its terms and its math. The boxes can be skipped; the main text does not depend on them. The grid and the web on the cover tell the same story: one idea, two depths.
 
 **Margin notes.** The short notes beside the text give the link between a topic and today, or a detail that is easy to miss at first glance.
 
@@ -186,7 +186,6 @@ Figures that show a process work like a film strip: follow the frames from left 
 ## Minds and Machines
 *Can a machine think?*
 
-<!-- acc #2a3bb0 · tag Foundations -->
 
 ### 1.1 Can a machine think?
 
@@ -491,40 +490,40 @@ The building blocks of the chapter are in place: intelligence, binary code, algo
 
 *Answers are at the back of the book.*
 1. What did Howard Gardner propose?
-   a) That IQ fully measures intelligence
-   b) That the brain is a computer
-   c) That machines can never think
-   d) That intelligence has many kinds, not one
+   a) That the brain is a computer
+   b) That intelligence has many kinds, not one
+   c) That IQ fully measures intelligence
+   d) That machines can never think
 
 2. Binary code is made of which symbols?
    a) A to Z
    b) Dots and dashes
-   c) 0 and 1
-   d) 0–9
+   c) 0–9
+   d) 0 and 1
 
 3. What can a Turing machine fundamentally do?
-   a) In principle any computation, via simple rules
-   b) Only addition
-   c) Only play chess
+   a) Only play chess
+   b) In principle any computation, via simple rules
+   c) Only addition
    d) Only store text
 
 4. The core idea of the von Neumann architecture?
    a) Inventing the internet
    b) Keeping program and data in the same memory
-   c) Using binary instead of decimal
-   d) Rewiring for each new task
+   c) Rewiring for each new task
+   d) Using binary instead of decimal
 
 5. What kind are today’s AI systems?
-   a) General AI (AGI)
-   b) Conscious AI
-   c) Narrow AI
-   d) Strong AI
+   a) Strong AI
+   b) Narrow AI
+   c) General AI (AGI)
+   d) Conscious AI
 
 6. What does Moore’s law say?
    a) Internet speed is constant
-   b) Computers get cheaper yearly
-   c) AI will surpass humans
-   d) Transistor count ~doubles every 2 years
+   b) AI will surpass humans
+   c) Transistor count ~doubles every 2 years
+   d) Computers get cheaper yearly
 
 ### What to keep from this chapter
 
@@ -536,48 +535,10 @@ The building blocks of the chapter are in place: intelligence, binary code, algo
 - Every AI today is narrow; general AI (AGI) does not exist yet, and a conscious machine is a separate question altogether.
 - Moore’s law: transistors doubled roughly every two years; the 2,300 of 1971 reach 154 billion after 26 doublings.
 
-<!-- SOURCE-CHANGES
-This first chapter goes back to the very start of the road. What is intelligence? Can “thinking” really be written down as a step-by-step recipe? We’ll walk from Babbage’s gears to the birth of the modern computer. And at the end of the road, it will become clear why artificial intelligence (AI for short) is possible at all. ||| This first chapter goes back to the very beginning. What is intelligence? Can “thinking” be written down as a step-by-step recipe? The path runs from Babbage’s gears to the birth of the modern computer, and by the end it will be clear why artificial intelligence (AI for short) is possible at all.
-AI isn’t really new: “can machines think?” has occupied philosophers since the 1600s. What’s new is the hardware that can test it. ||| AI isn’t new: “can machines think?” has occupied philosophers since the 1600s. What’s new is the hardware that can test it.
-Psychologist Howard Gardner said exactly this: Intelligence doesn’t fit in one number (IQ); it comes in several kinds. Explore them below, and notice the interesting part: today’s AI is a master of some and still a toddler at others. ||| The psychologist Howard Gardner made the same point: intelligence doesn’t fit in one number (IQ); it comes in several kinds. Explore them below. The interesting part is that today’s AI is a master of some and still a toddler at others.
-For Gardner, intelligence isn’t one number but eight distinct families of ability; each card in the figure is one of them. Notice something too: today’s AI is great with language and logic, yet far behind a small child at anything involving the body or emotions. ||| For Gardner, intelligence isn’t one number but eight distinct families of ability; each card in the figure is one of them. And today’s AI is great with language and logic, yet far behind a small child at anything involving the body or emotions.
-Each card is one of the eight domains in Gardner’s theory of multiple intelligences (contested in psychometrics). The real lesson: intelligence is not one-dimensional, and AI is wildly uneven across these dimensions; strong in language and logic, weak in bodily and social/intrapersonal domains. ||| Each card is one of the eight domains in Gardner’s theory: AI is strong in language and logic, weak in the bodily and social/intrapersonal domains.
-Step into the kitchen for a moment. You hold a cake recipe: crack the eggs, whisk, add the flour, into the oven. Someone following that recipe to the letter will produce a cake without “understanding” baking at all. The idea beneath all of AI is exactly that: Maybe “thinking,” too, is applying small, mechanical steps in order. ||| Step into the kitchen for a moment. You hold a cake recipe: crack the eggs, whisk, add the flour, into the oven. Someone following that recipe to the letter will produce a cake without “understanding” baking at all. The idea beneath all of AI is the same: maybe “thinking,” too, is applying small, mechanical steps in order.
-If so, we can get a machine to do those steps too. That takes two things: ||| If so, a machine can do those steps too. That takes two things:
-Eight boxes, eight bulbs: off means 0, on means 1. But who handed out the values? Think of it this way: The rightmost box holds the smallest, a 1. Moving left, each box carries double its right-hand neighbor: 1, 2, 4, 8, 16, 32, 64, and 128 on the far left. Why always double? Because each new box must be able to say one more than all the boxes to its right combined; otherwise some numbers could never be written. Now add up the values of the lit boxes: there is your number. A computer’s whole world is this game of on and off. ||| Eight boxes, eight bulbs: off means 0, on means 1. But who handed out the values? Start from the right: the rightmost box holds the smallest value, 1. Moving left, each box carries double its right-hand neighbor: 1, 2, 4, 8, 16, 32, 64, and 128 on the far left. Why always double? Because each new box must be able to say one more than all the boxes to its right combined; otherwise some numbers could never be written. Now add up the values of the lit boxes: there is your number. A computer’s whole world is this game of on and off.
-The dream of a “computer” was first dreamed in the 1800s. Charles Babbage drew a giant calculating machine of gears and levers: the Analytical Engine. Money and years ran out; he died without ever seeing it built. But his friend Ada Lovelace wrote the first “recipe” for that imaginary machine. That is why she counts as history’s first programmer. ||| The dream of a “computer” was first dreamed in the 1800s. Charles Babbage drew a giant calculating machine of gears and levers: the Analytical Engine. Money and years ran out; he died without ever seeing it built. But his friend Ada Lovelace wrote the first “recipe” for that imaginary machine. So she counts as history’s first programmer.
-The machine walks the tape like an ant: first it heads right to find the end of the number, then turns back and adds 1. The way it carries the digit is no different from how you carry in addition on paper. Such tiny moves can carry out any calculation; that is the whole magic. ||| The machine walks the tape like an ant: first it heads right to find the end of the number, then turns back and adds 1. The way it carries the digit is no different from how you carry in addition on paper. Moves this small can carry out any calculation at all.
-The machine slides right to the end of the tape, then turns left and adds 1 to the binary number (carry logic): the 1s it sees become 0, and the first 0 becomes 1. It performs addition using only read/write and state transitions. ||| The machine slides right to the end of the tape, then turns left and adds 1 to the binary number (carry logic): the 1s it sees become 0, and the first 0 becomes 1.
-The fix was an elegant idea: Keep the recipe next to the ingredients, in memory. Then, instead of rewiring the machine, you simply load new “instructions.” Nearly every computer today, including the phone in your pocket, runs on this arrangement. Follow the cycle in the figure below, then look at what its parts do. ||| The fix was an elegant idea: keep the recipe next to the ingredients, in memory. Then, instead of rewiring the machine, you load new “instructions.” Nearly every computer today, including the phone in your pocket, runs on this arrangement. Follow the cycle in the figure below, then look at what its parts do.
-Reprogramming ENIAC took days; the cables had to be reconnected by hand. That is why “putting the program in memory” was a revolution. ||| Reprogramming ENIAC took days; the cables had to be reconnected by hand. Putting the program in memory changed all of that.
-Here is the trick: any system that masters just one job is “narrow,” even chatbots. “General” means a machine that can learn across every domain like a human, and no such machine exists yet. A conscious machine is a different story altogether. ||| The rule is simple: any system that masters only one job is “narrow,” chatbots included. “General” means a machine that can learn across every domain like a human, and no such machine exists yet. A conscious machine is a different story altogether.
-An important distinction: Searle’s “strong AI” is really about whether the machine truly understands (has a mind); in everyday usage it is often conflated with “artificial general intelligence” (AGI). AGI is a hypothetical capability level that generalizes across domains; “strong AI” is a philosophical claim. They are not the same thing. ||| An important distinction: Searle’s “strong AI” is about whether the machine truly understands (has a mind); in everyday usage it is often conflated with “artificial general intelligence” (AGI). AGI is a hypothetical capability level that generalizes across domains; “strong AI” is a philosophical claim. They are not the same thing.
-Doubling looks innocent, but repeated it explodes. Do it yourself in the table of Figure 1.6: double the number every two years and see how it rockets. The power carrying modern AI is exactly this compounding computation. ||| Doubling looks innocent, but repeated it explodes. Do it yourself in the table of Figure 1.6: double the number every two years and see how it rockets. This compounding computation is what carries modern AI.
-If you could fold a sheet of paper 42 times, it would reach the Moon. That is the power of exponential growth; chips grew at that pace for decades. ||| If you could fold a sheet of paper 42 times, it would reach the Moon. That is exponential growth; chips grew at that pace for decades.
-Exponential growth: ×2 roughly every 2 years; n doublings give a 2^n-fold increase. It is not a law of nature but an empirical trend, and it has been slowing in recent years due to physical limits. ||| Exponential growth: ×2 roughly every 2 years; n doublings give a 2^n-fold increase.
--->
-
-<!-- EDITORIAL NOTES
-- 1.4 Simple: "Watch a real one 'think' below." → "Follow a real one as it 'thinks,' frame by frame, in Figure 1.3."
-- 1.4 Technical: "The simulation below is" → "The simulation in Figure 1.3 is" (the figure now sits above the paragraph; same decision as the Turkish edition and chapters 2–7).
-- Figure 1.3 states: the figure labels the middle state "add"; the text writes "add" (add 1 with carry) to match the label.
-- 1.5 Simple: "Watch the cycle turn below, then tap its parts." → "Follow the cycle in the figure below, then look at what its parts do."
-- 1.7 Simple: "Try it yourself below: press 'double' every 2 years and watch the number rocket." → "Do it yourself in the table of Figure 1.6: double the number every two years and see how it rockets."
-- Left as is (they make sense on paper because the Figure follows at once): 1.2 Simple "Explore them below"; 1.3 Simple "See how binary works for yourself below"; 1.6 Simple "Sort the examples below".
-- Adapted for paper (2026-09-30; screen verbs resolved in the source text too): Figure 1.1 What is happening "the card you tapped"; Figure 1.6 What is happening "Every press means…" and "Within a few presses"; 1.1 Technical (Figure 1.1 box) "This is one of the eight domains" ("This" referred to the tapped card); 1.7 Simple "every two years" (Moore's 1965 paper said every year; two years is the 1975 revision, as the Technical paragraph says).
-- Setups: source hints stripped of screen verbs ("tap", "press", "⏸", "Auto" removed).
-- Figure 1.5 (classify) is a self-test demo: a marking table replaces Step by step; reasons are in answers/M01.md.
-- Number style: thousands separator comma in tables (2,300; 17,500) as in the source technical text; the demo's rounded prose figures with a decimal point ("1.2 million"). Ranges in quiz options keep the source en dash ("0–9") because the option text is verbatim.
-- Quiz option order is the export's shuffled order, kept exactly; the answer key follows the same order.
-- Margin notes moved after the Simple paragraphs and before the Figure block, as in the Turkish edition.
-- 2026-09-30 humanizing pass: report findings applied (M01 :11–:304, answers :19); "On screen … on paper" frames removed from Figures 1.1, 1.4, 1.5, 1.6; "the digital version" ×5 → "the live demo" once / "the charts"; "exactly", "That is why", "Notice", "Here is the trick", "magic", "power", "revolution", "in one sentence" removed; technical "What is happening?" trimmed where it repeated the Technical paragraph (Figures 1.1, 1.3, 1.6). Source paragraph changes are listed in the SOURCE-CHANGES block above for the digital edition.
--->
-
 # Chapter 2
 ## The Age of Rules
 *Before learning: hand-written intelligence*
 
-<!-- acc #bb4d17 · tag Classical AI -->
 
 ### 2.1 The age of rules
 
@@ -749,7 +710,7 @@ Search assumed that the world is certain: a wall is a wall, and the goal stays w
 
 Strict rules stumble in the real world, because the world is uncertain. “If it rains, take an umbrella” is easy to say; but will it rain? Nobody knows for certain. At best, you can name the odds.
 
-Classical AI found an elegant answer: move from state to state by probability. The Markov chain is the most famous example: a weather game played with a loaded die. Figure 2.4 holds a seven-day example: follow the weather there as it changes according to its odds.
+Classical AI found an elegant answer: move from state to state by probability. The Markov chain is the most famous example: a weather game played with a loaded die. The table under Figure 2.4 holds a seven-day example: follow the weather there as it changes according to its odds.
 
 > **Margin note.** The Markov property: “the future depends only on the present; how you got here doesn’t matter.” It looks simple, yet it is everywhere, from weather to Google search.
 
@@ -846,40 +807,40 @@ The quarrel proved both camps partly right; the next chapter tells how. First, s
 
 *Answers are at the back of the book.*
 1. How does classical (symbolic) AI represent knowledge?
-   a) Only with images
-   b) By learning from data
-   c) By random guessing
-   d) With explicit symbols and rules
+   a) By learning from data
+   b) Only with images
+   c) With explicit symbols and rules
+   d) By random guessing
 
 2. What is “if it’s raining, take an umbrella”?
-   a) A dataset
-   b) A probability
+   a) A probability
+   b) A neural network
    c) A rule (IF-THEN)
-   d) A neural network
+   d) A dataset
 
 3. Key property of heuristic methods?
-   a) They speed up the search but don’t guarantee the best
+   a) They always guarantee the optimal solution
    b) They guess at random
-   c) They always guarantee the optimal solution
-   d) They learn from data
+   c) They learn from data
+   d) They speed up the search but don’t guarantee the best
 
 4. In a Markov chain, the next state depends on?
    a) Only the current state
-   b) Nothing
+   b) The entire history
    c) The future
-   d) The entire history
+   d) Nothing
 
 5. Classical AI’s biggest challenge was?
-   a) Being too cheap
-   b) Hand-writing all rules, and the messiness of the world
-   c) Being too fast
-   d) Depending on the internet
+   a) Hand-writing all rules, and the messiness of the world
+   b) Being too fast
+   c) Depending on the internet
+   d) Being too cheap
 
 6. What do “Neat” and “Scruffy” describe?
-   a) Two programming languages
+   a) Two approaches in AI research
    b) Two robot types
-   c) Two computer brands
-   d) Two approaches in AI research
+   c) Two programming languages
+   d) Two computer brands
 
 ### What to keep from this chapter
 
@@ -891,55 +852,10 @@ The quarrel proved both camps partly right; the next chapter tells how. First, s
 - Neats want proof first, scruffies want results first; modern AI took something from each.
 - Hand-writing rules does not scale and is brittle; the way out is learning the rules from data.
 
-<!-- SOURCE-CHANGES
-This approach is called “classical” or “symbolic” AI. Logic, rules, search and expert systems were that era’s toolbox. We are visiting it now: How did these ideas work, what did they achieve, and why did they one day hit a wall? You will try every bit of it with your own hands. ||| This approach is called “classical” or “symbolic” AI. Logic, rules, search and expert systems were that era’s toolbox. This chapter visits it: how did these ideas work, what did they achieve, and why did they one day hit a wall? You will try every bit of it with your own hands.
-How would you teach a machine about Tom? It cannot see him or pet him; it knows him only through the sentences you write: “Tom is a cat,” “a cat is a mammal,” “a mammal is an animal.” That is how classical AI stores knowledge: explicit symbols and the links between them. ||| How would you teach a machine about Tom? It cannot see him or pet him; it knows him only through the sentences you write: “Tom is a cat,” “a cat is a mammal,” “a mammal is an animal.” Classical AI stores knowledge in that form: explicit symbols and the links between them.
-Here is the lovely part: The machine follows those links and reaches facts nobody ever told it. It never heard the sentence “Tom is an animal”; but walking the chain link by link, it finds that out itself. Figure 2.1 asks four questions; read how the machine “thinks” there, step by step. ||| The best part is that the machine follows those links and reaches facts nobody ever told it. It never heard the sentence “Tom is an animal”; but walking the chain link by link, it finds that out itself. Figure 2.1 asks four questions; read how the machine “thinks” there, step by step.
-All the machine really holds is “what kind of thing is what”: Tom is a cat, a cat is a mammal... When you ask, it follows the chain link by link and reaches a fact nobody ever told it. And if it isn’t in the chain, it honestly says “unknown.” ||| All the machine holds is “what kind of thing is what”: Tom is a cat, a cat is a mammal... When you ask, it follows the chain link by link and reaches a fact nobody ever told it. And if it isn’t in the chain, it admits it: “unknown.”
-The knowledge base contains only consecutive “is-a” links. Pick a query; the inference engine follows the chain using the transitivity rule. If the target is in the chain: “Yes”; otherwise: “Unknown.” ||| The knowledge base contains only consecutive “is-a” links. For each query the inference engine follows the chain using the transitivity rule: if the target is in the chain, “Yes”; otherwise, “Unknown.”
-In the 1980s these apprentices worked everywhere, from medicine to engineering. Below is a tiny one: Switch the conditions on and off in your head; see in Figure 2.2 which rule “fires” and how the advice is born. ||| In the 1980s these apprentices worked everywhere, from medicine to engineering. Below is a tiny one: switch the conditions on and off in your head; see in Figure 2.2 which rule “fires” and how the advice is born.
-The system checks every condition that is on against its rules: whichever rule’s “IF” part holds, that rule fires and gives its advice. Look at R5: it waits for another rule’s result. That is how rules chain together. ||| The system checks every condition that is on against its rules: whichever rule’s “IF” part holds, that rule fires and gives its advice. R5 is the odd one out: it waits for another rule’s result. One rule feeding the next is chaining.
-Facts in working memory fire the production rules whose conditions match (forward chaining). R5 is a chain: it triggers only if R1 fired (umbrella) and it is windy. ||| R5 is a chain: it triggers only if R1 fired (umbrella) and it is windy.
-Finding the way out of a maze, picking a chess move, plotting a route through town... all versions of the same game: A crowd of possibilities lies before you, and you are hunting the one that reaches the goal. ||| Finding the way out of a maze, picking a chess move, plotting a route through town... all versions of the same game: a crowd of possibilities lies before you, and you are hunting the one that reaches the goal.
-The most patient method is trying every possibility one by one, but that can be terribly slow. A heuristic takes a shortcut: it guesses “which direction looks more promising?” We raced the two in Figure 2.3: The uninformed one scans everywhere; the informed one points its nose at the goal. ||| The most patient method is trying every possibility one by one, but that can be terribly slow. A heuristic takes a shortcut: it guesses “which direction looks more promising?” Figure 2.3 races the two: the uninformed one scans everywhere; the informed one points its nose at the goal.
-Strict rules stumble in the real world, because the world is uncertain. “If it rains, take an umbrella” is easy to say; but will it rain? Nobody knows for certain. At best, we can name the odds. ||| Strict rules stumble in the real world, because the world is uncertain. “If it rains, take an umbrella” is easy to say; but will it rain? Nobody knows for certain. At best, you can name the odds.
-Tomorrow’s weather is predicted by looking only at today; yesterday doesn’t matter. Each day rolls a die, but the die is loaded: after a sunny day, more sun is likely. As the days pile up, the bars of Figure 2.4 settle into the same proportions every time. ||| Tomorrow’s weather is predicted by looking only at today; yesterday doesn’t matter. Each day rolls a die, but the die is loaded: after a sunny day, more sun is likely. As the days pile up, the shares settle into the same proportions every time.
-The transition matrix P is fixed; the next state depends only on the current one (the Markov property). Each new day samples from P’s current row; in the long run the distribution converges to the stationary one. ||| Each new day samples from P’s current row; the transition matrix P itself never changes.
-For years, AI researchers were split into two rival camps. The “neats” wanted every step proven with clean mathematics. The “scruffies” just shrugged: “If it works, it’s good; we’ll find the theory later.” ||| For years, AI researchers were split into two rival camps. The “neats” wanted every step proven with clean mathematics. The “scruffies” shrugged: “If it works, it’s good; we’ll find the theory later.”
-This quarrel isn’t just history; it continues today. Sort the statements below into the right camp. At the end it will be clear why classical AI hit its wall, and how that collision gave birth to the idea of machines that “learn.” ||| This quarrel isn’t only history; it continues today. Sort the statements below into the right camp. At the end it will be clear why classical AI hit its wall, and how that collision gave birth to the idea of machines that “learn.”
-Classical AI’s lesson: hand-writing all the world’s rules is impossible. The solution? Instead of giving the machine rules, teach it to find them in data itself. That is exactly what the next chapter is about. ||| Classical AI’s lesson: hand-writing all the world’s rules is impossible. The solution? Instead of giving the machine rules, teach it to find them in data itself. That is the next chapter.
-Two camps, two personalities: neats want every step proven with mathematics; scruffies say “make it work first, theory comes later.” Both turned out right in places; today’s AI is really a blend of the two. ||| Two camps, two personalities: neats want every step proven with mathematics; scruffies say “make it work first, theory comes later.” Both turned out right in places; today’s AI is a blend of the two.
-This is a methodological tension in AI: principled/provable approaches (neat: logic, probability) versus empirical/engineering-driven ones (scruffy). Classical AI’s wall: the knowledge-acquisition bottleneck and brittleness. ||| Classical AI’s wall, in two words: the knowledge-acquisition bottleneck and brittleness.
--->
-
-<!-- EDITORIAL NOTES
-- 2.2 Simple: "Ask a question below and watch it “think.”" → "Figure 2.1 asks four questions; read how the machine “thinks” there, step by step."
-- 2.3 Simple: "Below is a tiny one: Flip the conditions on and off; watch which rule “fires” and how the advice is born." → "Below is a tiny one: Flip the conditions on and off on paper; see in Figure 2.2 which rule “fires” and how the advice is born."
-- 2.4 Simple: "Race the two below:" → "We raced the two in Figure 2.3:"
-- 2.5 Simple: "Try it below: press “Next day” and watch the weather change according to its odds." → "Figure 2.4 holds a seven-day example: follow the weather there as it changes according to its odds."
-- 2.6 Simple: "Sort the statements below into the right camp." left as is (the Figure 2.5 table answers it on paper). "At the end we’ll see why…" is a source sentence and was kept verbatim although the guide discourages "we will see"; → "At the end it will be clear why…" (digital source too; 2026-09-30).
-- Technical paragraphs kept verbatim except for the screen references that end up BELOW the Figure block in the final layout; following the author decision recorded in the Turkish chapter (2026-09-10: "demo" → "Şekil N.j"), the smallest change was applied: 2.2 "The demo below uses transitivity" → "The demonstration in Figure 2.1 uses transitivity"; 2.3 "In the demo you will also see" → "In Figure 2.2 you will also see"; 2.4 "Below, compare how many cells" → "In Figure 2.3, compare how many cells"; 2.5 "In the demo, observe how" → "In Figure 2.4, observe how".
-- Adapted for paper (2026-09-30; screen verbs resolved in the source text too): Figure 2.2 What is happening "every condition you switch on", "Watch R5"; Figure 2.4 What is happening "Each press rolls a die", "watch the bars below settle"; Figure 2.4 technical "“Next day” samples from P’s current row".
-- Setups: source hints stripped of screen verbs ("Ask a question", "Toggle", "press “Search”", "Advance the days with “Next day” or “Auto”", "Place each statement" removed or rephrased).
-- Figure 2.1: the two "Text embedded in the demo" fragments ("” found in the chain (transitivity)." and "” is not in the knowledge base.") are woven verbatim into Step by step as the full verdict lines shown in the figure: "✓ Yes: “Mammal” found in the chain (transitivity)." and "✗ Unknown: “Plant” is not in the knowledge base." Query order in the table follows the EN figure (Animal, Mammal, Plant, Rock); the Turkish table lists Mammal first.
-- Figure 2.1: the glossary entries "Inference" and "Knowledge representation" use the cat name "Tabby"; the demo data and figure use "Tom", so the chapter uses "Tom". Author to align the glossary if desired. "Entity" was chosen for the Turkish exercise's "Varlık".
-- Figure 2.2: emojis in the rule and advice texts (☂️ 🧥 🧣 👕 💨) were dropped, as in the printed figure (figure-2-2-expert.md). Rule R5 is shown as "R5" (the source id "R5 ⛓" becomes the "chain" mark in the figure).
-- Figure 2.3: computed from the demo code (GRID + runGrid), same as TR: BFS explores 36 cells, greedy 24; both find the 19-cell (18-step) path. On this grid greedy search does NOT miss the shortest path; the text says so honestly ("luck, not a guarantee"). The verbatim Simple "What is happening?" sentence "sometimes misses the shortest path" stays true as a general statement. Grid description uses 1-based column/row numbers (as in the figure); the h(n) formula in Technical depth uses the code's zero-based coordinates, stated in the text.
-- Figure 2.4: the seven draws (42, 83, 55, 91, 77, 12, 64) are example numbers chosen by the author, identical to the Turkish chapter; the demo uses Math.random. The text says so. Stationary distribution 6/13, 4/13, 3/13 and the day 1-5 expected values were re-verified by script. The EN figure shows the state diagram plus the transition matrix and no day counter; the matrix table from figure-2-4-markov.md is repeated in the Setup (as in TR); may count as duplication if the SVG also carries it.
-- Figure 2.4: ranges in the table use a hyphen (1-70) per the guide; the equations are given as three consecutive lines exactly as in the Turkish chapter.
-- Figure 2.5 (classify) is a self-test demo: a marking table replaces Step by step; the column header "Example" follows figure-2-5-classify.md; the statements are verbatim from the demo data, including the British spelling "rigour" (source text). Reasons are in answers/M02.md.
-- Number style: percentages in prose as "70 percent", "43 / 29 / 29 percent"; fractions and decimals as in the source (6/13, 0.462).
-- Word budget: new text per Figure block (Setup + Step by step + Try it yourself, tables excluded) is 361 / 373 / 435 / 413 / 315 words. Figure 2.3 (two search walkthroughs on the 11-wall grid) and Figure 2.4 (die, seven-day chain, stationary derivation; the 413 includes the three equation lines) follow the Turkish blueprint's content (372 and 329 Turkish words) and were trimmed twice; cutting further would drop blueprint steps. Author may shorten if the page budget requires.
-- Quiz option order is the export's shuffled order, kept exactly; the export draft's Turkish heading "Kendini test et" was replaced by "Test yourself".
-- Margin notes moved after the Simple paragraphs and before the Figure block, as in Chapter 1 and the Turkish edition.
-- 2026-09-30 humanizing pass: report findings applied (M02 :21–:268, answers :33); "On screen … on paper" frames removed from Figures 2.4 and 2.5; "the digital version" → "the live demo"; the ✓/✗ verdict marks dropped and the figure's verdict lines quoted; Figure 2.5 hand-holding cut to the one-sentence test; "exactly", "That is why", "Notice", "Here is the lovely part", "just", "really", "we" removed; Figure 2.4 What is happening now says "the shares" (the EN figure has no bars); technical "What is happening?" trimmed where it repeated the Technical paragraphs (Figures 2.2, 2.4, 2.5). Source paragraph changes are listed in the SOURCE-CHANGES block above for the digital edition.
--->
-
 # Chapter 3
 ## How Machines Learn
 *From rules to patterns*
 
-<!-- acc #1d6149 · tag Statistical AI -->
 
 ### 3.1 How do machines learn?
 
@@ -1207,40 +1123,40 @@ One idea ran through this chapter: grasp the pattern instead of memorizing the e
 
 *Answers are at the back of the book.*
 1. What is the core difference between ML and classical AI?
-   a) It never makes mistakes
-   b) It runs faster
-   c) It needs the internet
-   d) It learns from data instead of hand-written rules
+   a) It learns from data instead of hand-written rules
+   b) It never makes mistakes
+   c) It runs faster
+   d) It needs the internet
 
 2. What is an example’s “correct answer” called?
-   a) Feature
+   a) Label
    b) Gradient
-   c) Label
+   c) Feature
    d) Model
 
 3. Which task groups unlabeled data?
-   a) Regression
-   b) Clustering (unsupervised)
-   c) Classification
-   d) Reinforcement
+   a) Clustering (unsupervised)
+   b) Classification
+   c) Reinforcement
+   d) Regression
 
 4. What does gradient descent do?
    a) Generates labels
-   b) Slows the model
-   c) Updates parameters step by step to reduce loss
-   d) Deletes data
+   b) Deletes data
+   c) Slows the model
+   d) Updates parameters step by step to reduce loss
 
 5. What is overfitting?
-   a) Memorizing training data and failing on new data
-   b) Compressing data
-   c) Learning too fast
-   d) Not learning at all
+   a) Not learning at all
+   b) Learning too fast
+   c) Memorizing training data and failing on new data
+   d) Compressing data
 
 6. How does an agent learn in reinforcement learning?
-   a) From labeled examples
-   b) By memorizing rules
-   c) By clustering data
-   d) By reward and penalty, trial and error
+   a) By reward and penalty, trial and error
+   b) From labeled examples
+   c) By memorizing rules
+   d) By clustering data
 
 ### What to keep from this chapter
 
@@ -1252,53 +1168,10 @@ One idea ran through this chapter: grasp the pattern instead of memorizing the e
 - Gradient descent measures the loss, reads the slope, takes a small step and repeats this millions of times.
 - A model that memorizes the training data flunks new data; a good model grasps the pattern.
 
-<!-- SOURCE-CHANGES
-How would you teach a child what a cat is? By writing rules, “four legs, whiskers, a tail...”? No; you point at cats, and the child works out the rest. Last chapter we hit the wall of rule-writing. So what if machines could learn the way children do? ||| How would you teach a child what a cat is? By writing rules, “four legs, whiskers, a tail...”? No; you point at cats, and the child works out the rest. The last chapter ran into the wall of rule-writing. So what if machines could learn the way children do?
-That is the entire idea of machine learning: Show plenty of examples and let it catch the pattern itself. Now we step behind the curtain: How is data prepared, and how does a model grow a little more skillful with every try? You will see it all happen step by step. ||| That is the entire idea of machine learning: show plenty of examples and let it catch the pattern itself. This chapter goes behind the curtain: how is the data prepared, and how does a model grow a little more skillful with every try? You will see it all happen step by step.
-Reading hundreds of solved cases, the model learns which clue travels with which verdict. Look at an example in Figure 3.1 to see its clues and its correct answer. ||| Reading hundreds of solved cases, the model learns which clue travels with which verdict. Each example in Figure 3.1 shows its clues and its correct answer.
-*What is happening?* We lay an email’s clues (features) and its correct answer (label) side by side: mentions of “free,” a link request, urgent language... Seeing many examples, the machine learns by itself which clues go with “Spam”; we never write the rule, it draws it from the examples. ||| *What is happening?* An email’s clues (features) and its correct answer (label) sit side by side: mentions of “free,” a link request, urgent language... Seeing many examples, the machine learns by itself which clues go with “Spam”; nobody writes the rule, it draws it from the examples.
-*What is happening?* There are three ways to teach a machine: show it the right answers (supervised), give no answers and let it group things itself (unsupervised), or let it try and collect reward/penalty (reinforcement). Place each task on the right path, and remember: the borders aren’t always sharp. ||| *What is happening?* There are three ways to teach a machine: show it the right answers (supervised), give no answers and let it group things itself (unsupervised), or let it try and collect reward/penalty (reinforcement). Place each task on the right path.
-These boundaries are not sharp: semi-supervised and self-supervised learning sit in between. Modern large language models are largely trained with self-supervised pretraining, generating the labels from the data itself. Sort the tasks below into the three core types. ||| These boundaries are not sharp: semi-supervised and self-supervised learning sit in between. Modern large language models are largely trained with self-supervised pretraining, generating the labels from the data itself. Sort the tasks of Figure 3.2 into the three core types.
-*What is happening?* Two core jobs. Regression predicts a number: we draw the “best line” that runs through the middle of the points, staying as close to all of them as possible. Classification draws a border separating one group from the other. In short: “how much?” is regression, “which one?” is classification. ||| *What is happening?* Two core jobs. Regression predicts a number: the “best line” runs through the middle of the points, staying as close to all of them as possible. Classification draws a border separating one group from the other.
-Imagine being handed a huge box of buttons and told “sort these.” Nobody says which belongs where; still, you put like with like. That is clustering: The machine groups unlabeled data by similarity, all by itself. And there are always a few odd buttons that fit nowhere; anomaly detection catches those. It is how banks catch a suspicious transaction. ||| Imagine being handed a huge box of buttons and told “sort these.” Nobody says which belongs where; still, you put like with like. That is clustering: the machine groups unlabeled data by similarity, all by itself. And there are always a few odd buttons that fit nowhere; anomaly detection catches those. It is how banks catch a suspicious transaction.
-The points below carry no labels at all. In Figure 3.4 the machine sorts them into two clusters by similarity, and the odd one out gives itself away. ||| The points in Figure 3.4 carry no labels at all. The machine sorts them into two clusters by similarity, and the odd one out gives itself away.
-> **Margin note.** The power of unsupervised learning: without anyone saying “these belong together,” the machine finds the structure itself. Banks’ fraud detection relies heavily on spotting anomalies. ||| > **Margin note.** What unsupervised learning can do: without anyone saying “these belong together,” the machine finds the structure itself. Banks’ fraud detection relies heavily on spotting anomalies.
-*What is happening?* The points carry no labels at all. When you press “Group,” the machine ties each point to its nearest center (✕); similar ones end up in the same cluster. The lone point far from both clusters gets flagged as an “outlier” (an odd example); banks catch fraud in much the same way. ||| *What is happening?* The points carry no labels at all. The machine ties each point to its nearest center (✕); similar ones end up in the same cluster. The lone point far from both clusters gets flagged as an “outlier” (an odd example); banks catch fraud in much the same way.
-How does a model get “better”? First we measure how wrong it is; that is the loss. Now picture yourself in a fog-covered valley. The bigger the loss, the higher up you stand; your goal is the valley floor. The fog hides the path, but one thing you can still feel: the slope under your feet. ||| How does a model get “better”? First you measure how wrong it is; that is the loss. Now picture yourself in a fog-covered valley. The bigger the loss, the higher up you stand; your goal is the valley floor. The fog hides the path, but one thing you can still feel: the slope under your feet.
-Gradient descent is exactly that walk: Feel the slope, take a small step downhill, repeat. Below, lower the ball step by step and watch the loss melt away. And if your stride is too long? Look at what happens in the right panel of Figure 3.5. ||| Gradient descent is that walk: feel the slope, take a small step downhill, repeat. In the left panel of Figure 3.5 the ball descends step by step and the loss melts away. And if your stride is too long? The right panel shows what happens.
-> **Margin note.** Learning really is just this: ask “how wrong am I?” correct a little, repeat; millions of times over. Nearly all modern AI, neural networks included, is trained this way. ||| > **Margin note.** Learning is this: ask “how wrong am I?”, correct a little, repeat, millions of times over. Nearly all modern AI, neural networks included, is trained this way.
-*What is happening?* Improving a model is like descending to a valley floor: the bigger the “loss,” the higher up you are. Each step nudges the ball downhill and the loss shrinks. But if the step is too big (a high learning rate), the ball overshoots the bottom and flies up the far slope; that is why step size matters. ||| *What is happening?* Improving a model is like descending to a valley floor: the bigger the “loss,” the higher up you are. Each step nudges the ball downhill and the loss shrinks. But if the step is too big (a high learning rate), the ball overshoots the bottom and flies up the far slope; the step size matters as much as the direction.
-The learning rate is the most delicate dial: too small and convergence is slow; too large and it can oscillate around the minimum or diverge. In Figure 3.5, follow the descent on a convex loss curve and how a large learning rate causes overshoot. In practice surfaces aren’t convex, and stochastic gradient descent is the norm. ||| The learning rate is the most delicate dial: too small and convergence is slow; too large and it can oscillate around the minimum or diverge. Figure 3.5 shows descent on a convex loss curve and the overshoot a large learning rate causes. In practice surfaces aren’t convex, and stochastic gradient descent is the norm.
-*What is happening?* We fit three different models to the same data. The too-simple one misses the pattern (underfitting); the too-complex one memorizes every point but stumbles on new data (overfitting). The best is right in the middle: the model that also predicts examples it has never seen. In short, memorizing isn’t learning. ||| *What is happening?* Three different models are fitted to the same data. The too-simple one misses the pattern (underfitting); the too-complex one memorizes every point but stumbles on new data (overfitting). The best is right in the middle: the model that also predicts examples it has never seen.
--->
-
-<!-- EDITORIAL NOTES
-- 3.1 Simple: "You will watch it all happen step by step." → "You will see it all happen step by step." ("watch" is a screen verb; the Turkish edition made the same change.)
-- 3.2 Simple: "Tap an example below to see its clues and its correct answer." → "Look at an example in Figure 3.1 to see its clues and its correct answer." ("tap" is a screen verb.)
-- 3.5 Simple: "Press “Group”; let the machine sort them into two clusters by similarity, and let the odd one out give itself away." → "In Figure 3.4 the machine sorts them into two clusters by similarity, and the odd one out gives itself away." ("press" is a screen verb.)
-- 3.6 Simple: "Raise the learning rate and see for yourself." → "Look at what happens in the right panel of Figure 3.5." (the guide's own example). "Below, lower the ball step by step and watch the loss melt away." kept as is per the guide; Figure 3.5 answers it.
-- Left as is (they make sense on paper because the Figure follows at once): 3.3 Simple "Now take each task below to the right teacher"; 3.4 Simple "Try both yourself below"; 3.5 Simple "The points below carry no labels at all"; 3.7 Simple "Now fit three models to the same data".
-- Adapted for paper (2026-09-30; screen verbs resolved in the source text too) (the Turkish edition replaced "demo" with "Figure N.j" by author decision of 2026-09-10): 3.2 Technical "The example below"; 3.3 Technical "Sort the tasks below"; 3.4 Technical "The demo below fits" (Figure 3.3 now sits above that paragraph); 3.5 Technical "The demo shows k-means'"; 3.6 Technical "In the demo, watch descent". Also the verbatim "What is happening?" texts with screen wording: Figure 3.4 Simple "When you press “Group,”"; Figure 3.3 Technical "“Fit the line” computes"; Figure 3.4 Technical "“Group” shows". If the author prefers, these button names can be printed as panel labels in the figures.
-- 3.8: the export left the section heading in Turkish ("Kendini test et"); rendered as "Test yourself" per STYLE-GUIDE-EN §5. The export's "_Answers: answer-key.md_" line was treated as a working note and removed; "*Answers are at the back of the book.*" replaces it, as in M01.
-- Setups: source hints stripped of screen verbs ("Tap", "Pick", "Press", "Step", "Auto" removed).
-- Figure 3.2 (classify) is a self-test demo: a marking table replaces Step by step; answers and reasons are in answers/M03.md.
-- Figure 3.3 (scatter): the group names follow the legend of the EN figure, "green group" and "orange group" (the Turkish edition says "koyu/turuncu" for the duotone print). The embedded demo texts "Regression (number)" and "Classification (category)" are used as panel titles in the Setup. The alternate line y = 0.5x + 1 (sum of squared errors 0.37) and the x = 10 prediction (6.26) are computed from the demo data, as in the Turkish chapter.
-- Figure 3.4 (kmeans): the demo has 11 points, not 12 (10 cluster members + 1 outlier, index 10). The demo flags the outlier by a fixed index, not by a distance threshold; the text justifies it with the comparison "A's farthest member 1.22, outlier 2.92". The updated centers (2.22, 7.2) and (7.32, 3.26) are computed from the data.
-- Figure 3.5 (descent): the web demo's "High" learning rate is η = 0.92, and since 1 − 0.36·0.92 = 0.67 > 0 it does NOT overshoot (the ball descends one way: 0.6 → 2.06 → 3.03 → 3.68 …). The printed text and table use the η = 4.6 table from print/figures/out/en/figure-3-5-descent.md so that the oscillation described in the source "What is happening?" and Technical texts can be shown. A reader arriving by QR and choosing "High" will not see the oscillation. Suggestion: set the web demo's high η to 4.6 (or at least 3). "Close to sixty steps" in step 2 means x coming within 0.1 of the floor (57 steps); the loss comes within 0.1 of its minimum after 27.
-- Figure 3.6 (modelfit): the demo's "Good (balanced)" curve (y = 3.0 − 0.16x + 0.15·sin(0.6x)) does not give a lower error than the straight line on the training data (sum of squared errors: underfit 1.43, good 1.52, overfit 0). The text therefore makes no numeric error comparison between underfit and good; it only compares the hide-and-test exam with the overfit line. When the figure is redrawn, the "good" curve could pass a little closer to the points.
-- Number style: decimal point everywhere; small numbers in words in prose ("two numbers", "a factor of at least five"); en dash in "bias–variance" is part of the verbatim source. Quiz option order is the export's shuffled order, kept exactly; the answer key follows the same order.
-- Margin notes moved after the Simple paragraphs and before the Figure block, as in M01 and the Turkish edition.
-- Try it yourself answers: print/src/en/answers/M03.md
-- 2026-09-30 humanizing pass (copy edit; see the SOURCE-CHANGES block above for the source paragraphs the author should carry into the digital edition): author "we" → "you" or impersonal throughout; "exactly" as intensifier, "really / just", "In short", "remember: …", "the power of …" removed; "How much? / Which one?" slogan now in the margin note and the takeaway only, "memorizing isn't learning" in the margin note only, "the borders aren't sharp" in the Technical text of 3.3 only; production leak in Figure 3.2 ("the six were chosen to introduce…") cut; margin-note back-references in the Figure 3.2 self-test replaced by the questions themselves; bridges and the pre-quiz sentence rewritten; colon consistency (lowercase after a colon unless a direct question or two sentences follow).
-- Technical "What is happening?" paragraphs dropped from print because they repeat the Technical text above them word for word (print only; the digital edition keeps them under the demo): 3.3 ("Three paradigms: …"), 3.4 ("In regression the target is a continuous number; “Fit the line” computes …"), 3.5 ("Unlabeled x points, two fixed centroids …"), 3.6 ("Gradient descent: θ ← θ − η·∇L(θ). The parameter moves toward the minimum (x* = 5) …"), 3.7 ("The bias–variance tradeoff: …"). The note above about the "“Fit the line”" and "“Group”" button names therefore now applies only to the digital edition; Figure 3.4 Simple "When you press “Group,”" is resolved in the SOURCE-CHANGES block.
-- 3.3 Technical "Sort the tasks below" → "Sort the tasks of Figure 3.2" (the Technical box now sits after the figure).
--->
-
 # Chapter 4
 ## The Artificial Brain
 *From neuron to network*
 
-<!-- acc #3155c4 · tag Deep Learning -->
 
 ### 4.1 The artificial brain: deep learning
 
@@ -1614,40 +1487,40 @@ The networks have learned both to recognize and to create. Today’s systems tha
 
 *Answers are at the back of the book.*
 1. What does an artificial neuron compute?
-   a) It copies the inputs as-is
-   b) Just the average of the inputs
+   a) Just the average of the inputs
+   b) A weighted sum of inputs + bias, then an activation
    c) A random number
-   d) A weighted sum of inputs + bias, then an activation
+   d) It copies the inputs as-is
 
 2. What makes a neural network “deep”?
-   a) Many hidden layers
-   b) Having a single neuron
-   c) Running very fast
+   a) Running very fast
+   b) Many hidden layers
+   c) Having a single neuron
    d) Being connected to the internet
 
 3. What if there were no activation function at all?
-   a) The network would get stronger
+   a) The network would get faster
    b) The network would collapse into one linear function
    c) Nothing would change
-   d) The network would get faster
+   d) The network would get stronger
 
 4. What does backpropagation do?
-   a) Enlarges the image
-   b) Adds new layers
-   c) Spreads the error backward and updates weights to reduce it
+   a) Adds new layers
+   b) Spreads the error backward and updates weights to reduce it
+   c) Enlarges the image
    d) Deletes the data
 
 5. What data are CNNs especially strong at?
-   a) Images
+   a) A single number
    b) Passwords
    c) Tables
-   d) A single number
+   d) Images
 
 6. Which two networks compete in a GAN?
    a) Input and Output
    b) CNN and RNN
-   c) Teacher and Student
-   d) Generator and Discriminator
+   c) Generator and Discriminator
+   d) Teacher and Student
 
 ### What to keep from this chapter
 
@@ -1659,53 +1532,10 @@ The networks have learned both to recognize and to create. Today’s systems tha
 - Convolutional networks slide one small kernel across the whole image; the same nine numbers find an edge wherever it is.
 - Recurrent networks process each word together with the memory of the ones before; in a GAN, the generator and the discriminator push each other toward the real thing.
 
-<!-- SOURCE-CHANGES
-Artificial neural networks were born from that question. Stack “artificial neurons” into layers and out comes an astonishingly powerful learning machine. As the layers multiply, the name changes too: deep learning. In this chapter we sit beside a single messenger first; then we move to a whole network, and on to the special networks that handle images and sequences. ||| Artificial neural networks were born from that question. Stack “artificial neurons” into layers and out comes a powerful learning machine. As the layers multiply, the name changes too: deep learning. This chapter sits beside a single messenger first, then moves to a whole network, and on to the special networks that handle images and sequences.
-> **Margin note.** An “artificial neuron” is not a real copy of the brain; it is a very crude mathematical analogy. The power lies not in one neuron but in the patterns formed by millions of them together. ||| > **Margin note.** An “artificial neuron” is not a real copy of the brain; it is a very crude mathematical analogy. A single neuron does little; the patterns formed by millions of them together are what count.
-Deep learning is the stacking of many hidden layers; this depth lets the network learn increasingly abstract representations from raw data (edge → shape → object). One thing to know: without activation functions, stacked linear layers collapse into a single linear function; nonlinearity is what makes depth meaningful. The field entered its modern era with AlexNet’s leap on ImageNet in 2012. ||| Deep learning is the stacking of many hidden layers; this depth lets the network learn increasingly abstract representations from raw data (edge → shape → object). Without activation functions, stacked linear layers collapse into a single linear function; nonlinearity is what makes depth meaningful. The field entered its modern era with AlexNet’s leap on ImageNet in 2012.
-In Figure 4.1, strengthen or weaken the inputs; watch how the total changes and when the keeper rings the bell; that is the moment the neuron “fires.” ||| In Figure 4.1 the inputs are strengthened and weakened in turn. Follow how the total changes and when the keeper rings the bell; that moment is the neuron “firing.”
-*What is happening?* A neuron does something very simple: it multiplies each input by an “importance weight,” adds them up, then adds a small threshold value (the bias). If the total is big enough, the neuron “fires,” giving a strong output. Change the inputs and the sum and the output change together. ||| *What is happening?* A neuron does something simple: it multiplies each input by an “importance weight,” adds them up, then adds a small threshold value (the bias). If the total is big enough, the neuron “fires,” giving a strong output. Change the inputs and the sum and the output change together.
-News flowing from entrance to exit is called the forward pass. In Figure 4.2, compare the inputs on and off, and watch the signal climb floor by floor; see which neurons light up. ||| News flowing from entrance to exit is called the forward pass. Figure 4.2 shows two input patterns; follow the signal as it climbs floor by floor and see which neurons light up.
-The demo in Figure 4.2 performs a real forward pass: with fixed weights, the computation runs from input to output, and neuron brightness reflects the activation values. The highest output is the network’s “prediction.” Training is the act of tuning these weights; that is the next step’s topic. ||| The network in Figure 4.2 performs a real forward pass: with fixed weights, the computation runs from input to output, and neuron brightness reflects the activation values. The highest output is the network’s “prediction.” Training is the act of tuning these weights, and that comes next.
-That backward walk is called backpropagation. Follow Figure 4.3 round by round; watch the error flow back and the output edge toward the right answer each round. As the error shrinks, the backward whisper fades too; soon there is hardly any blame left to hand out. ||| That backward walk is called backpropagation. Follow Figure 4.3 round by round: the error flows back and the output edges toward the right answer. As the error shrinks, the backward whisper fades too; soon there is hardly any blame left to hand out.
-> **Margin note.** The forward pass means “make a guess”; backpropagation means “learn from the error.” Repeating those two steps millions of times is, honestly, all the magic of deep learning. ||| > **Margin note.** The forward pass means “make a guess”; backpropagation means “learn from the error.” Repeat those two steps millions of times and that is deep learning; there is nothing more to it.
-Below, watch the flashlight sweep the image step by step. At every stop it examines a tiny region and marks its findings on a “feature map.” Swap the flashlight (the filter) in Figure 4.4 and see which edges it catches this time. ||| In Figure 4.4 the flashlight sweeps the image step by step. At every stop it examines a tiny region and marks its findings on a “feature map.” Swap the flashlight (the filter) and see which edges it catches this time.
-Weight sharing and local connectivity greatly reduce the parameter count and grant translation invariance. LeNet (LeCun) pioneered this architecture; AlexNet (2012) made CNNs visible at scale. The demo in Figure 4.4 shows a real convolution operation. ||| Weight sharing and local connectivity greatly reduce the parameter count and grant translation invariance. LeNet (LeCun) pioneered this architecture; AlexNet (2012) made CNNs visible at scale. Figure 4.4 shows a real convolution operation.
-Picture a child listening to a bedtime story: each new sentence is heard through the memory of the ones before, or the tale falls apart. Text, music and speech are the same: all sequences, and order matters. “The dog bit the man” and “The man bit the dog” carry the same words yet tell utterly different stories. That is exactly why recurrent networks (RNNs) carry a “memory.” ||| Picture a child listening to a bedtime story: each new sentence is heard through the memory of the ones before, or the tale falls apart. Text, music and speech are the same: all sequences, and order matters. “The dog bit the man” and “The man bit the dog” carry the same words yet tell utterly different stories. That is why recurrent networks (RNNs) carry a “memory.”
-An RNN listens word by word, refreshing its memory at every step; it moves forward without losing the past. Below, the words are fed in order; watch the memory shift each time. ||| An RNN listens word by word, refreshing its memory at every step; it moves forward without losing the past. In Figure 4.5 the words are fed in one at a time, and the memory shifts each time.
-*What is happening?* The network reads the words one by one, carrying a “memory” as it goes. With each new word it updates that memory using both the new word and everything gathered so far. That is how it remembers order; “the dog bit the man” and “the man bit the dog” are no longer the same thing to it. ||| *What is happening?* The network reads the words one by one, carrying a “memory” as it goes. With each new word it updates that memory using both the new word and everything gathered so far. So it keeps track of order; “the dog bit the man” and “the man bit the dog” are no longer the same thing to it.
-Classic RNNs struggle with long dependencies due to vanishing gradients; LSTM (Hochreiter & Schmidhuber, 1997) and GRU ease this with gate mechanisms. In most modern sequence tasks, RNNs have largely given way to attention-based transformers; we meet those in the next chapter. The animation in Figure 4.5 shows the hidden-state update in simplified form. ||| Classic RNNs struggle with long dependencies due to vanishing gradients; LSTM (Hochreiter & Schmidhuber, 1997) and GRU ease this with gate mechanisms. In most modern sequence tasks, RNNs have largely given way to attention-based transformers; they come in the next chapter. The animation in Figure 4.5 shows the hidden-state update in simplified form.
-The two race without rest: as the detective catches fakes, the forger sharpens; as the forger sharpens, the detective’s eye grows keener. Follow Figure 4.6 round by round; watch an image born as pure noise edge toward the real thing as the forger masters its craft. ||| The two race without rest: as the detective catches fakes, the forger sharpens; as the forger sharpens, the detective’s eye grows keener. In Figure 4.6, round by round, an image born as pure noise edges toward the real thing as the forger masters its craft.
-> **Margin note.** The beauty of a GAN: “making a good fake” and “catching the fake” keep pushing each other. Like a forger racing a detective: as both improve, the result becomes astonishingly realistic. ||| > **Margin note.** What makes a GAN work: “making a good fake” and “catching the fake” keep pushing each other. Like a forger racing a detective: as both improve, the result becomes strikingly realistic.
--->
-
-<!-- EDITORIAL NOTES
-- 4.2 Simple: "Use the sliders to strengthen or weaken the inputs; watch how the total changes…" → "In Figure 4.1, strengthen or weaken the inputs; watch how the total changes…" (rest verbatim, "watch" kept).
-- 4.3 Simple: "Toggle the inputs, press “Forward pass,” and watch the signal climb floor by floor; see which neurons light up." → "In Figure 4.2, compare the inputs on and off, and watch the signal climb floor by floor; see which neurons light up."
-- 4.4 Simple: "Press “Train”; watch the error flow back…" → "Follow Figure 4.3 round by round; watch the error flow back…"
-- 4.5 Simple: "Swap the flashlight (the filter) and see which edges it catches this time." → "Swap the flashlight (the filter) in Figure 4.4 and see which edges it catches this time." ("Below, watch the flashlight sweep the image step by step." left as is; the Figure block answers it.)
-- 4.6 Simple: "Feed the words in order below and watch the memory shift each time." → "Below, the words are fed in order; watch the memory shift each time."
-- 4.7 Simple: "Press “Round”; watch an image born as pure noise…" → "Follow Figure 4.6 round by round; watch an image born as pure noise…"
-- 4.3 / 4.4 / 4.5 / 4.6 / 4.7 Technical: "The demo below" / "The animation below" → "The demo in Figure 4.2" / "The animation in Figure 4.3" / "The demo in Figure 4.4" / "The animation in Figure 4.5" / "The animation in Figure 4.6". Direction fix only, because Technical depth now comes AFTER the Figure block; this follows the author decision recorded in the Turkish M04 notes (2026-09-10). Chapter 1 left "The simulation below" as is; the author may revert either way for consistency.
-- Adapted for paper (2026-09-30; screen verbs resolved in the source text too): Figure 4.1 What is happening "Move the sliders and watch the sum and the output change together." (suggestion: "Change the inputs and the sum and the output change together."); Figure 4.3 What is happening "Each time you press “Train,”" (suggestion: "Each round,"); Figure 4.3 technical What is happening "Each “Train” carries the gradient…".
-- Figure 4.1 technical What is happening keeps the source's hyphen-minus in "w = [0.7, -0.5, 0.9], bias b = -0.3" (verbatim); the new text and tables use the Unicode minus (−0.5, −0.3).
-- Embedded demo text "⚡ The neuron fired!" woven into Figure 4.1 Step by step (item 3) as “The neuron fired!”; the lightning emoji was dropped for print.
-- Setups: source hints stripped of screen verbs ("move the sliders", "toggle", "press", "pick", "feed" removed); layouts described from the EN figure files (4.2: two panels [1, 0, 1] and [0, 1, 0]; 4.3: 9 frames; 4.4: both kernels, picked-out stops 2/4 and 6/16; 4.5: 4 frames with "machines / are / learning"; 4.6: 9 frames plus the target circle).
-- Figure 4.4: the map legend follows the EN figure ("plus = dark to light, minus = light to dark, darkness = magnitude"); no color names are used, because the Turkish Setup ("orange plus, gray minus") and its step 4 ("dark blue") disagree with each other.
-- Figure 4.5 (RNN): the bar values in the code depend only on the step count, not on the word; stated honestly in Step by step ("the bars follow a fixed rule and know nothing about the meaning of the words"), and Try it yourself question 3 is kept conceptual.
-- 4.8: the source h2 is Turkish ("Kendini test et"); rendered as "Test yourself" as in Chapter 1. The export note "_Answers: answer-key.md_" was removed (the file name does not belong in print).
-- Number style: decimals with a point; percentages as "37%" in tables and "37 percent" in prose; "points" for percentage-point gaps, as in the Turkish edition. Ranges in verbatim Technical text keep the source en dash ("0–1", "−1–1").
-- Quiz option order is the export's shuffled order, kept exactly; the answer key follows the same order.
-- Margin notes moved after the Simple paragraphs and before the Figure block, as in the Turkish edition.
-- 2026-09-30 humanizing pass (copy edit; see the SOURCE-CHANGES block above for the source paragraphs the author should carry into the digital edition): hype ("astonishingly", "the magic of", "the beauty of", "the power lies") toned down; "exactly" as intensifier, "simply", "honestly", "very" removed; the remaining screen verb "watch" in adapted Simple sentences replaced by "follow" or a plain statement; "the demo in Figure" → "the network in / Figure"; author "we" removed; the brake/gas metaphor of Figure 4.1 replaced by plain "pulls the sum down / pushes it up" (answers/M04.md matched); bridges and the pre-quiz sentence rewritten; the "power is not in one neuron but" mirror kept once, rephrased, in the margin note and the takeaway.
-- Technical "What is happening?" paragraphs dropped from print because they repeat the Technical text above them word for word (print only; the digital edition keeps them under the demo): 4.2 ("z = Σwᵢxᵢ + b, and φ(z) …"; the hyphen-minus note above is therefore moot for print), 4.3 ("a⁽ˡ⁾ = φ(…) is computed layer by layer …"), 4.4 ("Start: random weights, high loss. …"), 4.5 ("The selected kernel roams the image …"), 4.7 ("Start: G produces random noise …"). 4.6 ("Hidden state h₀ = 0. …") is kept because Try it yourself uses its tanh form.
--->
-
 # Chapter 5
 ## Today’s AI
 *From tokens to language models, attention to diffusion*
 
-<!-- acc #7a3fb0 · tag Generative Era -->
 
 ### 5.1 The generative era: from recognizing to creating
 
@@ -2052,46 +1882,46 @@ The chapter’s stack is complete: token, embedding, attention, generation, trai
    d) A small piece of text the model processes
 
 2. What is true of the embedding space?
-   a) Semantically similar words land near each other
-   b) Every word is at the same point
-   c) Words are placed randomly
-   d) Only numbers are stored, no meaning
+   a) Words are placed randomly
+   b) Only numbers are stored, no meaning
+   c) Semantically similar words land near each other
+   d) Every word is at the same point
 
 3. What does the attention mechanism provide?
-   a) Each word “looking at” the others with weights
-   b) Enlarging images
-   c) Deleting data
-   d) Slowing the model
+   a) Enlarging images
+   b) Slowing the model
+   c) Each word “looking at” the others with weights
+   d) Deleting data
 
 4. What does an LLM fundamentally do?
-   a) Applies hand-written rules
-   b) Queries a database
-   c) Predicts the next token
+   a) Predicts the next token
+   b) Applies hand-written rules
+   c) Queries a database
    d) Searches the internet
 
 5. The correct order of the training pipeline?
    a) Pretraining → fine-tuning → RLHF
-   b) RLHF → pretraining → fine-tuning
-   c) Pretraining only
-   d) Fine-tuning → pretraining → RLHF
+   b) Pretraining only
+   c) Fine-tuning → pretraining → RLHF
+   d) RLHF → pretraining → fine-tuning
 
 6. How does a diffusion model create an image?
-   a) Downloading it from the internet
-   b) Copying it in one shot
-   c) Leaving pixels random
+   a) Leaving pixels random
+   b) Downloading it from the internet
+   c) Copying it in one shot
    d) Starting from noise and cleaning it step by step
 
 7. What is hallucination?
-   a) Running faster
-   b) The model producing confident but wrong information
+   a) The model producing confident but wrong information
+   b) Generating an image
    c) The model crashing
-   d) Generating an image
+   d) Running faster
 
 8. What does the context window limit?
-   a) Screen resolution
-   b) How many tokens the model attends to at once
-   c) Internet speed
-   d) Disk size
+   a) How many tokens the model attends to at once
+   b) Disk size
+   c) Screen resolution
+   d) Internet speed
 
 ### What to keep from this chapter
 
@@ -2103,47 +1933,10 @@ The chapter’s stack is complete: token, embedding, attention, generation, trai
 - A diffusion model starts from pure noise and brings the image out by cleaning a little at every step.
 - Hallucination and the context window are structural limits of these models; always verify the facts that matter.
 
-<!-- SOURCE-CHANGES
-One invention made all of it possible: the Transformer architecture and the idea of “attention” at its heart. The story starts with the smallest piece: how does a sentence look to a machine? The answer lies in small chunks of text called “tokens.” From there we move to embeddings, which turn meaning into numbers, to the attention mechanism, and to how a language model writes word by word. We will see how the model is trained, visit the diffusion models behind image generation, and end with these systems’ limits. ||| One invention made all of it possible: the Transformer architecture and the idea of “attention” at its heart. The story starts with the smallest piece: how does a sentence look to a machine? The answer lies in small chunks of text called “tokens.” From there the chapter moves to embeddings, which turn meaning into numbers, to the attention mechanism, and to how a language model writes word by word. Then comes training, the diffusion models behind image generation, and finally the limits of these systems.
-The same text takes a different number of tokens in different languages. That is why asking an LLM something in Turkish can be more “expensive” than asking in English. ||| The same text takes a different number of tokens in different languages. So asking an LLM something in Turkish can be more “expensive” than asking in English.
-The beauty of this city: Words with similar meanings move into the same neighborhood. “Cat” and “dog” are next-door neighbors; so are “king” and “queen.” Pick a word in Figure 5.2 and meet its neighbors. ||| In this city, words with similar meanings move into the same neighborhood. “Cat” and “dog” are next-door neighbors; so are “king” and “queen.” Pick a word in Figure 5.2 and meet its neighbors.
-To make sense of a sentence, each word decides which others it should “pay attention” to. The darker the color, the stronger the bond. That is how the model works out what a little word like “it” actually refers to. ||| To make sense of a sentence, each word decides which others it should “pay attention” to. The darker the color, the stronger the bond. That is how the model works out what a little word like “it” refers to.
-Follow the steps of Figure 5.4; watch which words the model weighs at each step, with what probability, and how the sentence takes shape. Try the “creativity” (temperature) rows too: should it always pick the most likely word, or take a little risk? ||| Follow the steps of Figure 5.4: which words the model weighs at each step, with what probability, and how the sentence takes shape. Compare the two “creativity” (temperature) rows too: should it always pick the most likely word, or take a little risk?
-An assistant grows up in three stages. First, in “pretraining,” it learns language and the world from massive text. Then in “fine-tuning” it learns from example Q&A pairs how to actually answer. Finally, with human feedback, it learns to be helpful and polite. Same fact, three very different manners. ||| An assistant grows up in three stages. First, in “pretraining,” it learns language and the world from massive text. Then in “fine-tuning” it learns from example Q&A pairs how to answer. Finally, with human feedback, it learns to be helpful and polite. Same fact, three very different manners.
-Image-making models rest on a different idea altogether: diffusion. Picture a fogged-up window; the scene behind it is a blur. Now wipe the glass slowly: the picture emerges stroke by stroke. A diffusion model learns exactly that wiping; only it starts from a screen of pure static (noise) and cleans a little at each step until an image appears. ||| Image-making models rest on a different idea altogether: diffusion. Picture a fogged-up window; the scene behind it is a blur. Now wipe the glass slowly: the picture emerges stroke by stroke. A diffusion model learns that wiping; only it starts from a screen of pure static (noise) and cleans a little at each step until an image appears.
-Diffusion works like a sculptor: it faces a block of marble (noise) and chips away the excess, step by step, until the shape emerges. It also trains more stably than GANs. ||| Diffusion removes noise a little at a time, step by step, until the shape emerges. It also trains more stably than GANs.
-These models impress, but they aren’t magic. Their most famous flaw is hallucination: without missing a beat, the model can tell you something that sounds right and is simply wrong. Its job, after all, isn’t knowing the truth but producing a “plausible continuation.” The other limit is the context window: the model carries a small notebook and can hold only so many tokens at once. When the notebook fills, the oldest lines are erased. ||| These models impress, but they aren’t magic. Their most famous flaw is hallucination: without missing a beat, the model can tell you something that sounds right and is flat wrong. Its job, after all, isn’t knowing the truth but producing a “plausible continuation.” The other limit is the context window: the model carries a small notebook and can hold only so many tokens at once. When the notebook fills, the oldest lines are erased.
-Try the context window yourself below: as you add words the window fills, and the oldest words beyond the limit are “forgotten.” This is exactly why long documents get truncated or summarized. ||| Try the context window yourself below: as you add words the window fills, and the oldest words beyond the limit are “forgotten.”
--->
-
-<!-- EDITORIAL NOTES
-- 5.3 Simple: "Tap a word below and meet its neighbors." → "Pick a word in Figure 5.2 and meet its neighbors."
-- 5.4 Simple: "Tap a word; see how much it “attends” to the others…" → "Pick a word in Figure 5.3; see how much it “attends” to the others…"
-- 5.5 Simple: "Press “Generate”; watch which words…" → "Follow the steps of Figure 5.4: which words…"; "Try the “creativity” (temperature) switch too" → "Compare the two “creativity” (temperature) rows too" (2026-09-30: "watch" and "Try" removed).
-- 5.6 Simple: "Tap the three stages one by one and see…" → "Read the three stages of Figure 5.5 one by one and see…"
-- 5.7 Simple: "Drag the slider: the further right you go…" → "Follow the frames of Figure 5.6 from left to right: the further right you go…" (the guide's own example pattern).
-- Left as is (the Figure block answers them on paper): 5.2 Simple "Pick an example below and watch the machine take a sentence apart."; 5.8 Simple "Try the context window yourself below…" (its second sentence, "This is exactly why long documents get truncated or summarized.", cut 2026-09-30; the line stays in the What is happening? and the Technical depth).
-- Technical paragraphs (following the TR author decision of 2026-09-10 on "demo" words; the figure now sits above the box): 5.2 "The demo below is a simplified subword splitter" → "Figure 5.1 is a simplified subword splitter"; 5.3 "The visualization below is a 2D reduction" → "The visualization in Figure 5.2 is a 2D reduction"; 5.5 "The probabilities below are illustrative" → "The probabilities in Figure 5.4 are illustrative"; 5.7 "The demo below is a qualitative illustration" → "Figure 5.6 is a qualitative illustration". Author to confirm.
-- What is happening? paragraphs (Simple and Technical) are verbatim; none needed adapting in EN.
-- Figure 5.1: the third demo sentence ("Tokenization is surprisingly important!") contains a banned word. It is demo data and is kept verbatim, as the TR edition decided for "şaşırtıcı"; check_style_en.py therefore reports exactly one issue on that table line. Resolution belongs to the author: whitelist demo data in the checker or change the demo sentence in the source.
-- Figure 5.3: the demo folds "The cat" and "was scared" into single units and drops "away" (figure strings: attn.tokens); the Simple paragraph's sentence keeps "ran away". The Setup explains the five units instead of hiding the gap.
-- Figure 5.4: the start text "AI" comes from the figure strings (generate.prefix); "second candidate" at high creativity is the demo's own convention.
-- Figure 5.5: the question label ("capital of Türkiye?") is shown in the EN figure's output row, so the Setup names it. The 🙂 emoji in the stage-3 output is demo data; the figure removes it for duotone print (KEEP_EMOJI). Removed from the print table (2026-09-30).
-- Figure 5.6: the frame captions are not quoted in the print text (paragraph dropped 2026-09-30); their content is carried by the table's last column. Heart color: orange in print, "purple on screen" as the figure legend says. Step percentages and resolved/heart pixel counts are from the EN figure table (same seed as TR).
-- Figure 5.7: only one caption is quoted in the print text ("The window is full!"); the other fragments ("8 words added", "The first 1 word(s) are now “forgotten”", "Feed it with “Add word”") are paraphrased or dropped (2026-09-30).
-- Numbers recomputed for EN data (differ from TR): Figure 5.1 word/token counts (5/7, 6/11, 4/11) and tokens per word (1.4, 1.8, 2.75); Technical depth 5.8 and answers 5.7 Q2: the EN sentence makes 15 tokens with the Figure 5.1 rule (TR: 19), so a token window fills one word earlier (at "limited", 7th word) rather than "more than twice as fast". check_consistency_en.py will list these as TR/EN number differences by design. Figure 5.6 also carries the "Visible heart pixels" column (4, 9, 12, 17, 24, 29, 36, 40) from the EN figure table, which the TR table omits.
-- Answers file: 5.1 Q1–Q3 and 5.7 Q2 recomputed from the EN figure tables; 5.2, 5.3, 5.4, 5.5, 5.6 use the same numbers as TR with EN words.
-- Number style: percentages with % in tables and candidate lists, "42 percent" in prose; decimal point; en dashes in verbatim source terms ("instruction–response", "30K–100K+") untouched.
-- Quiz option order is the export's shuffled order, kept exactly; "5.9 Kendini test et" in the draft rendered as "Test yourself".
-- Margin notes moved after the Simple paragraphs and before the Figure block, as in M01 and the Turkish edition.
-- 2026-09-30 humanizing pass (print/kitap/humanize-en-report.md, M05 findings and the "counts only" patterns): "exactly", "That is why / This is exactly why" closers ("long documents get truncated" now twice: What is happening? 5.8 and Technical depth 5.8), signposts ("Look at one more thing", "Two things stand out. First… Second…", "Here is the link"), pre-quiz and section bridges, margin-note back-references (5.2, 5.6 ×2), unquoted UI captions (5.3, 5.4, 5.6, 5.7), "the digital edition", "honest warning", mirror sentences, the sculptor metaphor in the 5.7 margin note. Source paragraphs changed are listed in SOURCE-CHANGES above. Print only, not a source change: the technical "What is happening?" paragraphs of 5.2, 5.3, 5.4, 5.5, 5.6 and 5.7 were cut from the Technical depth boxes because they repeat the Technical paragraphs above them word for word; 5.8's is kept (the Figure 5.7 paragraph builds on it). Figure blocks, tables, numbers, quiz order and takeaway count unchanged.
--->
-
 # Chapter 6
 ## Using and Building AI
 *From prompts to agents, architecture to the real world*
 
-<!-- acc #2a7d86 · tag Application -->
 
 ### 6.1 Using and building AI
 
@@ -2420,39 +2213,39 @@ Six fields, five skills, one skeleton. Six questions follow.
 *Answers are at the back of the book.*
 
 1. What improves an answer in prompt engineering?
-   a) Writing shorter
+   a) Adding role, context, examples and a clear format
    b) Retraining the model
    c) A pricier GPU
-   d) Adding role, context, examples and a clear format
+   d) Writing shorter
 
 2. What does RAG fundamentally do?
-   a) Finds the relevant source and grounds the answer on it
-   b) Generates images
+   a) Generates images
+   b) Deletes data
    c) Speeds up the model
-   d) Deletes data
+   d) Finds the relevant source and grounds the answer on it
 
 3. What separates an “agent” from a chatbot?
-   a) Using tools and taking action step by step
+   a) A colorful interface
    b) Typing faster
-   c) A colorful interface
+   c) Using tools and taking action step by step
    d) Working offline
 
 4. What does the “orchestration” layer do in a typical AI app?
-   a) Only draws the screen
-   b) Coordinates prompts, tools and RAG calls
-   c) Trains the model
-   d) Only stores data
+   a) Trains the model
+   b) Only stores data
+   c) Coordinates prompts, tools and RAG calls
+   d) Only draws the screen
 
 5. A practical way to reduce hallucination?
-   a) Maxing out the temperature
-   b) Grounding the answer in a source via RAG
-   c) Turning the model off
-   d) Writing a longer prompt
+   a) Writing a longer prompt
+   b) Turning the model off
+   c) Grounding the answer in a source via RAG
+   d) Maxing out the temperature
 
 6. What are the most successful AI applications usually like?
-   a) Ones that just use the biggest model
+   a) Ones needing no evaluation
    b) Ones that exclude people entirely
-   c) Ones needing no evaluation
+   c) Ones that just use the biggest model
    d) Designs that strengthen people (copilots)
 
 ### What to keep from this chapter
@@ -2465,42 +2258,10 @@ Six fields, five skills, one skeleton. Six questions follow.
 - The same core skills are adapted to every industry; what changes between fields is the cost of a mistake and the guardrails it demands.
 - The most successful applications are copilot designs that strengthen people rather than exclude them.
 
-<!-- SOURCE-CHANGES
-Picture a master who knows everything but owns no workshop: no tools in hand, no notebook allowed, yesterday’s conversation already forgotten. A language model on its own is like that. What turns it into a useful assistant is the workshop we build around it: good prompts, feeding it your own data (RAG), tool use, agents and a solid architecture. We’ll build that workshop piece by piece, and end by seeing what these tools are changing in the real world. ||| Picture a master who knows everything but owns no workshop: no tools in hand, no notebook allowed, yesterday’s conversation already forgotten. A language model on its own is like that. What turns it into a useful assistant is the workshop built around it: good prompts, feeding it your own data (RAG), tool use, agents and a solid architecture. This chapter builds that workshop piece by piece, and ends with what these tools are changing in the real world.
-Today the competitive edge is rarely “owning the biggest model”; it is “using the model best with your own data and tools.” That is what this chapter is about. ||| Today the competitive edge is rarely “owning the biggest model”; it is “using the model best with your own data and tools.”
-A good prompt = a clear role + enough context + a definite format + (if needed) an example. Before blaming the model, review your prompt; most “bad answers” are really “incomplete questions.” ||| A good prompt = a clear role + enough context + a definite format + (if needed) an example. Before blaming the model, review your prompt; most “bad answers” are “incomplete questions.”
-As you add role (who to be), context (the situation), an example and a format to a prompt, you tell the model more clearly what you want; the answer’s quality rises with every piece. The model isn’t retrained; it has simply been asked a better question. ||| As you add role (who to be), context (the situation), an example and a format to a prompt, you tell the model more clearly what you want; the answer’s quality rises with every piece. The model isn’t retrained; it has been asked a better question.
-Watch an agent solve a task step by step in Figure 6.3. In each frame, see what it thinks, which tool it calls and what it observes. ||| Figure 6.3 follows an agent through one task. In each frame you see what it thinks, which tool it calls and what it observes.
-A real AI application is made of a few parts: the interface the user talks to, the orchestration layer running everything (the real “brain”), the knowledge base holding the data, the tools the model uses, and the memory keeping the history. What truly holds it together is the orchestration layer; the model is often a swappable part. ||| A real AI application is made of a few parts: the interface the user talks to, the orchestration layer running everything, the knowledge base holding the data, the tools the model uses, and the memory keeping the history. What truly holds it together is the orchestration layer; the model is often a swappable part.
-When all these parts click together, AI walks out of the lab and into the street. It helps the eye reading scans at the hospital, catches fraudsters at the bank, smells a breakdown coming on the factory floor, proposes new molecules in the lab, and pulls up a chair beside the artist. ||| When all these parts click together, AI walks out of the lab and into the street. It reads scans in hospitals, catches fraud in banks, predicts breakdowns on factory floors, proposes molecules in labs and sketches beside artists.
-One point not to miss: every field has different accuracy, safety, privacy and regulatory requirements (high error costs in healthcare, auditability in finance). So “integrating AI” matters as much as “integrating it responsibly and measurably”; that is what the next chapters are about. ||| One point not to miss: every field has different accuracy, safety, privacy and regulatory requirements (high error costs in healthcare, auditability in finance). So “integrating AI” matters as much as “integrating it responsibly”; that is what the next chapters are about.
--->
-
-<!-- EDITORIAL NOTES
-- 6.3 Simple: "Pick a question and toggle RAG on and off:" → "Pick a question and compare RAG off and on in Figure 6.2:"
-- 6.4 Simple: "Watch an agent solve a task step by step. Press “Next step”; see what it thinks, which tool it calls and what it observes." → "Figure 6.3 follows an agent through one task. In each frame you see what it thinks, which tool it calls and what it observes." (2026-09-30: "Watch" removed; earlier print wording was "Watch an agent solve a task step by step in Figure 6.3. In each frame, see…").
-- 6.5 Simple: "Tap the parts one by one and see what each does in the system." → "Look at the parts of Figure 6.4 one by one and see what each does in the system."
-- Left as is (they make sense on paper because the Figure follows at once): 6.2 Simple "Build a prompt piece by piece: … watch the model’s answer sharpen."; 6.6 Simple "Pick a field; see concrete examples …".
-- Figure 6.5 technical What is happening ("…integrating “responsibly and measurably” is the critical part."): cut from the print Technical depth on 2026-09-30 as a repeat of the two Technical paragraphs above it; the checker's allowlist entry for "is the critical part" is now unused in this file.
-- Figure 6.1 tables: the demo strings "Day 1 — Morning …" and "Day 2 — Morning …" (example piece and high-tier answer) carry em dashes in the source; written here with a spaced en dash ("Day 1 · Morning") so the file passes the em-dash check. If the author prefers, "Day 1 · Morning" is the alternative. The en dash in the RAG table ("250–300 TL") is verbatim demo text, as with the quiz range in M01.
-- Figure 6.2 Step by step, item 1: the Turkish edition calls the 14-day guess "close to the legal minimum" (Turkish Labor Law art. 53); for the English reader this became "a generic figure that fits many companies and none in particular," with no reference to any country’s law.
-- Figure 6.4 Step by step: the seven-step leave scenario (five-year employee, 12 days used, 14 left, Friday free) is not in the demo; it is the same new scenario as in the Turkish chapter, built from the data of Figures 6.1 to 6.3.
-- Figure 6.5 second table (skill mapping) is not in the demo; it follows the Turkish chapter’s mapping of the five skills named in the What is happening? text, and is open to discussion.
-- Figure 6.4 Technical depth: the seven-layer to five-box mapping table follows the Turkish chapter; labels are the English source terms.
-- Setups: source hints stripped of screen verbs ("toggle", "press", "tap" removed); figure colors described for the duotone print (orchestration box orange).
-- Currency: the English demo keeps "TL" in the RAG and agent data; kept verbatim, not converted.
-- 6.7: the export’s "_Answers: answer-key.md_" working note replaced by the reader-facing "Answers are at the back of the book."
-- Quiz option order is the export’s shuffled order, kept exactly; the answer key follows the same order.
-- Margin notes moved after the Simple paragraphs and before the Figure block, as in the Turkish edition.
-- answers/M06.md: the English figure data is identical to the Turkish data (same numbers, same section numbers, same prices), so no answer needed recomputing; only labels and example texts differ.
-- 2026-09-30 humanizing pass (print/kitap/humanize-en-report.md, M06 findings and the "counts only" patterns): "exactly", "That is exactly why", "One more point", "deliberate / on purpose", margin-note back-references (6.2, 6.5, 6.6), the screen verb in 6.4 Simple, "the real “brain”" kept only in the 6.5 Simple paragraph and the takeaway, "responsibly and measurably" kept only in the 6.6 What is happening?, the five-beat brochure sentence in 6.6 Simple, mirror sentences, the pre-quiz bridge, author "we". Source paragraphs changed are listed in SOURCE-CHANGES above. Print only, not a source change: the technical "What is happening?" paragraphs of 6.2, 6.3, 6.4, 6.5 and 6.6 were cut from the Technical depth boxes because they repeat the Technical paragraphs above them. Figure blocks, tables, numbers, quiz order and takeaway count unchanged.
--->
-
 # Chapter 7
 ## AI and Society
 *From bias to regulation, deepfakes to alignment*
 
-<!-- acc #b03a52 · tag Society -->
 
 ### 7.1 AI and society
 
@@ -2556,7 +2317,7 @@ Algorithmic bias mostly comes from data: historical prejudice, under-representat
 
 Fairness is not a single definition; metrics like demographic parity, equality of opportunity and calibration can conflict. Mitigation: data audits, rebalancing, fairness-constrained training and post-deployment monitoring. Figure 7.1 shows how data bias alone produces a decision gap despite identical merit.
 
-The model behind the figure: A = min(95, 50 + 0.4·e), B = max(5, 50 − 0.4·e), gap = A − B. Demographic parity is the condition P(approve | A) = P(approve | B); every value other than gap = 0 violates it. The figure attaches the label “balanced” to gap ≤ 6; that is a tolerance choice, not a definition of fairness.
+The model behind the figure: A = round(min(95, 50 + 0.4·e)), B = round(max(5, 50 − 0.4·e)), gap = A − B. Demographic parity is the condition P(approve | A) = P(approve | B); every value other than gap = 0 violates it. The figure attaches the label “balanced” to gap ≤ 6; that is a tolerance choice, not a definition of fairness.
 
 Bias can be measured. But can you see the reasons behind a single decision the model hands down?
 
@@ -2733,10 +2494,10 @@ That is as far as anyone can answer the five questions today. Six questions foll
 
 *Answers are at the back of the book.*
 1. Where does algorithmic bias mostly come from?
-   a) Slow hardware
-   b) The internet connection
-   c) Screen color
-   d) Skewed or incomplete training data
+   a) Screen color
+   b) Skewed or incomplete training data
+   c) The internet connection
+   d) Slow hardware
 
 2. What does a “black box” model mean?
    a) It is very fast
@@ -2746,27 +2507,27 @@ That is as far as anyone can answer the five questions today. Six questions foll
 
 3. The strongest personal defense against deepfakes?
    a) Faster internet
-   b) A pricier phone
-   c) Questioning and verifying the source
-   d) Never sharing anything
+   b) Never sharing anything
+   c) A pricier phone
+   d) Questioning and verifying the source
 
 4. The EU AI Act sorts uses by what?
-   a) Risk level
-   b) Company size
-   c) Programming language
-   d) Color code
+   a) Company size
+   b) Risk level
+   c) Color code
+   d) Programming language
 
 5. What is the alignment problem?
-   a) The model being slow
+   a) A small screen
    b) The stated goal diverging from the true intent
-   c) A small screen
+   c) The model being slow
    d) Having little data
 
 6. An example of a high-risk AI use?
-   a) An email spam filter
+   a) A weather widget
    b) A game-opponent AI
-   c) A weather widget
-   d) Screening job candidates
+   c) Screening job candidates
+   d) An email spam filter
 
 ### What to keep from this chapter
 
@@ -2777,42 +2538,10 @@ That is as far as anyone can answer the five questions today. Six questions foll
 - Regulation is tiered by risk: banned, high, limited, minimal; the higher the risk, the stricter the rule.
 - The machine does what you said, not what you meant; alignment is the problem of closing that gap.
 
-<!-- SOURCE-CHANGES
-“AI is neutral” is a myth. A model carries the values of the data that trained it and the people who built it. So “how it works” matters exactly as much as “whom it affects, and how.” ||| “AI is neutral” is a myth. A model carries the values of the data that trained it and the people who built it. So “how it works” matters as much as “whom it affects, and how.”
-The two groups (A and B) are identical in merit; in Figure 7.1 only the bias in the training data rises and falls. Watch the model’s decision shift. ||| The two groups (A and B) are identical in merit; in Figure 7.1 only the bias in the training data rises and falls. The model’s decision shifts with it.
-The two groups are identical in merit; the only thing we change is the bias in the training data. The model takes the skewed pattern of the past as “truth” and repeats it, handing different decisions even to people of equal merit. Discrimination grows not from malice but from skewed data. ||| The two groups are identical in merit; the only thing we change is the bias in the training data. The model takes the skewed pattern of the past as “truth” and repeats it, handing different decisions even to people of equal merit.
-When the model says “your loan is declined,” a fair question arises: Why? Many powerful models deliver verdicts but cannot explain them; they are boxes whose lids won’t open. Yet in decisions touching human lives (credit, hiring, health), asking “why?” and seeing the answer is a matter of rights. The black box must be turned into a glass one. ||| When the model says “your loan is declined,” a fair question arises: Why? Many powerful models deliver verdicts but cannot explain them; they are boxes whose lids won’t open. Yet in decisions touching human lives (credit, hiring, health), asking “why?” and seeing the answer is a matter of rights. The black box must be turned into a white one.
-First look at a loan decision; then open the lid in Figure 7.2 and see which factor pushed the decision which way (plus or minus). This is what turns a black box into a white box. ||| First look at a loan decision; then open the lid in Figure 7.2 and see which factor pushed the decision which way (plus or minus).
-Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) just need transparency; minimal-risk ones run free. The higher the risk, the tighter the rule. ||| Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) just need transparency; minimal-risk ones run free.
--->
-
-<!-- EDITORIAL NOTES
-- 7.2 Simple: "Keep the two groups (A and B) identical in merit and only raise or lower the bias in the training data." → "The two groups (A and B) are identical in merit; in Figure 7.1 only the bias in the training data rises and falls." (slider sentence; "Watch the model’s decision shift" → "The model’s decision shifts with it." in the humanizing pass)
-- 7.2 Technical: "The demo shows how data bias alone…" → "Figure 7.1 shows how data bias alone…" (the Technical block now sits below the figure; same decision as the Turkish edition)
-- 7.3 Simple: "then open “Explain” and see which factor…" → "then open the lid in Figure 7.2 and see which factor…" (screen button)
-- 7.3 Technical: "The demo below simplifies signed feature contributions." → "Figure 7.2 simplifies signed feature contributions." ("the demo below" is on the guide’s screen list)
-- 7.5 Technical: “critical infrastructure” kept verbatim (the EU AI Act’s own term); check_style_en.py allowlists the phrase.
-- Left as is (the Figure follows at once, or the answers section supplies it): 7.4 Simple "Below are a few situations… Then see the tell"; 7.5 Simple "Place the uses below"; 7.6 Simple "Pick a goal; see how the system…" (the Figure 7.5 table gives all three goals at once).
-- Adapted for paper (2026-09-30; screen verbs resolved in the source text too): Figure 7.2 What is happening "greens pull toward approval, reds toward decline" and Technical "green toward approval, red toward decline". The printed duotone figure uses orange (approve) and gray (decline); the Setup and step 4 say so ("On paper, read orange for green and gray for red").
-- Figure 7.1 embedded captions: the export fragments ("(A", "%)", "the model approves A at", "% gap)") were joined with the demo’s numbers: "(A 50%, B 50%)" and "approves A at 70% and B at 30% (40% gap)". The 8% and 25% rows of the Step-by-step table were computed from the demo’s rule (the EN figure table gives only 0, 50 and 100), same rows as the Turkish chapter.
-- Figure 7.2 embedded caption: "their total (" + ") decided the outcome" joined as "their total (−8 or +76) decided the outcome". Inside that quoted caption the source’s double quotes around black box / white box became single quotes (nested quotation).
-- Figure 7.4 embedded texts: "correct. Ask yourself: …" is the demo’s score line ("n/6 correct"); only the question part is quoted. "The same “AI” label…" closing line quoted with nested single quotes.
-- Setups: source hints stripped of screen verbs ("Move only the bias", "open the reasons with “Explain”", "press “Show”" removed).
-- Figures 7.3 (df) and 7.4 (reg) are self-test demos: a marking table with ☐ boxes replaces Step by step (as in Figure 1.5); tells, correct tiers and reasons are in answers/M07.md. The Turkish chapter uses a numbered list for the same content.
-- Technical depth 7.2 and 7.3: the formula paragraphs of the Turkish chapter (bias model with min/max clamps and the gap ≤ 6 tolerance; Σ cᵢ > 0 rule, Shapley axioms, bar scaling) were written in English from the same content.
-- Bias demo: the clamps A ≤ 95 and B ≥ 5 exist in the code but at e = 100 the rates stay at 90/10; the limits are never reached (Try it yourself question 3 rests on this).
-- Terminology: EU AI Act and GDPR as in the source; KVKK is not mentioned because the English source text does not mention it (glossary headword "GDPR / KVKK" covers it).
-- Quiz option order is the export’s shuffled order from the draft file, kept exactly; the answer key follows the same order.
-- Margin notes moved after the Simple paragraphs and before the Figure block, as in Chapter 1 and the Turkish edition.
-- 2026-09-30 humanizing pass (print/kitap/humanize-en-report.md): "the demo" → "the figure" throughout (only 7.5 keeps "the live demo" for its closing line); the "not from malice but from skewed data" slogan kept in 7.2 Simple and the takeaway only; "the higher the risk, the tighter the rule" kept in the margin note and the takeaway only; the "who said it, where did it come from…" mantra kept in the margin note and What is happening; "On screen …; on paper …" frames removed from 7.4 and 7.5 (the color mapping in 7.3 stays); 7.3 Simple now says "white" both times, the second sentence of the second paragraph dropped as a repeat; bridges and the pre-quiz line rewritten; UI strings ("Ask yourself: …") no longer quoted. Source paragraphs changed are listed in SOURCE-CHANGES above.
-- Print-only trim (same pass): the demo's technical "What is happening?" paragraph at the end of every Technical depth box (7.2 to 7.6) repeated the box's own first paragraph nearly word for word and was dropped from the print file. The digital edition keeps those texts unchanged; only the wording cuts in SOURCE-CHANGES are meant for it.
--->
-
 # Chapter 8
 ## Philosophy and the Future
 *Understanding, consciousness, singularity and responsibility*
 
-<!-- acc #9a5a1f · tag Philosophy & Future -->
 
 ### 8.1 Philosophy and the future
 
@@ -3047,40 +2776,40 @@ None of these questions closes with the chapter; they are the kind you keep. Six
 
 *Answers are at the back of the book.*
 1. What does the Turing test fundamentally measure?
-   a) Amount of memory
-   b) Processing speed
-   c) Real consciousness
-   d) Imitating a human indistinguishably in writing
+   a) Real consciousness
+   b) Amount of memory
+   c) Imitating a human indistinguishably in writing
+   d) Processing speed
 
 2. What does the Chinese Room argument question?
    a) Internet security
-   b) Whether symbol processing alone yields “understanding”
-   c) Computer speed
+   b) Computer speed
+   c) Whether symbol processing alone yields “understanding”
    d) The difficulty of Chinese
 
 3. What level is today’s AI at?
    a) AGI
-   b) Superintelligence
-   c) Narrow AI
-   d) Conscious AI
+   b) Conscious AI
+   c) Superintelligence
+   d) Narrow AI
 
 4. The most balanced stance on the singularity?
-   a) Uncertain; neither certain nor impossible
-   b) Completely impossible
-   c) It already happened
-   d) Definitely happening tomorrow
+   a) It already happened
+   b) Definitely happening tomorrow
+   c) Completely impossible
+   d) Uncertain; neither certain nor impossible
 
 5. When an AI causes harm, responsibility today usually falls on?
-   a) Only the AI itself
-   b) The internet
-   c) People and institutions (developer/operator/user)
-   d) No one
+   a) People and institutions (developer/operator/user)
+   b) Only the AI itself
+   c) No one
+   d) The internet
 
 6. The question of AI’s moral status (rights) today is?
-   a) A meaningless question
+   a) Open and contested
    b) Banned by law
    c) Definitively settled
-   d) Open and contested
+   d) A meaningless question
 
 ### What to keep from this chapter
 
@@ -3092,113 +2821,125 @@ None of these questions closes with the chapter; they are the kind you keep. Six
 - When harm happens, responsibility today falls on people and institutions: whoever built, operated or used the system.
 - Whether machines will ever have rights turns on the open question of consciousness; the future of AI will be decided by the values that build and use it.
 
-<!-- SOURCE-CHANGES
-We have reached the end of the road. We have learned how a machine “thinks”; now come the oldest and hardest questions. Can a machine truly understand, or does it only act as if it does? Is an AI smarter than us possible, and if so, when? And if machines one day gain consciousness, would they have rights? ||| This is the last chapter. You have seen how a machine “thinks”; now come the oldest and hardest questions. Can a machine understand, or does it only act as if it does? Is an AI smarter than us possible, and if so, when? And if machines one day gain consciousness, would they have rights?
-Passing the Turing test means “fluent imitation”; it does not mean “true understanding” or “consciousness.” Keeping those questions apart is the key to the modern debate. ||| Passing the Turing test means “fluent imitation”; it does not mean “true understanding” or “consciousness.” Much of the modern debate comes from mixing the two up.
-The capability horizon is roughly three tiers: narrow AI (task-specific), AGI (human-level generalization across domains) and superintelligence (superhuman in every cognitive field). The borders blur; being “general” and being “conscious” are separate questions. ||| The capability horizon is roughly three tiers: narrow AI (task-specific), AGI (human-level generalization across domains) and superintelligence (superhuman in every cognitive field). The borders blur.
-There are strong critiques too: intelligence may be neither one-dimensional nor endlessly scalable; data, energy, hardware and physics set limits; complexity and diminishing returns bite. It is not a proven prophecy but an uncertain scenario worth taking seriously. The curves below are qualitative. ||| There are strong critiques too: intelligence may be neither one-dimensional nor endlessly scalable; data, energy, hardware and physics set limits; complexity and diminishing returns bite. The curves below are qualitative.
--->
-
-<!-- EDITORIAL NOTES
-- 8.4 Simple: "Tap the rungs one by one; see what each means and the answer to “does it exist today?”" → "Look at the rungs of Figure 8.3 one by one; see what each means and the answer to “does it exist today?”"
-- 8.2 Simple: "Below are short exchanges. … Then see the tell." → "Then see the tell at the back of the book." (2026-09-30).
-- 8.3 Simple: "Process the incoming symbol and send the reply the rule produces." left as is; "send" is the thought experiment's own verb, not a screen verb.
-- 8.5 Simple: "Look at the scenarios below" left as is (Figure 8.4 follows at once).
-- 8.6 Simple: "Pick a scenario and mark who you would hold responsible. Then see the prevailing legal and ethical view" left as is; markable with a pencil, the view is at the back of the book.
-- 8.1 Simple: "the end of the journey" is source text; "journey" is on the banned list → "the end of the road" (2026-09-30); in the humanizing pass the sentence became "This is the last chapter." so that the book announces its ending once, in the 8.6 margin note (see SOURCE-CHANGES).
-- 8.5 Technical (source): "The curves below are qualitative." points, on paper, to Figure 8.4 which now sits above that paragraph. Left verbatim, as in M01 ("The simulation below").
-- Every Technical depth box carried the demo's technical "What is happening?" text verbatim, per the guide; in all five it nearly repeated the section's first technical paragraph (especially 8.2 and 8.4). Print-only trim (2026-09-30 humanizing pass): those five paragraphs were dropped from the print file. The digital edition keeps them unchanged; only the wording cuts in SOURCE-CHANGES are meant for it.
-- Figure 8.1 (tur) and Figure 8.5 (responsibility) are self-test demos: a marking table replaces Step by step (pattern of M01 Figure 1.5); the demo's tell/reason sentences go verbatim into answers/M08.md. The tur UI fragment "this reply was written by a" is woven into the Self-test sentence; the responsibility feedback strings ("✓ The prevailing view agrees." / "✗ The prevailing view differs." / "✗ “The AI itself” is not the prevailing view.") were quoted in the Self-test paragraph until the humanizing pass removed them (screen feedback has no place on paper; the answers section gives the prevailing view and its reason).
-- Figure 8.1 answers: the TR answer 1 says the friend looks at "kalıplı üslup ve kişisel ayrıntı yokluğu"; same reasoning in EN. Prompts and replies in the table are the EN demo's own lines (not translations of the TR ones).
-- Figure 8.2: the embedded EN texts "My name is Little Helper." and "It’s three in the afternoon." are used verbatim in the meaning table; the other meanings ("How are you?", "I’m fine, thanks!", "What’s your name?", "What time is it?") come from the EN figure table figure-8-2-chineseroom.md. Chinese characters unchanged. Try it yourself 1) "Türkçe yazman yeter" → "writing it in English is enough".
-- Figure 8.3 table: status labels taken verbatim from the EN figure table ("Exists today ✓", "Not yet; contested", "Speculative"); the EN source has no em dash here, unlike the TR "Henüz yok — tartışmalı".
-- Figure 8.4 table: values follow the EN figure table figure-8-4-singularity.md, which gives 1.3 for the accelerating curve at t = 5 (exact value 1.25, rounded half up); the TR chapter and TR table show 1.2. Figure generator should keep the same formulas. Answers do not depend on this cell.
-- Figure 8.5 answers: the prevailing-view reasons are the EN demo's own strings (semicolons, no em dash), unlike the TR strings that keep an em dash.
-- 8.7: the export draft's heading "Kendini test et" (Turkish) → "Test yourself"; the export line "_Answers: answer-key.md_" is a working note and was removed.
-- Quiz option order is the export's shuffled order, kept exactly; the answer key follows the same order.
-- Setups: source hints stripped of screen verbs ("tap" removed); the "On screen … on paper …" frames in 8.2 and 8.6 were removed in the humanizing pass.
-- Last bridge (8.6 → 8.7) and the final takeaway keep the TR closing tone (values over technology); the bridge no longer announces the end of the book, the 8.6 margin note does.
-- Margin notes moved after the Simple paragraphs and before the Figure block, as in the Turkish edition. The 🌱 emoji in the 8.6 margin note is source text and was kept.
-- 2026-09-30 humanizing pass (print/kitap/humanize-en-report.md): the ending is announced once (8.6 margin note); "prevailing view" appears once in the new text; "general ≠ conscious" kept in 8.4 What is happening and the takeaway; "not a proven prophecy" kept in 8.5 What is happening only (takeaway and glossary reworded); the bar disclaimer in 8.4 said once; "Notice…", "look at three things", "ask three questions", "First… Second…" signposts and the string of rhetorical questions in 8.6 removed; "deliberate / on purpose", "exactly", "honest" cut; the pre-quiz line no longer twins M07; scare quotes and "not X but Y" mirrors thinned. Source paragraphs changed are listed in SOURCE-CHANGES above.
--->
-
 # Answer Key
 
 ## End-of-chapter quizzes
 
 ### 01 · Minds and Machines
 
-1.8 · Question 1: **d** — That intelligence has many kinds, not one
-1.8 · Question 2: **c** — 0 and 1
-1.8 · Question 3: **a** — In principle any computation, via simple rules
-1.8 · Question 4: **b** — Keeping program and data in the same memory
-1.8 · Question 5: **c** — Narrow AI
-1.8 · Question 6: **d** — Transistor count ~doubles every 2 years
+1.8 · Question 1: **b** · That intelligence has many kinds, not one
+
+1.8 · Question 2: **d** · 0 and 1
+
+1.8 · Question 3: **b** · In principle any computation, via simple rules
+
+1.8 · Question 4: **b** · Keeping program and data in the same memory
+
+1.8 · Question 5: **b** · Narrow AI
+
+1.8 · Question 6: **c** · Transistor count ~doubles every 2 years
 
 ### 02 · The Age of Rules
 
-2.7 · Question 1: **d** — With explicit symbols and rules
-2.7 · Question 2: **c** — A rule (IF-THEN)
-2.7 · Question 3: **a** — They speed up the search but don’t guarantee the best
-2.7 · Question 4: **a** — Only the current state
-2.7 · Question 5: **b** — Hand-writing all rules, and the messiness of the world
-2.7 · Question 6: **d** — Two approaches in AI research
+2.7 · Question 1: **c** · With explicit symbols and rules
+
+2.7 · Question 2: **c** · A rule (IF-THEN)
+
+2.7 · Question 3: **d** · They speed up the search but don’t guarantee the best
+
+2.7 · Question 4: **a** · Only the current state
+
+2.7 · Question 5: **a** · Hand-writing all rules, and the messiness of the world
+
+2.7 · Question 6: **a** · Two approaches in AI research
 
 ### 03 · How Machines Learn
 
-3.8 · Question 1: **d** — It learns from data instead of hand-written rules
-3.8 · Question 2: **c** — Label
-3.8 · Question 3: **b** — Clustering (unsupervised)
-3.8 · Question 4: **c** — Updates parameters step by step to reduce loss
-3.8 · Question 5: **a** — Memorizing training data and failing on new data
-3.8 · Question 6: **d** — By reward and penalty, trial and error
+3.8 · Question 1: **a** · It learns from data instead of hand-written rules
+
+3.8 · Question 2: **a** · Label
+
+3.8 · Question 3: **a** · Clustering (unsupervised)
+
+3.8 · Question 4: **d** · Updates parameters step by step to reduce loss
+
+3.8 · Question 5: **c** · Memorizing training data and failing on new data
+
+3.8 · Question 6: **a** · By reward and penalty, trial and error
 
 ### 04 · The Artificial Brain
 
-4.8 · Question 1: **d** — A weighted sum of inputs + bias, then an activation
-4.8 · Question 2: **a** — Many hidden layers
-4.8 · Question 3: **b** — The network would collapse into one linear function
-4.8 · Question 4: **c** — Spreads the error backward and updates weights to reduce it
-4.8 · Question 5: **a** — Images
-4.8 · Question 6: **d** — Generator and Discriminator
+4.8 · Question 1: **b** · A weighted sum of inputs + bias, then an activation
+
+4.8 · Question 2: **b** · Many hidden layers
+
+4.8 · Question 3: **b** · The network would collapse into one linear function
+
+4.8 · Question 4: **b** · Spreads the error backward and updates weights to reduce it
+
+4.8 · Question 5: **d** · Images
+
+4.8 · Question 6: **c** · Generator and Discriminator
 
 ### 05 · Today’s AI
 
-5.9 · Question 1: **d** — A small piece of text the model processes
-5.9 · Question 2: **a** — Semantically similar words land near each other
-5.9 · Question 3: **a** — Each word “looking at” the others with weights
-5.9 · Question 4: **c** — Predicts the next token
-5.9 · Question 5: **a** — Pretraining → fine-tuning → RLHF
-5.9 · Question 6: **d** — Starting from noise and cleaning it step by step
-5.9 · Question 7: **b** — The model producing confident but wrong information
-5.9 · Question 8: **b** — How many tokens the model attends to at once
+5.9 · Question 1: **d** · A small piece of text the model processes
+
+5.9 · Question 2: **c** · Semantically similar words land near each other
+
+5.9 · Question 3: **c** · Each word “looking at” the others with weights
+
+5.9 · Question 4: **a** · Predicts the next token
+
+5.9 · Question 5: **a** · Pretraining → fine-tuning → RLHF
+
+5.9 · Question 6: **d** · Starting from noise and cleaning it step by step
+
+5.9 · Question 7: **a** · The model producing confident but wrong information
+
+5.9 · Question 8: **a** · How many tokens the model attends to at once
 
 ### 06 · Using and Building AI
 
-6.7 · Question 1: **d** — Adding role, context, examples and a clear format
-6.7 · Question 2: **a** — Finds the relevant source and grounds the answer on it
-6.7 · Question 3: **a** — Using tools and taking action step by step
-6.7 · Question 4: **b** — Coordinates prompts, tools and RAG calls
-6.7 · Question 5: **b** — Grounding the answer in a source via RAG
-6.7 · Question 6: **d** — Designs that strengthen people (copilots)
+6.7 · Question 1: **a** · Adding role, context, examples and a clear format
+
+6.7 · Question 2: **d** · Finds the relevant source and grounds the answer on it
+
+6.7 · Question 3: **c** · Using tools and taking action step by step
+
+6.7 · Question 4: **c** · Coordinates prompts, tools and RAG calls
+
+6.7 · Question 5: **c** · Grounding the answer in a source via RAG
+
+6.7 · Question 6: **d** · Designs that strengthen people (copilots)
 
 ### 07 · AI and Society
 
-7.7 · Question 1: **d** — Skewed or incomplete training data
-7.7 · Question 2: **b** — Its decisions’ reasons are hard to understand
-7.7 · Question 3: **c** — Questioning and verifying the source
-7.7 · Question 4: **a** — Risk level
-7.7 · Question 5: **b** — The stated goal diverging from the true intent
-7.7 · Question 6: **d** — Screening job candidates
+7.7 · Question 1: **b** · Skewed or incomplete training data
+
+7.7 · Question 2: **b** · Its decisions’ reasons are hard to understand
+
+7.7 · Question 3: **d** · Questioning and verifying the source
+
+7.7 · Question 4: **b** · Risk level
+
+7.7 · Question 5: **b** · The stated goal diverging from the true intent
+
+7.7 · Question 6: **c** · Screening job candidates
 
 ### 08 · Philosophy and the Future
 
-8.7 · Question 1: **d** — Imitating a human indistinguishably in writing
-8.7 · Question 2: **b** — Whether symbol processing alone yields “understanding”
-8.7 · Question 3: **c** — Narrow AI
-8.7 · Question 4: **a** — Uncertain; neither certain nor impossible
-8.7 · Question 5: **c** — People and institutions (developer/operator/user)
-8.7 · Question 6: **d** — Open and contested
+8.7 · Question 1: **c** · Imitating a human indistinguishably in writing
+
+8.7 · Question 2: **c** · Whether symbol processing alone yields “understanding”
+
+8.7 · Question 3: **d** · Narrow AI
+
+8.7 · Question 4: **d** · Uncertain; neither certain nor impossible
+
+8.7 · Question 5: **a** · People and institutions (developer/operator/user)
+
+8.7 · Question 6: **a** · Open and contested
 
 ## Figure exercises and self-test answers
 
@@ -3695,101 +3436,101 @@ Every figure in this book is a hands-on demo in the digital edition. The links b
 
 Numbers refer to chapter and section (3.6 = Chapter 3, sixth section). Page numbers are added at typesetting.
 
-**Accountability** · [7.3](#sec-7-3), [8.6](#sec-8-6)  
-**Activation function** · [4.1](#sec-4-1), [4.2](#sec-4-2), [4.3](#sec-4-3), [4.8](#sec-4-8)  
-**Agent** · [3.3](#sec-3-3), [3.8](#sec-3-8), [6.1](#sec-6-1), [6.4](#sec-6-4), [6.5](#sec-6-5), [6.6](#sec-6-6), [6.7](#sec-6-7)  
-**AlexNet** · [4.1](#sec-4-1), [4.5](#sec-4-5)  
-**Algorithm** · [1.1](#sec-1-1), [1.3](#sec-1-3), [1.4](#sec-1-4), [1.7](#sec-1-7), [1.8](#sec-1-8), [2.1](#sec-2-1), [3.5](#sec-3-5)  
-**Alignment** · [5.6](#sec-5-6), [5.8](#sec-5-8), [5.9](#sec-5-9), [7.1](#sec-7-1), [7.6](#sec-7-6), [7.7](#sec-7-7), [8.5](#sec-8-5)  
-**Anomaly detection** · [3.5](#sec-3-5), [6.6](#sec-6-6)  
-**Artificial general intelligence (AGI)** · [1.6](#sec-1-6), [1.8](#sec-1-8), [8.1](#sec-8-1), [8.4](#sec-8-4), [8.7](#sec-8-7)  
-**Artificial intelligence (AI)** · [1.1](#sec-1-1), [1.5](#sec-1-5), [5.2](#sec-5-2)  
-**Artificial neural network** · [2.7](#sec-2-7), [3.6](#sec-3-6), [4.1](#sec-4-1), [4.3](#sec-4-3), [4.5](#sec-4-5), [4.8](#sec-4-8), [5.7](#sec-5-7), [5.9](#sec-5-9)  
-**Artificial neuron** · [4.1](#sec-4-1), [4.2](#sec-4-2), [4.3](#sec-4-3), [4.6](#sec-4-6), [4.8](#sec-4-8)  
-**Attention** · [4.6](#sec-4-6), [4.7](#sec-4-7), [5.1](#sec-5-1), [5.4](#sec-5-4), [5.8](#sec-5-8), [5.9](#sec-5-9), [6.6](#sec-6-6), [7.3](#sec-7-3)  
-**Babbage, Charles** · [1.1](#sec-1-1), [1.4](#sec-1-4)  
-**Backpropagation** · [4.4](#sec-4-4), [4.8](#sec-4-8)  
-**Bias, neuron** · [4.2](#sec-4-2)  
-**Bias, social (algorithmic bias)** · [7.2](#sec-7-2), [7.7](#sec-7-7)  
-**Bias–variance tradeoff** · [3.7](#sec-3-7)  
-**Binary representation** · [1.1](#sec-1-1), [1.2](#sec-1-2), [1.3](#sec-1-3), [1.4](#sec-1-4), [1.5](#sec-1-5), [1.7](#sec-1-7), [1.8](#sec-1-8)  
-**Black box** · [7.1](#sec-7-1), [7.3](#sec-7-3), [7.7](#sec-7-7)  
-**Boole, George** · [1.3](#sec-1-3)  
-**BPE / WordPiece** · [5.2](#sec-5-2)  
-**Breadth-first search (BFS)** · [2.4](#sec-2-4)  
-**Chinese Room** · [1.6](#sec-1-6), [8.1](#sec-8-1), [8.2](#sec-8-2), [8.3](#sec-8-3), [8.7](#sec-8-7)  
-**Classification** · [3.2](#sec-3-2), [3.3](#sec-3-3), [3.4](#sec-3-4), [3.8](#sec-3-8), [6.6](#sec-6-6), [7.4](#sec-7-4)  
-**Clustering** · [3.3](#sec-3-3), [3.4](#sec-3-4), [3.5](#sec-3-5), [3.8](#sec-3-8)  
-**Computationalism** · [1.3](#sec-1-3)  
-**Context window** · [5.1](#sec-5-1), [5.2](#sec-5-2), [5.8](#sec-5-8), [5.9](#sec-5-9), [6.2](#sec-6-2)  
-**Convolutional neural network (CNN)** · [4.5](#sec-4-5), [4.8](#sec-4-8)  
-**Deep learning** · [1.7](#sec-1-7), [4.1](#sec-4-1), [4.4](#sec-4-4)  
-**Deepfake (synthetic media)** · [7.1](#sec-7-1), [7.4](#sec-7-4), [7.7](#sec-7-7)  
-**Diffusion model** · [4.7](#sec-4-7), [5.1](#sec-5-1), [5.7](#sec-5-7), [5.8](#sec-5-8), [5.9](#sec-5-9), [7.4](#sec-7-4)  
-**DPO** · [5.6](#sec-5-6)  
-**Embedding** · [4.6](#sec-4-6), [5.1](#sec-5-1), [5.3](#sec-5-3), [5.7](#sec-5-7), [5.8](#sec-5-8), [5.9](#sec-5-9), [6.3](#sec-6-3), [6.5](#sec-6-5)  
-**ENIAC** · [1.5](#sec-1-5)  
-**Ensemble learning** · [3.7](#sec-3-7)  
-**EU AI Act** · [7.1](#sec-7-1), [7.5](#sec-7-5), [7.7](#sec-7-7)  
-**Expert system** · [2.1](#sec-2-1), [2.3](#sec-2-3), [2.6](#sec-2-6), [2.7](#sec-2-7)  
-**Explainable AI (XAI)** · [7.1](#sec-7-1), [7.3](#sec-7-3)  
-**Exponential growth** · [1.7](#sec-1-7), [8.5](#sec-8-5)  
-**Feature** · [3.2](#sec-3-2), [3.8](#sec-3-8), [4.3](#sec-4-3), [4.5](#sec-4-5), [7.3](#sec-7-3)  
-**Feedforward** · [4.3](#sec-4-3), [4.4](#sec-4-4), [4.8](#sec-4-8)  
-**Fine-tuning** · [5.1](#sec-5-1), [5.6](#sec-5-6), [5.9](#sec-5-9)  
-**Gardner, Howard** · [1.2](#sec-1-2), [1.8](#sec-1-8)  
-**GDPR / KVKK** · [7.1](#sec-7-1), [7.5](#sec-7-5)  
-**Generative adversarial network (GAN)** · [4.7](#sec-4-7), [4.8](#sec-4-8), [5.7](#sec-5-7), [7.4](#sec-7-4)  
-**Generative AI** · [5.1](#sec-5-1), [7.4](#sec-7-4)  
-**Gradient descent** · [3.1](#sec-3-1), [3.6](#sec-3-6), [3.7](#sec-3-7), [3.8](#sec-3-8), [4.2](#sec-4-2), [4.4](#sec-4-4), [4.6](#sec-4-6)  
-**Hallucination** · [5.1](#sec-5-1), [5.8](#sec-5-8), [5.9](#sec-5-9), [6.3](#sec-6-3), [6.7](#sec-6-7)  
-**Heuristic** · [2.4](#sec-2-4), [2.6](#sec-2-6), [2.7](#sec-2-7)  
-**Hinton, Geoffrey** · [4.4](#sec-4-4)  
-**Hochreiter, Sepp** · [4.6](#sec-4-6)  
-**ImageNet** · [4.1](#sec-4-1)  
-**Inference** · [2.2](#sec-2-2), [2.3](#sec-2-3)  
-**Intel 4004** · [1.7](#sec-1-7)  
-**Knowledge acquisition bottleneck** · [2.1](#sec-2-1), [2.6](#sec-2-6)  
-**Knowledge representation** · [2.2](#sec-2-2)  
-**Label** · [3.2](#sec-3-2), [3.3](#sec-3-3), [3.4](#sec-3-4), [3.5](#sec-3-5), [3.8](#sec-3-8), [7.2](#sec-7-2), [7.5](#sec-7-5)  
-**Large language model (LLM)** · [1.6](#sec-1-6), [3.3](#sec-3-3), [5.1](#sec-5-1), [5.2](#sec-5-2), [5.5](#sec-5-5), [5.8](#sec-5-8), [5.9](#sec-5-9), [6.1](#sec-6-1), [6.2](#sec-6-2), [6.3](#sec-6-3), [6.4](#sec-6-4), [6.7](#sec-6-7), [8.2](#sec-8-2), [8.3](#sec-8-3)  
-**Learning rate** · [3.6](#sec-3-6), [4.4](#sec-4-4)  
-**Loss** · [3.1](#sec-3-1), [3.6](#sec-3-6), [3.8](#sec-3-8), [4.4](#sec-4-4), [5.6](#sec-5-6), [5.7](#sec-5-7)  
-**Lovelace, Ada** · [1.4](#sec-1-4)  
-**Machine learning** · [3.1](#sec-3-1), [3.2](#sec-3-2), [3.8](#sec-3-8)  
-**Markov chain** · [2.5](#sec-2-5), [2.6](#sec-2-6), [2.7](#sec-2-7)  
-**Moore, Gordon** · [1.7](#sec-1-7)  
-**Moore’s law** · [1.7](#sec-1-7), [1.8](#sec-1-8)  
-**Narrow AI** · [1.6](#sec-1-6), [1.8](#sec-1-8), [8.1](#sec-8-1), [8.4](#sec-8-4), [8.7](#sec-8-7)  
-**Neats and scruffies** · [2.6](#sec-2-6), [2.7](#sec-2-7)  
-**Orchestration** · [6.1](#sec-6-1), [6.4](#sec-6-4), [6.5](#sec-6-5), [6.7](#sec-6-7)  
-**Overfitting** · [3.7](#sec-3-7), [3.8](#sec-3-8)  
-**Parameter** · [3.1](#sec-3-1), [3.5](#sec-3-5), [3.6](#sec-3-6), [3.8](#sec-3-8), [4.3](#sec-4-3), [4.5](#sec-4-5), [4.6](#sec-4-6)  
-**Pretraining** · [3.3](#sec-3-3), [5.1](#sec-5-1), [5.6](#sec-5-6), [5.9](#sec-5-9)  
-**Prompt engineering** · [6.1](#sec-6-1), [6.2](#sec-6-2), [6.3](#sec-6-3), [6.4](#sec-6-4), [6.5](#sec-6-5), [6.7](#sec-6-7), [8.2](#sec-8-2)  
-**RAG (retrieval-augmented generation)** · [5.8](#sec-5-8), [6.1](#sec-6-1), [6.3](#sec-6-3), [6.5](#sec-6-5), [6.6](#sec-6-6), [6.7](#sec-6-7)  
-**ReAct** · [6.1](#sec-6-1), [6.4](#sec-6-4)  
-**Recurrent neural network (RNN)** · [4.6](#sec-4-6), [4.8](#sec-4-8), [5.4](#sec-5-4)  
-**Regression** · [3.2](#sec-3-2), [3.3](#sec-3-3), [3.4](#sec-3-4), [3.8](#sec-3-8)  
-**Reinforcement learning** · [2.5](#sec-2-5), [3.3](#sec-3-3), [3.8](#sec-3-8)  
-**RLHF (reinforcement learning from human feedback)** · [5.1](#sec-5-1), [5.6](#sec-5-6), [5.9](#sec-5-9), [7.6](#sec-7-6)  
-**Rumelhart, David** · [4.4](#sec-4-4)  
-**Searle, John** · [1.6](#sec-1-6), [8.2](#sec-8-2), [8.3](#sec-8-3)  
-**Shannon, Claude** · [1.3](#sec-1-3)  
-**SHAP** · [7.3](#sec-7-3)  
-**Singularity** · [8.1](#sec-8-1), [8.5](#sec-8-5), [8.7](#sec-8-7)  
-**Specification gaming, reward hacking** · [5.6](#sec-5-6), [7.6](#sec-7-6)  
-**Stored-program principle** · [1.1](#sec-1-1), [1.5](#sec-1-5), [1.7](#sec-1-7), [1.8](#sec-1-8)  
-**Strong AI** · [1.1](#sec-1-1), [1.6](#sec-1-6), [1.8](#sec-1-8), [8.3](#sec-8-3)  
-**Superintelligence** · [8.1](#sec-8-1), [8.4](#sec-8-4), [8.7](#sec-8-7)  
-**Supervised learning** · [3.2](#sec-3-2), [3.3](#sec-3-3), [3.4](#sec-3-4), [3.8](#sec-3-8), [5.6](#sec-5-6)  
-**Symbolic AI (GOFAI)** · [2.1](#sec-2-1), [2.2](#sec-2-2), [2.6](#sec-2-6), [2.7](#sec-2-7)  
-**Temperature** · [5.5](#sec-5-5), [5.6](#sec-5-6), [5.9](#sec-5-9), [6.7](#sec-6-7)  
-**Token** · [5.1](#sec-5-1), [5.2](#sec-5-2), [5.3](#sec-5-3), [5.4](#sec-5-4), [5.5](#sec-5-5), [5.6](#sec-5-6), [5.8](#sec-5-8), [5.9](#sec-5-9), [6.2](#sec-6-2)  
-**Transformer** · [4.6](#sec-4-6), [5.1](#sec-5-1), [5.4](#sec-5-4)  
-**Turing machine** · [1.1](#sec-1-1), [1.4](#sec-1-4), [1.7](#sec-1-7), [1.8](#sec-1-8)  
-**Turing test** · [8.1](#sec-8-1), [8.2](#sec-8-2), [8.3](#sec-8-3), [8.4](#sec-8-4), [8.7](#sec-8-7)  
-**Turing, Alan** · [1.4](#sec-1-4), [8.1](#sec-8-1), [8.2](#sec-8-2)  
-**Unsupervised learning** · [3.3](#sec-3-3), [3.5](#sec-3-5), [3.8](#sec-3-8)  
-**von Neumann, John** · [1.5](#sec-1-5), [1.8](#sec-1-8)  
-**Weight** · [3.1](#sec-3-1), [4.1](#sec-4-1), [4.2](#sec-4-2), [4.3](#sec-4-3), [4.4](#sec-4-4), [4.5](#sec-4-5), [4.6](#sec-4-6), [4.8](#sec-4-8), [5.4](#sec-5-4), [5.9](#sec-5-9), [8.3](#sec-8-3), [8.6](#sec-8-6)
+**Accountability** · [7.3](#ix-7-3-0), [8.6](#ix-8-6-0)  
+**Activation function** · [4.1](#ix-4-1-1), [4.2](#ix-4-2-1), [4.3](#ix-4-3-1), [4.8](#ix-4-8-1)  
+**Agent** · [3.3](#ix-3-3-2), [3.8](#ix-3-8-2), [6.1](#ix-6-1-2), [6.4](#ix-6-4-2), [6.5](#ix-6-5-2), [6.6](#ix-6-6-2), [6.7](#ix-6-7-2)  
+**AlexNet** · [4.1](#ix-4-1-92), [4.5](#ix-4-5-92)  
+**Algorithm** · [1.1](#ix-1-1-3), [1.3](#ix-1-3-3), [1.4](#ix-1-4-3), [1.7](#ix-1-7-3), [1.8](#ix-1-8-3), [2.1](#ix-2-1-3), [3.5](#ix-3-5-3)  
+**Alignment** · [5.6](#ix-5-6-4), [5.8](#ix-5-8-4), [5.9](#ix-5-9-4), [7.1](#ix-7-1-4), [7.6](#ix-7-6-4), [7.7](#ix-7-7-4), [8.5](#ix-8-5-4)  
+**Anomaly detection** · [3.5](#ix-3-5-5), [6.6](#ix-6-6-5)  
+**Artificial general intelligence (AGI)** · [1.6](#ix-1-6-6), [1.8](#ix-1-8-6), [8.1](#ix-8-1-6), [8.4](#ix-8-4-6), [8.7](#ix-8-7-6)  
+**Artificial intelligence (AI)** · [1.1](#ix-1-1-7), [1.5](#ix-1-5-7), [5.2](#ix-5-2-7)  
+**Artificial neural network** · [2.7](#ix-2-7-8), [3.6](#ix-3-6-8), [4.1](#ix-4-1-8), [4.3](#sec-4-3), [4.5](#ix-4-5-8), [4.8](#ix-4-8-8), [5.7](#ix-5-7-8), [5.9](#ix-5-9-8)  
+**Artificial neuron** · [4.1](#ix-4-1-9), [4.2](#ix-4-2-9), [4.3](#ix-4-3-9), [4.6](#ix-4-6-9), [4.8](#ix-4-8-9)  
+**Attention** · [4.6](#ix-4-6-10), [4.7](#ix-4-7-10), [5.1](#ix-5-1-10), [5.4](#ix-5-4-10), [5.8](#ix-5-8-10), [5.9](#ix-5-9-10), [6.6](#ix-6-6-10), [7.3](#ix-7-3-10)  
+**Babbage, Charles** · [1.1](#ix-1-1-81), [1.4](#ix-1-4-81)  
+**Backpropagation** · [4.4](#ix-4-4-11), [4.8](#ix-4-8-11)  
+**Bias, neuron** · [4.2](#ix-4-2-12)  
+**Bias, social (algorithmic bias)** · [7.2](#ix-7-2-13), [7.7](#ix-7-7-13)  
+**Bias–variance tradeoff** · [3.7](#ix-3-7-14)  
+**Binary representation** · [1.1](#ix-1-1-15), [1.2](#ix-1-2-15), [1.3](#ix-1-3-15), [1.4](#ix-1-4-15), [1.5](#ix-1-5-15), [1.7](#ix-1-7-15), [1.8](#ix-1-8-15)  
+**Black box** · [7.1](#ix-7-1-16), [7.3](#ix-7-3-16), [7.7](#ix-7-7-16)  
+**Boole, George** · [1.3](#ix-1-3-89)  
+**BPE / WordPiece** · [5.2](#ix-5-2-94)  
+**Breadth-first search (BFS)** · [2.4](#ix-2-4-17)  
+**Chinese Room** · [1.6](#ix-1-6-18), [8.1](#ix-8-1-18), [8.2](#ix-8-2-18), [8.3](#ix-8-3-18), [8.7](#ix-8-7-18)  
+**Classification** · [3.2](#ix-3-2-19), [3.3](#ix-3-3-19), [3.4](#ix-3-4-19), [3.8](#ix-3-8-19), [6.6](#ix-6-6-19), [7.4](#ix-7-4-19)  
+**Clustering** · [3.3](#ix-3-3-20), [3.4](#ix-3-4-20), [3.5](#ix-3-5-20), [3.8](#ix-3-8-20)  
+**Computationalism** · [1.3](#ix-1-3-21)  
+**Context window** · [5.1](#ix-5-1-22), [5.2](#ix-5-2-22), [5.8](#ix-5-8-22), [5.9](#ix-5-9-22), [6.2](#ix-6-2-22)  
+**Convolutional neural network (CNN)** · [4.5](#ix-4-5-23), [4.8](#ix-4-8-23)  
+**Deep learning** · [1.7](#ix-1-7-24), [4.1](#ix-4-1-24), [4.4](#ix-4-4-24)  
+**Deepfake (synthetic media)** · [7.1](#ix-7-1-25), [7.4](#ix-7-4-25), [7.7](#ix-7-7-25)  
+**Diffusion model** · [4.7](#ix-4-7-26), [5.1](#ix-5-1-26), [5.7](#ix-5-7-26), [5.8](#ix-5-8-26), [5.9](#ix-5-9-26), [7.4](#ix-7-4-26)  
+**DPO** · [5.6](#ix-5-6-97)  
+**Embedding** · [4.6](#ix-4-6-27), [5.1](#ix-5-1-27), [5.3](#ix-5-3-27), [5.7](#ix-5-7-27), [5.8](#ix-5-8-27), [5.9](#ix-5-9-27), [6.3](#ix-6-3-27), [6.5](#ix-6-5-27)  
+**ENIAC** · [1.5](#ix-1-5-90)  
+**Ensemble learning** · [3.7](#ix-3-7-28)  
+**EU AI Act** · [7.1](#ix-7-1-29), [7.5](#ix-7-5-29), [7.7](#ix-7-7-29)  
+**Expert system** · [2.1](#ix-2-1-30), [2.3](#ix-2-3-30), [2.6](#sec-2-6), [2.7](#ix-2-7-30)  
+**Explainable AI (XAI)** · [7.1](#ix-7-1-31), [7.3](#ix-7-3-31)  
+**Exponential growth** · [1.7](#ix-1-7-32), [8.5](#ix-8-5-32)  
+**Feature** · [3.2](#ix-3-2-33), [3.8](#ix-3-8-33), [4.3](#ix-4-3-33), [4.5](#ix-4-5-33), [7.3](#ix-7-3-33)  
+**Feedforward** · [4.3](#ix-4-3-34), [4.4](#ix-4-4-34), [4.8](#ix-4-8-34)  
+**Fine-tuning** · [5.1](#ix-5-1-35), [5.6](#ix-5-6-35), [5.9](#ix-5-9-35)  
+**Gardner, Howard** · [1.2](#ix-1-2-79), [1.8](#ix-1-8-79)  
+**GDPR / KVKK** · [7.1](#ix-7-1-36), [7.5](#ix-7-5-36)  
+**Generative adversarial network (GAN)** · [4.7](#ix-4-7-37), [4.8](#ix-4-8-37), [5.7](#ix-5-7-37), [7.4](#ix-7-4-37)  
+**Generative AI** · [5.1](#ix-5-1-38), [7.4](#ix-7-4-38)  
+**Gradient descent** · [3.1](#ix-3-1-39), [3.6](#ix-3-6-39), [3.7](#ix-3-7-39), [3.8](#ix-3-8-39), [4.2](#ix-4-2-39), [4.4](#ix-4-4-39), [4.6](#ix-4-6-39)  
+**Hallucination** · [5.1](#ix-5-1-40), [5.8](#ix-5-8-40), [5.9](#ix-5-9-40), [6.3](#ix-6-3-40), [6.7](#ix-6-7-40)  
+**Heuristic** · [2.4](#ix-2-4-41), [2.6](#ix-2-6-41), [2.7](#ix-2-7-41)  
+**Hinton, Geoffrey** · [4.4](#ix-4-4-85)  
+**Hochreiter, Sepp** · [4.6](#ix-4-6-87)  
+**ImageNet** · [4.1](#ix-4-1-93)  
+**Inference** · [2.2](#ix-2-2-42), [2.3](#ix-2-3-42)  
+**Intel 4004** · [1.7](#ix-1-7-91)  
+**Knowledge acquisition bottleneck** · [2.1](#ix-2-1-43), [2.6](#ix-2-6-43)  
+**Knowledge representation** · [2.2](#ix-2-2-44)  
+**Label** · [3.2](#sec-3-2), [3.3](#ix-3-3-45), [3.4](#ix-3-4-45), [3.5](#ix-3-5-45), [3.8](#ix-3-8-45), [7.2](#ix-7-2-45), [7.5](#ix-7-5-45)  
+**Large language model (LLM)** · [1.6](#ix-1-6-46), [3.3](#ix-3-3-46), [5.1](#ix-5-1-46), [5.2](#ix-5-2-46), [5.5](#ix-5-5-46), [5.8](#ix-5-8-46), [5.9](#ix-5-9-46), [6.1](#ix-6-1-46), [6.2](#ix-6-2-46), [6.3](#ix-6-3-46), [6.4](#ix-6-4-46), [6.7](#ix-6-7-46), [8.2](#ix-8-2-46), [8.3](#ix-8-3-46)  
+**Learning rate** · [3.6](#ix-3-6-47), [4.4](#ix-4-4-47)  
+**Loss** · [3.1](#ix-3-1-48), [3.6](#ix-3-6-48), [3.8](#ix-3-8-48), [4.4](#ix-4-4-48), [5.6](#ix-5-6-48), [5.7](#ix-5-7-48)  
+**Lovelace, Ada** · [1.4](#ix-1-4-82)  
+**Machine learning** · [3.1](#ix-3-1-49), [3.2](#ix-3-2-49), [3.8](#ix-3-8-49)  
+**Markov chain** · [2.5](#ix-2-5-50), [2.6](#sec-2-6), [2.7](#ix-2-7-50)  
+**Moore, Gordon** · [1.7](#ix-1-7-84)  
+**Moore’s law** · [1.7](#ix-1-7-51), [1.8](#ix-1-8-51)  
+**Narrow AI** · [1.6](#ix-1-6-52), [1.8](#ix-1-8-52), [8.1](#ix-8-1-52), [8.4](#ix-8-4-52), [8.7](#ix-8-7-52)  
+**Neats and scruffies** · [2.6](#sec-2-6), [2.7](#ix-2-7-53)  
+**Orchestration** · [6.1](#ix-6-1-54), [6.4](#ix-6-4-54), [6.5](#ix-6-5-54), [6.7](#ix-6-7-54)  
+**Overfitting** · [3.7](#ix-3-7-55), [3.8](#ix-3-8-55)  
+**Parameter** · [3.1](#ix-3-1-56), [3.5](#ix-3-5-56), [3.6](#ix-3-6-56), [3.8](#ix-3-8-56), [4.3](#ix-4-3-56), [4.5](#ix-4-5-56), [4.6](#ix-4-6-56)  
+**Pretraining** · [3.3](#ix-3-3-57), [5.1](#ix-5-1-57), [5.6](#ix-5-6-57), [5.9](#ix-5-9-57)  
+**Prompt engineering** · [6.1](#ix-6-1-58), [6.2](#ix-6-2-58), [6.3](#ix-6-3-58), [6.4](#ix-6-4-58), [6.5](#ix-6-5-58), [6.7](#ix-6-7-58), [8.2](#ix-8-2-58)  
+**RAG (retrieval-augmented generation)** · [5.8](#ix-5-8-59), [6.1](#ix-6-1-59), [6.3](#ix-6-3-59), [6.5](#ix-6-5-59), [6.6](#ix-6-6-59), [6.7](#ix-6-7-59)  
+**ReAct** · [6.1](#ix-6-1-95), [6.4](#ix-6-4-95)  
+**Recurrent neural network (RNN)** · [4.6](#ix-4-6-60), [4.8](#ix-4-8-60), [5.4](#ix-5-4-60)  
+**Regression** · [3.2](#ix-3-2-61), [3.3](#ix-3-3-61), [3.4](#ix-3-4-61), [3.8](#ix-3-8-61)  
+**Reinforcement learning** · [2.5](#ix-2-5-62), [3.3](#ix-3-3-62), [3.8](#ix-3-8-62)  
+**RLHF (reinforcement learning from human feedback)** · [5.1](#ix-5-1-63), [5.6](#ix-5-6-63), [5.9](#ix-5-9-63), [7.6](#ix-7-6-63)  
+**Rumelhart, David** · [4.4](#ix-4-4-86)  
+**Searle, John** · [1.6](#ix-1-6-80), [8.2](#ix-8-2-80), [8.3](#ix-8-3-80)  
+**Shannon, Claude** · [1.3](#ix-1-3-88)  
+**SHAP** · [7.3](#ix-7-3-96)  
+**Singularity** · [8.1](#ix-8-1-64), [8.5](#ix-8-5-64), [8.7](#ix-8-7-64)  
+**Specification gaming, reward hacking** · [5.6](#ix-5-6-65), [7.6](#ix-7-6-65)  
+**Stored-program principle** · [1.1](#ix-1-1-66), [1.5](#ix-1-5-66), [1.7](#ix-1-7-66), [1.8](#ix-1-8-66)  
+**Strong AI** · [1.1](#ix-1-1-67), [1.6](#ix-1-6-67), [1.8](#ix-1-8-67), [8.3](#ix-8-3-67)  
+**Superintelligence** · [8.1](#ix-8-1-68), [8.4](#ix-8-4-68), [8.7](#ix-8-7-68)  
+**Supervised learning** · [3.2](#ix-3-2-69), [3.3](#ix-3-3-69), [3.4](#ix-3-4-69), [3.8](#ix-3-8-69), [5.6](#ix-5-6-69)  
+**Symbolic AI (GOFAI)** · [2.1](#ix-2-1-70), [2.2](#ix-2-2-70), [2.6](#ix-2-6-70), [2.7](#ix-2-7-70)  
+**Temperature** · [5.5](#ix-5-5-71), [5.6](#sec-5-6), [5.9](#ix-5-9-71), [6.7](#ix-6-7-71)  
+**Token** · [5.1](#ix-5-1-72), [5.2](#ix-5-2-72), [5.3](#ix-5-3-72), [5.4](#ix-5-4-72), [5.5](#ix-5-5-72), [5.6](#ix-5-6-72), [5.8](#ix-5-8-72), [5.9](#ix-5-9-72), [6.2](#ix-6-2-72)  
+**Transformer** · [4.6](#ix-4-6-73), [5.1](#ix-5-1-73), [5.4](#ix-5-4-73)  
+**Turing machine** · [1.1](#ix-1-1-74), [1.4](#ix-1-4-74), [1.7](#ix-1-7-74), [1.8](#ix-1-8-74)  
+**Turing test** · [8.1](#ix-8-1-75), [8.2](#ix-8-2-75), [8.3](#ix-8-3-75), [8.4](#sec-8-4), [8.7](#ix-8-7-75)  
+**Turing, Alan** · [1.4](#ix-1-4-78), [8.1](#ix-8-1-78), [8.2](#ix-8-2-78)  
+**Unsupervised learning** · [3.3](#ix-3-3-76), [3.5](#ix-3-5-76), [3.8](#ix-3-8-76)  
+**von Neumann, John** · [1.5](#ix-1-5-83), [1.8](#ix-1-8-83)  
+**Weight** · [3.1](#ix-3-1-77), [4.1](#ix-4-1-77), [4.2](#ix-4-2-77), [4.3](#ix-4-3-77), [4.4](#ix-4-4-77), [4.5](#ix-4-5-77), [4.6](#ix-4-6-77), [4.8](#ix-4-8-77), [5.4](#ix-5-4-77), [5.9](#ix-5-9-77), [8.3](#ix-8-3-77), [8.6](#ix-8-6-77)

@@ -307,40 +307,40 @@ The building blocks of the chapter are in place: intelligence, binary code, algo
 
 *Answers are at the back of the book.*
 1. What did Howard Gardner propose?
-   a) That IQ fully measures intelligence
-   b) That the brain is a computer
-   c) That machines can never think
-   d) That intelligence has many kinds, not one
+   a) That the brain is a computer
+   b) That intelligence has many kinds, not one
+   c) That IQ fully measures intelligence
+   d) That machines can never think
 
 2. Binary code is made of which symbols?
    a) A to Z
    b) Dots and dashes
-   c) 0 and 1
-   d) 0–9
+   c) 0–9
+   d) 0 and 1
 
 3. What can a Turing machine fundamentally do?
-   a) In principle any computation, via simple rules
-   b) Only addition
-   c) Only play chess
+   a) Only play chess
+   b) In principle any computation, via simple rules
+   c) Only addition
    d) Only store text
 
 4. The core idea of the von Neumann architecture?
    a) Inventing the internet
    b) Keeping program and data in the same memory
-   c) Using binary instead of decimal
-   d) Rewiring for each new task
+   c) Rewiring for each new task
+   d) Using binary instead of decimal
 
 5. What kind are today’s AI systems?
-   a) General AI (AGI)
-   b) Conscious AI
-   c) Narrow AI
-   d) Strong AI
+   a) Strong AI
+   b) Narrow AI
+   c) General AI (AGI)
+   d) Conscious AI
 
 6. What does Moore’s law say?
    a) Internet speed is constant
-   b) Computers get cheaper yearly
-   c) AI will surpass humans
-   d) Transistor count ~doubles every 2 years
+   b) AI will surpass humans
+   c) Transistor count ~doubles every 2 years
+   d) Computers get cheaper yearly
 
 ### What to keep from this chapter
 

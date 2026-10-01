@@ -119,7 +119,7 @@ Bu ağ iki girdi düzeninde de aynı kapıyı gösterdi, çünkü ağırlıklar�
 
 Ağ işe rastgele tahminlerle başlar; ilk günkü acemiliğine şaşmamalı. Nasıl ustalaşır? Önce tahminini doğru cevapla kıyaslar, ne kadar yanıldığını ölçer; buna hata denir. Sonra bu hata, çıkıştan girişe doğru geri geri yürür ve uğradığı her bağlantıya “sen de birazcık payını düzelt” der.
 
-Bu geri geri yürüyüşe geri yayılım denir. Şekil 4.3’te tur tur ilerle; hatanın geriye akışını ve çıktının her turda doğru cevaba biraz daha yaklaşmasını izle. Hata küçüldükçe geriye taşınan fısıltı da zayıflar; düzeltilecek pay kalmaz.
+Bu geri geri yürüyüşe geri yayılım denir. Şekil 4.3’ü tur tur oku; hatanın geriye akışını ve çıktının her turda doğru cevaba biraz daha yaklaşmasını gör. Hata küçüldükçe geriye taşınan fısıltı da zayıflar; düzeltilecek pay kalmaz.
 
 > **Kenar notu.** İleri besleme “tahmin et”, geri yayılım “hatadan ders al” demektir. Bu iki adımı milyonlarca kez tekrarlamak; derin öğrenmenin özü bu.
 
@@ -276,7 +276,7 @@ Buraya kadar ağlar hep tanıdı: nöron ateşledi, kenar bulundu, dizi hatırla
 
 Bazen amaç tanımak değil, üretmektir: gerçekçi yüzler, manzaralar, sesler. Üretken çekişmeli ağların (GAN) hilesi, bir kalpazanla bir dedektifi aynı odaya kilitlemektir. Kalpazan (üretici) sahte örnekler üretir; dedektif (ayırt edici) gerçeği sahteden ayırmaya çalışır.
 
-İkisi durmadan yarışır: dedektif yakaladıkça kalpazan ustalaşır, kalpazan ustalaştıkça dedektif keskinleşir. Şekil 4.6’da tur tur ilerle; gürültüden ibaret görüntünün, kalpazan piştikçe gerçeğe nasıl yaklaştığını izle.
+İkisi durmadan yarışır: dedektif yakaladıkça kalpazan ustalaşır, kalpazan ustalaştıkça dedektif keskinleşir. Şekil 4.6’yı tur tur oku; gürültüden ibaret görüntünün, kalpazan piştikçe gerçeğe nasıl yaklaştığını gör.
 
 > **Kenar notu.** GAN’da iyi sahte üretmek ile sahteyi yakalamak birbirini sürekli iter. Kalpazanla dedektifin yarışı gibi; ikisi de geliştikçe sonuç giderek gerçeğe yaklaşır.
 
@@ -328,40 +328,40 @@ Ağlar tanımayı da üretmeyi de öğrendi. Bugünün sohbet eden, resim çizen
 
 *Cevaplar kitabın sonunda.*
 1. Bir yapay nöron ne hesaplar?
-   a) Girdileri olduğu gibi kopyalar
-   b) Sadece girdilerin ortalaması
+   a) Sadece girdilerin ortalaması
+   b) Girdilerin ağırlıklı toplamı + sapma, sonra aktivasyon
    c) Rastgele bir sayı
-   d) Girdilerin ağırlıklı toplamı + sapma, sonra aktivasyon
+   d) Girdileri olduğu gibi kopyalar
 
 2. Bir sinir ağını “derin” yapan nedir?
-   a) Çok sayıda gizli katman
-   b) Tek bir nöronu olması
-   c) Çok hızlı çalışması
+   a) Çok hızlı çalışması
+   b) Çok sayıda gizli katman
+   c) Tek bir nöronu olması
    d) İnternete bağlı olması
 
 3. Aktivasyon fonksiyonu hiç olmasaydı ne olurdu?
-   a) Ağ daha güçlü olurdu
+   a) Ağ daha hızlı olurdu
    b) Ağ tek bir doğrusal işleve çökerdi
    c) Hiçbir şey değişmezdi
-   d) Ağ daha hızlı olurdu
+   d) Ağ daha güçlü olurdu
 
 4. Geri yayılım ne yapar?
-   a) Görüntüyü büyütür
-   b) Yeni katman ekler
-   c) Hatayı geriye yayıp ağırlıkları hatayı azaltacak yönde günceller
+   a) Yeni katman ekler
+   b) Hatayı geriye yayıp ağırlıkları hatayı azaltacak yönde günceller
+   c) Görüntüyü büyütür
    d) Veriyi siler
 
 5. CNN’ler özellikle hangi veride güçlüdür?
-   a) Görüntü
+   a) Tek bir sayı
    b) Şifreler
    c) Tablolar
-   d) Tek bir sayı
+   d) Görüntü
 
 6. GAN’da çekişen iki ağ hangileridir?
    a) Girdi ve Çıktı
    b) CNN ve RNN
-   c) Öğretmen ve Öğrenci
-   d) Üretici ve Ayırt edici
+   c) Üretici ve Ayırt edici
+   d) Öğretmen ve Öğrenci
 
 ### Bu bölümden kalanlar
 

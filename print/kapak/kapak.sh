@@ -19,7 +19,8 @@ fs.writeFileSync('out/kapak-boxed.pdf', await d.save());})();
 EOJ
 GSICC="$(find /opt/homebrew /usr/local /usr/share -name default_cmyk.icc 2>/dev/null | head -1)"
 if [ -n "$ICC" ]; then PROF="$ICC"; COND="$(basename "$ICC" .icc)"; CID="FOGRA39"; else PROF="$GSICC"; COND="Ghostscript default CMYK (matbaa profili ile değiştirilecek)"; CID="Custom"; fi
-sed -e "s|ICCPROFILE|($PROF)|" -e "s|OUTPUTCONDITIONID|$CID|" -e "s|OUTPUTCONDITION|$COND|" -e "s|Herkes İçin Yapay Zekâ)|$TITLE)|" ../typeset/PDFX_def.ps > out/PDFX_def.ps
+TITLE_HEX=$(python3 -c 'import sys; print(sys.argv[1].encode("utf-16-be").hex().upper())' "$TITLE")
+sed -e "s|ICCPROFILE|($PROF)|" -e "s|OUTPUTCONDITIONID|$CID|" -e "s|OUTPUTCONDITION|$COND|" -e "s|TITLEHEX|$TITLE_HEX|" ../typeset/PDFX_def.ps > out/PDFX_def.ps
 gs -q -dBATCH -dNOPAUSE -dNOSAFER -dPDFX -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress \
    -sColorConversionStrategy=CMYK -dUseFastColor=true -dProcessColorModel=/DeviceCMYK \
    -dEmbedAllFonts=true -dSubsetFonts=true -dCompatibilityLevel=1.3 -dPreserveAnnots=false -dAutoRotatePages=/None \

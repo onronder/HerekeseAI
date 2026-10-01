@@ -1,17 +1,23 @@
 {
   "isbn": "",
-  "pages": 248,
+  "pages": 236,
   "spine_mm": 16.0,
   "paper_note": "KDP: spine = pages × 0.002252 in (standard color, white paper). Set 'pages' to the final interior page count; spine_mm is ignored when pages is set.",
   "price": "",
   "variant": "ag",
   "subtitle": "Eight chapters, forty-five experiments: step by step on paper, live on your phone.",
-  "back_lead": "Can a machine think? The question is four hundred years old. What is new is that the machines that can try to answer it are now sitting on the table.",
+  "back_lead": "Can a machine think? The question is very old. What is new is that the machines that can try to answer it are now sitting on the table.",
   "back_text": [
     "A two-century story, from the first calculating gears to today’s chatbots: rules, search, probability, learning, neurons, attention. Each idea was born where the one before it hit a wall, and the chapters follow that order.",
     "Forty-five experiments are worked out on paper with real numbers: you make a Turing machine add 1, fire a neuron, pull a picture out of noise. The QR code under each figure opens the live version of the same experiment on your phone; no sign-in needed.",
     "The book is written at two depths. The main text is for readers with no background at all; the “Technical depth” boxes are for anyone who wants the formula and the math. Skip the boxes and nothing is missing."
   ],
-  "author_bio": "[AUTHOR BIO: to be written by the author] Onur Önder is a software engineer working in AI and a co-founder of Fittechs. The interactive digital edition of this book, with all 45 live demos, is at book.onuronder.com.",
+  "author_bio": [
+    "Onur Önder is an engineer working in data, artificial intelligence and software, and a co-founder of Fittechs.",
+    "The real problem is that we cannot tell when we need to learn what. This book sets out to solve that very problem.",
+    "I am glad to share a source you need to read closely in order to understand and digest one of the most radical transformations and revolutions in the history of humanity and technology.",
+    "Get ready to learn, from the ground up, the real source of the developments we may face in the years ahead.",
+    "You can find the interactive digital edition of this book at book.onuronder.com. Scan the QR codes to see the live version of the figures inside the book."
+  ],
   "seller": "book.onuronder.com · support@fittechs.com"
 }
