@@ -31,7 +31,8 @@ TR_ORDER = 'aâbcçdefgğhıiîjklmnoöprsştuüûvyz'
 
 
 def tr_key(s):
-    return [TR_ORDER.index(c) if c in TR_ORDER else 100 + ord(c) for c in tr_lower(s)]
+    # boşluk ve ayraçlar tüm harflerden önce gelir: "Ön eğitim" < "Önyargı" (sözlük sırası, R076)
+    return [-1 if c in ' -–/(),' else (TR_ORDER.index(c) if c in TR_ORDER else 100 + ord(c)) for c in tr_lower(s)]
 
 
 # Dil tablosu: TR çıktısı bayt bayt eskisi gibi kalır; EN aynı hattın İngilizce dosya/başlık/klasör karşılıkları.
@@ -192,6 +193,7 @@ def build_index(chapter_mds):
     if not os.path.exists(path):
         return L['index_missing']
     terms = []
+    exclude, only_ch = {}, {}  # "Terim!hariç: ['Dikkat:']" → bu kalıbı içeren satırda eşleşme sayılmaz; "Terim!bölümler: [4, 5]" → yalnız o bölümler
     for ln in open(path, encoding='utf-8'):
         ln = ln.strip()
         if not ln or ln.startswith('#') or ': ' not in ln:
@@ -201,20 +203,26 @@ def build_index(chapter_mds):
             aliases = ast.literal_eval(rest)
         except Exception:
             aliases = []
+        if '!' in name:
+            base, opt = name.split('!', 1)
+            if opt.strip() == 'hariç': exclude[base.strip()] = [str(a) for a in aliases]
+            elif opt.strip() == 'bölümler': only_ch[base.strip()] = {int(a) for a in aliases}
+            continue
         pats = {name.split(' (')[0].strip()}
         for a in aliases:
             for piece in str(a).split(','):
                 piece = piece.strip()
                 if len(piece) >= 3:
                     pats.add(piece)
-        terms.append((name, sorted(pats, key=len, reverse=True)))
+        terms.append((name, sorted(pats, key=lambda p: (-len(p), p))))
     # bölüm metinleri: her terim için alt bölümdeki ilk geçiş yerine çapa konur (IXANCHOR{…} → html'de <a id="ix-…">),
     # böylece dizin sayfa numarası alt bölüm başını değil terimin geçtiği sayfayı gösterir. chapter_mds yerinde güncellenir.
     def safe_line(text, pos):
         ls = text.rfind('\n', 0, pos) + 1
         line = text[ls:text.find('\n', pos) if text.find('\n', pos) >= 0 else len(text)]
-        return not (line.startswith('#') or line.startswith('!') or line.startswith('<') or '[QR ' in line or 'IXANCHOR{' in line[:pos - ls]
-                    or re.match(r'\*\*(Şekil|Figure) \d', line))  # şekil başlığı satırına çapa konmaz (dizgi bloğu bozulur)
+        return not (line.startswith('#') or line.startswith('!') or line.startswith('<') or line.startswith('|') or line.startswith('>')
+                    or '[QR ' in line or 'IXANCHOR{' in line[:pos - ls]
+                    or re.match(r'\*\*(Şekil|Figure) \d', line))  # şekil başlığı/tablo/kenar notu satırına çapa konmaz (R076: kavram bağlamı)
     out = ['# ' + L['h_index'], '', L['index_intro'], '']
     entries = []
     inserts = [dict() for _ in chapter_mds]  # ci → {offset: token}
@@ -228,7 +236,9 @@ def build_index(chapter_mds):
         lowered.append((body, low, secs))
     for ti, (name, pats) in enumerate(terms):
         hits = []
+        exc = [L['lower'](x) for x in exclude.get(name, [])]
         for ci, (body, low, secs) in enumerate(lowered):
+            if name in only_ch and (ci + 1) not in only_ch[name]: continue
             for si, (label, start) in enumerate(secs):
                 end = secs[si + 1][1] if si + 1 < len(secs) else len(body)
                 seg = low[start:end]
@@ -238,10 +248,13 @@ def build_index(chapter_mds):
                     rx = r'(?<![\wâîû])' + re.escape(L['lower'](pat)) + r'(?![\wâîû])'
                     ms = list(re.finditer(rx, seg_clean))
                     if not ms: continue
+                    ms = [m for m in ms if not any(x in seg_clean[max(0, m.start() - 40):m.end() + 40] for x in exc)]
+                    if not ms: continue
                     for m in ms:
                         if safe_line(body, start + m.start()):
                             found = start + m.start(); break
-                    if found is None: found = -1  # geçiyor ama güvenli satır yok → bölüm çapası
+                    if found is None:
+                        continue  # yalnız tablo/kenar notu/şekilde geçiyor → bu alt bölüm dizine girmez (R076)
                     break
                 if found is None: continue
                 aid = f'{label.replace(".", "-")}-{ti}'

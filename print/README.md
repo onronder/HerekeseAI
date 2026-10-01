@@ -57,6 +57,14 @@ Gereksinimler: Chrome (yerel), Node (`print/typeset` ve `print/kapak` altında `
   (Kurulum, Adım adım, tablo…) arkasına ertelenir; seçenek kalmazsa en iyi konum kilitlenir. Bölüm/arka bölüm kuyruğu tek başına bir sayfaya
   taşıyorsa o bölümün satır aralığı / paragraf aralığı / puntosu kademeli ayarlanır (`_tighten`). Teknik derinlik kutuları sayfalar arasında
   bölünebilir; QR her şeklin altında (figcaption satırı); figür yüksekliği ≤ 120 mm. Matbaa forma katı `MULT=8` (yarım forma; `MULT=16` verilebilir).
+- **Metin kaybı koruması (2026-10-01, `typeset/hooks.js`, pagedjs-cli `--additional-script`):** Paged.js sayfa alanını çok sütunlu kutu olarak
+  kurar; ölçümden sonra alt-piksel bir taşma (bölünen kutunun alt kenarlığı, heceli sözcüğün harf ortasından kesilmesi) Chrome'un dul/yetim kuralıyla
+  bütün bir paragrafı görünmez sütuna atıyordu. `onOverflow` kesmeyi sözcük başına çeker; `renderNode` bölünen tabloya `thead`, bölünen kutuya
+  "Teknik derinlik · devam" ekler (yeniden kurulan ata öğeye; `rebuildAncestors` renderNode'a gelmez); `afterRendered` görünmez sütuna düşen
+  metni sayar, dizin tekrar numaralarını siler ve sonuçları PDF Keywords alanına yazar (`kitap-tasma:0 thead-tekrar:N kutu-devam:N
+  dizin-tekrar-silinen:N`). Sütun düzenini sonradan kaldırmak satırları yeniden akıtıp yapay taşma ürettiği için yapılmaz. `check.sh` iki kapı ekler: `check_text_integrity.py` (HTML gövde cümleleri
+  ⊂ pdftotext; alt/üst simgeler yok sayılır) ve `kitap-tasma:0`. Siyah: `PDFX_def.ps` başındaki `{} setblackgeneration {} setundercolorremoval`
+  RGB siyahı yalnız K'ya çevirir (inkcov ile doğrulanır). QR: 20 mm veri + 2,8 mm sessiz alan (`check_qr.mjs` ölçer).
 - `kapak/kapak.mjs`: arka + sırt + ön tek yayılım (`spine_mm` matbaadan), 5 mm taşma; ISBN girilince EAN-13 barkod (JsBarcode). Üç üretken
   konsept (`kapak.json → variant`): `ag` (koyu; ızgaradan organik ağa, ember öğrenme yolu — seçilen), `kadran`, `vadi` (eş yükselti + gradyan
   inişi). Metinler (`subtitle`, `back_lead`, `back_text`, `author_bio`, `seller`) kapak.json'da; önizleme `out/onizleme/`.
@@ -93,6 +101,9 @@ python3 print/apply_source_changes.py tr --dry-run --report print/kitap/sync-rep
 #   1) ESKİ HTML'de birebir → doğrudan; 2) basılıya uyarlanmış paragraf → book.json'daki en yakın kaynak bulunur, kelime-düzeyi
 #   farklar yalnız ortak metne taşınır (KISMİ/TAŞINAMADI raporlanır); 3) elle gözden geçirilmiş satırlar
 #   print/kitap/web-overrides-<dil>.md (WEB_ESKİ ||| WEB_YENİ; aynı metin = "dokunma") önce uygulanır ve otomatik taşımayı bastırır.
+#   YENİ dijitalde zaten varsa satır atlanır (YENİ = ESKİ + ek cümle satırları tekrar eklenmez). Basılıya özgü ifade ("Şekil N.j", TR "bölüm"
+#   yerine dijitalde "modül") taşıyan satırların dijital sürümü web-overrides'a yazılır. Çalıştırmadan önce HTML yedeği alın; sonra
+#   `grep -c "Şekil [0-9]\.[0-9]" Atlas-Kitap.dc.html` (EN "Figure") 0 olmalı.
 python3 print/apply_source_changes.py tr          # Atlas-Kitap.dc.html güncellenir (EN: Atlas-Kitap-EN.dc.html)
 python3 print/export.py --lang tr                 # book.json / cevap anahtarı yenilenir (--force YOK)
 python3 build.py                                  # web, store/d, gated çıktılar → yazar upload_book.py + git push

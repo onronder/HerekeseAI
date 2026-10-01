@@ -19,9 +19,12 @@ export default {
       mdHead: '| Girdi | G1 | G2 | G3 | G4 | Ç1 | Ç2 | Tahmin |',
     },
     backprop: {
-      round: (r) => `TUR ${r}`, error: (e) => `hata ${e}`, errorArrow: 'hata ◄', output: 'çıktı', target: 'hedef',
-      mdTitle: 'Adım tablosu', mdRule: 'hata(r) = 0.43 · 0.6ʳ, çıktı = 0.80 − hata',
-      mdHead: '| Tur | Hata | Çıktı | Hedefe uzaklık |', points: (n) => `${n} puan`,
+      round: (r) => `TUR ${r}`, loss: (l) => `kayıp L ${l}`, errorArrow: 'hata ◄', output: 'çıktı ŷ', target: 'hedef y',
+      footer: (x, y, lr) => [`girdi x = [${x}] · hedef y = ${y} · η = ${lr} · L = ½(y − ŷ)²`, 'gerçek gradyan güncellemesi: ağırlıklar her tur değişir (2 → 2 → 1 ağ)'],
+      mdTitle: 'Adım tablosu',
+      mdRule: (x, y, lr) => `Gerçek eğitim turları (print/kitap/qa/demo-data.json bp43): girdi x = [${x}], hedef y = ${y}, η = ${lr}; ağ 2 → 2 (sigmoid) → 1 (sigmoid); L = ½(y − ŷ)²; her tur ağırlıklar gradyanla güncellenir.`,
+      mdHead: '| Tur | Çıktı ŷ | Hata y − ŷ | Kayıp L |',
+      mdNote: '> Şekilde ŷ iki, L dört ondalıkla gösterilir; tam değerler demo-data.json içindedir. Eski 0.43·0.6ʳ kuralı kullanılmaz (R027).',
     },
     conv: {
       kernels: { vert: 'DİKEY KENAR ÇEKİRDEĞİ', horiz: 'YATAY KENAR ÇEKİRDEĞİ' },
@@ -30,10 +33,12 @@ export default {
       mdTitle: 'Özellik haritaları', mdNote: 'Görüntü: 7×7 artı (4. satır ve 4. sütun = 1). Dolgu yok, adım 1 → 5×5 harita.',
     },
     rnn: {
-      words: ['yapay', 'zekâ', 'öğreniyor'],
-      frame: (n) => `KARE ${n}`, processed: (n) => `${n} kelime işlendi`, memory: 'hafıza',
-      mdTitle: 'Gizli durum (%)', mdHead: '| Kelime | h₁ | h₂ | h₃ | h₄ | h₅ | h₆ | h₇ | h₈ |', empty: '(boş)',
-      mdNote: '> Gösterim: çubuklar yalnız adım sayısına bağlı sabit bir kuralla üretilir (kelimeye bağlı değil).',
+      // kelimeler ve h değerleri demo-data.json rnn45.tr içinden gelir (R031)
+      frame: (n) => `KARE ${n}`, processed: (n) => `${n} kelime işlendi`, memory: 'hafıza h',
+      legend: 'çubuk boyu = |h| · koyu çubuk = eksi değer · etiket işaretli değer · h₀ = 0',
+      formula: 'hₜ = tanh(Wₓ·xₜ + Wₕ·hₜ₋₁) · 4 gizli birim · sabit küçük ağırlıklar',
+      mdTitle: 'Gizli durum', mdHead: '| Kare | Kelime | h₁ | h₂ | h₃ | h₄ |', empty: '(boş)',
+      mdNote: '> Değerler gerçek yineleme formülünden (tanh) hesaplanır; kare 0 boş başlangıç h₀ = 0. Ağırlıklar print/kitap/qa/demo-data.json rnn45 içinde.',
     },
     gan: {
       target: 'HEDEF (GERÇEK GÖRÜNTÜ)',
@@ -64,9 +69,12 @@ export default {
       mdHead: '| Input | H1 | H2 | H3 | H4 | O1 | O2 | Prediction |',
     },
     backprop: {
-      round: (r) => `ROUND ${r}`, error: (e) => `error ${e}`, errorArrow: 'error ◄', output: 'output', target: 'target',
-      mdTitle: 'Step table', mdRule: 'error(r) = 0.43 · 0.6ʳ, output = 0.80 − error',
-      mdHead: '| Round | Error | Output | Distance to target |', points: (n) => `${n} ${n === 1 ? 'point' : 'points'}`,
+      round: (r) => `ROUND ${r}`, loss: (l) => `loss L ${l}`, errorArrow: 'error ◄', output: 'output ŷ', target: 'target y',
+      footer: (x, y, lr) => [`input x = [${x}] · target y = ${y} · η = ${lr} · L = ½(y − ŷ)²`, 'real gradient updates: the weights change every round (2 → 2 → 1 network)'],
+      mdTitle: 'Step table',
+      mdRule: (x, y, lr) => `Real training rounds (print/kitap/qa/demo-data.json bp43): input x = [${x}], target y = ${y}, η = ${lr}; network 2 → 2 (sigmoid) → 1 (sigmoid); L = ½(y − ŷ)²; weights are updated by the gradient every round.`,
+      mdHead: '| Round | Output ŷ | Error y − ŷ | Loss L |',
+      mdNote: '> The figure shows ŷ with two and L with four decimals; full values are in demo-data.json. The old 0.43·0.6ʳ rule is no longer used (R027).',
     },
     conv: {
       kernels: { vert: 'VERTICAL EDGE KERNEL', horiz: 'HORIZONTAL EDGE KERNEL' },
@@ -75,10 +83,11 @@ export default {
       mdTitle: 'Feature maps', mdNote: 'Image: 7×7 plus sign (4th row and 4th column = 1). No padding, stride 1 → 5×5 map.',
     },
     rnn: {
-      words: ['machines', 'are', 'learning'],
-      frame: (n) => `FRAME ${n}`, processed: (n) => `${n} ${n === 1 ? 'word' : 'words'} processed`, memory: 'memory',
-      mdTitle: 'Hidden state (%)', mdHead: '| Word | h₁ | h₂ | h₃ | h₄ | h₅ | h₆ | h₇ | h₈ |', empty: '(empty)',
-      mdNote: '> Illustration: the bars follow a fixed rule that depends only on the step count (not on the word).',
+      frame: (n) => `FRAME ${n}`, processed: (n) => `${n} ${n === 1 ? 'word' : 'words'} processed`, memory: 'memory h',
+      legend: 'bar length = |h| · dark bar = negative value · label = signed value · h₀ = 0',
+      formula: 'hₜ = tanh(Wₓ·xₜ + Wₕ·hₜ₋₁) · 4 hidden units · fixed small weights',
+      mdTitle: 'Hidden state', mdHead: '| Frame | Word | h₁ | h₂ | h₃ | h₄ |', empty: '(empty)',
+      mdNote: '> Values come from the actual recurrence (tanh); frame 0 is the empty start h₀ = 0. Weights are in print/kitap/qa/demo-data.json rnn45.',
     },
     gan: {
       target: 'TARGET (REAL IMAGE)',

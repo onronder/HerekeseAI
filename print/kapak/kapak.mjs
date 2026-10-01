@@ -17,7 +17,8 @@ const VARIANT = pos[0] || cfg.variant || 'ag';
 const KDP = PROFILE === 'kdp';
 const IN = 25.4;
 const W = KDP ? 6 * IN : 160, H = KDP ? 9 * IN : 240, BLEED = KDP ? 0.125 * IN : 5;
-const SP = KDP && cfg.pages ? Number(cfg.pages) * 0.002252 * IN : Number(cfg.spine_mm);
+// KDP sırtı: sayfa × in/sayfa (beyaz kâğıt standart renk 0.002252; krem 0.0025; premium renk 0.002347) → kapak.en.json "in_per_page"
+const SP = KDP && cfg.pages ? Number(cfg.pages) * (Number(cfg.in_per_page) || 0.002252) * IN : Number(cfg.spine_mm);
 const T = LANG === 'en'
   ? { eyebrow: 'From rules to deep learning', title: 'AI for<br>Everyone', spine: 'AI for Everyone', author: 'Onur Önder', isbnPh: 'ISBN barcode<br><small>[ISBN] → kapak.en.json → isbn</small>',
       labels: ['RULES', 'SEARCH', 'PROBABILITY', 'LEARNING', 'NEURONS', 'ATTENTION'], htmlLang: 'en', docTitle: 'Cover' }
@@ -25,7 +26,7 @@ const T = LANG === 'en'
       labels: ['KURAL', 'ARAMA', 'OLASILIK', 'ÖĞRENME', 'NÖRON', 'DİKKAT'], htmlLang: 'tr', docTitle: 'Kapak' };
 const TW = 2 * W + SP + 2 * BLEED, TH = H + 2 * BLEED;
 const FX = BLEED + W + SP; // ön kapak sol kenarı (mm)
-const INK = '#1f1f1f', PAPER = '#f4efe6', EMBER = '#e85d3a', MUTED = '#8a8270', RULE = '#d8d2c6', CREAM2 = '#efe9dc';
+const INK = '#000000', PAPER = '#f4efe6', EMBER = '#e85d3a', MUTED = '#8a8270', RULE = '#d8d2c6', CREAM2 = '#efe9dc';
 
 // deterministik rastgele
 function rng(seed) { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
@@ -198,7 +199,7 @@ if (digits.length === 13) {
   const JsBarcode = require('jsbarcode');
   const doc = new DOMImplementation().createDocument('http://www.w3.org/1999/xhtml', 'html', null);
   const svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  JsBarcode(svg, digits, { xmlDocument: doc, format: 'EAN13', width: 2, height: 60, fontSize: 14, margin: 6, background: '#ffffff', lineColor: '#000000' });
+  JsBarcode(svg, digits, { xmlDocument: doc, format: 'EAN13', width: 2, height: 139, fontSize: 14, margin: 6, /* çubuk ≈ 23,4 mm: GS1 nominal 22,85 mm × (0,336/0,330) (R079) */ background: '#ffffff', lineColor: '#000000' });
   barcode = `<div class="isbn"><div class="isbn-no">ISBN ${cfg.isbn}</div>${new XMLSerializer().serializeToString(svg)}</div>`;
 }
 const fonts = fs.readFileSync(path.join(ROOT, 'store', 'assets', 'fonts.css'), 'utf8')

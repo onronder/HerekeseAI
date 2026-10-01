@@ -1,7 +1,7 @@
 # Demolara gömülü öğretici metinler
 
-<!-- Bu dosya print/export.py tarafından üretildi (2026-09-30); elle düzenlenmez. -->
-_155 parça · 9376 karakter_
+<!-- Bu dosya print/export.py tarafından üretildi (2026-10-01); elle düzenlenmez. -->
+_176 parça · 10992 karakter_
 
 ## Şekil 1.1 — Çoklu zekâyı keşfet (`intelligence`)
 
@@ -82,17 +82,20 @@ _155 parça · 9376 karakter_
 
 —
 
-## Şekil 4.3 — Hatadan öğren (gösterim) (`backprop`)
+## Şekil 4.3 — Hatadan öğren (gerçek eğitim) (`backprop`)
 
-—
+- x = [1.0, 0.5] · y = 0.8 · η = 2.0 · 2 gizli sigmoid nöron · L = ½(ŷ − y)² · tur
+- Bu turun güncellemesi (w ← w − η·∂L/∂w): w₂ → [
+- ; W₁ ve b₁ aynı kuralla güncellenir.
+- Tur 8/8: bu örnekte eğitim hatası küçüldü; yeni örneklerde başarı ayrıca sınanmalıdır.
 
 ## Şekil 4.4 — Evrişim: filtreyi kaydır (`conv`)
 
 —
 
-## Şekil 4.5 — Hafızalı işleme (gösterim) (`rnn`)
+## Şekil 4.5 — Hafızalı işleme (gerçek yineleme) (`rnn`)
 
-—
+- hₜ = tanh(Wₓ xₜ + Wₕ hₜ₋₁) · xₜ = kelimenin one-hot kodu · çubuk = |h|, turuncu = negatif
 
 ## Şekil 4.6 — Üretici vs Ayırt edici (`gan`)
 
@@ -111,14 +114,18 @@ _155 parça · 9376 karakter_
 
 ## Şekil 5.3 — Hangi kelime hangisine bakıyor? (`attn`)
 
-- ” kelimesini seçtin (sorgu). En çok “
-- ” kelimesine bakıyor (en koyu). Model böylece “
-- ” kelimesinin neyle ilgili olduğunu çözüyor.
+- En yüksek ağırlık kendi konumunda (
+- ); diğer sözcükler arasında en çok “
+- En yüksek ağırlık “
+- Ağırlıklar temsilidir; tek başına anlam ilişkisinin kanıtı değildir.
 
 ## Şekil 5.4 — Kelime kelime üret (`generate`)
 
-- Yaratıcılık: Yüksek
-- Yaratıcılık: Düşük
+- Örnekleme, T = 1.5
+- · çubuk = softmax(z/1.5) · U =
+- Bitti: iki satır da
+- kelime üretti; sözcükleri ve seçim kuralını karşılaştır.
+- Açgözlü satır her adımda en yüksek p’yi alır. Örnekleme satırı z = ln p, q = softmax(z/1.5) hesaplar ve sabit U sayısıyla seçer (ters-CDF: toplam q ≥ U olan ilk aday). T pozitifken örnekleme rastlantısaldır; argmax ayrı bir seçim kuralıdır.
 
 ## Şekil 5.5 — Üç aşamada bir asistan (`train`)
 
@@ -189,8 +196,10 @@ _155 parça · 9376 karakter_
 ## Şekil 6.4 — Bir YZ uygulamasının parçaları (`arch`)
 
 - Kullanıcının soruyu yazdığı, cevabı gördüğü yer (sohbet ekranı, uygulama).
-- Asıl “beyin”: istemi hazırlar, hangi aracı/bilgiyi ne zaman çağıracağına karar verir, akışı yönetir.
-- Senin verin (belgeler, notlar) burada gömü olarak durur; RAG ile ilgili parça getirilir.
+- Bileşenleri yöneten katman: istemi hazırlar, hangi aracı/bilgiyi ne zaman çağıracağına karar verir, model çağrısını yapar, akışı yönetir.
+- Model çağrısı (LLM)
+- Kullanıcı isteği, erişilen kaynak parçaları ve araç sonuçları burada modele gider; modelin çıktısı (metin ya da bir araç çağrısı isteği) buradan orkestrasyona döner.
+- Senin verin (belgeler, notlar) burada gömüleriyle birlikte özgün parça ve metadata olarak durur; RAG ile ilgili parça getirilir.
 - Modelin dünyayla etkileşimi: hesap, arama, takvim, e-posta, bir API ya da kod çalıştırma.
 - Konuşmanın geçmişini ve kullanıcıya dair durumu tutar; bağlamın sürmesini sağlar.
 
@@ -217,29 +226,38 @@ _155 parça · 9376 karakter_
 
 ## Şekil 7.1 — Önyargı simülasyonu (`bias`)
 
+- Temsili formül: A = 50 + 0.4·e, B = 50 − 0.4·e (e = veri önyargısı, %); ölçülmüş eğitim sonucu değil.
 - Veri dengeli: iki grup da neredeyse aynı oranda onay alıyor (A %
 - ). Aynı niteliğe aynı karar; adil olan da bu.
 - İki grup tıpatıp aynı nitelikte olmasına rağmen model A’yı %
-- ). Model bu farkı gerçeklikten değil, çarpık veriden öğrendi; ayrımcılık böyle miras kalıyor.
+- yüzde puan). Model bu farkı gerçeklikten değil, çarpık veriden öğrendi; ayrımcılık böyle miras kalıyor.
 
 ## Şekil 7.2 — Beyaz kutu: kararı açıkla (`explain`)
 
 - Yüksek mevcut borç
 - Kısa hesap geçmişi
 - Uzun, temiz geçmiş
-- Yeşil etkenler kararı onaya, kırmızılar redde itti; toplamları (
-- ) sonucu belirledi. İşaretli katkılar (SHAP benzeri) “kara kutu”yu “beyaz kutu”ya çevirir.
+- Taban değer φ₀ = 0 puan (bu örneğe özgü seçim) · karar eşiği 0 puan · birim: puan (temsili)
+- . Yeşil etkenler onaya, kırmızılar redde itti. Katkılar temsilidir, hesaplanmış SHAP değerleri değildir; bu sonradan açıklama modeli bütünüyle şeffaf yapmaz.
 
 ## Şekil 7.3 — Gerçek mi, yapay mı? (`df`)
 
 - Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor.
-- Dudak senkronu ve yüz kenarlarındaki titreme klasik deepfake izidir.
+- dudak hareketleriyle ses arasındaki uyumsuzluk
+- konuşmanın özgün kaydını ve yayımlayan kurumu bağımsız bir kanaldan bul
 - Telefonda “patronun” acil para transferi istiyor; sesi tıpkı ona benziyor ama tonlama biraz robotik.
-- Ses klonlama + aciliyet baskısı = tipik dolandırıcılık. İkinci bir kanaldan doğrula.
+- ses klonlamayla uyumlu robotik tonlama ve aciliyet baskısı
+- transferi bekletip patronu bilinen numarasından geri ara ya da yüz yüze teyit et
 - Bir gazetenin web sitesinde yayımlanan, birden çok bağımsız kaynağın da doğruladığı bir haber.
-- Birden çok bağımsız kaynak ve izlenebilir köken güvenilirliğin işaretidir.
+- birden çok bağımsız kaynak ve izlenebilir köken
+- kaynakların her birini ayrı ayrı aç; metni insanın mı makinenin mi yazdığı bu bilgiden çıkarılamaz
 - Bir fotoğrafta kişinin elinde altı parmak var ve arka plandaki yazılar anlamsız harflerden oluşuyor.
-- Eller, dişler ve arka plan metni üretken modellerin hâlâ zorlandığı yerlerdir.
+- altı parmak ve anlamsız arka plan yazısı
+- ters görsel aramayla fotoğrafın özgün kaynağını bul
+- ✓ Önerilen adımla eşleşti:
+- ○ Önerilen adım farklı:
+- işareti var; önerilen adım:
+- İpuçları inceleme gerekçesidir; tek başına içeriğin nasıl üretildiğinin kanıtı değildir. Olayın gerçekliği ile üretim yöntemi ayrı sorulardır.
 
 ## Şekil 7.4 — Riski sınıflandır (`reg`)
 
@@ -269,15 +287,18 @@ _155 parça · 9376 karakter_
 
 - “En sevdiğin yemek ne?”
 - Bir yapay zekâ olarak yemek yiyemem, dolayısıyla bir favorim yok. Ancak istersen popüler yemekler hakkında bilgi verebilirim.
-- Aşırı kibar, kalıplı ve “bir yapay zekâ olarak” ifadesi tipik makine cevabıdır.
+- Aşırı kibar, kalıplı ve “bir yapay zekâ olarak” ifadesi makineyi düşündürür; ama bir insan da böyle yazabilir.
 - “Bu sabah trafiğe takıldın mı?”
 - Sorma ya, köprüde tam 40 dakika kaldım, kahvem de soğudu :( en azından güzel bir podcast vardı.
-- Kişisel ayrıntı, duygu, hafif şikâyet ve doğal samimiyet insan işaretidir.
+- Kişisel ayrıntı, duygu, hafif şikâyet ve doğal samimiyet insanı düşündürür; ama bir model de böyle bir anı uydurabilir.
 - “17 × 24 kaç eder?”
-- Anında, kusursuz ve tereddütsüz aritmetik genelde makineyi ele verir (çoğu insan biraz duraksar).
+- Kusursuz, tereddütsüz aritmetik bu kurguda makine olarak yazıldı; ama bir insan da doğru hesaplayabilir.
 - “Hafta sonu ne yaptın?”
 - Annemlere gittik, çok yedik, dönüşte de yağmura yakalandık. Klasik yani 😅
 - Belirsiz ama yaşanmış detaylar ve gündelik dil insanı düşündürür.
+- ✓ Tahminin kurguyla eşleşti:
+- ○ Tahminin kurguyla eşleşmedi:
+- olarak yazıldı; ipuçları kesin kanıt değildir.
 
 ## Şekil 8.2 — Çince Oda’dasın (`chineseroom`)
 
@@ -301,13 +322,11 @@ _155 parça · 9376 karakter_
 ## Şekil 8.5 — Sorumluluk kimde? (`responsibility`)
 
 - Sürücüsüz bir araç, üreticinin yazılım hatası yüzünden kaza yapar.
-- Üretici/geliştirici (ve denetim) — yazılım kusuru onların sorumluluğudur.
 - Bir kurum, YZ tavsiyesini kör biçimde uygulayıp müşteriye zarar verir.
-- Onu kullanan/işleten kurum — aracı denetlemeden kullanmak onların sorumluluğudur.
-- Bir kullanıcı, bir YZ aracını kasıtlı olarak sahte içerik üretmek için kullanır.
-- Kasıtlı kötüye kullanan kullanıcı — niyet ve eylem ona aittir.
+- Bir kullanıcı, bir YZ aracını birini aldatmak veya zarara uğratmak amacıyla sahte kanıt üretmek için kullanır.
 - Üretici / geliştirici
-- ✓ Yaygın görüş de bu yönde.
-- ✗ “YZ’nin kendisi” hâkim görüş değildir.
-- ✗ Yaygın görüş farklı.
-- Sorumluluk bugün ezici biçimde insanlara ve kurumlara atfedilir; “YZ’nin kendisi”ne hukuki sorumluluk yüklemek hâkim görüş değildir.
+- ✓ İlk incelenecek tarafı işaretledin.
+- ○ İlk incelenecek taraf seçimin dışında kaldı.
+- ; paylaşılan sorumluluk:
+- ; hukuki sonuç ülkeye, role ve olaya bağlıdır.
+- “YZ’nin kendisi”ne hukuki sorumluluk yüklemek bugün hâkim görüş değildir; sorumluluk insanlara ve kurumlara atfedilir.

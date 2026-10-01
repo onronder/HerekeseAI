@@ -23,7 +23,7 @@ function biasFigure(demo, { lang }) {
   });
   const pad = 10, pw = 92, gapX = 10, W = pad * 2 + pw * 3 + gapX * 2;
   const chartH = 90, top = 44, y0 = pad + top + chartH; // taban çizgisi
-  const H = y0 + 44;
+  const H = y0 + 52;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
   levels.forEach((lv, i) => {
     const px = pad + i * (pw + gapX), py = pad;
@@ -33,8 +33,8 @@ function biasFigure(demo, { lang }) {
     body.push(line(px, sy, px + pw, sy, { stroke: RULE, sw: 2 }));
     if (lv.e > 0) body.push(line(px, sy, sx, sy, { stroke: EMBER, sw: 2 }));
     body.push(circle(sx, sy, 3, { fill: '#fff', stroke: EMBER, sw: 1.2 }));
-    body.push(text(px, sy + 9, '0', { font: MONO, size: 5, fill: MUTED }));
-    body.push(text(px + pw, sy + 9, '100', { font: MONO, size: 5, fill: MUTED, anchor: 'end' }));
+    body.push(text(px, sy + 9, '0', { font: MONO, size: 6, fill: MUTED })); // R082: ≥ 6
+    body.push(text(px + pw, sy + 9, '100', { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
     // çubuklar: A koyu, B açık
     const bw = 24, ax = px + 14, bx = px + 54, hA = lv.A / 100 * chartH, hB = lv.B / 100 * chartH;
     body.push(line(px, y0, px + pw, y0, { stroke: INK, sw: 0.8 }));
@@ -53,12 +53,14 @@ function biasFigure(demo, { lang }) {
       body.push(line(gx - 2, y0 - hA, gx + 2, y0 - hA, { stroke: EMBER, sw: 1 }));
       body.push(line(gx - 2, y0 - hB, gx + 2, y0 - hB, { stroke: EMBER, sw: 1 }));
     }
-    body.push(text(px, y0 + 22, S.gap(lv.gap), { font: MONO, size: 6.5, fill: EMBER, weight: 700 }));
-    body.push(text(px, y0 + 32, lv.balanced ? S.balanced : S.skewed, { size: 7, fill: INK2 }));
+    // R052: fark "yüzde puan" birimiyle, iki satır
+    body.push(text(px, y0 + 22, S.gapLabel, { font: MONO, size: 6.5, fill: EMBER, weight: 700 }));
+    body.push(text(px, y0 + 31, S.gap(lv.gap), { font: MONO, size: 6.5, fill: EMBER, weight: 700 }));
+    body.push(text(px, y0 + 41, lv.balanced ? S.balanced : S.skewed, { size: 7, fill: INK2 }));
   });
   const md = [`# ${demo.title}`, '', S.mdFormula, '',
     S.mdHead, '|---|---|---|---|---|',
-    ...levels.map((l) => `| ${pct(l.e, lang)} | ${pct(l.A, lang)} | ${pct(l.B, lang)} | ${l.gap} | ${l.balanced ? S.mdBalanced : S.mdSkewed} |`), ''].join('\n');
+    ...levels.map((l) => `| ${pct(l.e, lang)} | ${pct(l.A, lang)} | ${pct(l.B, lang)} | ${S.gap(l.gap)} | ${l.balanced ? S.mdBalanced : S.mdSkewed} |`), '', S.mdNote, ''].join('\n');
   return [{ name: 'bias', svg: svg(W, H, body.join('\n')), md }];
 }
 
@@ -66,40 +68,44 @@ function biasFigure(demo, { lang }) {
 // renderVals() 'explain' dalı: iki başvuru, dört katkı; toplam > 0 ⇒ onay; çubuk boyu her başvurunun en büyük |katkı|'sına oranlı.
 const sgn = (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v);
 
+// R053 (2026-10-01): taban değer φ₀ = 0 puan (örneğe özgü seçim), birim "puan", karar eşiği 0, toplam f(x) = φ₀ + Σφᵢ görünür.
+const PHI0 = 0, THRESHOLD = 0;
 function explainFigure(demo, { lang }) {
   const S = STRINGS[lang].explain;
-  const pad = 10, pw = 140, gapX = 20, W = pad * 2 + pw * 2 + gapX, H = 160;
+  const pad = 10, pw = 140, gapX = 20, W = pad * 2 + pw * 2 + gapX, H = 200;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
   S.apps.forEach((app, i) => {
     const x0 = pad + i * (pw + gapX), zero = x0 + 70, maxW = 50;
-    const sum = app.feats.reduce((a, f) => a + f.c, 0), approved = sum > 0;
+    const sum = app.feats.reduce((a, f) => a + f.c, 0), fx = PHI0 + sum, approved = fx > THRESHOLD;
     const mx = Math.max(...app.feats.map((f) => Math.abs(f.c)));
     // üst yarı: kara kutu, yalnız sonuç
     body.push(caption(x0, 17, S.blackBox(up(app.name, lang))));
     body.push(rect(x0, 22, pw, 24, { fill: INK }));
     body.push(text(zero, 37, approved ? S.approved : S.declined, { font: SERIF, size: 11, fill: PAPER, anchor: 'middle' }));
-    // alt yarı: kapak açık
+    // alt yarı: kapak açık — taban değer ve birim
     body.push(caption(x0, 60, S.lidOpen));
-    body.push(text(zero - 4, 70, S.toDecline, { font: MONO, size: 5.5, fill: MUTED, anchor: 'end' }));
-    body.push(text(zero + 4, 70, S.toApprove, { font: MONO, size: 5.5, fill: MUTED }));
-    body.push(line(zero, 73, zero, 134, { stroke: INK, sw: 0.6 }));
+    body.push(text(x0, 69, S.baseLine(PHI0, S.unit), { font: MONO, size: 6, fill: INK2 }));
+    body.push(text(zero - 4, 79, S.toDecline, { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
+    body.push(text(zero + 4, 79, S.toApprove, { font: MONO, size: 6, fill: MUTED }));
+    body.push(line(zero, 82, zero, 143, { stroke: INK, sw: 0.6 }));
     app.feats.forEach((f, k) => {
-      const cy = 80 + k * 14, w = Math.abs(f.c) / mx * maxW, pos = f.c > 0;
+      const cy = 89 + k * 14, w = Math.abs(f.c) / mx * maxW, pos = f.c > 0;
       if (pos) body.push(rect(zero, cy - 4, w, 8, { fill: EMBER }));
       else body.push(rect(zero - w, cy - 4, w, 8, { fill: INK2 }));
       body.push(text(pos ? zero - 4 : zero + 4, cy + 2.5, f.label, { size: 7, anchor: pos ? 'end' : 'start' }));
       body.push(text(pos ? zero + w + 3 : zero - w - 3, cy + 2.5, sgn(f.c), { font: MONO, size: 6.5, fill: pos ? EMBER : INK2, anchor: pos ? 'start' : 'end', weight: 700 }));
     });
-    body.push(line(x0, 136, x0 + pw, 136, { stroke: RULE }));
-    body.push(text(zero - 4, 147, S.total, { size: 7, anchor: 'end', weight: 600 }));
-    body.push(text(zero + 4, 147, `${sgn(sum)} → ${approved ? S.approve : S.decline}`, { font: MONO, size: 7, weight: 700, fill: approved ? EMBER : INK2 }));
+    body.push(line(x0, 145, x0 + pw, 145, { stroke: RULE }));
+    body.push(text(x0, 155, S.totalLine(sgn(sum), S.unit), { font: MONO, size: 6.5, fill: INK }));
+    body.push(text(x0, 165, S.resultLine(sgn(fx), S.unit, approved ? S.approve : S.decline), { font: MONO, size: 6.5, weight: 700, fill: approved ? EMBER : INK2 }));
   });
-  const md = [`# ${demo.title}`, '', S.mdRule, '',
+  S.footer(PHI0, THRESHOLD).forEach((ln, k) => body.push(text(pad, H - 20 + k * 8, ln, { font: MONO, size: 6, fill: INK2 })));
+  const md = [`# ${demo.title}`, '', S.mdRule(PHI0, THRESHOLD, S.unit), '',
     ...S.apps.flatMap((app) => {
-      const sum = app.feats.reduce((a, f) => a + f.c, 0);
-      return [`| ${app.name} | ${S.mdContribution} |`, '|---|---|', ...app.feats.map((f) => `| ${f.label} | ${sgn(f.c)} |`),
-        `| **${S.total}** | **${sgn(sum)} → ${sum > 0 ? S.approved : S.declined}** |`, ''];
-    })].join('\n');
+      const sum = app.feats.reduce((a, f) => a + f.c, 0), fx = PHI0 + sum;
+      return [`| ${app.name} | ${S.mdContribution} (${S.unit}) |`, '|---|---|', `| φ₀ (${S.mdBase}) | ${sgn(PHI0)} |`, ...app.feats.map((f) => `| ${f.label} | ${sgn(f.c)} |`),
+        `| **Σφᵢ** | **${sgn(sum)}** |`, `| **f(x) = φ₀ + Σφᵢ** | **${sgn(fx)} ${S.unit} → ${fx > THRESHOLD ? S.approved : S.declined}** |`, ''];
+    }), S.mdNote, ''].join('\n');
   return [{ name: 'explain', svg: svg(W, H, body.join('\n')), md }];
 }
 
@@ -110,7 +116,8 @@ function dfFigure(demo, { lang }) {
   const pad = 10, cw = 145, gap = 10, W = pad * 2 + cw * 2 + gap;
   const wrapped = S.cases.map((c) => wrap(c.text, 35));
   const nl = Math.max(...wrapped.map((l) => l.length));
-  const ch = 22 + nl * 9.5 + 20, H = pad * 2 + ch * 2 + gap;
+  const no = S.options.length, oh = 9.5; // R055: üç seçenek alt alta
+  const ch = 22 + nl * 9.5 + 8 + no * oh, H = pad * 2 + ch * 2 + gap;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
   S.cases.forEach((c, i) => {
     const x0 = pad + (i % 2) * (cw + gap), y0 = pad + Math.floor(i / 2) * (ch + gap);
@@ -118,15 +125,15 @@ function dfFigure(demo, { lang }) {
     body.push(caption(x0 + 8, y0 + 13, S.caseOf(i + 1, S.cases.length)));
     body.push(text(x0 + cw - 8, y0 + 13, c.medium, { font: MONO, size: 6, fill: EMBER, anchor: 'end', spacing: 0.8 }));
     body.push(lines(x0 + 8, y0 + 28, wrapped[i]));
-    // cevap kutuları (okur işaretler)
-    const ay = y0 + ch - 11;
-    body.push(rect(x0 + 8, ay - 6, 7, 7, { fill: 'none', stroke: INK, sw: 0.7 }));
-    body.push(text(x0 + 19, ay, S.real, { size: 7, fill: INK2 }));
-    body.push(rect(x0 + 62, ay - 6, 7, 7, { fill: 'none', stroke: INK, sw: 0.7 }));
-    body.push(text(x0 + 73, ay, S.fake, { size: 7, fill: INK2 }));
+    // cevap kutuları (okur işaretler): üç seçenek alt alta (R055)
+    S.options.forEach((opt, k) => {
+      const ay = y0 + ch - 8 - (no - 1 - k) * oh;
+      body.push(rect(x0 + 8, ay - 6, 7, 7, { fill: 'none', stroke: INK, sw: 0.7 }));
+      body.push(text(x0 + 19, ay, opt, { size: 7, fill: INK2 }));
+    });
   });
-  const md = [`# ${demo.title}`, '', S.mdHead, '|---|---|---|',
-    ...S.cases.map((c, i) => `| ${i + 1} | ${c.medium} | ${c.text} |`), '', S.mdNote, ''].join('\n');
+  const md = [`# ${demo.title}`, '', S.mdHead, '|---|---|---|---|',
+    ...S.cases.map((c, i) => `| ${i + 1} | ${c.medium} | ${c.text} | ${S.options.map((o) => `☐ ${o}`).join(' · ')} |`), '', S.mdNote, ''].join('\n');
   return [{ name: 'df', svg: svg(W, H, body.join('\n')), md }];
 }
 
@@ -155,7 +162,7 @@ function regFigure(demo, { lang }) {
   // sağda: yukarı çıktıkça yük artar
   const axx = W - pad - 4;
   body.push(line(axx, ladderBot - 2, axx, ladderTop + 4, { stroke: INK2, sw: 0.7, marker: true }));
-  body.push(`<text transform="translate(${f1(axx - 4)} ${f1(ladderBot - 4)}) rotate(-90)" font-family="${MONO}" font-size="5.5" fill="${MUTED}" letter-spacing="0.8">${esc(S.axis)}</text>`);
+  body.push(`<text transform="translate(${f1(axx - 4)} ${f1(ladderBot - 4)}) rotate(-90)" font-family="${MONO}" font-size="6.2" fill="${MUTED}" letter-spacing="0.4">${esc(S.axis)}</text>`);
   // altı kullanım kartı, merdivenin dibinde
   const cy0 = ladderBot + 22, cw = 150, chh = 46, cgap = 6;
   body.push(caption(pad, cy0 - 8, S.kicker));

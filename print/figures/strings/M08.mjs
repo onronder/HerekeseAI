@@ -34,14 +34,15 @@ export default {
     },
     capability: {
       tiers: {
-        narrow: { name: 'Dar YZ', status: 'Bugün var ✓', desc: 'Tek bir görevde çok iyi (satranç, çeviri, görüntü tanıma) ama o işin dışına çıkamaz. Bugünkü tüm sistemler buradadır.' },
+        narrow: { name: 'Dar YZ', status: 'Bugün var ✓', desc: 'Bir görevde ya da belirli bir görev kümesinde çok iyi (satranç, çeviri, görüntü tanıma); insan düzeyinde genel öğrenme ve aktarım göstermez. Bugünkü sistemler buradadır.' }, // R069
         agi: { name: 'Genel YZ (AGI)', status: 'Henüz yok; tartışmalı', desc: 'İnsan gibi her alanda öğrenip uyum sağlayabilen, varsayımsal bir düzey. Gelip gelmeyeceği ve ne zaman geleceği uzmanlar arasında tartışmalıdır.' },
         super: { name: 'Süper Zekâ', status: 'Spekülatif', desc: 'Her bilişsel alanda insanı kat kat aşan, tümüyle kuramsal bir düzey. Hem büyük fırsat hem ciddi risk senaryolarının konusudur.' },
       },
       axis: 'yetenek alanı →',
+      barNote: 'çubuklar temsili düzey: sıralama, ölçüm değil', // R069
       mdTitle: (title) => `# ${title}`,
-      mdHead: ['| Basamak | Bugün | Çubuk | Tanım |', '|---|---|---|---|'],
-      mdNote: '> Çubuk yüzdeleri (30/70/100) kaynak koddan; yalnız sıralama, ölçüm değil.',
+      mdHead: ['| Basamak | Bugün | Çubuk (temsili) | Tanım |', '|---|---|---|---|'],
+      mdNote: '> Çubuk yüzdeleri (30/70/100) kaynak koddan; temsili düzey, yalnız sıralama, ölçüm değil.',
     },
     singularity: {
       curves: { accel: 'Hızlanan', plateau: 'Yavaşlayan', uncertain: 'Belirsiz' },
@@ -54,13 +55,14 @@ export default {
       scenarios: [
         'Sürücüsüz bir araç, üreticinin yazılım hatası yüzünden kaza yapar.',
         'Bir kurum, YZ tavsiyesini kör biçimde uygulayıp müşteriye zarar verir.',
-        'Bir kullanıcı, bir YZ aracını kasıtlı olarak sahte içerik üretmek için kullanır.',
+        'Bir kullanıcı, birini aldatmak ya da zarara uğratmak için bir YZ aracıyla sahte kanıt üretir.', // R062
       ],
       // her taraf iki satır (sütun başlığı)
       parties: [['Üretici /', 'geliştirici'], ['İşleten', 'kurum'], ['Son', 'kullanıcı'], ['YZ’nin', 'kendisi']],
       scenario: 'SENARYO',
-      who: 'SORUMLULUK KİMDE?',
-      mdTitle: (title) => `# ${title} — senaryolar (yaygın görüş kitabın sonunda)`,
+      who: 'İLK İNCELENECEK TARAF', // R062
+      shared: 'sorumluluk çoğu olayda paylaşılır · yaygın görüş kitabın sonunda',
+      mdTitle: (title) => `# ${title} — senaryolar (ilk incelenecek taraf; yaygın görüş kitabın sonunda)`,
       mdHead: ['| # | Senaryo |', '|---|---|'],
       mdParties: 'Taraflar: ',
     },
@@ -95,14 +97,15 @@ export default {
     },
     capability: {
       tiers: {
-        narrow: { name: 'Narrow AI', status: 'Exists today ✓', desc: 'Very good at one task (chess, translation, vision) but unable to step outside it. All of today’s systems live here.' },
+        narrow: { name: 'Narrow AI', status: 'Exists today ✓', desc: 'Very good at one task or a set of tasks (chess, translation, vision); shows no human-level general learning and transfer. Today’s systems live here.' }, // R069
         agi: { name: 'General AI (AGI)', status: 'Not yet; contested', desc: 'A hypothetical level able to learn and adapt across every domain like a human. Whether and when it arrives is debated among experts.' },
         super: { name: 'Superintelligence', status: 'Speculative', desc: 'A wholly theoretical level surpassing humans many times over in every cognitive field. The subject of both great-opportunity and serious-risk scenarios.' },
       },
       axis: 'capability range →',
+      barNote: 'bars are illustrative levels: ordering, not a measurement', // R069
       mdTitle: (title) => `# ${title}`,
-      mdHead: ['| Rung | Today | Bar | Definition |', '|---|---|---|---|'],
-      mdNote: '> Bar percentages (30/70/100) are from the source code; ordering only, not a measurement.',
+      mdHead: ['| Rung | Today | Bar (illustrative) | Definition |', '|---|---|---|---|'],
+      mdNote: '> Bar percentages (30/70/100) are from the source code; illustrative levels, ordering only, not a measurement.',
     },
     singularity: {
       curves: { accel: 'Accelerating', plateau: 'Plateauing', uncertain: 'Uncertain' },
@@ -115,12 +118,13 @@ export default {
       scenarios: [
         'A self-driving car crashes because of the maker’s software bug.',
         'An organization blindly applies an AI’s advice and harms a customer.',
-        'A user deliberately uses an AI tool to produce fake content.',
+        'A user creates fabricated evidence with an AI tool to deceive or harm someone.', // R062
       ],
       parties: [['Maker /', 'developer'], ['Operating', 'organization'], ['End', 'user'], ['The AI', 'itself']],
       scenario: 'SCENARIO',
-      who: 'WHO IS RESPONSIBLE?',
-      mdTitle: (title) => `# ${title} — scenarios (prevailing view at the end of the book)`,
+      who: 'PARTY TO EXAMINE FIRST', // R062
+      shared: 'responsibility is usually shared · prevailing view at the end of the book',
+      mdTitle: (title) => `# ${title} — scenarios (party to examine first; prevailing view at the end of the book)`,
       mdHead: ['| # | Scenario |', '|---|---|'],
       mdParties: 'Parties: ',
     },

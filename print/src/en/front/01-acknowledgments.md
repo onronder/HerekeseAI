@@ -1,13 +1,13 @@
 # Acknowledgments
 
-<!-- DRAFT: the author fills the bracketed slots; the unnamed paragraphs can stay as they are. -->
+This book was an idea that appeared out of nowhere. I asked myself why: shouldn't everyone have some idea of this, understand a little of what they are using, see what kind of era we are entering? Then I told myself that to understand artificial intelligence you first have to understand the computer and how it works; that is how the story began.
 
-This book was born on a screen first. Without the people who read the digital edition early, who poked at the demos and who said plainly where they got stuck, these pages would have stayed far more abstract. My thanks go to my first readers, [names] above all.
+The ideas this book rests on are not mine. They belong to Turing and Hinton, to the people who wrote rules and the people who computed probabilities, to the researchers who wrote the different chapters of this story, and to everyone who shared openly what they had learned. I have listed as many of them as I could in the bibliography, leaving no one out that I could name; I owe my thanks to all of them.
 
-I owe the text to the eyes that read it line by line and were not shy to say “this part is not clear”: [names]. Every error that remains is mine.
+Finally, to the ones who stood by me in hard times, whatever came: to my wife Öykü, my greatest supporter and the source of my energy to keep going, with her mind, her compassion and her love; to my children Kuzey and Poyraz; to my mother, who never withheld her tenderness and warmth and who thinks of the smallest details; and to my father, who rests in light and whose pride and love I have always felt...
 
-The ideas this book rests on are not mine. From Turing to Hinton, from the people who wrote rules to the people who computed probabilities, I am indebted to the researchers who wrote this story and to everyone who shared what they learned in the open. The bibliography names only a few of them.
+To the eyes that read the text line by line, corrected it and were never shy to say "this part is not clear": Seda and Gözde.
 
-Finally, to my family, who put up with someone saying “one more chapter” for months: [names]. This book is yours too.
+Thank you all; every error that remains is mine.
 
 Onur Önder

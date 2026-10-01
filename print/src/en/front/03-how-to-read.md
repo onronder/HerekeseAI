@@ -4,7 +4,7 @@ The book has eight chapters. Each chapter covers one era and the main idea of th
 
 **Two depths.** The main text is written in plain language and is complete on its own. At the end of some sections there are boxes headed **Technical depth**. They retell the same idea with its formula, its terms and its math. The boxes can be skipped; the main text does not depend on them. The grid and the web on the cover tell the same story: one idea, two depths.
 
-**Margin notes.** The short notes beside the text give the link between a topic and today, or a detail that is easy to miss at first glance.
+**Margin notes.** The short notes headed “Margin note” do not sit in the page margin; they stand in the flow of the text as small boxes, set in italics with a colored rule down the left edge. They give the link between a topic and today, or a detail that is easy to miss at first glance.
 
 **Figures.** Each of the 45 live demos in the digital edition has become a figure block here. Every block follows the same order:
 

@@ -383,6 +383,9 @@ def build(pad=0, plan=None):
             return f'<{m.group(1)}{m.group(2)} class="short">'
         return m.group(0)
     body = re.sub(r'<(ol|ul)([^>]*)>(?=((?:(?!</\1>).)*?</\1>))', short_list, body, flags=re.S)
+    # ≤ 4 satırlı tablolar/matrisler bölünmez (R071); kısa formül paragrafları bölünmez (R089)
+    body = re.sub(r'<table>(?=((?:(?!</table>).)*?</table>))', lambda m: '<table class="small">' if m.group(1).count('<tr>') <= 4 else '<table>', body, flags=re.S)
+    body = re.sub(r'<p>(?=([^<]{0,220}</p>))', lambda m: '<p class="formula">' if ('=' in m.group(1) and ('√' in m.group(1) or 'Σ' in m.group(1) or '²' in m.group(1) or '(' in m.group(1))) else '<p>', body)
     body = defer_figures(body, {k: v for k, v in (plan or {}).items() if not k.startswith('_')})
     extra_css = ''
     for sid, v in (plan or {}).get('_tighten', {}).items():  # bölüm kuyruğu tek başına sayfaya taşıyorsa satır/paragraf aralığını ayarla
@@ -391,7 +394,7 @@ def build(pad=0, plan=None):
         lh, pm, fs = vals
         body = re.sub(r'<section([^>]*id="' + re.escape(sid) + r'"[^>]*)>', lambda m: f'<section{m.group(1)} style="line-height:{lh};font-size:{fs}em">', body, count=1)
         extra_css += f'section#{sid} p {{ margin-bottom: {pm}em; }}\n'
-    body = strip_emoji(body)
+    body = strip_emoji(body).replace('𝔼', 'E')  # çift çizgili E fontta yok (PDF'te boş glif); düz E (R: metin bütünlüğü)
     body += notes_pages(pad)
     css = open(os.path.join(HERE, 'print.css'), encoding='utf-8').read()
     prof = os.path.join(HERE, 'profiles', PROFILE + '.css')

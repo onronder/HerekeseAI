@@ -20,17 +20,28 @@ export default {
     binary: {
       weight: 'AĞIRLIK',
       opening: (bits) => `AÇILIŞ · ${bits}`,
-      rule: 'SAYIYI YAZ · SOLDAN SAĞA "SIĞIYORSA YAK, KALANLA DEVAM ET"',
+      rule: ['SAYIYI YAZ · SOLDAN SAĞA', '"SIĞIYORSA YAK, KALANLA DEVAM ET"'], // R072: iki satır
       mdBox: 'Kutu', mdWeight: 'Ağırlık', mdOpening: 'Açılış',
     },
     cycle: {
       active: (label) => `iş başında: ${label}`,
       loop: 'döngü başa döner',
       mdHeader: '| Evre | İş başındaki parça | Ne yapar |',
+      // R006: üçüncü evre adı book.json/bölüm dosyasıyla aynı ("3 · Yaz"; 2. tur: "Kaydet / Yaz" override kaldırıldı); sonuç yazmaca ya da
+      // belleğe yazılır, Giriş / Çıkış yalnız çıkış talimatında. .md satırı print/src/tr/M01 Şekil 1.4 tablosuyla birebir.
+      phases: {},
+      writeActive: 'iş başında: yazmaç/Bellek',
+      ioNote: ['Giriş / Çıkış yalnız', 'çıkış talimatında'],
+      writePart: (cpu, mem, io) => `Yazmaç ya da ${mem.toLowerCase()}; çıkış talimatında ${io}`,
+      writeDesc: 'Sonucu kaydet: sonuç bir yazmaca ya da belleğe yazılır. Yalnız bir çıkış talimatında sonuç Giriş / Çıkış’a gider; o parça dış dünyayla bağlantıdır: klavye, ekran, sensörler. Veri buradan girer, sonuç buradan çıkar.',
+      mdNote: '> Şekil temsili bir döngüdür; gerçek işlemcilerde her talimat üç eş süreli evreye bölünmez.',
     },
     classify: {
       example: 'Örnek',
       mdNote: '> Cevaplar figürde gösterilmez (kitabın sonunda).',
+      // R007: M01 demosunda sütun adları ve bilinçli makine kartının etiketi
+      agiCats: ['Bugün kullanılan sistem', 'Varsayımsal sistem'],
+      consciousTag: 'Bilinç sorusu (ayrı)',
     },
     exp: {
       hdr: ['n', 'Yıl', '2ⁿ', 'Transistör'],
@@ -57,17 +68,25 @@ export default {
     binary: {
       weight: 'PLACE VALUE',
       opening: (bits) => `START · ${bits}`,
-      rule: 'WRITE A NUMBER · LEFT TO RIGHT "FITS? LIGHT IT, KEEP THE REST"',
+      rule: ['WRITE A NUMBER · LEFT TO RIGHT', '"FITS? LIGHT IT, KEEP THE REST"'], // R072: two lines
       mdBox: 'Box', mdWeight: 'Place value', mdOpening: 'Start',
     },
     cycle: {
       active: (label) => `active: ${label}`,
       loop: 'the cycle returns to the start',
       mdHeader: '| Phase | Active part | What it does |',
+      phases: {}, // book.json "3 · Write" (matches the chapter file)
+      writeActive: 'active: register/Memory',
+      ioNote: ['Input / Output only for', 'an output instruction'],
+      writePart: (cpu, mem, io) => `Register or ${mem.toLowerCase()}; ${io} on an output instruction`,
+      writeDesc: 'Save the result: it is written to a register or to memory. Only on an output instruction does the result go to Input / Output, the link to the outside world: keyboard, screen, sensors. Data comes in here, results go out here.',
+      mdNote: '> The figure is an illustrative cycle; in real processors not every instruction splits into three equal phases.',
     },
     classify: {
       example: 'Example',
       mdNote: '> Answers are not shown in the figure (they are at the end of the book).',
+      agiCats: ['In use today', 'Hypothetical'],
+      consciousTag: 'Consciousness question (separate)',
     },
     exp: {
       hdr: ['n', 'Year', '2ⁿ', 'Transistors'],

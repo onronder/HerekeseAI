@@ -16,7 +16,7 @@ Bu yaklaşıma “klasik” ya da “sembolik” YZ denir. Mantık, kurallar, ar
 
 Klasik YZ (sembolik YZ ya da GOFAI, açılımıyla “Good Old-Fashioned AI”), zekâyı biçimsel sembollerin kural-tabanlı manipülasyonu olarak ele alır. Temel varsayım: dünya hakkındaki bilgi açıkça temsil edilebilir ve akıl yürütme, bu temsiller üzerinde mantıksal işlemlerle yürütülebilir.
 
-Bu paradigma 1950’lerden 1980’lere kadar baskındı ve mantık programlama, arama algoritmaları ve uzman sistemler gibi güçlü araçlar üretti. Bu bölüm bu araçları kurar; sonunda “bilgi edinme darboğazı” ve kırılganlık sorunlarının neden istatistiksel/öğrenen yaklaşımlara (Bölüm 3) yol açtığını gösterir.
+Bu paradigma 1950’lerden 1980’lere kadar baskındı ve mantık programlama, arama algoritmaları ve uzman sistemler gibi güçlü araçlar üretti. Bu bölüm bu araçları kurar; sonunda “bilgi edinme darboğazı” ve kırılganlık sorunlarının, zaten araştırılmakta olan öğrenmeye dayalı yaklaşımlara (Bölüm 3) ilgiyi neden artırdığını gösterir.
 
 İlk soru en temeli: bir makine Tekir’in kedi olduğunu nereden bilir?
 
@@ -31,7 +31,7 @@ Bir makineye Tekir’i nasıl öğretirsin? Makine onu göremez, okşayamaz; anc
 **Şekil 2.1 · Bilgi zinciriyle çıkarım**
 ![Şekil 2.1](../../figures/out/tr/sekil-2-1-chain.svg)
 
-*Kurulum.* Şekilde beş kutu tek sıra hâlinde dizili: Tekir, Kedi, Memeli, Hayvan, Canlı. Kutular arasındaki her ok “bir …dır” demek: Tekir bir Kedi’dir, Kedi bir Memeli’dir ve böyle sürer. Makinenin bütün bilgisi bu dört ok; başka hiçbir şey bilmiyor. Altta dört soru var; her soru için makine zinciri baştan yürür ve kararını söyler.
+*Kurulum.* Şekilde beş kutu tek sıra hâlinde dizili: Tekir, Kedi, Memeli, Hayvan, Canlı. Kutular arasındaki her ok “bir …dır” demek: Tekir bir Kedi’dir, Kedi bir Memeli’dir ve böyle sürer. İlk ok bir bireyi sınıfına bağlar: Tekir, Kedi sınıfının bir örneği. Öbür oklar sınıfı üst sınıfa bağlar: Kedi, Memeli’nin alt sınıfı. Şekil ikisini de aynı okla gösterir. Makinenin bütün bilgisi bu dört ok; başka hiçbir şey bilmiyor. Altta dört soru var; her soru için makine zinciri baştan yürür ve kararını söyler.
 
 *Adım adım.* Önce “Tekir bir Memeli mi?” sorusu.
 
@@ -68,11 +68,11 @@ Karar “Hayır” değil, “Bilinmiyor”. Makine Tekir’in bitki olmadığı
 
 Sembolik YZ’de bilgi, bilgi temsili (knowledge representation) ile kodlanır: semantik ağlar, çerçeveler (frames), ontolojiler ya da mantık önermeleri. Varlıklar ve aralarındaki ilişkiler (ör. is-a, has-a) açıkça tanımlanır.
 
-Çıkarım (inference), bu temsiller üzerinde kuralların uygulanmasıdır. Şekil 2.1’deki gösterim bir is-a hiyerarşisinde geçişliliği (transitivity) kullanır: “Tekir is-a Kedi” ve “Kedi is-a Memeli” ise “Tekir is-a Memeli” türetilebilir. Sembolik akıl yürütmenin özü budur.
+Çıkarım (inference), bu temsiller üzerinde kuralların uygulanmasıdır. Şekil 2.1’deki gösterim bir is-a hiyerarşisinde geçişliliği (transitivity) kullanır. Ontolojide iki bağ ayrılır: Tekir, Kedi sınıfının bir örneğidir (instance-of); Kedi, Memeli sınıfının alt sınıfıdır (subclass-of). “Tekir instance-of Kedi” ve “Kedi subclass-of Memeli” ise “Tekir instance-of Memeli” türetilir; bu nedenle Tekir bir memelidir. Şekil iki bağı da tek ok türüyle, “bir …dır” diye gösterir. Sembolik akıl yürütmenin özü budur.
 
 Bilgi tabanı yalnızca ardışık “is-a” (bir …dır) bağlarını içerir. Hedef zincirde varsa “Evet”, yoksa “Bilinmiyor”.
 
-Geçişlilik kuralı biçimsel olarak şöyle yazılır: is-a(A, B) ∧ is-a(B, C) → is-a(A, C). Motor bu kuralı zincir boyunca tekrar tekrar uygular; beş düğümlük zincirde en fazla dört adımda ya hedefe ulaşır ya da zincirin sonuna gelir.
+Geçişlilik kuralı sınıflar arasında biçimsel olarak şöyle yazılır: subclass-of(A, B) ∧ subclass-of(B, C) → subclass-of(A, C). Örnek için: instance-of(a, B) ∧ subclass-of(B, C) → instance-of(a, C). Motor bu kuralı zincir boyunca tekrar tekrar uygular; beş düğümlük zincirde en fazla dört adımda ya hedefe ulaşır ya da zincirin sonuna gelir.
 
 Zincir yalnızca “bir …dır” bağlarını izledi. Makine bildiğinden eyleme nasıl geçer, yağmur yağıyorsa ne yapmalı? Bunun için “eğer … ise” kuralları gerekiyor.
 
@@ -125,7 +125,7 @@ Labirentte çıkışı bulmak, satrançta hamle seçmek, şehirde rota çizmek..
 
 En sabırlı yöntem her ihtimali tek tek denemektir ama bu çok yavaş olabilir. Sezgisel yöntem (heuristic) kestirmeden gider: “Hangi yön daha umut verici?” diye tahmin yürütür. Şekil 2.3’te ikisini yarıştırdık: sezgisiz olan her yeri tarar, sezgisel olan burnunu hedefe çevirir.
 
-> **Kenar notu.** Sezgisel yöntemler hız kazandırır ama bedeli vardır: bazen en iyi çözümü kaçırabilirler. “Yeterince iyi”yi “mükemmel”e tercih ederler.
+> **Kenar notu.** Açgözlü sezgisel yöntemler hız kazandırır ama bedeli vardır: bazen en iyi çözümü kaçırabilirler. “Yeterince iyi”yi “mükemmel”e tercih ederler. A* gibi daha dikkatli yöntemler, uygun bir sezgiyle garantiyi geri alır.
 
 **Şekil 2.3 · Yol bulma: sezgisiz vs sezgili**
 ![Şekil 2.3](../../figures/out/tr/sekil-2-3-grid.svg)
@@ -137,9 +137,9 @@ En sabırlı yöntem her ihtimali tek tek denemektir ama bu çok yavaş olabilir
 1. S’den başlar, komşularını bir sıraya alır; sıraya ilk giren ilk çıkar.
 2. Halka halka yayılır: önce S’ye bir adım uzaktaki kareler, sonra iki adım, sonra üç. Yön bilgisi yok; sol koridoru, alt satırı, orta koridoru aynı sabırla tarar.
 3. H sıradan çıktığında durur. Şekildeki sayaç “İncelenen: 36” diyor. 37 boş karenin 36’sı; yalnız 8. sütun, 4. satırdaki kareye el değmedi.
-4. Yol geriye doğru okunur: 19 kare (S ve H dâhil), 18 adım. Bu, olabilecek en kısa yol.
+4. Yol geriye doğru okunur: 19 kare (S ve H dâhil), 18 adım. Bu, olabilecek en az adımlı yol; ızgarada her adım aynı bedelde olduğu için en ucuz yol da bu.
 
-Sezgisel arama (hedefe):
+Açgözlü sezgisel arama (hedefe):
 
 1. Her kareye bir puan verir: hedefe sokak mesafesi, sütun farkı artı satır farkı. S için 7 + 5 = 12.
 2. Sıradan hep en düşük puanlı kareyi çeker. Sol koridordan aşağı iner (puan her adımda düşer), birinci engelin altından geçip 4. sütuna varır.
@@ -150,23 +150,23 @@ Sezgisel arama (hedefe):
 | Yöntem | Taranan kare | Yol (kare) |
 |---|---|---|
 | Sezgisiz (BFS) | 36 | 19 |
-| Sezgisel (hedefe) | 24 | 19 |
+| Açgözlü sezgisel (hedefe) | 24 | 19 |
 
-Bu ızgarada sezgisel arama üçte bir daha az kare gezdi ve yine en kısa yolu buldu. Ama bu bir garanti değil, şans: puanı düşük görünen bir çıkmaz onu beş kare oyaladı. Daha sinsi bir labirentte aynı huy onu uzun bir dolambaca da sokabilirdi. BFS’nin 36 karesi, garantinin bedeli.
+Bu ızgarada açgözlü arama üçte bir daha az kare gezdi ve yine en kısa yolu buldu. Ama bu bir garanti değil, şans: puanı düşük görünen bir çıkmaz onu beş kare oyaladı. Daha sinsi bir labirentte aynı huy onu uzun bir dolambaca da sokabilirdi. BFS’nin 36 karesi, garantinin bedeli. Gidilen yolu da puana katan A*, aynı sezgiyle hem garantiyi hem tasarrufu korur.
 
-*Ne oluyor?* İki arayıcıyı yarıştırıyorsun. Sezgisiz olan her yönü sabırla tarar; sonunda en kısa yolu bulur ama çok kare gezer. Sezgisel olan hep hedefe doğru koşar; az kare gezer ama bazen en kısa yolu kaçırır. Hız ile garanti arasındaki takas bu.
+*Ne oluyor?* İki arayıcıyı yarıştırıyorsun. Sezgisiz olan her yönü sabırla tarar; her adım aynı bedeldeyse sonunda en az adımlı yolu bulur ama çok kare gezer. Açgözlü sezgisel olan hep hedefe doğru koşar; az kare gezer ama bazen en kısa yolu kaçırır. Hız ile garanti arasındaki takas bu; A* gibi yöntemler gidilen yolu da hesaba katarak garantiyi geri alır.
 
 *Kendin dene.* 1) Sezgisel puanı iki kare için hesapla: 4. sütun, 2. satır ve 1. sütun, 6. satır. Hangisi hedefe daha yakın görünür? Hangisi gerçekten yolun üstünde? 2) S’nin puanı 12, ama en kısa yol 18 adım. Fark nereden geliyor? 3) 5. sütun, 6. satırdaki duvar kaldırılsa en kısa yol kaç adım olur? Canlı demo: [QR 2.3]
 
 #### Teknik derinlik
 
-Pek çok klasik YZ problemi durum-uzayı araması (state-space search) olarak modellenir. Bilgisiz (uninformed) arama, örneğin genişlik-öncelikli arama (BFS), hiçbir yön bilgisi kullanmadan sistematik tarar ve en kısa yolu garanti eder ama çok düğüm açar.
+Pek çok klasik YZ problemi durum-uzayı araması (state-space search) olarak modellenir. Bilgisiz (uninformed) arama, örneğin genişlik-öncelikli arama (BFS), hiçbir yön bilgisi kullanmadan sistematik tarar; tüm kenarların maliyeti eşitse en az adımlı, dolayısıyla en düşük maliyetli yolu garanti eder, ama çok düğüm açar. Farklı kenar maliyetlerinde başka yöntemler gerekir.
 
-Bilgili (informed) arama, bir sezgisel fonksiyon h(n) ile hedefe yakınlığı tahmin eder; açgözlü en-iyi-öncelikli arama yalnızca h’yi kullanır (hızlı ama eniyilik garantisi yok), A* ise g(n)+h(n) ile hem eniyiliği hem verimi dengeler (h kabul edilebilir ise). Şekil 2.3’te BFS ile sezgisel aramanın taradığı hücre sayısını karşılaştır.
+Bilgili (informed) arama, bir sezgisel fonksiyon h(n) ile hedefe yakınlığı tahmin eder; açgözlü en-iyi-öncelikli arama yalnızca h’yi kullanır (hızlı ama eniyilik garantisi yok), A* ise g(n)+h(n) kullanır: h kabul edilebilirse (gerçek uzaklığı hiç aşmıyorsa) ağaç aramasında en kısa yolu bulur; graf aramasında ayrıca h’nin tutarlı olması ya da daha iyi bir yolla ulaşılan düğümlerin yeniden açılması gerekir. Şekil 2.3’te BFS ile sezgisel aramanın taradığı hücre sayısını karşılaştır.
 
 BFS (bilgisiz) bir FIFO kuyruğuyla katman katman genişler ve eş-maliyetli ızgarada en kısa yolu garanti eder. Sezgisel (açgözlü en-iyi-öncelikli) arama, hedefe Manhattan uzaklığı h(n)’yi en aza indiren düğümü seçer; çok daha az hücre açar ama en kısa yolu garanti etmez.
 
-Bu ızgarada, sıfırdan başlayan koordinatlarla h(n) = |x − 7| + |y − 5|. Sonuçlar: BFS 36 düğüm açtı, açgözlü arama 24; ikisi de 18 adımlık en kısa yolu buldu. h gerçek uzaklığı hiçbir düğümde aşmadığı için (kabul edilebilir), aynı h ile A* de en kısa yolu bulur ve genellikle BFS’den az düğüm açar.
+Bu ızgarada, sıfırdan başlayan koordinatlarla h(n) = |x − 7| + |y − 5|. Sonuçlar: BFS 36 düğüm açtı, açgözlü arama 24; ikisi de 18 adımlık en kısa yolu buldu. h gerçek uzaklığı hiçbir düğümde aşmadığı için (kabul edilebilir) ve komşu kareler arasında en fazla 1 değiştiği için (tutarlı), aynı h ile A* graf aramasında da en kısa yolu bulur ve genellikle BFS’den az düğüm açar.
 
 Arama, dünyanın kesin olduğunu varsaydı: duvar duvardır, hedef yerinde durur. Yarın yağmur yağacak mı sorusu ise kesin cevap tanımaz.
 
@@ -176,12 +176,12 @@ Katı kurallar gerçek dünyada tökezler, çünkü dünya belirsizdir. “Yağm
 
 Klasik YZ buna zarif bir çözüm buldu: durumdan duruma olasılıkla geçmek. Markov zinciri bunun en ünlüsüdür; hileli bir zarla oynanan hava durumu oyunu gibi. Şekil 2.4’ün altındaki tabloda yedi günlük bir örnek var; havanın olasılıklara göre değişimini orada takip et.
 
-> **Kenar notu.** Markov özelliği: “gelecek, yalnızca şimdiye bağlıdır; nasıl geldiğin önemli değil.” Basit görünür ama hava durumundan Google aramasına kadar her yerde.
+> **Kenar notu.** Markov özelliği: “şimdiyi biliyorsan gelecek daha eski geçmişe bağlı değildir; buraya nasıl geldiğin önemli değil.” Basit görünür ama hava durumundan Google aramasına kadar her yerde.
 
 **Şekil 2.4 · Hava durumu Markov zinciri**
 ![Şekil 2.4](../../figures/out/tr/sekil-2-4-markov.svg)
 
-*Kurulum.* Şekilde üç durum kutusu var: Güneşli, Bulutlu, Yağmurlu; oklarla birbirine bağlı, her okun üstündeki sayı o geçişin yüzdesi. Yanında aynı sayılar geçiş matrisi olarak: satır bugün, sütun yarın. Yedi günlük bir zincirin gün gün gidişi aşağıda.
+*Kurulum.* Şekilde üç durum kutusu var: Güneşli, Bulutlu, Yağmurlu; oklarla birbirine bağlı, her okun üstündeki sayı o geçişin yüzdesi. Yanında aynı sayılar geçiş matrisi olarak: satır bugün, sütun yarın; her satırın toplamı 100. Yedi günlük bir zincirin gün gün gidişi aşağıda.
 
 | bugün \ yarın | Güneşli | Bulutlu | Yağmurlu |
 |---|---|---|---|
@@ -205,7 +205,7 @@ Sonra yedi günlük bir zincir. Canlı gösterimde sayıları makine rastgele ç
 
 Yedi günün sonunda sayaç: 3 güneşli, 2 bulutlu, 2 yağmurlu; dağılım yüzde 43 / 29 / 29. Dördüncü gün yağmura geçerken makine önceki üç güne hiç bakmadı; “bugün bulutlu” bilgisi ve 91 sayısı yetti.
 
-Son olarak uzun vade. Yedi gün az; yüzlerce gün sonra oranlar sabitlenir. Sabitlenen oranı zar atmadan da bulabilirsin. Uzun vadede güneşli günlerin payı G, bulutluların B, yağmurluların Y olsun. Bir güneşli gün üç yoldan gelir: güneşten sonra (0.7·G), buluttan sonra (0.3·B), yağmurdan sonra (0.2·Y). Oranlar sabitse bu toplam yine G olmalı:
+Son olarak uzun vade. Yedi gün az; bu zincirde her durumdan her duruma geçiş mümkün olduğundan yüzlerce gün sonra oranlar, başlangıç ne olursa olsun, sabitlenir. Sabitlenen oranı zar atmadan da bulabilirsin. Uzun vadede güneşli günlerin payı G, bulutluların B, yağmurluların Y olsun. Bir güneşli gün üç yoldan gelir: güneşten sonra (0.7·G), buluttan sonra (0.3·B), yağmurdan sonra (0.2·Y). Oranlar sabitse bu toplam yine G olmalı:
 
 G = 0.7·G + 0.3·B + 0.2·Y  
 B = 0.2·G + 0.4·B + 0.4·Y  
@@ -213,19 +213,24 @@ Y = 0.1·G + 0.3·B + 0.4·Y, ve G + B + Y = 1.
 
 Çözüm: G = 6/13, B = 4/13, Y = 3/13; yaklaşık yüzde 46 / 31 / 23. Sağlama: 0.7·6 + 0.3·4 + 0.2·3 = 4.2 + 1.2 + 0.6 = 6. Gösterim yeterince uzun çalışınca alttaki dağılım bu sayıların etrafında salınır.
 
-*Ne oluyor?* Yarının havası yalnızca bugüne bakılarak tahmin ediliyor; dünün önemi yok. Her gün makine bir zar atıyor ama zar hileli: güneşli bir günden sonra yine güneş gelme ihtimali yüksek. Günler biriktikçe dağılım hep aynı orana oturur.
+*Ne oluyor?* Yarının havası yalnızca bugüne bakılarak tahmin ediliyor; bugün bilinince dünün önemi kalmıyor. Her gün makine bir zar atıyor ama zar hileli: güneşli bir günden sonra yine güneş gelme ihtimali yüksek. Günler biriktikçe dağılım hep aynı orana oturur.
 
 *Kendin dene.* 1) Bugün yağmurlu, çekilen sayı 35: yarın hava ne? 2) Bugün güneşli. İki gün sonra yağmurlu olma olasılığı kaç? İpucu: yarının üç ihtimalini ayrı ayrı hesapla, topla. 3) Güneşli satırını 90 / 5 / 5 yapsan uzun vadeli dağılım hangi yöne kayar? Önce tahmin et, sonra ilk denklemle kontrol et. Canlı demo: [QR 2.4]
 
 #### Teknik derinlik
 
-Belirsizlik altında akıl yürütmek için olasılıksal modeller kullanılır. Markov zinciri, bir sonraki durumun yalnızca şu anki duruma bağlı olduğu (Markov özelliği: geçmişten bağımsızlık) bir stokastik süreçtir; geçişler bir olasılık matrisiyle tanımlanır.
+Belirsizlik altında akıl yürütmek için olasılıksal modeller kullanılır. Markov zinciri, mevcut durum bilindiğinde bir sonraki durumun daha eski geçmişe bağlı olmadığı (Markov özelliği: mevcut duruma koşullu bağımsızlık) bir stokastik süreçtir; geçişler, her satırının toplamı 1 olan bir olasılık matrisiyle tanımlanır.
 
-Yeterince adımda dağılım çoğu zaman bir kararlı duruma (stationary distribution) yakınsar. Bu fikir, gizli Markov modelleri, PageRank ve pekiştirmeli öğrenmedeki Markov karar süreçlerine kadar uzanır. Şekil 2.4’teki gösterimde uzun vadeli dağılımın nasıl oluştuğunu gözlemle.
+Sonlu, indirgenemez ve periyodik olmayan bir zincirin durum dağılımı, başlangıç ne olursa olsun, tek bir kararlı dağılıma (stationary distribution) yakınsar; kararlı dağılımın var olması tek başına yakınsama demek değildir. Bu fikir, gizli Markov modelleri, PageRank ve pekiştirmeli öğrenmedeki Markov karar süreçlerine kadar uzanır. Şekil 2.4’teki gösterimde uzun vadeli dağılımın nasıl oluştuğunu gözlemle.
 
 Geçiş matrisi P sabittir; her yeni gün, P’nin mevcut satırından bir örneklem üretir.
 
-Kararlı dağılım π, πP = π ve Σπᵢ = 1 denklemlerinin çözümüdür; bu P için π = (6/13, 4/13, 3/13) ≈ (0.462, 0.308, 0.231). Güneşli başlangıçtan beklenen dağılımın gidişi: 1. gün (0.70, 0.20, 0.10), 2. gün (0.57, 0.26, 0.17), 3. gün (0.51, 0.29, 0.20), 5. gün (0.47, 0.30, 0.23). Yakınsama beş günde büyük ölçüde tamamlanır; gösterimdeki sayaç ise örneklem olduğundan bu değerlerin etrafında dalgalanır.
+Kararlı dağılım π şu iki denklemin çözümüdür:
+
+πP = π  
+Σπᵢ = 1
+
+Bu P için π = (6/13, 4/13, 3/13) ≈ (0.462, 0.308, 0.231). Matrisin her girdisi pozitif olduğundan zincir indirgenemez ve periyodik değildir; üç durumlu sonlu zincir bu yüzden her başlangıçtan aynı π’ye yakınsar. Güneşli başlangıçtan beklenen dağılımın gidişi: 1. gün (0.70, 0.20, 0.10), 2. gün (0.57, 0.26, 0.17), 3. gün (0.51, 0.29, 0.20), 5. gün (0.47, 0.30, 0.23). Yakınsama beş günde büyük ölçüde tamamlanır; gösterimdeki sayaç ise örneklem olduğundan bu değerlerin etrafında dalgalanır.
 
 Olasılık kurallara esneklik kattı; ama tabloyu, kuralları, zinciri hâlâ bir insan elle yazıyor. Bu yükün ne kadar taşınabileceği konusunda YZ’ciler ikiye bölündü.
 
@@ -233,7 +238,7 @@ Olasılık kurallara esneklik kattı; ama tabloyu, kuralları, zinciri hâlâ bi
 
 YZ araştırmacıları yıllarca iki kampa bölündü. “Düzenliler” (neats) her adımın temiz matematikle kanıtlanmasını istedi. “Dağınıklar” (scruffies) ise omuz silkti: “Çalışıyorsa iyidir, teorisini sonra buluruz.”
 
-Bu kavga yalnızca tarih değil; bugün de sürüyor. Aşağıdaki ifadeleri doğru kampa ayır. Sonunda anlaşılacak: klasik YZ neden duvara tosladı ve bu çarpışma, makinelerin “öğrenmesi” fikrini nasıl doğurdu?
+Bu kavga yalnızca tarih değil; bugün de sürüyor. Aşağıdaki ifadeleri doğru kampa ayır. Sonunda anlaşılacak: klasik YZ neden duvara tosladı ve bu çarpışma, zaten araştırılan bir fikre, makinelerin “öğrenmesine”, ilgiyi nasıl artırdı?
 
 > **Kenar notu.** Klasik YZ’nin dersi: dünyanın tüm kurallarını elle yazmak imkânsız. Çözüm, makineye kuralları biz vermek yerine onları veriden kendisinin bulmasını öğretmek. Sıradaki bölümün konusu bu.
 
@@ -259,7 +264,7 @@ Kelimeye değil tutuma bak: konuşan önce doğruluğu mu göstermek istiyor, ö
 
 “Neat” ve “scruffy” ayrımı (Roger Schank’a atfedilir), YZ’de yöntemsel bir gerilimi tanımlar: biçimsel, kanıtlanabilir, ilkeli yaklaşımlar (neats; mantık ve olasılık kuramı gibi) ile sezgisel, mühendislik-odaklı, ampirik yaklaşımlar (scruffies) arasında.
 
-Klasik sembolik YZ iki temel sınıra çarptı: bilgi edinme darboğazı (tüm kuralları elle yazmak ölçeklenmez) ve kırılganlık (öngörülmeyen durumlarda çökme). Bu sınırlar, bilgiyi elle kodlamak yerine veriden öğrenmeyi öneren istatistiksel YZ’ye (Bölüm 3) geçişi hızlandırdı.
+Klasik sembolik YZ iki temel sınıra çarptı: bilgi edinme darboğazı (tüm kuralları elle yazmak ölçeklenmez) ve kırılganlık (öngörülmeyen durumlarda çökme). Bu sınırlar, zaten araştırılmakta olan öğrenmeye dayalı yöntemlere ilgiyi artırdı; sembolik ve öğrenmeye dayalı yaklaşımlar uzun süre birlikte gelişti (Rosenblatt’ın perceptron’u 1958 tarihlidir). Bilgiyi elle kodlamak yerine veriden öğrenen istatistiksel YZ’ye (Bölüm 3) geçiş böyle hızlandı.
 
 Kavga iki kampı da kısmen haklı çıkardı; nasıl olduğu sıradaki bölümde. Önce altı soru.
 
@@ -278,7 +283,7 @@ Kavga iki kampı da kısmen haklı çıkardı; nasıl olduğu sıradaki bölümd
    c) Bir kural (IF-THEN)
    d) Bir veri kümesi
 
-3. Sezgisel (heuristic) yöntemlerin temel özelliği?
+3. Açgözlü (greedy) sezgisel aramanın temel özelliği?
    a) Her zaman en iyi çözümü garanti eder
    b) Rastgele tahmin eder
    c) Veriden öğrenir
@@ -305,12 +310,12 @@ Kavga iki kampı da kısmen haklı çıkardı; nasıl olduğu sıradaki bölümd
 ### Bu bölümden kalanlar
 
 - Klasik YZ bilgiyi açık semboller ve elle yazılmış kurallar olarak saklar.
-- Bir “bir …dır” zinciri, geçişlilik sayesinde kimsenin yazmadığı bilgiyi türetir; zincirde olmayan için “bilinmiyor” der.
+- Bir “bir …dır” zinciri (örnekten sınıfa, sınıftan üst sınıfa), geçişlilik sayesinde kimsenin yazmadığı bilgiyi türetir; zincirde olmayan için “bilinmiyor” der.
 - Uzman sistem, açık olgularla eşleşen EĞER-O ZAMAN kurallarını ateşler; bir kuralın sonucu başka bir kuralı tetikleyebilir.
-- Sezgisiz arama en kısa yolu garanti eder ama çok kare gezer; sezgisel arama az gezer ama garanti vermez.
-- Markov zincirinde yarın yalnızca bugüne bağlıdır ve uzun vadede dağılım sabit bir orana oturur.
+- Eş maliyetli ızgarada sezgisiz arama en az adımlı yolu garanti eder ama çok kare gezer; açgözlü sezgisel arama az gezer ama garanti vermez; A*, kabul edilebilir bir sezgiyle ikisini birleştirir.
+- Markov zincirinde, bugün bilinince yarın daha eski geçmişe bağlı değildir; her duruma ulaşılabilen, döngüye kilitlenmeyen sonlu bir zincirde dağılım uzun vadede tek bir orana oturur.
 - Düzenliler kanıt, Dağınıklar işe yarayan çözüm ister; bugünün YZ’si ikisinden de pay taşır.
-- Kuralları elle yazmak ölçeklenmez ve kırılgandır; çıkış yolu, kuralları veriden öğrenmektir.
+- Kuralları elle yazmak ölçeklenmez ve kırılgandır; bu sınırlar, sembolik çağla birlikte yürüyen öğrenme araştırmalarına ilgiyi artırdı.
 
 <!-- SOURCE-CHANGES
 Bugün yapay zekâ deyince verilerden öğrenen sistemleri düşünüyoruz. Oysa hikâyenin ilk büyük bölümü tam tersiydi: O çağın ustaları makineye dünyayı ezberletmeye çalıştı. Akıllı davranması için ne gerekiyorsa (bütün bilgileri, bütün kuralları) tek tek elle yazdılar. ||| Bugün yapay zekâ deyince verilerden öğrenen sistemleri düşünüyoruz. Oysa hikâyenin ilk büyük bölümü tam tersiydi: o çağın ustaları makineye dünyayı ezberletmeye çalıştı. Akıllı davranması için ne gerekiyorsa (bütün bilgileri, bütün kuralları) tek tek elle yazdılar.
@@ -330,7 +335,20 @@ Geçiş matrisi P sabittir; bir sonraki durum yalnızca şimdiki duruma bağlıd
 Bu kavga yalnızca tarih değil; bugün de sürüyor. Aşağıdaki ifadeleri doğru kampa ayır. Sonunda anlaşılacak: Klasik YZ neden duvara tosladı ve bu çarpışma, makinelerin “öğrenmesi” fikrini nasıl doğurdu? ||| Bu kavga yalnızca tarih değil; bugün de sürüyor. Aşağıdaki ifadeleri doğru kampa ayır. Sonunda anlaşılacak: klasik YZ neden duvara tosladı ve bu çarpışma, makinelerin “öğrenmesi” fikrini nasıl doğurdu?
 Klasik YZ’nin dersi: dünyanın tüm kurallarını elle yazmak imkânsız. Çözüm? Makineye kuralları biz vermek yerine, onları veriden kendisinin bulmasını öğretmek. Sıradaki bölümün konusu tam olarak bu. ||| Klasik YZ’nin dersi: dünyanın tüm kurallarını elle yazmak imkânsız. Çözüm, makineye kuralları biz vermek yerine onları veriden kendisinin bulmasını öğretmek. Sıradaki bölümün konusu bu.
 İki kamp, iki karakter: Düzenliler her adımı matematikle kanıtlamak ister; Dağınıklar “önce çalışsın, teorisi sonra gelir” der. İkisinin de haklı çıktığı yerler var; bugünün yapay zekâsı aslında ikisinin karışımı. ||| İki kamp, iki karakter: Düzenliler her adımı matematikle kanıtlamak ister; Dağınıklar “önce çalışsın, teorisi sonra gelir” der. İkisinin de haklı çıktığı yerler var; bugünün yapay zekâsı ikisinin karışımı.
-Bu, YZ’de yöntemsel bir gerilimdir: ilkeli/kanıtlanabilir yaklaşımlar (neat: mantık, olasılık) ile ampirik/mühendislik-odaklı yaklaşımlar (scruffy). Klasik YZ’nin duvarı: bilgi edinme darboğazı ve kırılganlık. ||| (basılı sürümde silindi: 2.6 teknik[0] ve teknik[1] aynı içeriği zaten taşıyor; dijital sürümde kalabilir)
+Bu, YZ’de yöntemsel bir gerilimdir: ilkeli/kanıtlanabilir yaklaşımlar (neat: mantık, olasılık) ile ampirik/mühendislik-odaklı yaklaşımlar (scruffy). Klasik YZ’nin duvarı: bilgi edinme darboğazı ve kırılganlık. ||| [SİL] (basılı sürümde silindi: 2.6 teknik[0] ve teknik[1] aynı içeriği zaten taşıyor; dijital sürümde kalabilir)
+Bu paradigma 1950’lerden 1980’lere kadar baskındı ve mantık programlama, arama algoritmaları ve uzman sistemler gibi güçlü araçlar üretti. Bu modül bu araçları kurar; sonunda “bilgi edinme darboğazı” ve kırılganlık sorunlarının neden istatistiksel/öğrenen yaklaşımlara (Modül 3) yol açtığını gösterir. ||| Bu paradigma 1950’lerden 1980’lere kadar baskındı ve mantık programlama, arama algoritmaları ve uzman sistemler gibi güçlü araçlar üretti. Bu modül bu araçları kurar; sonunda “bilgi edinme darboğazı” ve kırılganlık sorunlarının, zaten araştırılmakta olan öğrenmeye dayalı yaklaşımlara (Modül 3) ilgiyi neden artırdığını gösterir.
+Çıkarım (inference), bu temsiller üzerinde kuralların uygulanmasıdır. Aşağıdaki demo bir is-a hiyerarşisinde geçişliliği (transitivity) kullanır: “Tekir is-a Kedi” ve “Kedi is-a Memeli” ise “Tekir is-a Memeli” türetilebilir. Sembolik akıl yürütmenin özü budur. ||| Çıkarım (inference), bu temsiller üzerinde kuralların uygulanmasıdır. Aşağıdaki demo bir is-a hiyerarşisinde geçişliliği (transitivity) kullanır. Ontolojide iki bağ ayrılır: Tekir, Kedi sınıfının bir örneğidir (instance-of); Kedi, Memeli sınıfının alt sınıfıdır (subclass-of). “Tekir instance-of Kedi” ve “Kedi subclass-of Memeli” ise “Tekir instance-of Memeli” türetilir; bu nedenle Tekir bir memelidir. Demo iki bağı da tek ok türüyle, “bir …dır” diye gösterir. Sembolik akıl yürütmenin özü budur.
+Sezgisel yöntemler hız kazandırır ama bedeli vardır: bazen en iyi çözümü kaçırabilirler. “Yeterince iyi”yi “mükemmel”e tercih ederler. ||| Açgözlü sezgisel yöntemler hız kazandırır ama bedeli vardır: bazen en iyi çözümü kaçırabilirler. “Yeterince iyi”yi “mükemmel”e tercih ederler. A* gibi daha dikkatli yöntemler, uygun bir sezgiyle garantiyi geri alır.
+İki arayıcıyı yarıştırıyorsun. Sezgisiz olan her yönü sabırla tarar; sonunda en kısa yolu bulur ama çok kare gezer. Sezgisel olan hep hedefe doğru koşar; az kare gezer ama bazen en kısa yolu kaçırır. Hız ile garanti arasındaki takas bu. ||| İki arayıcıyı yarıştırıyorsun. Sezgisiz olan her yönü sabırla tarar; her adım aynı bedeldeyse sonunda en az adımlı yolu bulur ama çok kare gezer. Açgözlü sezgisel olan hep hedefe doğru koşar; az kare gezer ama bazen en kısa yolu kaçırır. Hız ile garanti arasındaki takas bu; A* gibi yöntemler gidilen yolu da hesaba katarak garantiyi geri alır.
+Pek çok klasik YZ problemi durum-uzayı araması (state-space search) olarak modellenir. Bilgisiz (uninformed) arama, örneğin genişlik-öncelikli arama (BFS), hiçbir yön bilgisi kullanmadan sistematik tarar ve en kısa yolu garanti eder ama çok düğüm açar. ||| Pek çok klasik YZ problemi durum-uzayı araması (state-space search) olarak modellenir. Bilgisiz (uninformed) arama, örneğin genişlik-öncelikli arama (BFS), hiçbir yön bilgisi kullanmadan sistematik tarar; tüm kenarların maliyeti eşitse en az adımlı, dolayısıyla en düşük maliyetli yolu garanti eder, ama çok düğüm açar. Farklı kenar maliyetlerinde başka yöntemler gerekir.
+Bilgili (informed) arama, bir sezgisel fonksiyon h(n) ile hedefe yakınlığı tahmin eder; açgözlü en-iyi-öncelikli arama yalnızca h’yi kullanır (hızlı ama eniyilik garantisi yok), A* ise g(n)+h(n) ile hem eniyiliği hem verimi dengeler (h kabul edilebilir ise). Aşağıda BFS ile sezgisel aramanın taradığı hücre sayısını karşılaştır. ||| Bilgili (informed) arama, bir sezgisel fonksiyon h(n) ile hedefe yakınlığı tahmin eder; açgözlü en-iyi-öncelikli arama yalnızca h’yi kullanır (hızlı ama eniyilik garantisi yok), A* ise g(n)+h(n) kullanır: h kabul edilebilirse (gerçek uzaklığı hiç aşmıyorsa) ağaç aramasında en kısa yolu bulur; graf aramasında ayrıca h’nin tutarlı olması ya da daha iyi bir yolla ulaşılan düğümlerin yeniden açılması gerekir. Aşağıda BFS ile sezgisel aramanın taradığı hücre sayısını karşılaştır.
+Sezgisel (heuristic) yöntemlerin temel özelliği? ||| Açgözlü (greedy) sezgisel aramanın temel özelliği?
+Markov özelliği: “gelecek, yalnızca şimdiye bağlıdır; nasıl geldiğin önemli değil.” Basit görünür ama hava durumundan Google aramasına kadar her yerde. ||| Markov özelliği: “şimdiyi biliyorsan gelecek daha eski geçmişe bağlı değildir; buraya nasıl geldiğin önemli değil.” Basit görünür ama hava durumundan Google aramasına kadar her yerde.
+Yarının havası yalnızca bugüne bakılarak tahmin ediliyor; dünün önemi yok. Her basışta makine bir zar atıyor ama zar hileli: güneşli bir günden sonra yine güneş gelme ihtimali yüksek. Günler biriktikçe alttaki çubukların hep aynı orana oturduğunu göreceksin. ||| Yarının havası yalnızca bugüne bakılarak tahmin ediliyor; bugün bilinince dünün önemi kalmıyor. Her basışta makine bir zar atıyor ama zar hileli: güneşli bir günden sonra yine güneş gelme ihtimali yüksek. Günler biriktikçe alttaki çubukların hep aynı orana oturduğunu göreceksin.
+Belirsizlik altında akıl yürütmek için olasılıksal modeller kullanılır. Markov zinciri, bir sonraki durumun yalnızca şu anki duruma bağlı olduğu (Markov özelliği: geçmişten bağımsızlık) bir stokastik süreçtir; geçişler bir olasılık matrisiyle tanımlanır. ||| Belirsizlik altında akıl yürütmek için olasılıksal modeller kullanılır. Markov zinciri, mevcut durum bilindiğinde bir sonraki durumun daha eski geçmişe bağlı olmadığı (Markov özelliği: mevcut duruma koşullu bağımsızlık) bir stokastik süreçtir; geçişler, her satırının toplamı 1 olan bir olasılık matrisiyle tanımlanır.
+Yeterince adımda dağılım çoğu zaman bir kararlı duruma (stationary distribution) yakınsar. Bu fikir, gizli Markov modelleri, PageRank ve pekiştirmeli öğrenmedeki Markov karar süreçlerine kadar uzanır. Aşağıdaki demoda uzun vadeli dağılımın nasıl oluştuğunu gözlemle. ||| Sonlu, indirgenemez ve periyodik olmayan bir zincirin durum dağılımı, başlangıç ne olursa olsun, tek bir kararlı dağılıma (stationary distribution) yakınsar; kararlı dağılımın var olması tek başına yakınsama demek değildir. Bu fikir, gizli Markov modelleri, PageRank ve pekiştirmeli öğrenmedeki Markov karar süreçlerine kadar uzanır. Aşağıdaki demoda uzun vadeli dağılımın nasıl oluştuğunu gözlemle.
+Bu kavga yalnızca tarih değil; bugün de sürüyor. Aşağıdaki ifadeleri doğru kampa ayır. Sonunda anlaşılacak: klasik YZ neden duvara tosladı ve bu çarpışma, makinelerin “öğrenmesi” fikrini nasıl doğurdu? ||| Bu kavga yalnızca tarih değil; bugün de sürüyor. Aşağıdaki ifadeleri doğru kampa ayır. Sonunda anlaşılacak: klasik YZ neden duvara tosladı ve bu çarpışma, zaten araştırılan bir fikre, makinelerin “öğrenmesine”, ilgiyi nasıl artırdı?
+Klasik sembolik YZ iki temel sınıra çarptı: bilgi edinme darboğazı (tüm kuralları elle yazmak ölçeklenmez) ve kırılganlık (öngörülmeyen durumlarda çökme). Bu sınırlar, bilgiyi elle kodlamak yerine veriden öğrenmeyi öneren istatistiksel YZ’ye (Modül 3) geçişi hızlandırdı. ||| Klasik sembolik YZ iki temel sınıra çarptı: bilgi edinme darboğazı (tüm kuralları elle yazmak ölçeklenmez) ve kırılganlık (öngörülmeyen durumlarda çökme). Bu sınırlar, zaten araştırılmakta olan öğrenmeye dayalı yöntemlere ilgiyi artırdı; sembolik ve öğrenmeye dayalı yaklaşımlar uzun süre birlikte gelişti (Rosenblatt’ın perceptron’u 1958 tarihlidir). Bilgiyi elle kodlamak yerine veriden öğrenen istatistiksel YZ’ye (Modül 3) geçiş böyle hızlandı.
 -->
 
 <!-- REDAKSİYON NOTLARI
@@ -350,5 +368,6 @@ Bu, YZ’de yöntemsel bir gerilimdir: ilkeli/kanıtlanabilir yaklaşımlar (nea
 - Şekil 2.5 "Kendini sına" demosu: Adım adım yerine soru listesi; ifadeler book.json/demo verisiyle birebir. Gerekçeler cevaplar/M02.md'de.
 - Şekil dosyaları üretildi; Kurulum metinleri SVG ile karşılaştırıldı (2026-09-30).
 - Yazar kararı (2026-09-10): kaynak metin dahil tüm "demo" sözcükleri "gösterim" ya da "Şekil N.j" yapıldı; "Aşağıdaki demo" → şekil öncesinde "Aşağıda yer alan gösterim (Şekil N.j)", sonrasında "Şekil N.j'teki gösterim".
+- 2026-10-01 düzeltme belgesi: R011 (öğrenme, sembolik çöküşün ardılı değil; "zaten araştırılan" + paralel gelişim: 2.1 teknik, 2.6 basit, 2.6 teknik, kalanlar), R012 (instance-of / subclass-of ayrımı: Kurulum, 2.2 teknik, biçimsel kural, kalanlar; cevaplar/M02), R013 (BFS garantisi eş kenar maliyetine bağlandı: teknik[0], Adım 4, Ne oluyor, kalanlar; sınav 3 sorusu açgözlü aramaya daraltıldı), R014 (greedy ile A* ayrıldı: kenar notu, Adım adım başlığı/tablo "Açgözlü sezgisel", Ne oluyor, teknik kabul edilebilirlik + graf aramasında tutarlılık/yeniden açma; cevaplar/M02), R015 (Markov: mevcut duruma koşullu bağımsızlık; sonlu/indirgenemez/periyodik olmayan zincir tek kararlı dağılıma yakınsar; satır toplamı 1; πP = π ve Σπᵢ = 1 ayrı satırlarda; kenar notu, Kurulum, Adım adım, Ne oluyor, teknik, kalanlar), R016 (yalnız EN: "in two words" → "in two ideas", rigour → rigor; TR'de değişiklik gerekmedi), R066 (Bölüm 1–2'de bias/embedding geçmiyor; işlem yok).
 - 2026-09-30 insanlaştırma geçişi: humanize-tr-report.md bulguları uygulandı; "Peki/Sıradaki bölüm …-yor" köprüleri, "işte/tam olarak" çivileri, punchline'lar, "Ekranda … kâğıtta …" cümleleri (2.4, 2.5 Kurulum), "aslında/yani/dürüst/harika/yolculuk" sözcükleri, Şekil 2.5 ipucu şişkinliği (cevap dağılımını ele veren cümle dahil) ve kavram tırnakları temizlendi. Teknik "Ne oluyor" paragraflarında ilk teknik paragrafı tekrar eden cümleler kırpıldı (2.2, 2.3, 2.5; 2.6'daki paragraf tamamen tekrar olduğu için basılı sürümden çıkarıldı; dijital sürüm tam hâlini koruyabilir). Kaynak paragraf değişiklikleri yukarıdaki SOURCE-CHANGES bloğunda.
 -->

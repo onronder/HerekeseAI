@@ -45,7 +45,7 @@ function promptFigure(demo, { lang }) {
     const h = 12 + p.h + 4;
     body.push(rect(lx, y, lw, h, { fill: b.base ? EMBER_SOFT : '#fff', stroke: b.base ? EMBER : INK, sw: b.base ? 1 : 0.7 }));
     body.push(caption(tx, y + 8, up(b.name, lang), { fill: b.base ? EMBER : MUTED, size: 6 }));
-    if (!b.base) body.push(text(lx + lw - 5, y + 8, P.partTag(i + 1), { font: MONO, size: 5.5, fill: MUTED, anchor: 'end' }));
+    if (!b.base) body.push(text(lx + lw - 5, y + 8, P.partTag(i + 1), { font: MONO, size: 6, fill: MUTED, anchor: 'end' })); // R082: ≥ 6
     body.push(p.svg);
     y += h + 2;
   });
@@ -66,10 +66,10 @@ function promptFigure(demo, { lang }) {
   const ladderBottom = ladderTop + steps.length * rowH;
   [60, 85].forEach((th) => {
     const x = bx + (bw * th) / 100;
-    body.push(text(x, ladderBottom + 8, `${th}`, { font: MONO, size: 5.5, fill: MUTED, anchor: 'middle' }));
+    body.push(text(x, ladderBottom + 8, `${th}`, { font: MONO, size: 6, fill: MUTED, anchor: 'middle' }));
   });
-  body.push(text(bx, ladderBottom + 8, '0', { font: MONO, size: 5.5, fill: MUTED }));
-  body.push(text(bx + bw, ladderBottom + 8, '100', { font: MONO, size: 5.5, fill: MUTED, anchor: 'end' }));
+  body.push(text(bx, ladderBottom + 8, '0', { font: MONO, size: 6, fill: MUTED }));
+  body.push(text(bx + bw, ladderBottom + 8, '100', { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
   const note = para(rx, ladderBottom + 14, P.note, cpl(rw, 6.5, lang), { size: 6.5, lh: 8, fill: INK2 });
   body.push(note.svg);
   // --- alt: üç düzeyin cevabı
@@ -108,7 +108,7 @@ function ragFigure(demo, { lang }) {
   // --- üst: akış diyagramı (açık yol düz, kapalı yol kesikli baypas)
   const nodes = R.nodes;
   const nw = 52, ng = (W - pad * 2 - nw * nodes.length) / (nodes.length - 1), ny = 16, nh = 15;
-  body.push(caption(pad, 10, R.flowOn, { size: 5.5 }));
+  body.push(caption(pad, 10, R.flowOn, { size: 6 })); // R082: ≥ 6
   nodes.forEach((n, i) => {
     const x = pad + i * (nw + ng);
     const src = i === 2;
@@ -119,7 +119,7 @@ function ragFigure(demo, { lang }) {
   // kapalı yol: Soru → Model baypas (kesikli)
   const sx = pad + nw / 2, mx = pad + 3 * (nw + ng) + nw / 2, by = ny + nh;
   body.push(`<path d="M${f1(sx)} ${f1(by)} C${f1(sx)} ${f1(by + 15)} ${f1(mx)} ${f1(by + 15)} ${f1(mx)} ${f1(by + 1.5)}" fill="none" stroke="${INK2}" stroke-width="0.7" stroke-dasharray="2 1.5" marker-end="url(#arrow)"/>`);
-  body.push(text((sx + mx) / 2, by + 19, R.flowOff, { font: MONO, size: 5.5, fill: INK2, anchor: 'middle', spacing: 0.4 }));
+  body.push(text((sx + mx) / 2, by + 19, R.flowOff, { font: MONO, size: 6, fill: INK2, anchor: 'middle', spacing: 0.4 }));
   // --- üç soru paneli
   let y = by + 26;
   const cw = (W - pad * 2 - 8) / 2, cx1 = pad, cx2 = pad + cw + 8, size = 6.5, lh = 8.2, max = cpl(cw - 10, size, lang);
@@ -131,16 +131,16 @@ function ragFigure(demo, { lang }) {
     body.push(caption(pad, y + 6, qLabel, { size: 6 }));
     body.push(text(pad + Math.max(34, Math.ceil(qLabel.length * 4.8) + 4), y + 6, d.q, { size: 7.5, weight: 600 })); // soru metni etiket genişliğine göre kayar
     y += 12;
-    body.push(caption(cx1, y + 6, R.offHead, { size: 5.5, fill: INK2 }));
-    body.push(caption(cx2, y + 6, R.onHead, { size: 5.5, fill: EMBER }));
+    body.push(caption(cx1, y + 6, R.offHead, { size: 6, fill: INK2 }));
+    body.push(caption(cx2, y + 6, R.onHead, { size: 6, fill: EMBER }));
     y += 9;
     // kaynak kutusu (sağ) ve boş kutu (sol), aynı yükseklik
     const ch = para(cx2 + 5, y + 9, d.chunk, max, { size, lh, fill: INK });
     const boxH = 10 + ch.h + 4;
     body.push(rect(cx1, y, cw, boxH, { fill: 'none', stroke: RULE, sw: 0.7 }).replace('/>', ' stroke-dasharray="2 2"/>'));
-    body.push(text(cx1 + cw / 2, y + boxH / 2 + 2, R.noSource, { font: MONO, size: 5.5, fill: MUTED, anchor: 'middle' }));
+    body.push(text(cx1 + cw / 2, y + boxH / 2 + 2, R.noSource, { font: MONO, size: 6, fill: MUTED, anchor: 'middle' }));
     body.push(rect(cx2, y, cw, boxH, { fill: EMBER_SOFT, stroke: EMBER, sw: 0.7 }).replace('/>', ' stroke-dasharray="2 2"/>'));
-    body.push(caption(cx2 + 5, y + 7, R.retrieved, { size: 5.5, fill: EMBER }));
+    body.push(caption(cx2 + 5, y + 7, R.retrieved, { size: 6, fill: EMBER }));
     body.push(ch.svg);
     y += boxH + 3;
     const a1 = para(cx1 + 5, y + 4, d.ungrounded, max, { size, lh, fill: INK });
@@ -150,8 +150,8 @@ function ragFigure(demo, { lang }) {
     body.push(rect(cx2, y, cw, ah, { fill: '#fff', stroke: INK, sw: 0.7 }));
     body.push(a1.svg, a2.svg);
     y += ah + 2;
-    body.push(text(cx1 + 5, y + 6, R.unverified, { size: 5.8, fill: EMBER, italic: true }));
-    body.push(text(cx2 + 5, y + 6, R.source(d.chunk.split(':')[0]), { font: MONO, size: 5.5, fill: INK2 }));
+    body.push(text(cx1 + 5, y + 6, R.unverified, { size: 6, fill: EMBER, italic: true }));
+    body.push(text(cx2 + 5, y + 6, R.source(d.chunk.split(':')[0]), { font: MONO, size: 6, fill: INK2 }));
     y += 11;
     rows.push(`| ${d.q} | ${d.chunk} | ${d.ungrounded} | ${d.grounded} |`);
   });
@@ -194,15 +194,17 @@ function agentFigure(demo, { lang }) {
   body.push(line(cxm + half - (wTool / 2 + 1), bot, cxm - half + (wObs / 2 + 2), bot, { sw: 0.7, marker: true }));
   body.push(line(cxm - half + 8, bot - 7, cxm - 14, top + 6, { sw: 0.7, marker: true }));
   body.push(line(cxm, top + 6.5, cxm, bot + 10, { stroke: EMBER, sw: 0.7, dash: '1.5 1.5', marker: true }));
-  body.push(text(cxm, bot + 18, A.goal, { font: MONO, size: 5.2, fill: EMBER, anchor: 'middle' }));
-  body.push(text(cxm + half + 3, top + 12, A.edgeCall, { font: MONO, size: 5, fill: MUTED }));
-  body.push(text(cxm - 6, bot - 6 - (wObs - 40) / 4, A.edgeOut, { font: MONO, size: 5, fill: MUTED, anchor: 'end' })); // geniş düğümde etiket üst kenardan uzaklaşır
-  body.push(text(cxm - half - 3, top + 12, A.edgeFeed, { font: MONO, size: 5, fill: MUTED, anchor: 'end' }));
+  body.push(text(cxm, bot + 18, A.goal, { font: MONO, size: 6, fill: EMBER, anchor: 'middle' })); // R082: ≥ 6
+  body.push(text(cxm + half + 3, top + 12, A.edgeCall, { font: MONO, size: 6, fill: MUTED }));
+  body.push(text(cxm - 4, bot + 8.5, A.edgeOut, { font: MONO, size: 6, fill: MUTED, anchor: 'end' })); // Araç → Gözlem okunun altı, kesik çizginin solu (R082 büyük puntoda çapraz okla çakışıyordu)
+  body.push(text(cxm - half - 3, top + 12, A.edgeFeed, { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
   // --- üç kare
   const y0 = Math.max(10 + th + 16, bot + 26), fw = (W - pad * 2 - 12) / 3, fmax = cpl(fw - 8, 7, lang);
   // düşünce paragrafı 2 satırı aşarsa (EN) araç/gözlem bloğu ve kare yüksekliği o kadar aşağı kayar
   const extra = Math.max(0, Math.max(...A.steps.map((s) => para(0, 0, s.thought, fmax, { size: 7, lh: 8.4 }).n)) - 2) * 8.4;
-  const frameH = 108 + extra;
+  // R073: son cevap paragrafı alt çerçeveye değmesin — kare yüksekliği en uzun son cevaba göre (+8 iç boşluk)
+  const finalH = Math.max(0, ...A.steps.filter((s) => s.isFinal).map((s) => 83 + para(0, 0, s.final, fmax, { size: 7, lh: 8.4 }).n * 8.4 + 8));
+  const frameH = Math.max(108, finalH) + extra;
   A.steps.forEach((s, i) => {
     const fx = pad + i * (fw + 6), fy = y0, fz = fy + extra;
     body.push(rect(fx, fy, fw, frameH, { fill: '#fff', stroke: INK, sw: 0.7 }));
@@ -216,7 +218,7 @@ function agentFigure(demo, { lang }) {
     if (s.tool) {
       body.push(rect(fx + 4, fz + 58, fw - 8, 16, { fill: '#f4f2ee' }));
       body.push(text(fx + 7, fz + 65, A.toolLine(s.tool), { font: MONO, size: 5.5, fill: INK2 }));
-      body.push(text(fx + 7, fz + 72, s.action, { font: MONO, size: 5.5, fill: INK }));
+      body.push(text(fx + 7, fz + 72, s.action.replace(/ ([*/+−-]) /g, '$1'), { font: MONO, size: 5.5, fill: INK, spacing: -0.25 })); // R082 6.2 pt: kart genişliğine sığsın
       body.push(caption(fx + 5, fz + 86, A.obsHead, { size: 5.5, fill: EMBER }));
       body.push(text(fx + 5, fz + 99, `→ ${s.obs}`, { font: MONO, size: 10, weight: 700 }));
     } else {

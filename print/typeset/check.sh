@@ -35,6 +35,12 @@ sys.exit(0 if ok else 1)
 EOP
   [ $? -eq 0 ] || fail=1
 done
+echo "== metin bütünlüğü"
+if [ "$LANG_" = tr ] && [ "$PROFILE" = matbaa ]; then HX="$HERE/out/ic-blok.html"; else HX="$HERE/out/$LANG_-$PROFILE/ic-blok.html"; fi
+if python3 "$HERE/check_text_integrity.py" "$HX" "$IN" "$LANG_"; then chk ok "kaynak cümlelerinin tamamı PDF metninde"; else chk bad "PDF metninde kayıp cümle var"; fi
+RGBPDF="$(dirname "$HX")/ic-blok-rgb.pdf"
+kw=$(pdfinfo "$RGBPDF" 2>/dev/null | sed -n 's/^Keywords: *//p')
+case "$kw" in *kitap-tasma:0*) chk ok "sayfa alanı taşması yok ($kw)";; *kitap-tasma:*) chk bad "sayfa alanı taşıyor: $kw";; *) chk bad "taşma ölçümü yok (hooks.js çalışmadı?)";; esac
 echo "== QR"; node "$HERE/check_qr.mjs" "$IN" "$LANG_" || fail=1
 echo; [ $fail -eq 0 ] && echo "SONUÇ: tüm denetimler geçti" || echo "SONUÇ: hata var"
 exit $fail

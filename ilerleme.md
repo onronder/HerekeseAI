@@ -740,3 +740,20 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   SON: TR 232 s. (226+6) sırt 13 mm; EN KDP 236 s. sırt 13,5 mm (başlık 0.54 in, folyo 0.50 in); EPUB epubcheck 0; dijital build güncel.
   Yazara kalan: TR teşekkür isimleri + matbaa künye satırı; EN teşekkür isimleri (paperback + Kindle'da görünüyor); EN ISBN; KDP listeleme
   alanları (qa/kdp-paperback.md ve kindle.md sonunda); upload_book.py + git push (dijital sınav karışımı ve 2.5 düzeltmesi için).
+- TEŞEKKÜR + TESLİM PAKETLERİ (2026-10-01): yazar TR Teşekkür'ü yazdı (yalnız yazım düzeltildi: zekâ/hikâye/hiçbir, anneme/babama);
+  EN çevirisi front/01-acknowledgments.md. upload_book.py + git push yapıldı (yazar). Yeniden üretim: TR 232 s., EN 236 s., EPUB 0 hata;
+  kalan yer tutucu: TR künye matbaa satırı, EN [ISBN]. Teslim klasörleri: print/teslim/matbaa/ (iç blok, kapak, matbaa notu, OKUBENI.md)
+  ve print/teslim/kdp/ (paperback iç blok + kapak, Kindle EPUB + kapak JPG, README-KDP.md adım adım form alanları).
+  kapak.en.json "in_per_page" ile krem/premium sırt hesabı.
+- DÜZELTME BELGESİ (2026-10-01, 99 kayıt R001–R099; yazarın docx'i): plan §9; kayıtlar print/kitap/qa/duzeltme-kayitlari.json, uygulama
+  günlükleri uygulama-*.md (demo, şekil ×2, içerik ×4, sözlük-dizin), kanıt qa_evidence.py → kanit.json + make_uretim_kanit.py, kapanış raporu
+  print/kitap/qa/duzeltme-raporu.md (93 uygulandı; 6 kayıt yalnız dış onay bekliyor: R079 fiziksel EAN doğrulayıcı, R080 matbaa ICC +
+  preflight, R081 künye matbaa satırı + EN ISBN, R082 fiziksel prova, R084 sırt teyidi, R099 Kindle Previewer/cihaz). Dijital: tüm demo
+  kodu değişiklikleri (yazar kararı), apply_source_changes TR 151 / EN 150 satır + web-overrides; sızan basılı ifadeler ("Şekil N.j",
+  "bölüm", mükerrer cümle, "(basılı sürümde silindi…)") temizlendi, betik artık tekrar çalıştırmaya dayanıklı. Dizgi: metin kaybının kök
+  nedeni Paged.js çok sütunlu sayfa alanında alt-piksel taşma → hooks.js (onOverflow sözcük başı, bölünen kutu/tablo ataları, görünmez
+  sütun ölçümü, dizin numarası yer ayırma + tekilleştirme), check.sh'e metin bütünlüğü ve taşma kapıları; dizin tek sütun; figür etiketleri
+  ≥ 6,5 pt (lib.mjs MIN_TEXT 6.2; 9 figürde yerleşim düzeltmesi). SON: TR 256 s. (tam 16 forma, sırt geçici 14,2 mm), EN KDP 272 s.,
+  EPUB epubcheck 0; iki dilde 0 kayıp cümle, 45/45 QR (sessiz alan ≥ 3,73 mm), EAN 23,37 mm, siyah yalnız K, 90/90 canlı demo URL.
+  Metin düzeltmelerle %15 büyüdü (46,2 bin → 53,4 bin kelime). Teslim klasörleri yenilendi. Yazara kalan: upload_book.py + git push
+  (dijital demo/metin değişiklikleri), künye matbaa satırı, EN ISBN, matbaadan sırt/ICC/zengin siyah kararı.

@@ -28,7 +28,11 @@ export default {
       query: 'sorgu ↓',
       key: 'bakılan →',
       weight: 'AĞIRLIK',
-      caption: (q, v, best) => `“${q}” sorgu: en koyu hücre ${v} ile “${best}” · zamir kediye bakıyor`,
+      // R038: en koyu hücre kendisiyse "kendi konumu" + "diğerleri arasında en çok …"; değilse kendi payı da yazılır. Gönderge iddiası yok.
+      caption: (q, v, best, selfV, other, otherV) => (best === q
+        ? `“${q}” sorgu: en koyu hücre kendi konumu (${v}) · diğerleri arasında en çok “${other}” (${otherV})`
+        : `“${q}” sorgu: en koyu hücre ${v} ile “${best}” · kendi konumu ${selfV}`),
+      note: ['temsili, çift yönlü (encoder) tablo · ağırlıklar elle seçildi', 'tek bir dikkat hücresi göndergenin çözüldüğünü kanıtlamaz'],
       legend: 'kalın = satırın en yükseği · Σ = satır toplamı (her satır 1.00)',
       mdTitle: (title) => `# Dikkat ağırlıkları — ${title}`,
       mdHead: 'Sorgu ↓ · Bakılan →',
@@ -36,21 +40,24 @@ export default {
     generate: {
       steps: [['çok', 'artık', 'bugün', 'giderek'], ['hızlı', 'güçlü', 'yaygın', 'akıllı'], ['gelişiyor', 'ilerliyor', 'yayılıyor', 'büyüyor']],
       prefix: 'Yapay zekâ ',
-      low: 'DÜŞÜK YARATICILIK (SICAKLIK) · HEP EN OLASI ADAY',
-      high: 'YÜKSEK YARATICILIK (SICAKLIK) · GÖSTERİMDE İKİNCİ ADAY',
+      // R040: iki satır — açgözlü (argmax) ve T = 1.5 örneklemesi (demo-data.json temp54 kuralı)
+      greedy: 'AÇGÖZLÜ (ARGMAX) · HER ADIMDA EN YÜKSEK OLASILIK',
+      sample: (T) => `ÖRNEKLEME, T = ${T} · softmax(z/T) · SEÇİM: U İLE TERS-CDF`,
       step: (n) => `ADIM ${n}`,
       result: 'SONUÇ',
       chosen: (list) => `seçilen: ${list}`,
+      footer: (T, us) => `z = ln p · örnekleme: softmax(z/${T}), yuvarlanmış · U = ${us}`,
       mdTitle: (title) => `# Aday tablosu — ${title}`,
-      mdHead: '| Adım | Adaylar ve olasılıklar |',
-      mdLow: (s) => `Düşük yaratıcılık (1. aday): ${s}`,
-      mdHigh: (s) => `Yüksek yaratıcılık (demoda 2. aday): ${s}`,
+      mdRule: (T) => `Kural (demo-data.json temp54): açgözlü satır her adımda argmax; örnekleme satırında z = ln p, q = softmax(z/${T}), seçim U ile ters-CDF (adım i → U[i mod 8], ilk u < kümülatif q).`,
+      mdHead: (T) => `| Adım | Adaylar ve olasılıklar p | Açgözlü seçim | softmax(z/${T}) | U → örnekleme seçimi |`,
+      mdLow: (s) => `Açgözlü (argmax): ${s}`,
+      mdHigh: (s, T) => `Örnekleme, T = ${T}: ${s}`,
     },
     train: {
       stages: [
         { name: '1 · Ön eğitim', data: 'Devasa internet metni', learns: 'Dili ve dünyayı (bir sonraki kelimeyi tahmin)', out: 'Türkiye’nin başkenti Ankara’dır ve nüfusu yaklaşık altı milyondur. Bu şehir...', note: 'Ham model “tamamlayıcı”dır: soruyu cevaplamaz, metni sürdürür.' },
         { name: '2 · İnce ayar', data: 'Talimat–cevap çiftleri', learns: 'Yönergeyi izlemeyi (soruyu cevaplamayı)', out: 'Türkiye’nin başkenti Ankara’dır.', note: 'Artık soruyu doğrudan, derli toplu cevaplıyor.' },
-        { name: '3 · RLHF / hizalama', data: 'İnsan tercihleri (ödül modeli)', learns: 'Yardımcı, dürüst ve güvenli olmayı', out: 'Türkiye’nin başkenti Ankara’dır. İstersen şehir hakkında birkaç ilginç bilgi de paylaşabilirim. 🙂', note: 'Aynı bilgi; ama daha yardımcı, kibar ve hizalı bir tonla.' },
+        { name: '3 · RLHF / hizalama', data: 'İnsan tercihleri (tercih çiftleri)', learns: 'Yardımcı, dürüst ve güvenli olmayı', out: 'Türkiye’nin başkenti Ankara’dır. İstersen şehir hakkında birkaç ilginç bilgi de paylaşabilirim. 🙂', note: 'Aynı bilgi; ama daha yardımcı, kibar ve hizalı bir tonla.' },
       ],
       rowData: ['VERİ'],
       rowLearns: ['ÖĞRENDİĞİ'],
@@ -71,9 +78,9 @@ export default {
       legHeart: 'kalp pikseli (ekranda mor)',
       legClear: 'açık piksel',
       legNoise: 'gürültü (çözülmemiş)',
-      under: 'her karenin altında: temizlenen pay (%) · çözülen piksel / 64',
+      under: 'her karenin altında: ilerleme (adım/8, %) · çözülen piksel / 64 (ayrı nicelik)', // R042
       mdTitle: (title) => `# Adım tablosu — ${title}`,
-      mdHead: '| Adım | Temizlenen pay | Çözülen piksel (64’te) | Görünen kalp pikseli |',
+      mdHead: '| Adım | İlerleme (adım/8) | Çözülen piksel (64’te) | Görünen kalp pikseli |',
       mdFormula: 'rand(i) = frac(sin(i·12.9898 + 78.233)·43758.5453); piksel i, adım s’de rand(i) < s/8 ise çözülür. Kalp 40 piksel.',
     },
     ctx: {
@@ -117,7 +124,10 @@ export default {
       query: 'query ↓',
       key: 'attends to →',
       weight: 'WEIGHT',
-      caption: (q, v, best) => `“${q}” query: darkest cell ${v} at “${best}” · the pronoun looks at the cat`,
+      caption: (q, v, best, selfV, other, otherV) => (best === q
+        ? `“${q}” query: darkest cell is its own (${v}) · among the others, most at “${other}” (${otherV})`
+        : `“${q}” query: darkest cell ${v} at “${best}” · its own cell ${selfV}`),
+      note: ['illustrative, bidirectional (encoder-style) table · weights chosen by hand', 'a single attention cell does not prove the reference is resolved'],
       legend: 'bold = row maximum · Σ = row sum (each row 1.00)',
       mdTitle: (title) => `# Attention weights — ${title}`,
       mdHead: 'Query ↓ · Attends to →',
@@ -125,21 +135,23 @@ export default {
     generate: {
       steps: [['now', 'already', 'today', 'rapidly'], ['learns', 'writes', 'creates', 'reasons'], ['fast', 'well', 'daily', 'deeply']],
       prefix: 'AI ',
-      low: 'LOW CREATIVITY (TEMPERATURE) · ALWAYS THE TOP CANDIDATE',
-      high: 'HIGH CREATIVITY (TEMPERATURE) · 2ND CANDIDATE IN THE DEMO',
+      greedy: 'GREEDY (ARGMAX) · HIGHEST PROBABILITY AT EVERY STEP',
+      sample: (T) => `SAMPLING, T = ${T} · softmax(z/T) · PICK: INVERSE CDF WITH U`,
       step: (n) => `STEP ${n}`,
       result: 'RESULT',
       chosen: (list) => `chosen: ${list}`,
+      footer: (T, us) => `z = ln p · sampling row: softmax(z/${T}), rounded · U = ${us}`,
       mdTitle: (title) => `# Candidate table — ${title}`,
-      mdHead: '| Step | Candidates and probabilities |',
-      mdLow: (s) => `Low creativity (1st candidate): ${s}`,
-      mdHigh: (s) => `High creativity (2nd candidate in the demo): ${s}`,
+      mdRule: (T) => `Rule (demo-data.json temp54): the greedy row takes the argmax at every step; in the sampling row z = ln p, q = softmax(z/${T}), the pick uses inverse CDF with U (step i → U[i mod 8], first u < cumulative q).`,
+      mdHead: (T) => `| Step | Candidates and probabilities p | Greedy pick | softmax(z/${T}) | U → sampled pick |`,
+      mdLow: (s) => `Greedy (argmax): ${s}`,
+      mdHigh: (s, T) => `Sampling, T = ${T}: ${s}`,
     },
     train: {
       stages: [
         { name: '1 · Pretraining', data: 'Massive internet text', learns: 'Language and the world (next-word prediction)', out: 'The capital of Türkiye is Ankara, with a population of about six million. The city...', note: 'The raw model is a “completer”: it doesn’t answer the question, it continues the text.' },
         { name: '2 · Fine-tuning', data: 'Instruction–response pairs', learns: 'Following instructions (answering the question)', out: 'The capital of Türkiye is Ankara.', note: 'Now it answers directly and concisely.' },
-        { name: '3 · RLHF / alignment', data: 'Human preferences (a reward model)', learns: 'Being helpful, honest and safe', out: 'The capital of Türkiye is Ankara. If you’d like, I can also share a few interesting facts about the city. 🙂', note: 'Same fact; a more helpful, polite, aligned tone.' },
+        { name: '3 · RLHF / alignment', data: 'Human preferences (preference pairs)', learns: 'Being helpful, honest and safe', out: 'The capital of Türkiye is Ankara. If you’d like, I can also share a few interesting facts about the city. 🙂', note: 'Same fact; a more helpful, polite, aligned tone.' },
       ],
       rowData: ['DATA'],
       rowLearns: ['LEARNS'],
@@ -160,9 +172,9 @@ export default {
       legHeart: 'heart pixel (purple on screen)',
       legClear: 'clear pixel',
       legNoise: 'noise (unresolved)',
-      under: 'under each frame: cleaned share (%) · resolved pixels / 64',
+      under: 'under each frame: progress (step/8, %) · resolved pixels / 64 (a different quantity)', // R042
       mdTitle: (title) => `# Step table — ${title}`,
-      mdHead: '| Step | Cleaned share | Resolved pixels (of 64) | Visible heart pixels |',
+      mdHead: '| Step | Progress (step/8) | Resolved pixels (of 64) | Visible heart pixels |',
       mdFormula: 'rand(i) = frac(sin(i·12.9898 + 78.233)·43758.5453); pixel i is resolved at step s if rand(i) < s/8. The heart has 40 pixels.',
     },
     ctx: {

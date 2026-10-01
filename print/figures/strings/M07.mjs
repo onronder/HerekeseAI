@@ -3,13 +3,15 @@ export default {
   tr: {
     bias: {
       kicker: (p) => `VERİ ÖNYARGISI ${p}`,
-      gap: (g) => `parite farkı ${g}`,
+      gapLabel: 'onay oranı farkı', // R052
+      gap: (g) => `${g} yüzde puan`,
       balanced: 'veri dengeli',
       skewed: 'çarpık veri',
-      mdFormula: 'A = min(95, 50 + 0.4·e), B = max(5, 50 − 0.4·e), fark = A − B, dengeli ⇔ fark ≤ 6',
-      mdHead: '| e | A onay | B onay | Parite farkı | Yorum |',
+      mdFormula: 'A = min(95, 50 + 0.4·e), B = max(5, 50 − 0.4·e), fark = A − B (yüzde puan), dengeli ⇔ fark ≤ 6',
+      mdHead: '| e | A onay | B onay | Onay oranı farkı | Yorum |',
       mdBalanced: 'Veri dengeli',
       mdSkewed: 'Çarpık',
+      mdNote: '> Fark iki oranın farkıdır ve yüzde puan ile ölçülür (%90 − %10 = 80 yüzde puan); oranlar temsili formülle atanır, eğitim sonucu değildir.',
     },
     explain: {
       apps: [
@@ -20,13 +22,20 @@ export default {
       approved: 'Kredi onaylandı',
       declined: 'Kredi reddedildi',
       lidOpen: 'KAPAK AÇIK · KATKILAR',
+      unit: 'puan',
+      baseLine: (phi0, unit) => `φ₀ = ${phi0} ${unit} · taban, örneğe özgü`,
       toDecline: '← redde',
       toApprove: 'onaya →',
+      totalLine: (sum, unit) => `katkı toplamı Σφᵢ = ${sum} ${unit}`,
+      resultLine: (fx, unit, verdict) => `f(x) = ${fx} ${unit} → ${verdict}`,
+      footer: (phi0, th) => [`karar eşiği ${th} puan: f(x) > ${th} ⇒ onay, aksi hâlde ret`, `f(x) = φ₀ + Σφᵢ · taban değer, katkılar ve sonuç aynı ölçekte (puan)`, 'temsili katkılar (hesaplanmış SHAP değil) · çubuk boyu en büyük |katkı|’ya oranlı'],
       total: 'Toplam',
       approve: 'onay',
       decline: 'ret',
-      mdRule: 'Kural: dört katkının toplamı > 0 ⇒ onay, değilse ret. Çubuk boyu her başvurunun en büyük |katkı|\'sına oranlı (demo ile aynı).',
+      mdRule: (phi0, th, unit) => `Kural: f(x) = φ₀ + Σφᵢ; φ₀ = ${phi0} ${unit} (örneğe özgü taban), karar eşiği ${th}: f(x) > ${th} ⇒ onay, değilse ret. Katkılar temsilidir (hesaplanmış SHAP değeri değil); çubuk boyu her başvurunun en büyük |katkı|'sına oranlı.`,
       mdContribution: 'Katkı',
+      mdBase: 'taban değer',
+      mdNote: '> Başvuru #1: +32 − 46 + 18 − 12 = −8 puan ≤ 0 ⇒ ret. Borç en büyük eksi katkıdır; kısa hesap geçmişiyle birlikte artıların toplamını aşar.',
     },
     df: {
       cases: [
@@ -36,10 +45,9 @@ export default {
         { text: 'Bir fotoğrafta kişinin elinde altı parmak var ve arka plandaki yazılar anlamsız harflerden oluşuyor.', medium: 'FOTOĞRAF' },
       ],
       caseOf: (i, n) => `DURUM ${i} / ${n}`,
-      real: 'Gerçek',
-      fake: 'Yapay / sahte',
-      mdHead: '| # | Ortam | Durum |',
-      mdNote: '> Cevaplar ve ipuçları cevaplar/M07.md’de; figür göstermez.',
+      options: ['Gerçek görünüyor', 'Şüpheli: doğrula', 'Belirlenemez'], // R055: bölüm dosyasındaki üç seçenek
+      mdHead: '| # | Ortam | Durum | Seçenekler |',
+      mdNote: '> Cevaplar ve ipuçları cevaplar/M07.md’de; figür göstermez. Her kartta üç seçenek: gerçek görünüyor / şüpheli: doğrula / belirlenemez.',
     },
     reg: {
       levels: [
@@ -78,13 +86,15 @@ export default {
   en: {
     bias: {
       kicker: (p) => `DATA BIAS ${p}`,
-      gap: (g) => `parity gap ${g}`,
+      gapLabel: 'approval rate gap', // R052
+      gap: (g) => `${g} percentage points`,
       balanced: 'balanced data',
       skewed: 'skewed data',
-      mdFormula: 'A = min(95, 50 + 0.4·e), B = max(5, 50 − 0.4·e), gap = A − B, balanced ⇔ gap ≤ 6',
-      mdHead: '| e | A approval | B approval | Parity gap | Note |',
+      mdFormula: 'A = min(95, 50 + 0.4·e), B = max(5, 50 − 0.4·e), gap = A − B (percentage points), balanced ⇔ gap ≤ 6',
+      mdHead: '| e | A approval | B approval | Approval rate gap | Note |',
       mdBalanced: 'Balanced data',
       mdSkewed: 'Skewed',
+      mdNote: '> The gap is the difference of two rates, measured in percentage points (90% − 10% = 80 percentage points); the rates are assigned by an illustrative formula, not a training result.',
     },
     explain: {
       apps: [
@@ -95,13 +105,20 @@ export default {
       approved: 'Loan approved',
       declined: 'Loan declined',
       lidOpen: 'LID OPEN · CONTRIBUTIONS',
+      unit: 'points',
+      baseLine: (phi0, unit) => `φ₀ = ${phi0} ${unit} · base, chosen here`,
       toDecline: '← decline',
       toApprove: 'approve →',
+      totalLine: (sum, unit) => `sum of contributions Σφᵢ = ${sum} ${unit}`,
+      resultLine: (fx, unit, verdict) => `f(x) = ${fx} ${unit} → ${verdict}`,
+      footer: (phi0, th) => [`decision threshold ${th} points: f(x) > ${th} ⇒ approved, otherwise declined`, 'f(x) = φ₀ + Σφᵢ · base value, contributions and result on one scale (points)', 'illustrative values, not computed SHAP · bars scaled to largest |contribution|'],
       total: 'Total',
       approve: 'approved',
       decline: 'declined',
-      mdRule: 'Rule: the sum of the four contributions > 0 ⇒ approved, otherwise declined. Bar length is proportional to each applicant\'s largest |contribution| (same as the demo).',
+      mdRule: (phi0, th, unit) => `Rule: f(x) = φ₀ + Σφᵢ; φ₀ = ${phi0} ${unit} (base value chosen for this example), decision threshold ${th}: f(x) > ${th} ⇒ approved, otherwise declined. Contributions are illustrative (not computed SHAP values); bar length is proportional to each applicant's largest |contribution|.`,
       mdContribution: 'Contribution',
+      mdBase: 'base value',
+      mdNote: '> Applicant #1: +32 − 46 + 18 − 12 = −8 points ≤ 0 ⇒ declined. Debt is the largest negative contribution; together with the short account history it outweighs the positive contributions.',
     },
     df: {
       cases: [
@@ -111,10 +128,9 @@ export default {
         { text: 'In a photo, a person’s hand has six fingers and the text in the background is gibberish.', medium: 'PHOTO' },
       ],
       caseOf: (i, n) => `CASE ${i} / ${n}`,
-      real: 'Real',
-      fake: 'Synthetic / fake',
-      mdHead: '| # | Medium | Case |',
-      mdNote: '> Answers and tells are in answers/M07.md; the figure does not show them.',
+      options: ['Looks real', 'Suspicious: verify', 'Cannot determine'], // R055: the three options of the chapter file
+      mdHead: '| # | Medium | Case | Options |',
+      mdNote: '> Answers and tells are in answers/M07.md; the figure does not show them. Three options per card: looks real / suspicious: verify / cannot determine.',
     },
     reg: {
       levels: [
@@ -131,7 +147,7 @@ export default {
         'A model assessing loan applications',
         'An opponent AI inside a game',
       ],
-      axis: 'RISK AND OVERSIGHT INCREASE',
+      axis: 'RISK AND OVERSIGHT RISE',
       kicker: 'SIX USES · WHICH TIER?',
       tier: 'tier',
       mdLevelHead: '| Tier | Rule |',

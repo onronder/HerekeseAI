@@ -74,7 +74,7 @@ def carry_over(old, new, web):
     out = re.sub(r' ([,;.!?])', r'\1', out)
     return out, applied, skipped, notes
 
-applied = missing = ambiguous = skipped = carried = partial = 0
+applied = missing = ambiguous = skipped = carried = partial = already = 0
 rep = []
 # Elle gözden geçirilmiş web değişiklikleri (WEB_ESKİ ||| WEB_YENİ); önce uygulanır, aynı paragrafa otomatik taşıma yapılmaz.
 ov_path = sys.argv[sys.argv.index('--overrides') + 1] if '--overrides' in sys.argv else os.path.join(ROOT, 'print', 'kitap', f'web-overrides-{lang}.md')
@@ -89,7 +89,7 @@ for o, n in overrides.items():
     hit, cnt = find_unique(o)
     if not hit:
         ov_missing += 1; print(f'  OVERRIDE BULUNAMADI ({cnt}): {o[:80]}…'); continue
-    if o == n: ov_same += 1; continue
+    if o == n or any(html.count(v) >= 1 for v in variants(n)): ov_same += 1; continue  # zaten uygulanmış
     nv = esc_all(n) if hit != o else n
     if not dry: html = html.replace(hit, nv, 1)
     ov_applied += 1
@@ -103,10 +103,12 @@ for f in sorted(glob.glob(os.path.join(ROOT, 'print', 'src', lang, 'M0*-*.md')))
             if '|||' not in line: continue
             old, new = [x.strip() for x in line.split('|||', 1)]
             if not old: continue
-            if re.match(r'^\[(SİL|SIL|DELETE|REMOVE)\]', new.strip(), re.I) or new.strip('[] ').upper() in ('SİL', 'SIL', 'DELETE', 'REMOVE'):  # "[SİL] (not…)" da silmedir; dijitale uygulanmaz
+            if re.match(r'^\[(SİL|SIL|DELETE|REMOVE)\]|^\((basılı sürümde sil|deleted in print|removed in print)', new.strip(), re.I) or new.strip('[] ').upper() in ('SİL', 'SIL', 'DELETE', 'REMOVE'):  # "[SİL] (not…)" da silmedir; dijitale uygulanmaz
                 skipped += 1; continue
             old, new = PREFIX.sub('', old), PREFIX.sub('', new)
             if overridden(old): continue  # elle yazılmış web sürümü uygulandı
+            if any(html.count(v) >= 1 for v in variants(new)):  # YENİ zaten var (ESKİ, YENİ'nin parçasıysa tekrar eklemeyi önler)
+                already += 1; continue
             hit, n = find_unique(old)
             if n > 1:
                 ambiguous += 1; print(f'  ÇOKLU ({n}): {fn}: {old[:70]}…'); continue
@@ -114,6 +116,8 @@ for f in sorted(glob.glob(os.path.join(ROOT, 'print', 'src', lang, 'M0*-*.md')))
                 nv = esc_all(new) if hit != old else new
                 if not dry: html = html.replace(hit, nv, 1)
                 applied += 1; continue
+            if any(html.count(v) >= 1 for v in variants(new)):  # önceki turda uygulanmış satır: sessizce geç
+                already += 1; continue
             # kademe 2: en yakın kaynak paragraf
             cand = max(paras, key=lambda p: difflib.SequenceMatcher(None, old, striptags(p[1]), autojunk=False).ratio())
             r = difflib.SequenceMatcher(None, old, striptags(cand[1]), autojunk=False).ratio()
@@ -142,4 +146,4 @@ for f in sorted(glob.glob(os.path.join(ROOT, 'print', 'src', lang, 'M0*-*.md')))
                 rep.append(f'## TAŞINDI · {fn} · {cand[0]}\nWEB_ESKİ ||| {web}\nWEB_YENİ ||| {new_web}\n')
 if not dry: open(html_path, 'w', encoding='utf-8').write(html)
 if report_path: open(report_path, 'w', encoding='utf-8').write('\n'.join(rep))
-print(f'{lang}: doğrudan {applied} · taşındı {carried} (kısmi {partial}) · elle {ov_applied} (aynı {ov_same}, bulunamadı {ov_missing}) · bulunamadı {missing} · çoklu {ambiguous} · atlandı (silme) {skipped}' + (' (dry-run)' if dry else ''))
+print(f'{lang}: doğrudan {applied} · önceden uygulanmış {already} · taşındı {carried} (kısmi {partial}) · elle {ov_applied} (aynı {ov_same}, bulunamadı {ov_missing}) · bulunamadı {missing} · çoklu {ambiguous} · atlandı (silme) {skipped}' + (' (dry-run)' if dry else ''))

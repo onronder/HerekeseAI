@@ -1,0 +1,140 @@
+{
+ "hash": {
+  "tr_pdf": "05e077a767776d39ea415219ead941e5c617b65f6da258a6c8bfe10cc258b435",
+  "tr_cover": "8a28a55a84457d977c063920d47e713825a7b5f773bba4e98b89fe6af29370dd",
+  "en_pdf": "77017e02724d2692aa5a33ce21d473115b5fb199f39f01dd41572876ade9f139",
+  "en_cover": "d31951b5bbe0752620cd0190f746867be2f5133fd556386a363bd64e2dd31199",
+  "epub": "dbde93671d0dcf8586e6ec0d11b60e98a4bad6ad2f5d4674c56321bc2749a180",
+  "tr_html": "19a2ad64f7ebdaaeac6cd2284250115735760da829aeaf5c2049370676e709ea",
+  "en_html": "e35aeb899ae20f2b1f8873bb60271250b5f8f255e298c601c4b0cf1f6b8a21ef"
+ },
+ "pages": {
+  "tr_pdf": "256",
+  "tr_cover": "1",
+  "en_pdf": "272",
+  "en_cover": "1"
+ },
+ "placeholders": {
+  "tr": [
+   "[matbaa adı, adres, sertifika no]"
+  ],
+  "en": [
+   "[ISBN]"
+  ]
+ },
+ "checkers": {
+  "style_tr": "TOPLAM: 45 şekil, 0 sorun",
+  "style_en": "TOTAL: 45 figures, 0 issues",
+  "consistency": "Chapter 3: TR 4601 / EN 5747 words · 1 issues\n    tables: TR 3 vs EN 4\nChapter 4: TR 5560 / EN 6849 words · 1 issues\n    figure 4.5 numbers · only TR: [] · only EN: ['0.09', '0.39', '0.55', '0.67', '0.77', '0.86', '7']\nChapter 5: TR 6318 / EN 8018 words · 1 issues\n    figure 5.1 numbers · only TR: ['8'] · only EN: ['1.4', '1.8', '2.75', '6']\nChapter 6: TR 4654 / EN 5811 words · 0 issues\nChapter 7: TR 4008 / EN 5222 words · 1 issues\n    tables: TR 5 vs EN 7\nChapter 8: TR 3790 / EN 4809 words · 1 issues\n    tables: TR 5 vs EN 7\nTOTAL issues: 6",
+  "verbatim_tr": "TOTAL not verbatim: 83 (her biri REDAKSİYON NOTLARI'ta gerekçeli olmalı)",
+  "verbatim_en": "TOTAL not verbatim: 95 (her biri EDITORIAL NOTES'ta gerekçeli olmalı)"
+ },
+ "integrity": {
+  "tr": "tr: 4508 cümle denetlendi · PDF'de bulunamayan 0",
+  "en": "en: 4537 cümle denetlendi · PDF'de bulunamayan 0"
+ },
+ "qr": {
+  "tr": "QR sessiz alan: 45 kod ölçüldü · en dar 3.73 mm · < 2,7 mm olan: 0\nQR okunan: 45 · beklenen ile eşleşen: 45/45 · eksik: 0 · yabancı: 0",
+  "en": "QR sessiz alan: 45 kod ölçüldü · en dar 3.73 mm · < 2,7 mm olan: 0\nQR okunan: 45 · beklenen ile eşleşen: 45/45 · eksik: 0 · yabancı: 0"
+ },
+ "ean": {
+  "normal_bar_mm": 23.37,
+  "guard_bar_mm": 24.88,
+  "module_mm": 0.336,
+  "print_width_mm": 38.0,
+  "digits": "978-625-00-5211-2"
+ },
+ "ean_bar_mm": 23.37,
+ "ink": {
+  "tr_pdf": "0.00000  0.07098  0.07098  0.10815 CMYK OK",
+  "en_pdf": "0.00000  0.07532  0.07532  0.11741 CMYK OK",
+  "tr_cover": "0.00000  0.05848  0.05848  0.98919 CMYK OK",
+  "en_cover": "0.00000  0.05942  0.05942  0.97515 CMYK OK"
+ },
+ "ink_ops": {
+  "tr_pdf": {
+   "rich_black_cmy": 0,
+   "k_only_black": 0,
+   "gray_black": 1241,
+   "other_cmyk": 3225,
+   "streams": 422
+  },
+  "en_pdf": {
+   "rich_black_cmy": 0,
+   "k_only_black": 0,
+   "gray_black": 1294,
+   "other_cmyk": 3287,
+   "streams": 418
+  },
+  "tr_cover": {
+   "rich_black_cmy": 0,
+   "k_only_black": 0,
+   "gray_black": 3,
+   "other_cmyk": 26,
+   "streams": 31
+  },
+  "en_cover": {
+   "rich_black_cmy": 0,
+   "k_only_black": 0,
+   "gray_black": 1,
+   "other_cmyk": 25,
+   "streams": 16
+  }
+ },
+ "layout": {
+  "tr": "kitap-tasma:0 thead-tekrar:14 kutu-devam:34 dizin-tekrar-silinen:3 dizin-cozulmeyen:0",
+  "en": "kitap-tasma:0 thead-tekrar:13 kutu-devam:32 dizin-tekrar-silinen:7 dizin-cozulmeyen:0"
+ },
+ "boxes": {
+  "tr_pdf": {
+   "MediaBox": "166.1 × 245.9 mm",
+   "BleedBox": "166.1 × 245.9 mm",
+   "TrimBox": "160.1 × 239.9 mm"
+  },
+  "en_pdf": {
+   "MediaBox": "158.8 × 234.9 mm",
+   "BleedBox": "158.8 × 234.9 mm",
+   "TrimBox": "152.4 × 228.6 mm"
+  },
+  "tr_cover": {
+   "MediaBox": "344.3 × 250.1 mm",
+   "BleedBox": "344.3 × 250.1 mm",
+   "TrimBox": "334.3 × 240.1 mm"
+  },
+  "en_cover": {
+   "MediaBox": "326.6 × 234.9 mm",
+   "BleedBox": "326.6 × 234.9 mm",
+   "TrimBox": "320.3 × 228.6 mm"
+  }
+ },
+ "index": {
+  "tr": {
+   "html": 95,
+   "pdf_found": 95,
+   "missing": [],
+   "dup_pages": 0,
+   "alfabetik": true
+  },
+  "en": {
+   "html": 100,
+   "pdf_found": 100,
+   "missing": [],
+   "dup_pages": 0,
+   "alfabetik": true
+  }
+ },
+ "fig_fonts": "✓ figure-8-3-capability.svg          en küçük 6.2 → 6.81 pt\n  ✓ figure-8-4-singularity.svg         en küçük 6.2 → 6.81 pt\n  ✓ figure-8-5-responsibility.svg      en küçük 6.2 → 6.81 pt\n\ntemiz: tüm figürlerde en küçük metin ≥ 6 pt",
+ "en_turkish_visible": [],
+ "live_urls": {
+  "ok": 90,
+  "total": 90,
+  "bad": []
+ },
+ "epub": {
+  "epubcheck": "EPUBCheck completed",
+  "figures": 45,
+  "alt_descriptive": 45,
+  "placeholders": [],
+  "qr_word": 0
+ }
+}

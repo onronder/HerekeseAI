@@ -6,7 +6,7 @@ Bölüm numarası (ör. 3.6), terimin kitapta tanıtıldığı bölümü ve o b�
 Avrupa Birliği’nin yapay zekâ kullanımlarını riske göre dört kademeye ayıran düzenlemesi: kabul edilemez (yasak), yüksek, sınırlı ve minimal. Risk arttıkça yükümlülükler de artar.
 
 **Açıklanabilir yapay zekâ (explainable AI, XAI)** · Bölüm 7.3
-Bir modelin çıktısını insanın anlayabileceği gerekçelere bağlama çabası. Özellik önemi (SHAP, LIME) gibi yöntemlerle kara kutuyu denetlenebilir ve itiraz edilebilir kılar. Bkz. Kara kutu.
+Bir modelin çıktısını insanın anlayabileceği gerekçelere bağlama çabası. SHAP, LIME gibi sonradan açıklama yöntemleri belirli bir çıktıyı, seçilen bir taban değere göre özellik katkılarıyla açıklar (SHAP, 2017: yerel doğruluk, eksiklik, tutarlılık). Kararı denetlenebilir ve itiraz edilebilir kılar; modelin tamamını şeffaf yapmaz, nedensellik kanıtı da değildir. Bkz. Kara kutu.
 
 **Ağırlık (weight)** · Bölüm 4.2
 Yapay nöronun her girdiye verdiği önem değeri. Eğitim, bu değerleri kaybı azaltacak yönde ayarlama işidir. Bkz. Parametre.
@@ -15,7 +15,7 @@ Yapay nöronun her girdiye verdiği önem değeri. Eğitim, bu değerleri kaybı
 Dil modelini araçlarla (hesap, arama, API) donatıp “düşün, aracı kullan, sonucu gözlemle, tekrar dene” döngüsüyle (ReAct) çalıştıran sistem. Konuşmakla kalmaz, işe girişir.
 
 **Aktivasyon fonksiyonu (activation function)** · Bölüm 4.2
-Nöronun ağırlıklı toplamını çıktıya çeviren doğrusal olmayan işlev: sigmoid, tanh, ReLU. Onsuz üst üste konan katmanlar tek bir doğrusal işleve çöker.
+Nöronun ağırlıklı toplamını çıktıya çeviren doğrusal olmayan işlev: sigmoid, tanh, ReLU. Çıktının bir eşiği aşıp aşmadığı (“ateşledi”) ayrı bir karar kuralıdır; aktivasyon eşik demek değildir. Onsuz üst üste konan katmanlar tek bir doğrusal işleve çöker.
 
 **Algoritma (algorithm)** · Bölüm 1.3
 Sonlu, kesin tanımlı adımlar dizisi; bir kek tarifi gibi. Sözcük, 9. yüzyıl matematikçisi el-Harezmî’nin adından gelir.
@@ -27,7 +27,7 @@ Sonlu, kesin tanımlı adımlar dizisi; bir kek tarifi gibi. Sözcük, 9. yüzy�
 Modelin eğitim örneklerini gürültüsüyle birlikte ezberleyip görülmemiş veride başarımını yitirmesi. Tersi, örüntüyü yakalayamayacak kadar basit kalan eksik uyumdur (underfitting). İyi model ikisinin ortasında durur.
 
 **Bağlam penceresi (context window)** · Bölüm 5.8
-Dil modelinin aynı anda tutabildiği en fazla token sayısı; küçük bir not defteri. Defter dolunca en eski satırlar silinir; pencereyi büyütmek pahalıdır.
+Dil modelinin aynı anda tutabildiği en fazla token sayısı; küçük bir not defteri. Defter dolunca ne olacağını kullanılan sistem belirler: hata verir, metni kırpar ya da özetler. Pencereyi büyütmek pahalıdır.
 
 **Belirtim oyunlama, ödül oyunlama (specification gaming, reward hacking)** · Bölüm 7.6
 Sistemin verilen ölçütü en üst düzeye çıkarırken asıl amacı kaçırması: “çöp görünmesin” deyince çöpü halının altına süpürmek. Bkz. Hizalama.
@@ -39,19 +39,19 @@ Klasik YZ’nin duvarı: dünya hakkındaki bütün kuralları elle yazmak ölç
 Sembolik YZ’de bilgiyi açık semboller ve aralarındaki bağlarla (“Tekir bir kedidir”) kodlama. Semantik ağlar, çerçeveler ve mantık önermeleri bunun araçlarıdır.
 
 **Büyük dil modeli (large language model, LLM)** · Bölüm 5.1
-Devasa metinle eğitilmiş, her adımda en olası bir sonraki token’ı tahmin edip diziye ekleyerek (otoregresif) yazan Transformer tabanlı model. Bugünkü sohbet asistanlarının temeli.
+Devasa metinle eğitilmiş, Transformer tabanlı dil modeli. Bu kitapta incelenen otoregresif üretici modeller her adımda bir sonraki token için skorlar (logit) üretir; softmax bu skorları bir olasılık dağılımına çevirir, seçilen token diziye eklenir. Her dil modeli otoregresif değildir. Bugünkü sohbet asistanlarının temeli.
 
 **Çıkarım (inference)** · Bölüm 2.2
-Bilgi temsili üzerinde kurallar uygulayarak açıkça söylenmemiş bilgiye ulaşma. “Tekir kedidir, kedi memelidir” bağlarından “Tekir memelidir” sonucunu türetmek gibi.
+Bilgi temsili üzerinde kurallar uygulayarak açıkça söylenmemiş bilgiye ulaşma: “Tekir kedidir, kedi memelidir” bağlarından “Tekir memelidir” sonucunu türetmek. Makine öğrenmesinde aynı sözcük, eğitilmiş bir modeli yeni girdiler üzerinde çalıştırmayı da anlatır (eğitim ile çıkarım aşamaları).
 
 **Çince Oda (Chinese Room)** · Bölüm 8.3
 Searle’ün düşünce deneyi: kural kitabıyla kusursuz Çince cevaplar üreten ama tek kelime Çince anlamayan kişi. Sembol işlemenin anlamaya yetmediğini savunur; karşı görüşler de güçlüdür.
 
 **Dar yapay zekâ (narrow AI)** · Bölüm 1.6
-Tek bir işte usta, o işin bir adım dışında acemi sistem; “zayıf YZ” de denir. Bugünkü bütün YZ sistemleri, sohbet botları dahil, bu sınıftadır.
+Belirli görevlerde çalışan, alanlar arasında aktarılabilir genel yeteneği olmayan sistem. “Dar mı?” sorusunun ölçütü kaç iş yaptığı değil, eğitildiği işlerin dışına çıkıp çıkamadığıdır. Bugünkü bütün YZ sistemleri, çok görevli sohbet modelleri dahil, bu sınıftadır; dar olmak tek bir işe sıkışmak demek değildir, çok iş yapabilmek de tek başına genel olmak demek değildir. Gündelik dilde “zayıf YZ” de denir; Searle’ün zayıf/güçlü ayrımı ise ayrı, felsefi bir sorudur. Bkz. Güçlü yapay zekâ.
 
 **Deepfake (sentetik medya)** · Bölüm 7.4
-Üretken modellerle üretilen sahte içerik: hiç yaşanmamış konuşma, çekilmemiş fotoğraf. Tespit bir silahlanma yarışıdır; en sağlam savunma kaynak doğrulama ve şüpheciliktir.
+Sentetik medya, üretken modellerle (GAN, difüzyon, ses klonlama) üretilen içeriğin genel adıdır; deepfake bunun gerçek bir kişiyi taklit eden türüdür: hiç yaşanmamış konuşma, çekilmemiş fotoğraf. Tespit bir silahlanma yarışıdır ve kesin bir “gerçek/sahte” hükmü vermez: bir ipucu incelemeye götürür, kararı bağımsız doğrulama verir. İçeriğin yapay üretilmiş olması ile anlattığı olayın doğru olması ayrı sorulardır; en sağlam savunma kaynak doğrulama ve şüpheciliktir.
 
 **Denetimli öğrenme (supervised learning)** · Bölüm 3.3
 Doğru cevabı verilmiş örneklerden, yani özellik-etiket çiftlerinden, girdiden çıktıya eşlemeyi öğrenme. Sınıflandırma ve regresyon bu türdendir.
@@ -69,7 +69,7 @@ Programın da veri gibi bellekte tutulması. Makineyi yeniden kablolamak yerine 
 Saf gürültüden başlayıp her adımda biraz temizleyerek görsel üreten model; buğulu camı yavaş yavaş silmek gibi. Gürültü ekleme sürecini tersine çevirmeyi öğrenir.
 
 **Dikkat (attention)** · Bölüm 5.4
-Her token’ın, anlamı için dizideki hangi token’lara bakacağını öğrenmesi; “o” zamirinin kimi kastettiğini böyle çözer. Öz-dikkat (self-attention) bunu sorgu, anahtar ve değer vektörleriyle hesaplar. Transformer’ın temeli.
+Her token’ın, anlamı için dizideki hangi token’lara bakacağını öğrenmesi; “o” zamirinin kime baktığı böyle görünür, ama dikkat ağırlığı tek başına göndergenin çözüldüğünü kanıtlamaz. Öz-dikkat (self-attention) bunu sorgu, anahtar ve değer vektörleriyle hesaplar. Transformer’ın temeli.
 
 **Düzenliler ve dağınıklar (neats and scruffies)** · Bölüm 2.6
 YZ’deki yöntemsel gerilim: her adımın temiz matematikle kanıtlanmasını isteyenler (neats) ile “çalışıyorsa iyidir, teorisini sonra buluruz” diyenler (scruffies). Bugünün YZ’si ikisinin karışımıdır.
@@ -78,28 +78,28 @@ YZ’deki yöntemsel gerilim: her adımın temiz matematikle kanıtlanmasını i
 Bir eğitim örneğinin doğru cevabı: “Spam” ya da “Normal”. Etiket kategorikse sınıflandırma, sayısalsa regresyon görevi doğar. Bkz. Özellik.
 
 **Evrişimli sinir ağı (convolutional neural network, CNN)** · Bölüm 4.5
-Küçük bir filtreyi (çekirdek) görüntü üzerinde gezdirip yerel desenleri (kenar, köşe) arayan ve bulduklarını özellik haritasına işleyen ağ. Aynı filtre her yerde kullanılır; az parametreyle öğrenir.
+Küçük bir filtreyi (çekirdek) görüntü üzerinde gezdirip yerel desenleri (kenar, köşe) arayan ve bulduklarını özellik haritasına işleyen ağ. Aynı filtre her yerde kullanılır (ağırlık paylaşımı); girdi kayınca özellik haritası da kayar (ötelemeye eşdeğişkenlik). Az parametreyle öğrenir.
 
 **Genel yapay zekâ (artificial general intelligence, AGI)** · Bölüm 1.6
-İnsan gibi her alanda öğrenip uyum sağlayabilen varsayımsal sistem; henüz yapılmadı. Genel olmak, bilinçli olmak demek değildir. Bkz. Güçlü yapay zekâ.
+İnsan gibi her alanda öğrenip uyum sağlayabilen, yetenekleri alanlar arasında aktarılabilen varsayımsal sistem; henüz yapılmadı. Çok iş yapabilmek tek başına genel olmak değildir; genel olmak da bilinçli olmak demek değildir. Bkz. Güçlü yapay zekâ.
 
 **Genişlik-öncelikli arama (breadth-first search, BFS)** · Bölüm 2.4
-Hiçbir yön bilgisi kullanmadan her yeri katman katman tarayan bilgisiz arama. En kısa yolu garanti eder ama çok düğüm açar. Bkz. Sezgisel.
+Hiçbir yön bilgisi kullanmadan her yeri katman katman tarayan bilgisiz arama. Tüm kenarların maliyeti eşitse en az adımlı, dolayısıyla en düşük maliyetli yolu garanti eder; ama çok düğüm açar ve farklı kenar maliyetlerinde başka yöntemler gerekir. Bkz. Sezgisel.
 
 **Geri yayılım (backpropagation)** · Bölüm 4.4
 Hatanın çıkıştan girişe geri geri yürüyüp her bağlantıya “payını düzelt” demesi; zincir kuralıyla gradyan hesabı. Derin ağların eğitilebilmesinin anahtarı.
 
 **Gömü (embedding)** · Bölüm 5.3
-Bir token’ı anlamını taşıyan yoğun bir sayı vektörüne, kocaman bir şehirdeki adrese, eşleme. Anlamca benzer kelimeler yakın düşer; “kedi” ile “köpek” kapı komşusudur.
+Bir token’ın vektör gösterimi (kısaca gömü): anlamını taşıyan yoğun bir sayı vektörü, kocaman bir şehirdeki adres. Anlamca benzer kelimeler yakın düşer; “kedi” ile “köpek” kapı komşusudur.
 
 **Gradyan inişi (gradient descent)** · Bölüm 3.6
 Her adımda eğimi yoklayıp kaybı azaltacak yönde küçük bir adım atarak parametreleri güncelleme. Sisli vadide dibe iniş gibi. Bkz. Öğrenme oranı.
 
 **Güçlü yapay zekâ (strong AI)** · Bölüm 1.6
-Searle’ün terimi: makinenin gerçekten anlayıp anlamadığı, bir zihne sahip olup olmadığı iddiası. Felsefi bir sorudur; genel yapay zekâ (AGI) ile karıştırılmamalı.
+Searle’ün terimi: makinenin gerçekten anlayıp anlamadığı, bir zihne sahip olup olmadığı iddiası. Felsefi bir sorudur; genel yapay zekâ (AGI) ile karıştırılmamalı. Zekâ, bilinç, öz farkındalık ve öznel deneyim yaşayabilme kapasitesi (sentience: haz ve acı duyabilme) birbirinin yerine kullanılmaz.
 
 **Halüsinasyon (hallucination)** · Bölüm 5.8
-Modelin kulağa doğru gelen ama yanlış bilgiyi bozuntuya vermeden üretmesi. İşi doğruyu bilmek değil, olası devamı üretmektir; RAG ve doğrulama bunu azaltır.
+Modelin kulağa doğru gelen ama yanlış bilgiyi bozuntuya vermeden üretmesi. İşi doğruyu bilmek değil, olası devamı üretmektir; akıcı ya da yüksek olasılıklı bir cevap doğru olduğunun garantisi değildir. Kaynaklarla temellendirme (RAG) ve doğrulama bunu azaltır.
 
 **Hesaplamacılık (computationalism)** · Bölüm 1.3
 Zihnin bir bilgi-işleme sistemi, düşünmenin de sembol manipülasyonu biçiminde bir hesaplama olduğu görüşü. Kökleri Hobbes’a uzanır; yapay zekânın temelindeki fikir.
@@ -114,13 +114,13 @@ Her bilgiyi 0 ve 1’lerle (bit) kodlama; makinenin basit alfabesi. Sekiz bit bi
 Sinyalin giriş katmanından gizli katmanlar üzerinden çıkış katmanına akması; ağın “tahmin et” adımı. Geri yayılım ise “hatadan ders al” adımıdır.
 
 **İnce ayar (fine-tuning)** · Bölüm 5.6
-Ön eğitilmiş modeli talimat-cevap çiftleriyle yeniden eğiterek soruya cevap vermeyi, yönergeyi izlemeyi öğretme aşaması (denetimli ince ayar, SFT).
+Ön eğitilmiş bir modeli daha küçük, hedefli bir veriyle yeniden eğiterek belirli bir davranış ya da görev kazandırma; genel kavram. Talimat–cevap çiftleriyle yapılan denetimli ince ayar (SFT) bunun bir türüdür: soruya cevap vermeyi, yönergeyi izlemeyi öğretir. Bilgiyi ve görev başarımını da değiştirebilir.
 
 **İstem mühendisliği (prompt engineering)** · Bölüm 6.2
 Modeli yeniden eğitmeden, istemi (prompt) iyi kurarak davranışını yönlendirme pratiği: açık rol, yeterli bağlam, net format, gerekirse örnek (few-shot).
 
 **Kara kutu (black box)** · Bölüm 7.3
-Kararını veren ama gerekçesini anlatamayan model. Kredi, işe alım gibi kararlarda “neden?” diye sorabilmek bir hak meselesidir. Bkz. Açıklanabilir yapay zekâ.
+Kararını veren ama gerekçesini anlatamayan model. Kredi, işe alım gibi kararlarda “neden?” diye sorabilmek bir hak meselesidir. Kapak bir karar için aralanabilir; modelin tamamı yine kapalı kalabilir. Bkz. Açıklanabilir yapay zekâ.
 
 **Kayıp (loss)** · Bölüm 3.6
 Modelin ne kadar yanıldığının ölçüsü; ne kadar büyükse vadide o kadar yukarıdasın. Eğitim, kaybı en aza indirecek parametreleri bulmaktır.
@@ -135,13 +135,13 @@ Kişisel veri rejimleri: rıza, amaç sınırlaması, veri minimizasyonu ve otom
 Kural yazmak yerine bol örnek gösterip örüntüyü makinenin kendisinin yakalamasını sağlayan yaklaşım. Model, kayıp ve optimizasyon döngüsüne dayanır.
 
 **Markov zinciri (Markov chain)** · Bölüm 2.5
-Bir sonraki durumun yalnızca şimdiki duruma bağlı olduğu olasılıksal süreç (Markov özelliği: geçmiş önemli değil). Uzun vadede dağılım kararlı bir duruma yakınsar.
+Mevcut durum bilindiğinde bir sonraki durumun daha eski geçmişe bağlı olmadığı olasılıksal süreç (Markov özelliği: mevcut duruma koşullu bağımsızlık). Sonlu, indirgenemez ve periyodik olmayan bir zincirin dağılımı, başlangıç ne olursa olsun, tek bir kararlı dağılıma yakınsar; kararlı dağılımın var olması tek başına yakınsama demek değildir.
 
 **Moore yasası (Moore’s law)** · Bölüm 1.7
-Çipteki transistör sayısının yaklaşık her iki yılda bir ikiye katlandığı gözlemi (1965). Doğa yasası değil, ampirik bir eğilim; son yıllarda yavaşlıyor.
+Çipteki transistör sayısının düzenli aralıklarla ikiye katlandığı gözlemi: 1965 öngörüsünde yaklaşık her yıl, 1975 revizyonunda yaklaşık iki yılda bir. Doğa yasası değil, ampirik bir eğilim; transistör yapıları atomik ölçeğe yaklaştıkça yavaşlıyor. Daha çok transistör, her iş yükünde aynı oranda hız demek değildir.
 
 **Orkestrasyon (orchestration)** · Bölüm 6.5
-YZ uygulamasında istem oluşturma, yönlendirme, araç ve RAG çağrılarını koordine eden katman; restoranın müdürü, asıl “beyin”. Model çoğu zaman değiştirilebilir bir parçadır.
+YZ uygulamasında istem oluşturma, yönlendirme, araç ve RAG çağrılarını, yedek yönteme geçişi (fallback) ve koruyucu kontrolleri (guardrails) koordine eden yöneten katman; restoranın müdürü. Model çoğu zaman değiştirilebilir bir parçadır.
 
 **Öğrenme oranı (learning rate)** · Bölüm 3.6
 Gradyan inişinde her adımın boyu. Çok küçükse yakınsama yavaşlar; çok büyükse top vadinin dibini ıskalayıp karşı yamaca fırlar.
@@ -150,40 +150,37 @@ Gradyan inişinde her adımın boyu. Çok küçükse yakınsama yavaşlar; çok 
 Devasa metin derlemi üzerinde, bir sonraki token’ı tahmin hedefiyle (öz-denetimli) dilin ve dünyanın istatistiğini öğrenme aşaması. Model “ne bildiğini” burada kazanır.
 
 **Önyargı, algoritmik yanlılık (bias)** · Bölüm 7.2
-Modelin verideki tarihsel önyargıyı, eksik temsili ya da vekil değişkenleri öğrenip pekiştirmesi. Model niyet taşımaz; çarpıklığı okuduğu defterden alır. Nöron sapması için bkz. Sapma.
+Toplumsal anlamda yanlılık (bias): modelin verideki tarihsel önyargıyı, eksik temsili, etiketleme hatasını ya da vekil değişkenleri öğrenip pekiştirmesi. Kaynak yalnız veri değildir; ölçüm ve modelleme tercihleri, kurumsal süreçler ve kullanım bağlamı da yanlılık üretir. Model niyet taşımaz. Nörondaki sabit terim için bkz. Sabit terim; istatistiksel yanlılık için bkz. Yanlılık-varyans dengesi.
 
 **Özellik (feature)** · Bölüm 3.2
 Bir örneği tarif eden ölçülebilir ipucu: e-postada “link var mı”, “bedava geçiyor mu”. Model, özelliklerden etikete giden eşlemeyi öğrenir. Bkz. Etiket.
 
-**Özyinelemeli sinir ağı (recurrent neural network, RNN)** · Bölüm 4.6
-Diziyi kelime kelime okuyup her adımda bir hafıza (gizli durum) taşıyan ağ. Uzun bağımlılıklarda kaybolan gradyanla zorlanır; LSTM bunu hafifletir. Yerini büyük ölçüde Transformer aldı.
-
 **Parametre (parameter)** · Bölüm 3.1
-Modelin eğitimle öğrendiği sayısal değerler: ağırlıklar ve sapmalar. Model, girdileri bu değerler aracılığıyla çıktılara eşler.
+Modelin eğitimle öğrendiği sayısal değerler: ağırlıklar ve sabit terimler (bias). Model, girdileri bu değerler aracılığıyla çıktılara eşler.
 
 **Pekiştirmeli öğrenme (reinforcement learning)** · Bölüm 3.3
 Bir ajanın ortamda deneyerek, ödül ya da ceza toplayarak, ödülü en üst düzeye çıkaran bir politika öğrenmesi. Öğretmen ders anlatmaz; makine oyuna girer.
 
 **RAG (retrieval-augmented generation, bilgiyle desteklenmiş üretim)** · Bölüm 6.3
-Cevaptan önce ilgili belgeleri bulup isteme ekleyerek modeli kaynağa dayandırma (topraklama). Açık kitap sınavı gibi: halüsinasyon azalır, kaynak gösterilebilir.
+Cevaptan önce ilgili kaynak parçalarını bulup isteme ekleyerek modeli kaynaklarla temellendirme (grounding). Erişim vektör benzerliğiyle, anahtar sözcükle ya da ikisinin karışımıyla yapılabilir; vektör veri tabanı yaygın bir seçenektir, zorunlu değildir. Açık kitap sınavı gibi: halüsinasyon azalır, kaynak gösterilebilir; cevabın kaynağa dayandığı yine doğrulanmalıdır.
 
 **Regresyon (regression)** · Bölüm 3.4
 “Ne kadar?” sorusuna sayı cevabı veren denetimli görev: evin fiyatı kaç lira? En basit hâli, noktalara en küçük kareler doğrusu uydurmaktır.
 
 **RLHF (reinforcement learning from human feedback, insan geri bildirimiyle hizalama)** · Bölüm 5.6
-İnsan tercihleriyle bir ödül modeli eğitip dil modelini ona göre güncelleme. Asistanın yardımcı, dürüst ve güvenli olmayı, yani görgüyü öğrendiği aşama.
+İnsan tercihlerinden türetilen sinyale göre dil modelini güncelleme. PPO tabanlı RLHF ayrı bir ödül modeli eğitir; DPO ise tercih çiftlerinden doğrudan optimize eder. Asistanın yardımcı, dürüst ve güvenli olmayı, yani görgüyü öğrendiği aşama; her model aynı aşamalardan geçmez.
 
-**Sapma (bias)** · Bölüm 4.2
-Nöronun ağırlıklı toplamına eklenen, eşiği ayarlayan sabit; kapı bekçisinin kendi huyu. Eğitimle öğrenilir. Verideki önyargı anlamı için bkz. Önyargı.
+**Sabit terim (bias)** · Bölüm 4.2
+Nöronun ağırlıklı toplamına eklenen, toplamı kaydıran sabit; kapı bekçisinin kendi huyu. Eğitimle öğrenilir; “ateşledi” eşiği ise ayrı bir karar kuralıdır. Toplumsal yanlılık anlamı için bkz. Önyargı.
 
 **Sembolik yapay zekâ (symbolic AI, GOFAI)** · Bölüm 2.1
 Zekâyı açıkça yazılmış semboller ve kurallar üzerinde mantıksal işlem olarak ele alan klasik yaklaşım; 1950’lerden 1980’lere baskındı. Mantık, arama ve uzman sistemler alet çantasıydı.
 
 **Sezgisel (heuristic)** · Bölüm 2.4
-Aramada “hangi yön daha umut verici?” diye tahmin yürüten kısayol. Hız kazandırır ama en iyi çözümü kaçırabilir; “yeterince iyi”yi “mükemmel”e tercih eder.
+Aramada “hangi yön daha umut verici?” diye tahmin yürüten kısayol. Açgözlü sezgisel arama hız kazandırır ama en iyi çözümü kaçırabilir; A*, kabul edilebilir bir sezgiyle garantiyi geri alır.
 
 **Sıcaklık (temperature)** · Bölüm 5.5
-Üretimde olasılık dağılımını keskinleştiren ya da yumuşatan “yaratıcılık” ayarı. Düşükse hep en olası kelime seçilir; yüksekse daha çeşitli, daha riskli çıktı.
+Üretimde softmax(z/T) dağılımını keskinleştiren ya da yumuşatan ayar. Düşük T dağılımı sivriltir, yüksek T düzleştirir; T sıfırdan büyük olduğu sürece örnekleme rastlantısaldır. Her adımda en olasıyı seçmek (argmax, açgözlü çözümleme) ayrı bir kuraldır, düşük sıcaklık değildir.
 
 **Sınıflandırma (classification)** · Bölüm 3.4
 “Hangisi?” sorusuna kategori cevabı veren denetimli görev: spam mı, değil mi? Sınıfları ayıran bir karar sınırı öğrenir; sınır doğrusal olmak zorunda değildir.
@@ -204,7 +201,7 @@ Dil modelinin metni böldüğü küçük lego parçası: bazen bir kelime, bazen
 Birçok modelin tahminini birleştirerek (oylama, bagging, boosting) tek modelden daha iyi ve kararlı sonuç alma. Rastgele orman ve gradyan artırma en bilinen örnekleridir.
 
 **Transformer** · Bölüm 5.1
-Dikkat mekanizmasına dayanan, diziyi sıralı değil aynı anda işleyen mimari (2017, “Attention Is All You Need”). Bugünün büyük dil modellerinin temeli.
+Dikkat mekanizmasına dayanan mimari (2017, “Attention Is All You Need”). Eğitimde dizinin konumlarını birlikte (paralel) işler; otoregresif üretim ise token’ları sırayla ekler ve nedensel maskeyle her konum yalnız öncekileri görür. Bugünün büyük dil modellerinin temeli.
 
 **Turing makinesi (Turing machine)** · Bölüm 1.4
 Bandı okuyan, yazan ve iki yana kayan tek bir kutucuktan oluşan soyut makine; prensipte her hesabı yapabilir. Hesaplanabilirliğin biçimsel temeli (1936).
@@ -213,7 +210,7 @@ Bandı okuyan, yazan ve iki yana kayan tek bir kutucuktan oluşan soyut makine; 
 Turing’in taklit oyunu (1950): makine yazışmada insandan ayırt edilemiyorsa yeterli sayılır. Davranışçı bir ölçüttür; akıcı taklit, anlama ya da bilinç kanıtı değildir.
 
 **Uzman sistem (expert system)** · Bölüm 2.3
-Bir alandaki uzman bilgisini “EĞER şu doğruysa O ZAMAN şunu yap” kurallarına döken sistem: bilgi tabanı artı çıkarım motoru. Kuralları ileri zincirlemeyle ateşler; 1980’lerde yaygındı.
+Bir alandaki uzman bilgisini “EĞER şu doğruysa O ZAMAN şunu yap” kurallarına döken sistem: bilgi tabanı artı çıkarım motoru. Motor, olgularla eşleşen kuralları tetikler; ileri zincirleme olgulardan sonuca, geri zincirleme hedeften kanıta gider; bir sistem bunlardan birini ya da ikisini kullanabilir. 1980’lerde yaygındı.
 
 **Üretken çekişmeli ağ (generative adversarial network, GAN)** · Bölüm 4.7
 Kalpazan (üretici) ile dedektifi (ayırt edici) aynı odaya kilitleyen ikili ağ. Biri sahte üretir, öteki yakalamaya çalışır; yarış sürdükçe üretilenler gerçeğe yaklaşır.
@@ -222,16 +219,19 @@ Kalpazan (üretici) ile dedektifi (ayırt edici) aynı odaya kilitleyen ikili a�
 Tanımakla kalmayıp yazı, görsel, kod üreten modeller; verinin kendisini üreten dağılımı öğrenir. Transformer ve difüzyon bu çağın motorlarıdır.
 
 **Üstel büyüme (exponential growth)** · Bölüm 1.7
-Belirli aralıklarla ikiye katlanan büyüme; satranç tahtasındaki pirinç gibi masum başlar, birkaç katlamada kontrolden çıkar. Modern YZ’yi taşıyan işlem gücü böyle birikti.
+Her adımda sabit bir çarpanla büyüme; belirli aralıklarla ikiye katlanma bunun özel bir örneğidir. Satranç tahtasındaki pirinç gibi masum başlar, birkaç katlamada kontrolden çıkar. Modern YZ’yi taşıyan işlem gücü böyle birikti.
 
 **Yanlılık-varyans dengesi (bias–variance tradeoff)** · Bölüm 3.7
-Eksik uyum ile aşırı uyum arasındaki denge. İyi model ikisini dengeleyip görülmemiş veriye genelleşendir; örüntüyü öğrenir.
+Eksik uyum ile aşırı uyum arasındaki denge; buradaki yanlılık istatistiksel anlamdadır (modelin sistematik hatası), toplumsal önyargı değil. İyi model ikisini dengeleyip görülmemiş veriye genelleşendir; örüntüyü öğrenir.
 
 **Yapay nöron (artificial neuron)** · Bölüm 4.2
-Girdileri ağırlıklarıyla tartıp toplayan, sapma ekleyen ve sonucu aktivasyondan geçiren basit birim; kapı bekçisi gibi. Beynin kopyası değil, kaba bir matematiksel benzetme.
+Girdileri ağırlıklarıyla tartıp toplayan, sabit terim (bias) ekleyen ve sonucu aktivasyondan geçiren basit birim; kapı bekçisi gibi. Beynin kopyası değil, kaba bir matematiksel benzetme.
 
 **Yapay sinir ağı (artificial neural network)** · Bölüm 4.1
 Yapay nöronların katman katman dizilmesiyle kurulan öğrenme makinesi; özünde doğrusal olmayan dönüşümler yığını. Biyolojik nörondan yalnızca gevşek biçimde esinlenir.
 
 **Yapay zekâ (artificial intelligence, YZ)** · Bölüm 1.1
 İnsan zekâsı gerektiren görevleri yerine getirebilen sistemler; alanın pragmatik tanımı. Hesaplama kuramı ile zihin felsefesinin kesişiminde doğdu.
+
+**Yinelemeli sinir ağı (recurrent neural network, RNN)** · Bölüm 4.6
+Diziyi kelime kelime okuyup her adımda bir hafıza (gizli durum) taşıyan ağ: hₜ = tanh(Wₕ·hₜ₋₁ + Wₓ·xₜ). Aynı hücre ve aynı ağırlıklar her adımda yeniden kullanılır; “yinelemeli” (recurrent) adı buradan gelir. Ağaç yapılı “özyinelemeli” (recursive) ağlardan ayrıdır. Uzun bağımlılıklarda kaybolan gradyanla zorlanır; LSTM bunu hafifletir. Yerini büyük ölçüde Transformer aldı.

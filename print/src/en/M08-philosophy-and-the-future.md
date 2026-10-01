@@ -31,9 +31,9 @@ Below are short exchanges. For each, guess: was this reply written by a human or
 **Figure 8.1 · Human or machine?**
 ![Figure 8.1](../../figures/out/en/figure-8-1-tur.svg)
 
-*Setup.* The figure shows four short exchanges. In each frame a question sits on top and a single reply underneath. Who wrote the reply is hidden, and so is the tell that gives it away; the tells wait at the back of the book. You play the imitation game as Turing set it: text only, no voice, no face.
+*Setup.* The figure shows four short exchanges. In each frame a question sits on top and a single reply underneath. All four are fictional exchanges written for this discussion, not taken from a real record. Who wrote the reply in the fiction is hidden, and so is the tell that gives it away; the tells wait at the back of the book. You play the imitation game as Turing set it: text only, no voice, no face.
 
-*Self-test.* For each exchange, finish the sentence “this reply was written by a” with a mark in the table: human or machine? Then note, in one word, what pushed you to that decision.
+*Self-test.* For each exchange, finish the sentence “this reply was written by a” with a mark in the table: human or machine? Then note, in one word, what pushed you to that decision. The back of the book gives the role in the fiction and the tell, not a verdict.
 
 | # | Prompt | Reply | Human | Machine |
 |---|---|---|---|---|
@@ -42,7 +42,7 @@ Below are short exchanges. For each, guess: was this reply written by a human or
 | 3 | “What’s 17 × 24?” | 408. | ☐ | ☐ |
 | 4 | “What did you do this weekend?” | Visited my folks, ate far too much, got caught in the rain on the way back. Classic. | ☐ | ☐ |
 
-You are weighing three things as you guess: how formulaic the reply is, how personal it is, and how fast and flawless it is. Then step back and question the tells themselves. A machine can learn to write “my coffee went cold” too; an accountant can say 408 without a pause. Getting all four right is not hard, but that shows the examples are easy, not that the tells are solid. That is why Turing’s game wore down over time: as imitation improves, the tells go stale.
+You are weighing two things as you guess: how formulaic the reply is and how personal it is, and perhaps how flawless. Response time is not on the page, so speed is not a criterion. Then step back and question the tells themselves. A machine can learn to write “my coffee went cold” too; an accountant can say 408 without a pause. A personal anecdote or a correct calculation does not establish whether the author is human or a machine. Getting all four right, as the fiction has them, is not hard, but that shows the examples are easy, not that the tells are solid. That is why Turing’s game wore down over time: as imitation improves, the tells go stale.
 
 *What is happening?* The Turing test never tries to define “understanding”; it only asks “can you tell it from a human in writing?” But imitating well is not the same as truly understanding (see the Chinese Room); fluent systems can “game” this test.
 
@@ -52,7 +52,7 @@ You are weighing three things as you guess: how formulaic the reply is, how pers
 
 The Turing test is a behavioral criterion: instead of defining “understanding,” it counts indistinguishable behavior as enough. Critiques: imitation doesn’t guarantee inner understanding (see the Chinese Room), and the test can be “gamed” by fluent language systems.
 
-Modern large language models can pass loose versions of the test in short, everyday chats; rather than settling the “thinking” debate, this shifted the question to “what should the criterion be?” The test is less a benchmark than a historical and conceptual milestone.
+Some models have been indistinguishable from human participants in particular Turing-test experiments (Jones and Bergen, 2025). Results depend on the model, prompt and protocol; they do not establish consciousness or general intelligence. Rather than settling the “thinking” debate, this shifted the question to “what should the criterion be?” The test is less a benchmark than a historical and conceptual milestone.
 
 The four tells in Figure 8.1 also show why the test wears down. Each one is a surface marker, and each one can be learned:
 
@@ -60,7 +60,7 @@ The four tells in Figure 8.1 also show why the test wears down. Each one is a su
 |---|---|---|
 | Formulaic, polite style | A trace of the training instructions | When the model is told “talk casually” |
 | Personal detail, emotion | An impression of lived experience | When the model invents fictional detail |
-| Flawless, instant arithmetic | Calculator behavior | When the model is told “pause like a human” |
+| Flawless arithmetic | Calculator behavior | When the model is told “pause like a human”; in an accountant |
 | Everyday language, emoji | Chat habits | In every model trained on chat data |
 
 Is a fluent reply the same as understanding? John Searle’s room pokes at that question.
@@ -94,9 +94,9 @@ You gave all three replies flawlessly. The person outside believes they are chat
 | 2 | What’s your name? | My name is Little Helper. |
 | 3 | What time is it? | It’s three in the afternoon. |
 
-You told someone your name is Little Helper. You said it is three o’clock, and you never looked at a clock. Still, the replies were “correct,” because the rulebook was correct. Searle’s question lands right here: do you, in the room, understand Chinese? Most readers say no. But do the room, the book and you understand together? That is where opinions split.
+You told someone your name is Little Helper. You said it is three o’clock, and you never looked at a clock. The replies followed the rules and were grammatically flawless; whether they were true is another matter. Perhaps it was not three o’clock. The rulebook gives you the form, not the world. Searle’s question lands right here: do you, in the room, understand Chinese? Most readers say no. But do the room, the book and you understand together? That is where opinions split.
 
-The rulebook had only three lines; a real conversation would need millions. And answering “three” to “What time is it?” every time gives you away on the fourth note. A large language model can be seen as a huge, statistical version of this book. Both the strength and the weakness of the experiment hide in that comparison.
+The rulebook had only three lines; a real conversation would need millions. And answering “three” to “What time is it?” every time gives you away on the fourth note. A large language model is often compared to a huge, statistical version of this book; but its weights are not a ready-made table of answers. Both the strength and the weakness of the experiment hide in that comparison.
 
 *What is happening?* The Chinese Room says this: applying rules and producing the right symbols (processing the form) doesn’t mean truly understanding the language. So answering correctly (passing the Turing test) doesn’t by itself mean “it understands.” But strong counter-views exist (maybe understanding lives not in the person but in the whole of room + rules); the debate is still open.
 
@@ -108,13 +108,13 @@ The Chinese Room argues that syntactic symbol manipulation is not enough to prod
 
 The counter-views are strong: the “systems reply” says understanding may live not in the person but in the whole of room + rules + process; the “robot reply” argues grounding through senses and motors would change the picture. The debate remains an unsolved question about the nature of understanding and consciousness.
 
-In technical terms, the rulebook of Figure 8.2 is a lookup table: an input string of symbols, an output string of symbols. A language model also goes from an input sequence to an output sequence. The difference is that its table is not written out as lines; it sits implicit in billions of weights. To Searle that difference does not matter; both are syntax. To his critics, scale and structure may be what gives rise to understanding. How strong the argument looks depends on which side you stand on.
+In technical terms, the rulebook of Figure 8.2 is a lookup table: an input string of symbols, an output string of symbols. A language model also goes from an input sequence to an output sequence; but its weights are not a ready-made table of answers. The model produces each reply on the spot from the statistics of the whole sequence in its context; it can answer the same question differently and produces a reply to a question the book never lists. The analogy strains here. To Searle that difference does not matter; both are syntax. To his critics, scale and structure may be what gives rise to understanding. How strong the argument looks depends on which side you stand on.
 
 Set the question of understanding aside for a moment. How far can machines go? A ladder of three rungs gives one answer.
 
 ### 8.4 From narrow AI to superintelligence
 
-Every AI today is “narrow”: excellent at one job (chess, translation, images) and unable to step outside it. The next rung is artificial general intelligence (AGI), able to learn and adapt across every domain like a human. Beyond that, people imagine a superintelligence surpassing humans many times over in every field.
+AI today counts as “narrow”: excellent at one job (chess, translation, images); even chat models that work across many tasks show no human-level general learning. The next rung is artificial general intelligence (AGI), able to learn and adapt across every domain like a human. Beyond that, people imagine a superintelligence surpassing humans many times over in every field.
 
 Look at the rungs of Figure 8.3 one by one; see what each means and the answer to “does it exist today?”
 
@@ -123,19 +123,19 @@ Look at the rungs of Figure 8.3 one by one; see what each means and the answer t
 **Figure 8.3 · The capability ladder**
 ![Figure 8.3](../../figures/out/en/figure-8-3-capability.svg)
 
-*Setup.* The figure shows a ladder with three rungs. Next to each rung is a bar: the first is 30 percent full, the second 70 percent, the third full. The bars only order the rungs; they measure nothing. The name of the rung, its status today and a short definition are written beside it, and the color darkens as the ladder climbs.
+*Setup.* The figure shows a ladder with three rungs. Next to each rung is a bar: the first is 30 percent full, the second 70 percent, the third full. The bars only order the rungs; they illustrate hypothetical differences between concepts and are not measured intelligence scores or percentages of progress toward AGI. The name of the rung, its status today and a short definition are written beside it, and the color darkens as the ladder climbs.
 
 *Step by step.* The three rungs, with their definitions:
 
 | Rung | Today | Definition |
 |---|---|---|
-| Narrow AI | Exists today ✓ | Very good at one task (chess, translation, vision) but unable to step outside it. All of today’s systems live here. |
+| Narrow AI | Exists today ✓ | Very good at one task or a set of tasks (chess, translation, vision); shows no human-level general learning and transfer. Today’s systems live here. |
 | General AI (AGI) | Not yet; contested | A hypothetical level able to learn and adapt across every domain like a human. Whether and when it arrives is debated among experts. |
 | Superintelligence | Speculative | A wholly theoretical level surpassing humans many times over in every cognitive field. The subject of both great-opportunity and serious-risk scenarios. |
 
 Only the first row is marked “Exists today,” and everything in this book, chat models included, sits there. “Contested” and “speculative” differ only in how far away the thing is. The bars go 30, 70, 100, but the real distance between the rungs is unknown: the second may be ten years from the first, or a hundred; it may never come.
 
-But a chat model writes poems and produces code; isn’t that “general”? This is why some experts put intermediate rungs between narrow and general. The table has three rungs; the real world is probably a continuous slope.
+But a chat model writes poems and produces code, and even with fixed weights it adapts to a new task from the instructions and examples in its context (Brown et al., 2020); isn’t that “general”? This is why some experts put intermediate rungs between narrow and general; there is no universally agreed criterion for human-level general intelligence. The table has three rungs; the real world is probably a continuous slope.
 
 *What is happening?* Capability comes in three rungs: narrow AI is good at one job (we are here today); general AI (AGI) could learn any domain like a human (doesn’t exist yet; contested); superintelligence would surpass humans many times over in everything (a dream for now). Careful: “doing every job” and “being conscious” are separate things.
 
@@ -147,7 +147,7 @@ The capability horizon is roughly three tiers: narrow AI (task-specific), AGI (h
 
 Expert views on whether and when AGI arrives span a wide range (soon, far, perhaps never). Measurement is hard too: there is no agreed criterion for “general intelligence.” Treat claims that give definite dates with caution.
 
-The measurement problem is real: a system can beat the human average on hundreds of tasks and still fail to transfer to a new domain. So in AGI debates, “which task list?” and “how is transfer measured?” are more productive questions than date predictions.
+The bar lengths in Figure 8.3 (30, 70, 100) come from the figure’s code; their ratio rests on no measurement and shows no distance left to AGI. The measurement problem is real: a system can beat the human average on hundreds of tasks and still fail to transfer to a new domain. So in AGI debates, “which task list?” and “how is transfer measured?” are more productive questions than date predictions.
 
 How do you climb to the third rung, and can it be climbed at all? It depends on how intelligence grows over time.
 
@@ -200,24 +200,24 @@ If an AI causes harm, who is responsible? The company that built it, the organiz
 
 Pick a scenario and mark who you would hold responsible. Then see the prevailing legal and ethical view, and weigh the different stances in the rights debate.
 
-> **Margin note.** We have reached the end of the book. Perhaps the most important lesson is this: AI’s future will be decided not by the “technology” but by the values with which we build and use it. You have a say in that future. 🌱
+> **Margin note.** We have reached the end of the book. This book’s stance is plain: it advocates uses that strengthen human agency and allow their outcomes to be checked. AI’s future will not be decided by the technology alone; the values with which we build and use it will decide it too. You have a say in that future. 🌱
 
 **Figure 8.5 · Who is responsible?**
 ![Figure 8.5](../../figures/out/en/figure-8-5-responsibility.svg)
 
-*Setup.* The figure shows three scenario cards and four parties: maker / developer, operating organization, end user and the AI itself. For each scenario, mark the party you would hold responsible. Your answer key is the view that carries the most weight in today’s legal and ethical debate; “right” here means today’s consensus, nothing stronger.
+*Setup.* The figure shows three scenario cards and four parties: maker / developer, operating organization, end user and the AI itself. For each scenario, mark the party you would examine first. Your answer key is the view that carries the most weight in today’s legal and ethical debate; it is not a legal ruling. In most cases responsibility is shared, and the outcome depends on the country, the fault and the contract.
 
-*Self-test.* For each scenario, give the responsibility to one party and justify it in one sentence. The prevailing view for each scenario, with its reason, is at the back of the book.
+*Self-test.* For each scenario, pick the party to examine first and justify it in one sentence; note who else might carry a share. The prevailing view for each scenario, with its reason, is at the back of the book.
 
 | # | Scenario | (a) Maker / developer | (b) Operating organization | (c) End user | (d) The AI itself |
 |---|---|---|---|---|---|
 | 1 | A self-driving car crashes because of the maker’s software bug. | ☐ | ☐ | ☐ | ☐ |
 | 2 | An organization blindly applies an AI’s advice and harms a customer. | ☐ | ☐ | ☐ | ☐ |
-| 3 | A user deliberately uses an AI tool to produce fake content. | ☐ | ☐ | ☐ | ☐ |
+| 3 | A user creates fabricated evidence with an AI tool to deceive or harm someone. | ☐ | ☐ | ☐ | ☐ |
 
-Three questions help. In the chain that led to the harm, who made the decision? Who could have checked and did not? Who intended harm? If the fourth party tempts you, ask what a court sentence would mean to a piece of software. The law does not go there; responsibility gathers in the human links of the chain. The scenarios here are simpler than life. In real cases all three human parties turn out partly responsible, and the fight over shares runs through the courts for years.
+Three questions help. In the chain that led to the harm, who made the decision? Who could have checked and did not? Who intended harm? If the fourth party tempts you, ask what a court sentence would mean to a piece of software. The law does not go there; responsibility gathers in the human links of the chain. The scenarios here are simpler than life. In real cases all three human parties can turn out partly responsible, and the fight over shares runs through the courts for years. Producing synthetic content is not by itself harm or bad intent; fiction and art are synthetic too. What sets the third scenario apart is the aim to deceive and harm.
 
-The rights question has no scenario, because it has no case yet. Today there are two main stances. One says rights need experience or consciousness, which today’s systems lack, so the question is premature. The other says that where nobody is sure, caution is due: better careful now than wrong later. Both rest on the question of consciousness, and no chapter of this book has settled it. Nobody has.
+The rights question has no scenario, because it has no case yet. Today there are two main stances. One says rights need subjective experience (the capacity for pleasure and pain) or consciousness, which today’s systems lack, so the question is premature. The other says that where nobody is sure, caution is due: better careful now than wrong later. Both rest on the question of consciousness, and no chapter of this book has settled it. Nobody has.
 
 *What is happening?* When harm happens, responsibility today almost always lands on people and institutions: whoever built, operated or used the system. Holding “the AI itself” legally responsible is not a common view. Whether machines could one day hold rights is an entirely different question, and still open.
 
@@ -227,9 +227,9 @@ The rights question has no scenario, because it has no case yet. Today there are
 
 Accountability today is overwhelmingly attributed to people and institutions: humans make the design, deployment and usage decisions; assigning legal responsibility to “the AI itself” is not the prevailing view. Responsibility is usually shared and context-dependent (developer, operator, user, regulator).
 
-AI’s moral status is a separate, contested question: some argue status requires sentience, absent in current systems; others invoke precaution. It is both an empirical question (is there consciousness?) and a normative one (if there were, what would we owe?), and it remains open.
+AI’s moral status is a separate, contested question: some argue status requires sentience, the capacity for subjective experience including pleasure and pain, absent in current systems; others invoke precaution. It is both an empirical question (is there consciousness?) and a normative one (if there were, what would we owe?), and it remains open. Intelligence, consciousness and self-awareness are not interchangeable here.
 
-The three scenarios in Figure 8.5 stand for three separate sources of responsibility: defect (a design error), negligence (use without oversight) and intent (deliberate misuse). Legal systems meet these three with different instruments: product liability, duty of care and criminal law. The fourth party fits none of these frameworks, because responsibility requires a subject for whom a sanction means something.
+The three scenarios in Figure 8.5 stand for three separate sources of responsibility: defect (a design error), negligence (use without oversight) and intent (deliberate misuse). Legal systems meet these three with different instruments: product liability, duty of care and criminal law; which one applies depends on the country, the fault and the contract, and more than one party can carry a share in the same case. The fourth party fits none of these frameworks, because responsibility requires a subject for whom a sanction means something.
 
 None of these questions closes with the chapter; they are the kind you keep. Six questions follow.
 
@@ -254,7 +254,7 @@ None of these questions closes with the chapter; they are the kind you keep. Six
    c) Superintelligence
    d) Narrow AI
 
-4. The most balanced stance on the singularity?
+4. Which cautious stance on the singularity does this book defend?
    a) It already happened
    b) Definitely happening tomorrow
    c) Completely impossible
@@ -277,16 +277,21 @@ None of these questions closes with the chapter; they are the kind you keep. Six
 - The questions in this chapter are open, and that is their point.
 - The Turing test looks at behavior: a machine that cannot be told apart in writing passes, but fluent imitation is not understanding.
 - The Chinese Room argues that matching symbols by rule does not produce understanding; whether understanding lives in the person or in the system is still contested.
-- Every AI today is narrow; general AI is hypothetical, superintelligence is theoretical, and being “general” is not being “conscious.”
+- AI today counts as narrow; it works across many tasks, but there is no agreed criterion for general intelligence, superintelligence is theoretical, and being “general” is not being “conscious.”
 - Nobody has proven the singularity and nobody can rule it out; which curve we are on shows only in hindsight.
 - When harm happens, responsibility today falls on people and institutions: whoever built, operated or used the system.
-- Whether machines will ever have rights turns on the open question of consciousness; the future of AI will be decided by the values that build and use it.
+- Whether machines will ever have rights turns on the open question of consciousness; the future of AI will be decided by the values that build and use it as much as by the technology, and that is this book’s stance.
 
 <!-- SOURCE-CHANGES
 We have reached the end of the road. We have learned how a machine “thinks”; now come the oldest and hardest questions. Can a machine truly understand, or does it only act as if it does? Is an AI smarter than us possible, and if so, when? And if machines one day gain consciousness, would they have rights? ||| This is the last chapter. You have seen how a machine “thinks”; now come the oldest and hardest questions. Can a machine understand, or does it only act as if it does? Is an AI smarter than us possible, and if so, when? And if machines one day gain consciousness, would they have rights?
 Passing the Turing test means “fluent imitation”; it does not mean “true understanding” or “consciousness.” Keeping those questions apart is the key to the modern debate. ||| Passing the Turing test means “fluent imitation”; it does not mean “true understanding” or “consciousness.” Much of the modern debate comes from mixing the two up.
 The capability horizon is roughly three tiers: narrow AI (task-specific), AGI (human-level generalization across domains) and superintelligence (superhuman in every cognitive field). The borders blur; being “general” and being “conscious” are separate questions. ||| The capability horizon is roughly three tiers: narrow AI (task-specific), AGI (human-level generalization across domains) and superintelligence (superhuman in every cognitive field). The borders blur.
 There are strong critiques too: intelligence may be neither one-dimensional nor endlessly scalable; data, energy, hardware and physics set limits; complexity and diminishing returns bite. It is not a proven prophecy but an uncertain scenario worth taking seriously. The curves below are qualitative. ||| There are strong critiques too: intelligence may be neither one-dimensional nor endlessly scalable; data, energy, hardware and physics set limits; complexity and diminishing returns bite. The curves below are qualitative.
+Modern large language models can pass loose versions of the test in short, everyday chats; rather than settling the “thinking” debate, this shifted the question to “what should the criterion be?” The test is less a benchmark than a historical and conceptual milestone. ||| Some models have been indistinguishable from human participants in particular Turing-test experiments (Jones and Bergen, 2025). Results depend on the model, prompt and protocol; they do not establish consciousness or general intelligence. Rather than settling the “thinking” debate, this shifted the question to “what should the criterion be?” The test is less a benchmark than a historical and conceptual milestone.
+Every AI today is “narrow”: excellent at one job (chess, translation, images) and unable to step outside it. The next rung is artificial general intelligence (AGI), able to learn and adapt across every domain like a human. Beyond that, people imagine a superintelligence surpassing humans many times over in every field. ||| AI today counts as “narrow”: excellent at one job (chess, translation, images); even chat models that work across many tasks show no human-level general learning. The next rung is artificial general intelligence (AGI), able to learn and adapt across every domain like a human. Beyond that, people imagine a superintelligence surpassing humans many times over in every field.
+AI’s moral status is a separate, contested question: some argue status requires sentience, absent in current systems; others invoke precaution. It is both an empirical question (is there consciousness?) and a normative one (if there were, what would we owe?), and it remains open. ||| AI’s moral status is a separate, contested question: some argue status requires sentience, the capacity for subjective experience including pleasure and pain, absent in current systems; others invoke precaution. It is both an empirical question (is there consciousness?) and a normative one (if there were, what would we owe?), and it remains open. Intelligence, consciousness and self-awareness are not interchangeable here.
+We have reached the end of the book. Perhaps the most important lesson is this: AI’s future will be decided not by the “technology” but by the values with which we build and use it. You have a say in that future. 🌱 ||| We have reached the end of the book. This book’s stance is plain: it advocates uses that strengthen human agency and allow their outcomes to be checked. AI’s future will not be decided by the technology alone; the values with which we build and use it will decide it too. You have a say in that future. 🌱
+The most balanced stance on the singularity? ||| Which cautious stance on the singularity does this book defend?
 -->
 
 <!-- EDITORIAL NOTES
@@ -310,4 +315,5 @@ There are strong critiques too: intelligence may be neither one-dimensional nor 
 - Last bridge (8.6 → 8.7) and the final takeaway keep the TR closing tone (values over technology); the bridge no longer announces the end of the book, the 8.6 margin note does.
 - Margin notes moved after the Simple paragraphs and before the Figure block, as in the Turkish edition. The 🌱 emoji in the 8.6 margin note is source text and was kept.
 - 2026-09-30 humanizing pass (print/kitap/humanize-en-report.md): the ending is announced once (8.6 margin note); "prevailing view" appears once in the new text; "general ≠ conscious" kept in 8.4 What is happening and the takeaway; "not a proven prophecy" kept in 8.5 What is happening only (takeaway and glossary reworded); the bar disclaimer in 8.4 said once; "Notice…", "look at three things", "ask three questions", "First… Second…" signposts and the string of rhetorical questions in 8.6 removed; "deliberate / on purpose", "exactly", "honest" cut; the pre-quiz line no longer twins M07; scare quotes and "not X but Y" mirrors thinned. Source paragraphs changed are listed in SOURCE-CHANGES above.
+- 2026-10-01 correction document (R059–R063, R067, R069, R092): the Turing-test claim tied to a specific experiment (Jones and Bergen, 2025; added to the bibliography); Figure 8.1 exchanges marked fictional, speed dropped as a criterion (table row "instant" removed), answers give the role in the fiction, no verdict; Chinese Room: rule-following ≠ truth, weights ≠ answer table (Simple 8.3 and the Technical paragraph); 8.4 "unable to step outside it" → multi-task models and in-context adaptation (Brown et al., 2020; added to the bibliography), no agreed AGI criterion; Figure 8.3 bar disclaimer kept and strengthened; Figure 8.5 "the party you would hold responsible" → "the party you would examine first", shared responsibility, scenario 3 "creates fabricated evidence to deceive or harm someone" (figure strings are the figure agent’s job; the digital demo moves to multiple choice); sentience glossed as the capacity for subjective experience including pleasure and pain; the 8.6 margin note states the book’s stance as a stance and softens "not by the technology but"; quiz 4 "most balanced stance" → "cautious stance this book defends" (option order unchanged). Paragraphs for the digital edition are in SOURCE-CHANGES.
 -->

@@ -19,7 +19,7 @@ else O="out/$LANG_-$PROFILE"; mkdir -p "$ROOT/print/kitap/$LANG_"; FINAL="$ROOT/
   [ "$PROFILE" = kdp ] && { BLEED_MM=3.175; MULT=2; TEXT_W=123; }
 fi
 mkdir -p "$O"
-render() { npx pagedjs-cli "$O/ic-blok.html" -o "$O/ic-blok-rgb.pdf" --timeout 600000 2>&1 | grep -E "Rendering|rror" || true; }
+render() { npx pagedjs-cli "$O/ic-blok.html" -o "$O/ic-blok-rgb.pdf" --timeout 600000 $( [ -n "$NOHOOKS" ] || echo --additional-script hooks.js ) 2>&1 | tee "$O/render.log" | grep -E "Rendering|rror|TAŞMA|taşan" || true; }
 PLAN="$O/defer.json"; rm -f "$PLAN" "$O/heights.json"
 python3 typeset.py --lang "$LANG_" --profile "$PROFILE" $ARGS
 render
@@ -44,7 +44,7 @@ GSICC="$(find /opt/homebrew /usr/local /usr/share -name default_cmyk.icc 2>/dev/
 if [ -n "$ICC" ]; then
   PROF="$ICC"; COND="$(basename "$ICC" .icc)"; CID="FOGRA39"
 else
-  PROF="$GSICC"; COND="Ghostscript default CMYK (matbaa profili ile değiştirilecek)"; CID="Custom"
+  PROF="$GSICC"; COND="Ghostscript default CMYK (printer profile pending)"; CID="Custom"
 fi
 [ -f "$PROF" ] || { echo "ICC profili bulunamadı: $PROF"; exit 1; }
 TITLE_HEX=$(python3 -c 'import sys; print(sys.argv[1].encode("utf-16-be").hex().upper())' "$TITLE")  # PDF metin dizgisi UTF-16BE (Türkçe karakterler)

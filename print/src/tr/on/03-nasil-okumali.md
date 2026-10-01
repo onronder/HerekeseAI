@@ -4,7 +4,7 @@ Kitap sekiz bölüm. Her bölüm bir dönemi ve o dönemin ana fikrini anlatıyo
 
 **İki derinlik.** Ana metin sade bir dille yazıldı ve tek başına eksiksizdir. Bazı alt bölümlerin sonunda **Teknik derinlik** başlıklı kutular var. Bunlar aynı fikri formülüyle, terimiyle ve matematiğiyle yeniden anlatır. Kutular atlanabilir; ana metin onlara dayanmaz. Kapaktaki ızgara ve ağ da bunu anlatır: aynı fikir, iki derinlik.
 
-**Kenar notları.** Sayfa kenarındaki kısa notlar, konunun bugünle bağını ya da ilk bakışta görünmeyen bir ayrıntıyı verir.
+**Kenar notları.** “Kenar notu” diye başlayan kısa notlar sayfa kenarında değil, metnin akışı içinde durur: sol kenarı renkli bir çizgiyle ayrılmış, eğik yazılı küçük kutular. Konunun bugünle bağını ya da ilk bakışta görünmeyen bir ayrıntıyı verirler.
 
 **Şekiller.** Dijital sürümdeki 45 canlı demonun her biri burada bir şekil bloğuna dönüştü. Her blok aynı düzende ilerler:
 

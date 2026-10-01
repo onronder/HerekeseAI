@@ -31,16 +31,16 @@ Aşağıda kısa yazışmalar var. Her biri için tahmin et: bu cevabı bir insa
 **Şekil 8.1 · İnsan mı, makine mi?**
 ![Şekil 8.1](../../figures/out/tr/sekil-8-1-tur.svg)
 
-*Kurulum.* Şekilde dört kısa yazışma var. Her karede üstte bir soru, altında tek bir cevap duruyor. Cevabı kimin yazdığı gizli; ele veren ipucu da gizli. Turing’in taklit oyununu tek başına oynuyorsun: elinde yalnız metin var, ses yok, yüz yok. Yalnızca kelimelere bakarak karar vereceksin.
+*Kurulum.* Şekilde dört kısa yazışma var. Her karede üstte bir soru, altında tek bir cevap duruyor. Dört yazışma da bu konuyu tartışmak için yazılmış kurgusal örnekler; gerçek bir kayıttan alınmadı. Cevabı kimin yazdığı gizli; ele veren ipucu da gizli. Turing’in taklit oyununu tek başına oynuyorsun: elinde yalnız metin var, ses yok, yüz yok. Yalnızca kelimelere bakarak karar vereceksin.
 
-*Kendini sına.* Her yazışma için tahminini kenara yaz: insan mı, makine mi? Sonra seni o karara götüren şeyi bir kelimeyle not et. Cevaplar ve ipuçları kitabın sonunda.
+*Kendini sına.* Her yazışma için tahminini kenara yaz: insan mı, makine mi? Sonra seni o karara götüren şeyi bir kelimeyle not et. Kurgudaki rol ve ipuçları kitabın sonunda; kesin bir tanı değil.
 
 1. Soru: “En sevdiğin yemek ne?” Cevap: “Bir yapay zekâ olarak yemek yiyemem, dolayısıyla bir favorim yok. Ancak istersen popüler yemekler hakkında bilgi verebilirim.”
 2. Soru: “Bu sabah trafiğe takıldın mı?” Cevap: “Sorma ya, köprüde tam 40 dakika kaldım, kahvem de soğudu :( en azından güzel bir podcast vardı.”
 3. Soru: “17 × 24 kaç eder?” Cevap: “408.”
 4. Soru: “Hafta sonu ne yaptın?” Cevap: “Annemlere gittik, çok yedik, dönüşte de yağmura yakalandık. Klasik yani.”
 
-Ölçütlerin kalıp, kişisellik ve hız: cevap ne kadar kalıplı, ne kadar kişisel, ne kadar hızlı ve kusursuz? Ama ipuçlarının kendisini de sorgula. Bir makine “kahvem soğudu” yazmayı öğrenebilir; bir muhasebeci 408’i duraksamadan söyleyebilir. Dört yazışmayı doğru bilmek zor değil; bu, örneklerin kolay olduğunu gösterir, ipuçlarının sağlam olduğunu değil. Turing’in oyunu bu yüzden zamanla aşındı: taklit iyileştikçe ipuçları eskir.
+Ölçütlerin kalıp ve kişisellik: cevap ne kadar kalıplı, ne kadar kişisel, ne kadar kusursuz? Kâğıtta cevap süresi görünmüyor; hız ölçüt değil. Ama ipuçlarının kendisini de sorgula. Bir makine “kahvem soğudu” yazmayı öğrenebilir; bir muhasebeci 408’i duraksamadan söyleyebilir. Tek bir anı ya da doğru bir hesap, yazanın insan ya da makine olduğunu kanıtlamaz. Dört yazışmayı kurgudaki rolüyle bilmek zor değil; bu, örneklerin kolay olduğunu gösterir, ipuçlarının sağlam olduğunu değil. Turing’in oyunu bu yüzden zamanla aşındı: taklit iyileştikçe ipuçları eskir.
 
 *Ne oluyor?* Turing testi bir şeyi “anlamayı” tanımlamaya çalışmaz; sadece “yazışmada insandan ayırt edilemiyor mu?” diye bakar. Ama iyi taklit etmek, gerçekten anlamak demek değildir (bkz. Çince Oda); akıcı konuşan sistemler bu testi “kandırabilir”.
 
@@ -50,7 +50,7 @@ Aşağıda kısa yazışmalar var. Her biri için tahmin et: bu cevabı bir insa
 
 Turing testi davranışçı bir ölçüttür: “anlama”yı tanımlamak yerine, ayırt edilemez davranışı yeterli sayar. Eleştiriler: taklit, içsel anlamayı garanti etmez (bkz. Çince Oda) ve test, akıcı dil üreten sistemlerle “kandırılabilir”.
 
-Modern büyük dil modelleri, kısa ve sıradan sohbetlerde testin gevşek sürümlerini geçebiliyor; bu, “düşünme” tartışmasını bitirmek yerine soruyu “ölçüt ne olmalı?”ya kaydırdı. Test bir başarım ölçütünden çok tarihsel/kavramsal bir kilometre taşıdır.
+Bazı modeller belirli Turing testi deneylerinde insan katılımcılardan ayırt edilemedi (Jones ve Bergen, 2025). Bu sonuç kullanılan model, istem ve deney düzenine bağlıdır; bilinç ya da genel zekâ kanıtı değildir. Bu, “düşünme” tartışmasını bitirmek yerine soruyu “ölçüt ne olmalı?”ya kaydırdı. Test bir başarım ölçütünden çok tarihsel/kavramsal bir kilometre taşıdır.
 
 Ayırt edilemezlik ölçüt olunca, ayırt etmeye yarayan her ipucu da öğrenilebilir bir hedefe dönüşür.
 
@@ -60,7 +60,7 @@ Ayırt edilemezlik ölçüt olunca, ayırt etmeye yarayan her ipucu da öğrenil
 |---|---|---|
 | Kalıplı, kibar üslup | Eğitimdeki yönerge izi | Modele “samimi konuş” denince |
 | Kişisel ayrıntı, duygu | Yaşanmışlık izlenimi | Model kurgusal ayrıntı ürettiğinde |
-| Kusursuz, anlık aritmetik | Hesap makinesi davranışı | Modele “insan gibi duraksa” denince |
+| Kusursuz aritmetik | Hesap makinesi davranışı | Modele “insan gibi duraksa” denince; bir muhasebecide |
 | Gündelik dil, emoji | Sohbet alışkanlığı | Sohbet verisiyle eğitilen her modelde |
 
 Akıcı cevap vermek anlamak mıdır? John Searle’ün odası bu soruyu kurcalar.
@@ -94,9 +94,9 @@ Aşağıda o odadaki kişi sensin. Gelen sembolü işle ve kuralın ürettiği c
 | 2 | Adın ne? | Adım Küçük Yardımcı. |
 | 3 | Saat kaç? | Saat öğleden sonra üç. |
 
-Birine adının Küçük Yardımcı olduğunu söyledin. Saatin üç olduğunu söyledin; saate bakmadın. Yine de cevaplar doğruydu, çünkü kural kitabı doğruydu. Searle’ün sorusu bu: odadaki sen Çince anlıyor musun? Çoğu okur hayır der. Oda, kitap ve sen birlikte anlıyor musunuz? Görüşler burada ayrılır.
+Birine adının Küçük Yardımcı olduğunu söyledin. Saatin üç olduğunu söyledin; saate bakmadın. Cevaplar kurala uygundu, dilbilgisi kusursuzdu; doğru muydu, orası ayrı. Saat belki üç değildi. Kural kitabı biçimi verir, dünyayı değil. Searle’ün sorusu bu: odadaki sen Çince anlıyor musun? Çoğu okur hayır der. Oda, kitap ve sen birlikte anlıyor musunuz? Görüşler burada ayrılır.
 
-Kural kitabı üç satırdı. Gerçek bir sohbet için milyonlarca satır gerekir. Üstelik “Saat kaç?” sorusuna hep “üç” demek, dördüncü notta seni ele verir. Büyük dil modelleri bu kitabın devasa ve istatistiksel bir sürümü sayılabilir. Deneyin gücü de zayıflığı da bu benzetmede.
+Kural kitabı üç satırdı. Gerçek bir sohbet için milyonlarca satır gerekir. Üstelik “Saat kaç?” sorusuna hep “üç” demek, dördüncü notta seni ele verir. Büyük dil modelleri bu kitabın devasa ve istatistiksel bir sürümüne benzetilir; ama ağırlıkları hazır bir cevap tablosu değildir. Deneyin gücü de zayıflığı da bu benzetmede.
 
 *Ne oluyor?* Çince Oda şunu söyler: kuralları uygulayıp doğru sembolleri sıralamak (yani biçimi işlemek) o dili gerçekten anlamak anlamına gelmez. Demek ki doğru cevap vermek (Turing testini geçmek) tek başına “anlıyor” demek değildir. Ama güçlü karşı görüşler de var (belki anlama kişide değil, oda + kurallar bütünündedir); tartışma hâlâ açık.
 
@@ -110,13 +110,13 @@ Karşı görüşler güçlüdür: “Sistem yanıtı” der ki anlama, kişide d
 
 Argümanın bütün yükü tek öncüldedir: sözdizimi tek başına anlambilim vermez. Karşı görüşlerin hepsi bu öncüle yüklenir.
 
-Şekil 8.2’deki kural kitabı, teknik dille bir arama tablosudur (lookup table): girdi sembol dizisi, çıktı sembol dizisi. Bir dil modeli de girdi dizisinden çıktı dizisine gider; fark, tablonun açık satırlar yerine milyarlarca ağırlıkta örtük durmasıdır. Searle’e göre bu fark önemsizdir; ikisi de sözdizimidir. Eleştirmenlere göre ise ölçek ve yapı, anlamanın kendisini doğurabilir. Argümanın gücü, hangi tarafta durduğuna bağlı olarak değişir.
+Şekil 8.2’deki kural kitabı, teknik dille bir arama tablosudur (lookup table): girdi sembol dizisi, çıktı sembol dizisi. Bir dil modeli de girdi dizisinden çıktı dizisine gider; ama ağırlıkları hazır bir cevap tablosu değildir. Model her cevabı o anda, bağlamdaki bütün dizinin istatistiğinden üretir; aynı soruya farklı cevaplar verebilir ve kitapta hiç yazmayan bir soruya da cevap üretir. Benzetme burada zorlanır. Searle’e göre bu fark önemsizdir; ikisi de sözdizimidir. Eleştirmenlere göre ise ölçek ve yapı, anlamanın kendisini doğurabilir. Argümanın gücü, hangi tarafta durduğuna bağlı olarak değişir.
 
 Anlama sorusunu bir yana koy: makineler ne kadar ileri gidebilir?
 
 ### 8.4 Dar YZ’den süper zekâya
 
-Bugünkü her yapay zekâ “dar”dır: tek bir işte (satranç, çeviri, görüntü) çok iyidir ama o işin dışına çıkamaz. Bir sonraki basamak, insan gibi her alanda öğrenip uyum sağlayabilen genel yapay zekâ (AGI). Onun da ötesinde, her alanda insanı kat kat aşan bir süper zekâ hayal ediliyor.
+Bugünkü yapay zekâ “dar” sayılır: bir işte (satranç, çeviri, görüntü) çok iyidir; birçok görevde çalışan sohbet modelleri bile insan düzeyinde genel öğrenme göstermez. Bir sonraki basamak, insan gibi her alanda öğrenip uyum sağlayabilen genel yapay zekâ (AGI). Onun da ötesinde, her alanda insanı kat kat aşan bir süper zekâ hayal ediliyor.
 
 Şekil 8.3’teki basamaklara tek tek bak; her birinin ne anlama geldiğini ve “bugün var mı?” sorusunun cevabını gör.
 
@@ -125,19 +125,19 @@ Bugünkü her yapay zekâ “dar”dır: tek bir işte (satranç, çeviri, gör�
 **Şekil 8.3 · Yetenek basamakları**
 ![Şekil 8.3](../../figures/out/tr/sekil-8-3-capability.svg)
 
-*Kurulum.* Şekilde üç basamaklı bir merdiven var. Her basamağın yanında bir çubuk: ilki yüzde 30 dolu, ikincisi yüzde 70, üçüncüsü tam. Çubuklar ölçüm değil, sıralama: yetenek alanı ne kadar geniş? Basamağın adı, bugünkü durumu ve kısa tanımı yanında yazıyor. Merdiven yukarı çıktıkça renk koyulaşıyor.
+*Kurulum.* Şekilde üç basamaklı bir merdiven var. Her basamağın yanında bir çubuk: ilki yüzde 30 dolu, ikincisi yüzde 70, üçüncüsü tam. Çubuklar ölçüm değil, sıralama: kavramlar arasındaki varsayımsal farkı anlatır; ölçülmüş zekâ puanı ya da AGI’ye ilerleme oranı değildir. Basamağın adı, bugünkü durumu ve kısa tanımı yanında yazıyor. Merdiven yukarı çıktıkça renk koyulaşıyor.
 
 *Adım adım.* Üç basamak, tanımlarıyla birlikte:
 
 | Basamak | Bugün | Tanım |
 |---|---|---|
-| Dar YZ | Bugün var ✓ | Tek bir görevde çok iyi (satranç, çeviri, görüntü tanıma) ama o işin dışına çıkamaz. Bugünkü tüm sistemler buradadır. |
+| Dar YZ | Bugün var ✓ | Bir görevde ya da belirli bir görev kümesinde çok iyi (satranç, çeviri, görüntü tanıma); insan düzeyinde genel öğrenme ve aktarım göstermez. Bugünkü sistemler buradadır. |
 | Genel YZ (AGI) | Henüz yok; tartışmalı | İnsan gibi her alanda öğrenip uyum sağlayabilen, varsayımsal bir düzey. Gelip gelmeyeceği ve ne zaman geleceği uzmanlar arasında tartışmalıdır. |
 | Süper Zekâ | Spekülatif | Her bilişsel alanda insanı kat kat aşan, tümüyle kuramsal bir düzey. Hem büyük fırsat hem ciddi risk senaryolarının konusudur. |
 
 “Bugün var” işareti yalnız ilk satırda; bu kitapta gördüğün her şey, sohbet modelleri dahil, o satırda. Alt iki satırın durumu bir belirsizlik etiketi; tartışmalı ile spekülatif arasındaki fark, konuştuğumuz şeyin ne kadar uzakta olduğu. Çubuklar yüzde 30, 70, 100 diye ilerliyor ama basamaklar arasındaki mesafe bilinmiyor: ikinci basamak birinciden on yıl da uzak olabilir, yüz yıl da; belki hiç gelmeyebilir.
 
-Bir sohbet modeli hem şiir yazıyor hem kod üretiyor; bu genel sayılmaz mı? Bazı uzmanlar bu yüzden dar ile genel arasına ara basamaklar koyar. Tabloda üç basamak var; gerçek dünyada muhtemelen sürekli bir eğim. Basamak, konuşmayı kolaylaştıran bir sadeleştirme.
+Bir sohbet modeli hem şiir yazıyor hem kod üretiyor; ağırlıkları sabitken bile bağlamdaki yönerge ve örneklerle yeni bir göreve uyarlanabiliyor (Brown vd., 2020). Bu genel sayılmaz mı? Bazı uzmanlar bu yüzden dar ile genel arasına ara basamaklar koyar; insan düzeyinde genel zekâ için herkesin kabul ettiği bir ölçüt yoktur. Tabloda üç basamak var; gerçek dünyada muhtemelen sürekli bir eğim. Basamak, konuşmayı kolaylaştıran bir sadeleştirme.
 
 *Ne oluyor?* Yetenek üç basamakta düşünülür: dar YZ tek bir işte iyidir (bugün buradayız); genel YZ (AGI) insan gibi her alanda öğrenebilir (henüz yok, tartışmalı); süper zekâ ise her alanda insanı kat kat aşar (şimdilik hayal). Her işi yapabilmek ile bilinçli olmak ayrı şeylerdir.
 
@@ -151,7 +151,7 @@ AGI’nin gelip gelmeyeceği ve ne zaman geleceği konusunda uzman görüşleri 
 
 Kademeler arasında tanımlı bir eşik yoktur; ilk kademeden ikinciye geçildiğini kimse tek bir ölçütle ilan edemez.
 
-Şekil 8.3’teki çubuk uzunlukları (30, 70, 100) gösterimin kodundan gelir; aralarındaki oran bir ölçüme dayanmaz. Ölçüm sorunu gerçektir: bir sistem yüzlerce görevde insan ortalamasını geçebilir ve yine de yeni bir alana aktarım yapamayabilir. Bu yüzden AGI tartışmalarında “hangi görev listesi?” ve “aktarım nasıl ölçülür?” soruları, tarih tahminlerinden daha verimlidir.
+Şekil 8.3’teki çubuk uzunlukları (30, 70, 100) gösterimin kodundan gelir; aralarındaki oran bir ölçüme dayanmaz, AGI’ye kalan mesafeyi göstermez. Ölçüm sorunu gerçektir: bir sistem yüzlerce görevde insan ortalamasını geçebilir ve yine de yeni bir alana aktarım yapamayabilir. Bu yüzden AGI tartışmalarında “hangi görev listesi?” ve “aktarım nasıl ölçülür?” soruları, tarih tahminlerinden daha verimlidir.
 
 Üçüncü basamağa nasıl çıkılır, hatta çıkılabilir mi? Bu, zekânın zamanla nasıl büyüdüğüne bağlı.
 
@@ -206,24 +206,24 @@ Bir yapay zekâ bir zarara yol açarsa kim sorumlu olur? Onu yapan şirket mi, k
 
 Bir senaryo seç ve sorumluluğu kime vereceğini işaretle. Sonra yaygın hukuki/etik görüşü gör ve haklar tartışmasındaki farklı duruşları değerlendir.
 
-> **Kenar notu.** Kitabın sonuna geldik. Belki en önemli ders: yapay zekânın geleceğini teknoloji değil, onu hangi değerlerle kurup kullandığımız belirleyecek. O gelecek üzerinde söz hakkın var.
+> **Kenar notu.** Kitabın sonuna geldik. Bu kitabın tutumu açık: insanın karar gücünü artıran ve sonuçları denetlenebilen kullanımları savunuyor. Yapay zekânın geleceğini teknoloji tek başına belirlemeyecek; onu hangi değerlerle kurup kullandığımız da belirleyecek. O gelecek üzerinde söz hakkın var.
 
 **Şekil 8.5 · Sorumluluk kimde?**
 ![Şekil 8.5](../../figures/out/tr/sekil-8-5-responsibility.svg)
 
-*Kurulum.* Şekilde üç senaryo kartı ve dört taraf var: üretici/geliştirici, işleten kurum, son kullanıcı ve YZ’nin kendisi. Her senaryo için doğru tarafın hücresini işaretlemen bekleniyor. Karşılığında yaygın görüş gelecek: bugünkü hukuk ve etik tartışmasında ağır basan cevap. Doğru burada bugünkü uzlaşı anlamına geliyor.
+*Kurulum.* Şekilde üç senaryo kartı ve dört taraf var: üretici/geliştirici, işleten kurum, son kullanıcı ve YZ’nin kendisi. Her senaryo için ilk incelenecek tarafın hücresini işaretlemen bekleniyor. Karşılığında yaygın görüş gelecek: bugünkü hukuk ve etik tartışmasında ağır basan cevap. Bu bir hukuk hükmü değil; sorumluluk çoğu olayda paylaşılır ve sonuç ülkeye, kusura ve sözleşmeye bağlıdır.
 
-*Kendini sına.* Her senaryo için sorumluluğu bir tarafa ver ve bir cümleyle gerekçelendir. Yaygın görüş ve gerekçesi kitabın sonunda.
+*Kendini sına.* Her senaryo için ilk incelenecek tarafı seç ve bir cümleyle gerekçelendir; başka kimin payı olabilir, onu da not et. Yaygın görüş ve gerekçesi kitabın sonunda.
 
 1. Sürücüsüz bir araç, üreticinin yazılım hatası yüzünden kaza yapar.
 2. Bir kurum, YZ tavsiyesini kör biçimde uygulayıp müşteriye zarar verir.
-3. Bir kullanıcı, bir YZ aracını kasıtlı olarak sahte içerik üretmek için kullanır.
+3. Bir kullanıcı, birini aldatmak ya da zarara uğratmak için bir YZ aracıyla sahte kanıt üretir.
 
 Taraflar: (a) Üretici / geliştirici, (b) İşleten kurum, (c) Son kullanıcı, (d) YZ’nin kendisi.
 
-Karar verirken üç soru sor: zarara giden zincirde kararı kim verdi? Kim denetleyebilirdi ama denetlemedi? Niyet kimdeydi? Dördüncü taraf için bir soru yeter: bir yazılımı mahkemeye çıkarıp ceza verebilir misin, cezadan ne anlar? Bugün hukuk buna hayır diyor; sorumluluk zincirin insan halkalarında toplanıyor. Senaryolar bilerek temiz tutuldu. Gerçek olaylarda üç insan taraf da bir parça sorumlu çıkar; pay kavgası mahkemelerde yıllarca sürer.
+Karar verirken üç soru sor: zarara giden zincirde kararı kim verdi? Kim denetleyebilirdi ama denetlemedi? Niyet kimdeydi? Dördüncü taraf için bir soru yeter: bir yazılımı mahkemeye çıkarıp ceza verebilir misin, cezadan ne anlar? Bugün hukuk buna hayır diyor; sorumluluk zincirin insan halkalarında toplanıyor. Senaryolar bilerek temiz tutuldu. Gerçek olaylarda üç insan taraf da bir parça sorumlu çıkabilir; pay kavgası mahkemelerde yıllarca sürer. Sahte içerik üretmek tek başına zarar ya da kötü niyet demek değildir; kurgu ve sanat da sentetiktir. Üçüncü senaryoyu ayıran, aldatma ve zarar amacı.
 
-Haklar sorusunun ise senaryosu yok, çünkü henüz olayı yok. Bugün iki ana duruş var. Biri, haklar için bir tür deneyim ya da bilinç gerektiğini söyler; bugünkü sistemlerde bu yok, dolayısıyla soru erken. Öteki, emin olmadığımız yerde ihtiyatlı davranmayı önerir; sonradan haksızlık etmiş çıkmaktansa şimdiden dikkatli olmak daha iyi. İki duruş da bilinç sorusuna dayanıyor ve o soru bu kitabın hiçbir bölümünde çözülmedi. Çözülmemesi normal; kimse çözmedi.
+Haklar sorusunun ise senaryosu yok, çünkü henüz olayı yok. Bugün iki ana duruş var. Biri, haklar için öznel deneyim (haz ve acı duyabilme) ya da bilinç gerektiğini söyler; bugünkü sistemlerde bu yok, dolayısıyla soru erken. Öteki, emin olmadığımız yerde ihtiyatlı davranmayı önerir; sonradan haksızlık etmiş çıkmaktansa şimdiden dikkatli olmak daha iyi. İki duruş da bilinç sorusuna dayanıyor ve o soru bu kitabın hiçbir bölümünde çözülmedi. Çözülmemesi normal; kimse çözmedi.
 
 *Ne oluyor?* Bir zarar olduğunda sorumluluk bugün neredeyse her zaman insanlara ve kurumlara verilir: geliştiren, işleten ve kullanan. “YZ’nin kendisini” hukuken sorumlu tutmak yaygın bir görüş değil. Makinelerin bir gün hak sahibi olup olamayacağı ise bambaşka ve hâlâ açık bir sorudur.
 
@@ -233,11 +233,11 @@ Haklar sorusunun ise senaryosu yok, çünkü henüz olayı yok. Bugün iki ana d
 
 Sorumluluk (accountability) bugün ezici biçimde insanlara ve kurumlara atfedilir: tasarım, dağıtım ve kullanım kararlarını insanlar verir; “YZ’nin kendisi”ne hukuki sorumluluk yüklemek hâkim görüş değildir. Sorumluluk genelde paylaşılır ve bağlama bağlıdır (geliştirici, işleten, kullanıcı, düzenleyici).
 
-YZ’nin ahlaki statüsü ayrı ve tartışmalı bir sorudur: bazıları statünün duyarlılık/bilinç (sentience) gerektirdiğini ve mevcut sistemlerde bunun bulunmadığını savunur; bazıları ihtiyatlılık ilkesini öne sürer. Bu, hem ampirik (bilinç var mı?) hem normatif (olsa ne borçluyuz?) bir sorudur ve açıktır.
+YZ’nin ahlaki statüsü ayrı ve tartışmalı bir sorudur: bazıları statünün öznel deneyim yaşayabilme kapasitesi (sentience), yani haz ve acı duyabilme gerektirdiğini ve mevcut sistemlerde bunun bulunmadığını savunur; bazıları ihtiyatlılık ilkesini öne sürer. Bu, hem ampirik (bilinç var mı?) hem normatif (olsa ne borçluyuz?) bir sorudur ve açıktır. Zekâ, bilinç ve öz farkındalık burada birbirinin yerine kullanılmaz.
 
 Sorumluluk ve haklar iki ayrı sorudur; ilki bugün hukukun, ikincisi henüz felsefenin masasında.
 
-Şekil 8.5’teki üç senaryo, sorumluluğun üç ayrı kaynağını temsil eder: kusur (tasarım hatası), ihmal (denetimsiz kullanım) ve kasıt (kötüye kullanım). Hukuk sistemleri bu üçünü farklı kurumlarla karşılar: ürün sorumluluğu, özen yükümlülüğü ve ceza hukuku. Dördüncü taraf bu çerçevelerin hiçbirine oturmaz; çünkü sorumluluk, yaptırımın anlamlı olduğu bir özne gerektirir.
+Şekil 8.5’teki üç senaryo, sorumluluğun üç ayrı kaynağını temsil eder: kusur (tasarım hatası), ihmal (denetimsiz kullanım) ve kasıt (kötüye kullanım). Hukuk sistemleri bu üçünü farklı kurumlarla karşılar: ürün sorumluluğu, özen yükümlülüğü ve ceza hukuku; hangisinin uygulanacağı ülkeye, kusura ve sözleşmeye bağlıdır ve aynı olayda birden çok taraf pay alabilir. Dördüncü taraf bu çerçevelerin hiçbirine oturmaz; çünkü sorumluluk, yaptırımın anlamlı olduğu bir özne gerektirir.
 
 Kitap burada bitiyor, soruları bitmiyor. Son altı soru.
 
@@ -254,7 +254,7 @@ Kitap burada bitiyor, soruları bitmiyor. Son altı soru.
    a) İnternetin güvenliğini
    b) Bilgisayar hızını
    c) Sembol işlemenin tek başına “anlama” doğurup doğurmadığını
-   d) Çince’nin zorluğunu
+   d) Çincenin zorluğunu
 
 3. Bugünkü yapay zekâ hangi düzeydedir?
    a) AGI
@@ -262,7 +262,7 @@ Kitap burada bitiyor, soruları bitmiyor. Son altı soru.
    c) Süper zekâ
    d) Dar YZ
 
-4. Tekillik için en dengeli duruş hangisidir?
+4. Tekillik için bu kitapta savunulan temkinli yaklaşım hangisidir?
    a) Zaten oldu
    b) Kesinlikle yarın olacak
    c) Tamamen imkânsız
@@ -285,10 +285,10 @@ Kitap burada bitiyor, soruları bitmiyor. Son altı soru.
 - Anlama, yetenek ve bilinç üç ayrı sorudur; birini cevaplamak ötekini cevaplamaz.
 - Turing testi davranışa bakar: yazışmada ayırt edilemeyen makine testi geçer, ama akıcı taklit anlama demek değildir.
 - Çince Oda, kuralla sembol eşleştirmenin anlamayı doğurmadığını savunur; anlamanın kişide mi, sistemde mi olduğu hâlâ tartışmalıdır.
-- Bugünkü her yapay zekâ dardır; genel YZ varsayımsal, süper zekâ kuramsaldır ve genel olmak bilinçli olmak demek değildir.
+- Bugünkü yapay zekâ dar sayılır; birçok görevde çalışsa da genel zekâ için uzlaşılmış ölçüt yoktur, süper zekâ kuramsaldır ve genel olmak bilinçli olmak demek değildir.
 - Tekillik ne kesin ne imkânsız; hangi eğride olduğumuz ancak geriye bakınca belli olur.
 - Bir zarar olduğunda sorumluluk bugün insanlara ve kurumlara düşer: geliştiren, işleten, kullanan.
-- Makinelerin hakları bilinç sorusuna bağlı ve o soru açık; geleceği ise teknolojiden çok onu kuran değerler belirleyecek.
+- Makinelerin hakları bilinç sorusuna bağlı ve o soru açık; geleceği teknoloji kadar onu kuran değerler de belirleyecek, kitabın tutumu bu.
 
 <!-- SOURCE-CHANGES
 Yolculuğun sonuna geldik. Bir makinenin nasıl “düşündüğünü” öğrendik; şimdi sıra en eski ve en zor sorularda. Bir makine gerçekten anlayabilir mi, yoksa yalnızca anlıyormuş gibi mi yapar? Bizden daha zeki bir yapay zekâ mümkün mü; mümkünse ne zaman? Ya da bir gün makineler bilinç kazanırsa, hakları olur mu? ||| Son bölümdeyiz. Bir makinenin nasıl “düşündüğünü” öğrendik; şimdi sıra en eski ve en zor sorularda. Bir makine gerçekten anlayabilir mi, yoksa yalnızca anlıyormuş gibi mi yapar? Bizden daha zeki bir yapay zekâ mümkün mü; mümkünse ne zaman? Ya da bir gün makineler bilinç kazanırsa, hakları olur mu?
@@ -301,6 +301,12 @@ Fikir şu: bir YZ kendini geliştirebilirse daha iyi bir sürümünü yapar, o d
 Tekillik hipotezi, özyinelemeli özgelişimin üstel bir “zekâ patlamasına” yol açabileceğini öne sürer; güçlü eleştiriler de vardır (azalan getiriler; veri, enerji, fizik sınırları). Kanıtlanmış bir kehanet değil, ciddiye alınması gereken ama belirsiz bir senaryodur. ||| Lehte ve aleyhte argümanlar aynı veriye bakıp farklı eğri görür; ayrım, hangi sınırın önce geleceğine dair varsayımdadır.
 Kitabın sonuna geldik. Belki en önemli ders şu: yapay zekânın geleceğini “teknoloji” değil, onu hangi değerlerle kurup kullandığımız belirleyecek. O gelecek üzerinde söz hakkın var. 🌱 ||| Kitabın sonuna geldik. Belki en önemli ders: yapay zekânın geleceğini teknoloji değil, onu hangi değerlerle kurup kullandığımız belirleyecek. O gelecek üzerinde söz hakkın var.
 Sorumluluk bugün ezici biçimde insanlara ve kurumlara atfedilir (geliştirici, işleten, kullanıcı); “YZ’nin kendisi”ne hukuki sorumluluk yüklemek hâkim görüş değildir. YZ’nin ahlaki statüsü (haklar) ise ayrı ve açık bir sorudur. ||| Sorumluluk ve haklar iki ayrı sorudur; ilki bugün hukukun, ikincisi henüz felsefenin masasında.
+Modern büyük dil modelleri, kısa ve sıradan sohbetlerde testin gevşek sürümlerini geçebiliyor; bu, “düşünme” tartışmasını bitirmek yerine soruyu “ölçüt ne olmalı?”ya kaydırdı. Test bir başarım ölçütünden çok tarihsel/kavramsal bir kilometre taşıdır. ||| Bazı modeller belirli Turing testi deneylerinde insan katılımcılardan ayırt edilemedi (Jones ve Bergen, 2025). Bu sonuç kullanılan model, istem ve deney düzenine bağlıdır; bilinç ya da genel zekâ kanıtı değildir. Bu, “düşünme” tartışmasını bitirmek yerine soruyu “ölçüt ne olmalı?”ya kaydırdı. Test bir başarım ölçütünden çok tarihsel/kavramsal bir kilometre taşıdır.
+Bugünkü her yapay zekâ “dar”dır: tek bir işte (satranç, çeviri, görüntü) çok iyidir ama o işin dışına çıkamaz. Bir sonraki basamak, insan gibi her alanda öğrenip uyum sağlayabilen genel yapay zekâ (AGI). Onun da ötesinde, her alanda insanı kat kat aşan bir süper zekâ hayal ediliyor. ||| Bugünkü yapay zekâ “dar” sayılır: bir işte (satranç, çeviri, görüntü) çok iyidir; birçok görevde çalışan sohbet modelleri bile insan düzeyinde genel öğrenme göstermez. Bir sonraki basamak, insan gibi her alanda öğrenip uyum sağlayabilen genel yapay zekâ (AGI). Onun da ötesinde, her alanda insanı kat kat aşan bir süper zekâ hayal ediliyor.
+YZ’nin ahlaki statüsü ayrı ve tartışmalı bir sorudur: bazıları statünün duyarlılık/bilinç (sentience) gerektirdiğini ve mevcut sistemlerde bunun bulunmadığını savunur; bazıları ihtiyatlılık ilkesini öne sürer. Bu, hem ampirik (bilinç var mı?) hem normatif (olsa ne borçluyuz?) bir sorudur ve açıktır. ||| YZ’nin ahlaki statüsü ayrı ve tartışmalı bir sorudur: bazıları statünün öznel deneyim yaşayabilme kapasitesi (sentience), yani haz ve acı duyabilme gerektirdiğini ve mevcut sistemlerde bunun bulunmadığını savunur; bazıları ihtiyatlılık ilkesini öne sürer. Bu, hem ampirik (bilinç var mı?) hem normatif (olsa ne borçluyuz?) bir sorudur ve açıktır. Zekâ, bilinç ve öz farkındalık burada birbirinin yerine kullanılmaz.
+Kitabın sonuna geldik. Belki en önemli ders: yapay zekânın geleceğini teknoloji değil, onu hangi değerlerle kurup kullandığımız belirleyecek. O gelecek üzerinde söz hakkın var. ||| Kitabın sonuna geldik. Bu kitabın tutumu açık: insanın karar gücünü artıran ve sonuçları denetlenebilen kullanımları savunuyor. Yapay zekânın geleceğini teknoloji tek başına belirlemeyecek; onu hangi değerlerle kurup kullandığımız da belirleyecek. O gelecek üzerinde söz hakkın var.
+Tekillik için en dengeli duruş hangisidir? ||| Tekillik için bu kitapta savunulan temkinli yaklaşım hangisidir?
+Çince’nin zorluğunu ||| Çincenin zorluğunu
 -->
 
 <!-- REDAKSİYON NOTLARI
@@ -317,4 +323,5 @@ Sorumluluk bugün ezici biçimde insanlara ve kurumlara atfedilir (geliştirici,
 - Yazar kararı (2026-09-10): kaynak metin dahil tüm "demo" sözcükleri "gösterim" ya da "Şekil N.j" yapıldı; "Aşağıdaki demo" → şekil öncesinde "Aşağıda yer alan gösterim (Şekil N.j)", sonrasında "Şekil N.j'teki gösterim".
 - Yazar kararı (2026-09-10, figürler): ekran renkleri (yeşil/kırmızı/mavi/mor) duotone baskıya göre 'koyu/gri' ve 'turuncu' yapıldı; figür düzeni tarifleri ('kendi rengi', 'yanında rolü', 'ok çekmen') figürlerle eşleştirildi.
 - 2026-09-30 insanlaştırma geçişi: humanize-tr-report.md bulguları uygulandı (yolculuk, Peki/Cevap köprüleri, "tam da/işte", "Şimdi …" açılışları, numaralı gözlem şablonları, "Bir de şunu fark et", kenar notu göndermeleri, "Dürüst cevap", emoji, punchline'lar; "X değil, Y" seyreltildi, kavram tırnakları azaltıldı; "kanıtlanmış kehanet değil…" 4→1 (teknik), "genel ≠ bilinçli" 6→3). Teknik "Ne oluyor" paragraflarının beşi de ilk teknik paragrafı tekrar ediyordu; tekrar etmeyen tek cümleyle değiştirildi (8.2–8.6). "Kalanlar"daki klişe madde ("iyi bir soru sormak…") içerik maddesiyle değiştirildi (7 madde, EN ile eşit). Kaynak paragraf değişiklikleri SOURCE-CHANGES bloğunda; dijital sürüme taşınacak.
+- 2026-10-01 düzeltme belgesi (R059–R063, R067, R069, R092): Turing testi iddiası belirli deneye bağlandı (Jones ve Bergen, 2025; kaynakçaya eklendi); Şekil 8.1 yazışmalar kurgusal, hız ölçütü kalktı (tablo "anlık" düşürüldü), cevaplar "kurgudaki rol" diye verildi, kesin tanı yok; Çince Oda: kurala uygunluk ≠ doğruluk, ağırlıklar ≠ cevap tablosu (basit 8.3 ve teknik paragraf); 8.4 "o işin dışına çıkamaz" → çok görevli modeller ve bağlam içi uyum (Brown vd., 2020; kaynakçaya eklendi), AGI ölçütü yok; Şekil 8.3 çubuk uyarısı korunup güçlendirildi; Şekil 8.5 "doğru taraf" → "ilk incelenecek taraf", paylaşılan sorumluluk, senaryo 3 "aldatmak ya da zarara uğratmak için sahte kanıt" (figür dizgisi figür ajanında; dijital demo çoklu seçime geçiyor); "duyarlılık/bilinç (sentience)" → "öznel deneyim yaşayabilme kapasitesi (sentience), yani haz ve acı duyabilme"; 8.6 kenar notu kitabın tutumunu açıkça tutum olarak söylüyor, "teknoloji değil … belirleyecek" yumuşatıldı; sınav 4 "en dengeli duruş" → "bu kitapta savunulan temkinli yaklaşım" (şık sırası aynı); "Çince’nin" → "Çincenin". Dijitale giden paragraflar SOURCE-CHANGES'ta.
 -->

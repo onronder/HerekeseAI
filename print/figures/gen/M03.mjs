@@ -1,5 +1,5 @@
 // Bölüm 3 figürleri
-import { INK, INK2, MUTED, RULE, EMBER, PAPER, SANS, MONO, SERIF, f1, text, rect, line, circle, svg, caption } from '../lib.mjs';
+import { INK, INK2, MUTED, RULE, EMBER, PAPER, SANS, MONO, SERIF, f1, text, rect, line, circle, svg, caption, tw as twLib, wrapW } from '../lib.mjs';
 import STRINGS from '../strings/M03.mjs';
 
 // ---------------------------------------------------------------- 2. Gradyan inişi: iki panel + adım tablosu
@@ -32,13 +32,34 @@ function descentPanel(ox, oy, w, h, steps, title, S) {
       b.push(line(px(p.x), py(p.L), px(s.x), py(s.L), { stroke: EMBER, sw: 0.8, marker: true }));
     }
   });
-  let last = null;
-  steps.forEach((s, i) => {
-    b.push(circle(px(s.x), py(s.L), 3.2, { fill: i === 0 ? '#fff' : EMBER, stroke: EMBER, sw: 1 }));
-    const X = px(s.x), Y = py(s.L);
-    if (last && Math.hypot(X - last[0], Y - last[1]) < 9 && i !== steps.length - 1) return; // sık noktalarda etiket atla
-    last = [X, Y];
-    b.push(text(X + (s.x < 5 ? -6 : 6), Y - 4, s.i, { font: MONO, size: 6.5, fill: INK2, anchor: s.x < 5 ? 'end' : 'start' }));
+  steps.forEach((s, i) => b.push(circle(px(s.x), py(s.L), 3.2, { fill: i === 0 ? '#fff' : EMBER, stroke: EMBER, sw: 1 })));
+  // R073: adım numaraları çakışmasın — engeller: noktalar, eğri örnekleri, adım okları, eksen yazısı, önceki etiketler.
+  // Her etiket için nokta çevresinde 8 yön × 3 yarıçap denenir; ilk çakışmasız konum alınır (uzak konumda ince çağrı çizgisi).
+  const obst = steps.map((s) => ({ x: px(s.x) - 4, y: py(s.L) - 4, w: 8, h: 8 }));
+  for (let x = 0; x <= 10; x += 0.2) obst.push({ x: px(x) - 1, y: py(Lf(x)) - 1, w: 2, h: 2 });
+  steps.forEach((s, i) => { if (!i) return; const p = steps[i - 1], X1 = px(p.x), Y1 = py(p.L), X2 = px(s.x), Y2 = py(s.L), n = Math.ceil(Math.hypot(X2 - X1, Y2 - Y1) / 3);
+    for (let k = 0; k <= n; k++) obst.push({ x: X1 + (X2 - X1) * k / n - 1, y: Y1 + (Y2 - Y1) * k / n - 1, w: 2, h: 2 }); });
+  obst.push({ x: ox + 2, y: oy + 12, w: tw(`${S.descent.loss} L(x)`, 6, true), h: 7 }); // eksen yazısı
+  obst.push({ x: ox + 14, y: oy + h - 16, w: w - 24, h: 20 }); // taban çizgisi ve en düşük nokta etiketi
+  const hit = (bx) => obst.some((o) => bx.x < o.x + o.w && bx.x + bx.w > o.x && bx.y < o.y + o.h && bx.y + bx.h > o.y);
+  const DIRS = [[-1, -1], [1, -1], [-1, 1], [1, 1], [0, -1], [-1, 0], [1, 0], [0, 1]];
+  steps.forEach((s) => {
+    const X = px(s.x), Y = py(s.L), lw = tw(String(s.i), 6.5, true), lh = 6.5;
+    let best = null;
+    for (const rad of [7, 12, 17]) {
+      for (const [dx, dy] of DIRS) {
+        const cx = X + dx * rad, cy = Y + dy * rad; // etiket merkezi
+        const bx = { x: cx - lw / 2, y: cy - lh / 2, w: lw, h: lh };
+        if (bx.x < ox || bx.x + bx.w > ox + w || bx.y < oy + 10 || hit(bx)) continue;
+        best = { bx, cx, cy, rad }; break;
+      }
+      if (best) break;
+    }
+    if (!best) { const cx = X, cy = Y - 9; best = { bx: { x: cx - lw / 2, y: cy - lh / 2, w: lw, h: lh }, cx, cy, rad: 9 }; }
+    if (best.rad > 7) { const d = Math.hypot(best.cx - X, best.cy - Y), ux = (best.cx - X) / d, uy = (best.cy - Y) / d;
+      b.push(line(X + ux * 4, Y + uy * 4, X + ux * (best.rad - 4), Y + uy * (best.rad - 4), { stroke: INK2, sw: 0.4 })); }
+    b.push(text(best.cx, best.cy + 2.3, s.i, { font: MONO, size: 6.5, fill: INK2, anchor: 'middle' }));
+    obst.push({ ...best.bx, x: best.bx.x - 1, w: best.bx.w + 2 });
   });
   return b.join('\n');
 }
@@ -60,26 +81,18 @@ function descentFigure(demo, { lang }) {
 }
 
 // ---------------------------------------------------------------- ortak küçük yardımcılar (bu dosya)
-// Kaba metin genişliği kestirimi (pt) ve kelime sarma: SANS için ~0.5·boyut, MONO için ~0.6·boyut.
-const tw = (s, size, mono = false) => s.length * size * (mono ? 0.6 : 0.5);
-function wrap(s, size, maxW, mono = false) {
-  const out = []; let cur = '';
-  for (const w of String(s).split(/\s+/)) {
-    const cand = cur ? cur + ' ' + w : w;
-    if (cur && tw(cand, size, mono) > maxW) { out.push(cur); cur = w; } else cur = cand;
-  }
-  if (cur) out.push(cur);
-  return out;
-}
+// Metin genişliği ve kelime sarma: lib.mjs (ölçülmüş Work Sans / Space Mono glif genişlikleri; 2026-10-01).
+const tw = (s, size, mono = false) => twLib(s, size, mono ? 'mono' : 'sans');
+const wrap = (s, size, maxW, mono = false) => wrapW(s, size, maxW, mono ? 'mono' : 'sans');
 // Beyaz zeminli, ince çerçeveli çizim alanı (ekrandaki "background:#fff;border:1px" kutusunun kâğıt hâli).
 const plotBox = (x, y, w, h) => rect(x, y, w, h, { fill: '#fff', stroke: RULE, sw: 0.6 });
 // Işık eksen çizgileri + tik etiketleri. mx/my: veri→kâğıt dönüşümü; xt/yt: tik değerleri.
 function axes(x, y, w, h, mx, my, xt, yt) {
   const b = [line(x, y + h, x + w, y + h, { stroke: RULE, sw: 0.6 }), line(x, y, x, y + h, { stroke: RULE, sw: 0.6 })];
   xt.forEach((v) => b.push(line(mx(v), y + h, mx(v), y + h + 2, { stroke: MUTED, sw: 0.5 }),
-    text(mx(v), y + h + 7.5, v, { font: MONO, size: 5, fill: MUTED, anchor: 'middle' })));
+    text(mx(v), y + h + 7.5, v, { font: MONO, size: 6, fill: MUTED, anchor: 'middle' }))); // R082: tik etiketleri ≥ 6
   yt.forEach((v) => b.push(line(x - 2, my(v), x, my(v), { stroke: MUTED, sw: 0.5 }),
-    text(x - 3, my(v) + 1.8, v, { font: MONO, size: 5, fill: MUTED, anchor: 'end' })));
+    text(x - 3, my(v) + 1.8, v, { font: MONO, size: 6, fill: MUTED, anchor: 'end' })));
   return b.join('\n');
 }
 
@@ -87,12 +100,15 @@ function axes(x, y, w, h, mx, my, xt, yt) {
 // book.json demo.emails / demo.featureNames birebir. ✓ ve ○ font glifine bağlı kalmamak için çizilir.
 function spamFigure(demo, { lang }) {
   const S = STRINGS[lang], P = S.spam;
-  const F = demo.featureNames, E = demo.emails;
+  // R017: özellik adı tek tanım ("link veya şifre isteği") — strings spam.featureOverride (dizin → ad)
+  const F = demo.featureNames.map((nm, k) => (P.featureOverride && P.featureOverride[k]) || nm), E = demo.emails;
   const pad = 8, cNo = 12, cMail = 132, cF = 40, cLab = 40;
   const W = pad * 2 + cNo + cMail + cF * F.length + cLab; // 320
   const xNo = pad, xMail = xNo + cNo, xF = xMail + cMail, xLab = xF + cF * F.length;
-  const headH = 30, rowH = 24, groupH = 12;
-  const H = pad + groupH + headH + E.length * rowH + pad;
+  const headH = 30, groupH = 12;
+  const mailLines = E.map((e) => wrap(e.text, 7, cMail - 8)), rowHs = mailLines.map((l) => Math.max(24, l.length * 8.5 + 7));
+  const rowsH = rowHs.reduce((a, b) => a + b, 0);
+  const H = pad + groupH + headH + rowsH + pad;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
   // grup başlıkları (ekrandaki iki kutu başlığı)
   const gy = pad + 7;
@@ -100,8 +116,8 @@ function spamFigure(demo, { lang }) {
   body.push(caption(W - pad, gy, P.groupOut, { size: 6, spacing: 0.6, anchor: 'end' }));
   // sütun başlıkları
   const hy = pad + groupH;
-  body.push(rect(xF, hy, cF * F.length, headH + E.length * rowH, { fill: '#fff', stroke: RULE, sw: 0.6 }));
-  body.push(rect(xLab, hy, cLab, headH + E.length * rowH, { fill: '#fff', stroke: RULE, sw: 0.6 }));
+  body.push(rect(xF, hy, cF * F.length, headH + rowsH, { fill: '#fff', stroke: RULE, sw: 0.6 }));
+  body.push(rect(xLab, hy, cLab, headH + rowsH, { fill: '#fff', stroke: RULE, sw: 0.6 }));
   body.push(text(xNo + cNo / 2, hy + headH - 6, '#', { font: MONO, size: 6, fill: INK2, anchor: 'middle' }));
   body.push(text(xMail + 4, hy + headH - 6, P.email, { font: MONO, size: 6, fill: INK2 }));
   F.forEach((nm, k) => {
@@ -111,11 +127,13 @@ function spamFigure(demo, { lang }) {
   body.push(text(xLab + cLab / 2, hy + headH - 6, P.label, { font: MONO, size: 6, fill: INK2, anchor: 'middle' }));
   body.push(line(xNo, hy + headH, W - pad, hy + headH, { stroke: INK, sw: 0.7 }));
   // satırlar
+  let rowY = hy + headH;
   E.forEach((e, i) => {
-    const y0 = hy + headH + i * rowH, cy = y0 + rowH / 2;
+    const rowH = rowHs[i], y0 = rowY, cy = y0 + rowH / 2;
+    rowY += rowH;
     if (i > 0) body.push(line(xNo, y0, W - pad, y0, { stroke: RULE, sw: 0.5 }));
     body.push(text(xNo + cNo / 2, cy + 2.5, i + 1, { font: MONO, size: 7, fill: INK2, anchor: 'middle' }));
-    const lines = wrap(e.text, 7, cMail - 8);
+    const lines = mailLines[i];
     lines.forEach((ln, j) => body.push(text(xMail + 4, cy + 2.5 + (j - (lines.length - 1) / 2) * 8.5, ln, { size: 7 })));
     e.features.forEach((on, k) => {
       const cx = xF + cF * k + cF / 2;
@@ -235,10 +253,12 @@ function kmeansFigure(demo, { lang }) {
   body.push(caption(L1, pad + 7, K.before), caption(L2, pad + 7, K.after));
   body.push(panel(L1, r1, false), panel(L2, r1, true));
   // gösterge
-  const ly = H - 3, lx = L2 + 14;
-  body.push(circle(lx, ly - 2, 2.4, { fill: INK }), text(lx + 5, ly, K.clusterA, { font: MONO, size: 5.5, fill: INK2 }));
-  body.push(circle(lx + 40, ly - 2, 2.4, { fill: EMBER }), text(lx + 45, ly, K.clusterB, { font: MONO, size: 5.5, fill: INK2 }));
-  body.push(circle(lx + 80, ly - 2, 2.6, { fill: '#fff', stroke: EMBER, sw: 1.2 }), text(lx + 85, ly, K.outlier, { font: MONO, size: 5.5, fill: INK2 }));
+  const ly = H - 3; let lx = L2 + 6; // gösterge: aralıklar çizilen puntoyla (≥ 6.2) ölçülür (R082)
+  [[INK, null, K.clusterA], [EMBER, null, K.clusterB], ['#fff', EMBER, K.outlier]].forEach(([f, st, lab]) => {
+    body.push(st ? circle(lx, ly - 2, 2.6, { fill: f, stroke: st, sw: 1.2 }) : circle(lx, ly - 2, 2.4, { fill: f }));
+    body.push(text(lx + 5, ly, lab, { font: MONO, size: 5.5, fill: INK2 }));
+    lx += 5 + twLib(lab, 6.2, 'mono') + 8;
+  });
   body.push(text(L1, ly, K.centroid, { font: MONO, size: 5.5, fill: INK2 }));
   const md = [`# ${S.common.table} — ${demo.title}`, '', K.md.centers(KM_C[0], KM_C[1]), '',
     K.md.head, '|---|---|---|---|---|',
@@ -253,11 +273,16 @@ const MF_FN = {
   under: (x) => 3.1 - 0.18 * x,
   good: (x) => 3.0 - 0.16 * x + 0.15 * Math.sin(x * 0.6),
 };
+// R024 (2026-10-01): "İyi (dengeli)" paneli "Daha düzgün temsili eğri" diye etiketlenir (strings modelfit.labelOverride, kind → etiket; '\n' satır böler).
 function modelfitFigure(demo, { lang }) {
   const S = STRINGS[lang], M = S.modelfit;
-  const pad = 6, n = demo.fits.length, gap = 8, pw = Math.floor((320 - pad * 2 - gap * (n - 1)) / n), ph = 74, cap = 10;
+  const labelOf = (f) => (M.labelOverride && M.labelOverride[f.kind]) || f.label;
+  const labels = demo.fits.map((f) => String(labelOf(f)).split('\n'));
+  const capLines = Math.max(...labels.map((l) => l.length));
+  const pad = 6, n = demo.fits.length, gap = 8, pw = Math.floor((320 - pad * 2 - gap * (n - 1)) / n), ph = 74, cap = 2 + capLines * 8.5;
   const vSize = 6.3, vLine = 8;
-  const verdicts = demo.fits.map((f) => wrap(f.verdict, vSize, pw - 2));
+  const verdictOf = (f) => (M.verdictOverride && M.verdictOverride[f.kind]) || f.verdict;
+  const verdicts = demo.fits.map((f) => wrap(verdictOf(f), vSize, pw - 2));
   const vRows = Math.max(...verdicts.map((v) => v.length));
   const W = pad * 2 + pw * n + gap * (n - 1), H = pad + cap + ph + 8 + vRows * vLine + pad;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
@@ -265,7 +290,7 @@ function modelfitFigure(demo, { lang }) {
     const ox = pad + i * (pw + gap), oy = pad + cap;
     const x0 = ox + 10, y0 = oy, w = pw - 12, h = ph - 10;
     const mx = (x) => x0 + (x / 10) * w, my = (y) => y0 + h - (y / 4) * h;
-    body.push(caption(ox, pad + 7, f.label));
+    labels[i].forEach((ln, k) => body.push(caption(ox, pad + 7 + k * 8.5, ln)));
     body.push(plotBox(x0, y0, w, h), axes(x0, y0, w, h, mx, my, [0, 5, 10], [0, 2, 4]));
     let d = '';
     if (f.kind === 'over') MF_P.forEach((p, j) => { d += (j ? 'L' : 'M') + f1(mx(p[0])) + ' ' + f1(my(p[1])) + ' '; });
@@ -278,7 +303,7 @@ function modelfitFigure(demo, { lang }) {
   const md = [`# ${S.common.table} — ${demo.title}`, '', M.md.head, '|---|---|---|---|---|',
     ...MF_P.map((p) => `| ${p[0]} | ${p[1]} | ${MF_FN.under(p[0]).toFixed(2)} | ${MF_FN.good(p[0]).toFixed(2)} | ${p[1]} |`), '',
     M.md.sse(sse(MF_FN.under).toFixed(2), sse(MF_FN.good).toFixed(2)), '',
-    ...demo.fits.map((f) => `- ${f.label}: ${f.verdict}`), ''].join('\n');
+    ...demo.fits.map((f) => `- ${labelOf(f).replace('\n', ' ')}: ${verdictOf(f)}`), '', M.md.note, ''].join('\n');
   return [{ name: 'modelfit', svg: svg(W, H, body.join('\n')), md }];
 }
 

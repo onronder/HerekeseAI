@@ -2,7 +2,7 @@
 // Veri kaynağı: Atlas-Kitap.dc.html renderVals() (token 2153–2171, embed 2172–2194, attn 2195–2217, generate 2218–2244,
 // train 2245–2257, diffuse 2258–2280, ctx 2281–2298). Sayılar ve etiketler ekrandakiyle aynı; ekran renkleri (mor) → EMBER.
 // Görünen metin ve kelime dizileri strings/M05.mjs içinden (S = STRINGS[lang]); burada yalnız sayısal veri ve düzen kalır.
-import { INK, INK2, MUTED, RULE, EMBER, EMBER_SOFT, PAPER, SANS, MONO, SERIF, esc, f1, text, rect, line, circle, svg, caption, pct , up } from '../lib.mjs';
+import { MIN_TEXT, INK, INK2, MUTED, RULE, EMBER, EMBER_SOFT, PAPER, SANS, MONO, SERIF, esc, f1, text, rect, line, circle, svg, caption, pct, up, DEMO, wrapW } from '../lib.mjs';
 import STRINGS from '../strings/M05.mjs';
 
 // ---------------------------------------------------------------- ortak yardımcılar
@@ -103,14 +103,14 @@ function embedFigure(demo, { lang }) {
   // eksen çentikleri (tablodaki koordinatlar okunabilsin)
   for (let x = 50; x < mw; x += 50) {
     body.push(line(X(x), Y(mh), X(x), Y(mh) - 3, { stroke: RULE }));
-    body.push(text(X(x), Y(mh) + 7, x, { font: MONO, size: 5, fill: MUTED, anchor: 'middle' }));
+    body.push(text(X(x), Y(mh) + 7, x, { font: MONO, size: 6, fill: MUTED, anchor: 'middle' })); // R082: ≥ 6
   }
   for (let y = 50; y < mh; y += 50) {
     body.push(line(X(0), Y(y), X(0) + 3, Y(y), { stroke: RULE }));
-    body.push(text(X(0) - 2, Y(y) + 2, y, { font: MONO, size: 5, fill: MUTED, anchor: 'end' }));
+    body.push(text(X(0) - 2, Y(y) + 2, y, { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
   }
-  body.push(text(X(mw) - 2, Y(mh) + 7, 'x', { font: MONO, size: 5, fill: MUTED, anchor: 'end' }));
-  body.push(text(X(0) - 2, Y(0) + 6, 'y', { font: MONO, size: 5, fill: MUTED, anchor: 'end' }));
+  body.push(text(X(mw) - 2, Y(mh) + 7, 'x', { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
+  body.push(text(X(0) - 2, Y(0) + 6, 'y', { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
   // aile kümeleri: kesikli daire + aile adı (ekrandaki üç renk yerine)
   const fams = [...new Set(pts.map((p) => p.f))];
   fams.forEach((f) => {
@@ -166,8 +166,8 @@ function attnFigure(demo, { lang }) {
   const W = 320, ox = 10, oy = 10, lab = 52, cw = 44, ch = 20, hh = 18, sumW = 28;
   const body = [rect(0, 0, W, 0)];
   const gx = ox + lab, gy = oy + hh;
-  body.push(text(ox, gy - 6, S.attn.query, { font: MONO, size: 5.5, fill: MUTED }));
-  body.push(text(gx, oy + 5, S.attn.key, { font: MONO, size: 5.5, fill: MUTED }));
+  body.push(text(ox, gy - 6, S.attn.query, { font: MONO, size: 6, fill: MUTED })); // R082: ≥ 6
+  body.push(text(gx, oy + 5, S.attn.key, { font: MONO, size: 6, fill: MUTED }));
   toks.forEach((t, j) => body.push(text(gx + cw * j + cw / 2, gy - 5, t, { font: MONO, size: 6.5, fill: INK2, anchor: 'middle' })));
   body.push(text(gx + cw * n + sumW / 2, gy - 5, 'Σ', { font: MONO, size: 6.5, fill: MUTED, anchor: 'middle' }));
   const best = M.map((row) => row.indexOf(Math.max(...row)));
@@ -193,10 +193,13 @@ function attnFigure(demo, { lang }) {
     const x = ox + 46 + k * 22;
     body.push(rect(x, y - 1, 20, 8, { fill: '#fff' }));
     body.push(orect(x, y - 1, 20, 8, EMBER, v, { stroke: RULE, sw: 0.5 }));
-    body.push(text(x + 10, y + 13, v.toFixed(2), { font: MONO, size: 5, fill: MUTED, anchor: 'middle' }));
+    body.push(text(x + 10, y + 13, v.toFixed(2), { font: MONO, size: 6, fill: MUTED, anchor: 'middle' }));
   });
   y += 24;
-  body.push(text(ox, y + 5, S.attn.caption(toks[q], M[q][best[q]].toFixed(2), toks[best[q]]), { font: MONO, size: 6, fill: INK2 }));
+  // R038: kendi payı ve (kendisi hariç) en yüksek hücre; altyazı dizgisi iki durumu ayırır
+  const otherBest = M[q].reduce((bi, v, j) => (j !== q && v > M[q][bi] ? j : bi), q === 0 ? 1 : 0);
+  body.push(text(ox, y + 5, S.attn.caption(toks[q], M[q][best[q]].toFixed(2), toks[best[q]], M[q][q].toFixed(2), toks[otherBest], M[q][otherBest].toFixed(2)), { font: MONO, size: 6, fill: INK2 }));
+  for (const ln of S.attn.note) { y += 9; body.push(text(ox, y + 5, ln, { font: MONO, size: 6, fill: INK2 })); }
   y += 10;
   body.push(text(ox, y + 5, S.attn.legend, { font: MONO, size: 6, fill: MUTED }));
   const H = y + 14;
@@ -206,15 +209,24 @@ function attnFigure(demo, { lang }) {
   return [{ name: 'attn', svg: svg(W, H, body.join('\n')), md }];
 }
 
-// ---------------------------------------------------------------- 5.4 generate: iki film şeridi (düşük/yüksek sıcaklık) × 3 adım × 4 aday
-// Olasılıklar (%) dilden bağımsız; aday kelimeler S.generate.steps (aynı sırayla).
+// ---------------------------------------------------------------- 5.4 generate: iki film şeridi × 3 adım × 4 aday — R040 (2026-10-01)
+// Satır 1 açgözlü (argmax): mevcut demo olasılıkları p, her adımda en yüksek. Satır 2 örnekleme, T = 1.5: z = ln p, q = softmax(z/T),
+// seçim sabit tohumlu U dizisiyle ters-CDF (adım i → U[i mod 8]; ilk u < kümülatif). Kural ve U: print/kitap/qa/demo-data.json temp54.
 const GEN_P = [[42, 28, 18, 12], [38, 30, 20, 12], [50, 25, 15, 10]];
+function softmaxT(ps, T) { const z = ps.map((p) => Math.log(p)), m = Math.max(...z), e = z.map((v) => Math.exp((v - m) / T)), s = e.reduce((a, b) => a + b, 0); return e.map((v) => v / s); }
 function generateFigure(demo, { lang }) {
-  const S = STRINGS[lang];
+  const S = STRINGS[lang], TEMP = DEMO.temp54, T = TEMP.T_ornekleme, U = TEMP.U;
   const GEN_STEPS = GEN_P.map((ps, s) => ps.map((p, k) => [S.generate.steps[s][k], p]));
   const W = 320, pad = 10, fgap = 8, fw = (W - 2 * pad - 2 * fgap) / 3, bh = 7, bgap = 3.2, labW = 34, pctW = 16;
   const barMax = fw - labW - pctW - 8;
-  const rows = [{ title: S.generate.low, idx: 0 }, { title: S.generate.high, idx: 1 }];
+  // satır başına: her adımda gösterilen olasılıklar (%) ve seçilen aday dizini
+  const greedy = GEN_P.map((ps) => ({ q: ps, pick: ps.indexOf(Math.max(...ps)), u: null }));
+  const sampled = GEN_P.map((ps, si) => {
+    const q = softmaxT(ps, T), u = U[si % U.length]; let acc = 0, pick = q.length - 1;
+    for (let i = 0; i < q.length; i++) { acc += q[i]; if (u < acc) { pick = i; break; } }
+    return { q: q.map((v) => v * 100), pick, u, qExact: q };
+  });
+  const rows = [{ title: S.generate.greedy, runs: greedy }, { title: S.generate.sample(T), runs: sampled }];
   const body = [rect(0, 0, W, 0)];
   let y = pad;
   const sentences = [];
@@ -224,17 +236,18 @@ function generateFigure(demo, { lang }) {
     const picks = [];
     const fh = 10 + 4 * (bh + bgap) + 12;
     GEN_STEPS.forEach((cands, s) => {
-      const fx = pad + s * (fw + fgap), fy = y;
+      const fx = pad + s * (fw + fgap), fy = y, run = r.runs[s];
       body.push(rect(fx, fy, fw, fh, { fill: '#fff', stroke: RULE, sw: 0.6 }));
       body.push(caption(fx + 4, fy + 8, S.generate.step(s + 1)));
-      picks.push(cands[r.idx][0]);
-      const cmax = cands[0][1];
+      if (run.u != null) body.push(text(fx + fw - 4, fy + 8, `U = ${run.u.toFixed(2)}`, { font: MONO, size: 6, fill: EMBER, anchor: 'end' }));
+      picks.push(cands[run.pick][0]);
+      const cmax = Math.max(...run.q);
       cands.forEach((c, k) => {
-        const by = fy + 12 + k * (bh + bgap), chosen = k === r.idx;
+        const by = fy + 12 + k * (bh + bgap), chosen = k === run.pick, q = run.q[k];
         body.push(text(fx + labW, by + bh - 1.5, c[0], { size: 6.5, anchor: 'end', fill: chosen ? INK : INK2, weight: chosen ? 700 : 400 }));
         body.push(rect(fx + labW + 3, by, barMax, bh, { fill: '#efece4' }));
-        body.push(rect(fx + labW + 3, by, barMax * c[1] / cmax, bh, { fill: chosen ? EMBER : EMBER_SOFT }));
-        body.push(text(fx + labW + 3 + barMax + 3, by + bh - 1.5, pct(c[1], lang), { font: MONO, size: 5.5, fill: chosen ? EMBER : MUTED }));
+        body.push(rect(fx + labW + 3, by, barMax * q / cmax, bh, { fill: chosen ? EMBER : EMBER_SOFT }));
+        body.push(text(fx + labW + 3 + barMax + 3, by + bh - 1.5, pct(Math.round(q), lang), { font: MONO, size: 6, fill: chosen ? EMBER : MUTED }));
       });
       const done = s === GEN_STEPS.length - 1;
       let sent = S.generate.prefix + picks.join(' ') + (done ? '.' : ' ▍');
@@ -247,14 +260,15 @@ function generateFigure(demo, { lang }) {
     body.push(caption(pad, y + 6, S.generate.result));
     body.push(text(pad + 34, y + 6.5, full, { font: SERIF, size: 9, fill: INK }));
     y += 10;
-    body.push(text(pad + 34, y + 6, S.generate.chosen(picks.map((p, s) => `${p} ${pct(GEN_STEPS[s][r.idx][1], lang)}`).join(' · ')), { font: MONO, size: 5.5, fill: MUTED }));
+    body.push(text(pad + 34, y + 6, S.generate.chosen(picks.map((p, s) => `${p} ${pct(Math.round(r.runs[s].q[r.runs[s].pick]), lang)}`).join(' · ')), { font: MONO, size: 6, fill: MUTED }));
     y += 16;
   });
-  const H = y + 2;
+  body.push(text(pad, y + 2, S.generate.footer(T, U.slice(0, GEN_P.length).map((u) => u.toFixed(2)).join(', ')), { font: MONO, size: 6, fill: INK2 }));
+  const H = y + 10;
   body[0] = rect(0, 0, W, H, { fill: PAPER });
-  const md = [S.generate.mdTitle(demo.title), '', S.generate.mdHead, '|---|---|',
-    ...GEN_STEPS.map((c, s) => `| ${s + 1} | ${c.map((k) => `${k[0]} ${pct(k[1], lang)}`).join(' · ')} |`), '',
-    S.generate.mdLow(sentences[0]), S.generate.mdHigh(sentences[1]), ''].join('\n');
+  const md = [S.generate.mdTitle(demo.title), '', S.generate.mdRule(T), '', S.generate.mdHead(T), '|---|---|---|---|---|',
+    ...GEN_STEPS.map((c, s) => `| ${s + 1} | ${c.map((k) => `${k[0]} ${pct(k[1], lang)}`).join(' · ')} | ${c[greedy[s].pick][0]} | ${c.map((k, i) => `${k[0]} ${(sampled[s].qExact[i] * 100).toFixed(1)}%`).join(' · ')} | ${sampled[s].u.toFixed(2)} → ${c[sampled[s].pick][0]} |`), '',
+    S.generate.mdLow(sentences[0]), S.generate.mdHigh(sentences[1], T), ''].join('\n');
   return [{ name: 'generate', svg: svg(W, H, body.join('\n')), md }];
 }
 
@@ -332,7 +346,7 @@ function diffuseFigure(demo, { lang }) {
     fr.px.forEach((p, i) => body.push(rect(fx + (i % 8) * cell, fy + Math.floor(i / 8) * cell, cell, cell, { fill: fill[p] })));
     body.push(rect(fx, fy, fw, fw, { stroke: RULE, sw: 0.5 }));
     body.push(text(fx + fw / 2, fy + fw + 8, pct(fr.pct, lang), { font: MONO, size: 6.5, anchor: 'middle', fill: fr.step === 8 ? EMBER : INK }));
-    body.push(text(fx + fw / 2, fy + fw + 15, `${fr.revealed}/64`, { font: MONO, size: 5, anchor: 'middle', fill: MUTED }));
+    body.push(text(fx + fw / 2, fy + fw + 15, `${fr.revealed}/64`, { font: MONO, size: 6, anchor: 'middle', fill: MUTED })); // R082: ≥ 6
   });
   y += 8 + fw + 20;
   // alt ok: ileri süreç (gürültü ekleme), sağdan sola
@@ -346,11 +360,12 @@ function diffuseFigure(demo, { lang }) {
     ks.forEach((k, i) => body.push(rect(lx + i * 7.5, y, 6, 6, { fill: fill[k], stroke: RULE, sw: 0.5 })));
     lx += ks.length * 7.5 + 2;
     body.push(text(lx, y + 5.5, l, { font: MONO, size: 5.5, fill: MUTED }));
-    lx += tw(l, 5.5, 'mono') + 9;
+    lx += tw(l, MIN_TEXT, 'mono') + 9; // çizilen punto (≥ MIN_TEXT) ile ölç
   });
   y += 10;
-  body.push(text(pad, y + 5.5, S.diffuse.under, { font: MONO, size: 5.5, fill: MUTED }));
-  const H = y + 13;
+  const underL = wrapW(S.diffuse.under, 5.5, W - 2 * pad, 'mono'); // EN satırı sağ kenardan taşıyordu (R082 punto)
+  underL.forEach((l, i) => body.push(text(pad, y + 5.5 + i * 7.6, l, { font: MONO, size: 5.5, fill: MUTED })));
+  const H = y + 13 + (underL.length - 1) * 7.6;
   body[0] = rect(0, 0, W, H, { fill: PAPER });
   const md = [S.diffuse.mdTitle(demo.title), '', S.diffuse.mdHead, '|---|---|---|---|',
     ...frames.map((fr) => `| ${fr.step} | ${pct(fr.pct, lang)} | ${fr.revealed} | ${fr.heart} |`), '',
@@ -373,8 +388,8 @@ function ctxFigure(demo, { lang }) {
   const body = [rect(0, 0, W, 0)];
   let y = pad;
   body.push(text(pad, y + 5, S.ctx.title(CTX_MAX), { font: MONO, size: 6.5, fill: INK2 }));
-  body.push(text(W - pad, y + 5, S.ctx.legend, { font: MONO, size: 5.5, fill: MUTED, anchor: 'end' }));
-  y += 14;
+  body.push(text(pad, y + 13.5, S.ctx.legend, { font: MONO, size: 5.5, fill: MUTED })); // başlığın altında ayrı satır (büyük puntoda çakışıyordu)
+  y += 22;
   const rows = [];
   frames.forEach((n, k) => {
     const forgotten = Math.max(0, n - CTX_MAX), used = Math.min(n, CTX_MAX);

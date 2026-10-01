@@ -8,7 +8,7 @@
 
 AI is no longer a lab toy; it touches loan applications, job listings, news feeds, even health decisions. And this power brings responsibility with it. The focus now is not the technology itself, but where it touches people.
 
-We have five big questions. How do machines inherit the biases in data? Why are their decisions so often a “black box”? How do deepfakes and disinformation strain our grip on reality? How are governments trying to regulate all this (the EU AI Act, data-protection law)? And do machines truly understand our goals (alignment)? We won’t ignore the quieter effects either, like the changing nature of work and “filter bubbles.”
+We have five big questions. How do machines inherit the biases in data? Why are their decisions so often a “black box”? How do deepfakes and disinformation strain our grip on reality? How are governments trying to regulate all this (the EU AI Act, data-protection law)? And do machines truly understand our goals (alignment)?
 
 > **Margin note.** “AI is neutral” is a myth. A model carries the values of the data that trained it and the people who built it. So “how it works” matters as much as “whom it affects, and how.”
 
@@ -16,7 +16,7 @@ We have five big questions. How do machines inherit the biases in data? Why are 
 
 This chapter takes up AI’s sociotechnical dimension: systems don’t operate in a vacuum; they run embedded in institutions, data and people, and their effects grow from there.
 
-The axes covered: data-driven bias and fairness, explainability/interpretability (XAI), synthetic media and disinformation, regulatory frameworks (the EU AI Act’s risk-based approach, personal-data principles of GDPR-style law) and alignment/safety. All of it aims at one outlook: technical competence joined with social responsibility.
+The axes covered: bias and fairness, explainability/interpretability (XAI), synthetic media and disinformation, regulatory frameworks (the EU AI Act’s risk-based approach, personal-data principles of GDPR-style law) and alignment/safety. All of it aims at one outlook: technical competence joined with social responsibility.
 
 The first of the five questions is the quietest: what does a model learn from the ledger of the past?
 
@@ -26,16 +26,16 @@ A model studies from one textbook: the ledger of the past. If the ledger is warp
 
 The two groups (A and B) are identical in merit; in Figure 7.1 only the bias in the training data rises and falls. The model’s decision shifts with it.
 
-> **Margin note.** “Garbage in, garbage out.” For a model to be fair, its data must first be fair and representative. The responsibility usually lies not with the model but with the people who choose and assemble the data.
+> **Margin note.** “Garbage in, garbage out.” For a model to be fair, its data must first be fair and representative; but that is only the start. People also choose the goal, the metric and the place of use. The responsibility usually lies not with the model but with the people who choose the data and the goal.
 
 **Figure 7.1 · A bias simulation**
 ![Figure 7.1](../../figures/out/en/figure-7-1-bias.svg)
 
-*Setup.* The figure shows two groups, A and B. Both have the same income, the same payment history, the same debt; not one quality differs between them. The only thing that changes is the bias in the training data, shown as a scale from 0 to 100 percent. For each level of bias the model approves the two groups at different rates. The two bars set those rates side by side; the space between them is the “parity gap.” The three panels of the figure show the scale at 0, 50 and 100 percent.
+*Setup.* The figure shows two groups, A and B. Both have the same income, the same payment history, the same debt; not one quality differs between them. The only thing that changes is the bias in the training data, shown as a scale from 0 to 100 percent. For each level of bias the figure approves the two groups at different rates. The two bars set those rates side by side; the space between them is the parity gap, measured in percentage points. The three panels of the figure show the scale at 0, 50 and 100 percent. The numbers in this figure were chosen for the explanation; they are not the measured result of a trained model.
 
-*Step by step.* The rule behind the figure fits in one line: at bias e, group A is approved at 50 + 0.4·e percent and group B at 50 − 0.4·e percent. The gap is the difference between the two; it widens by 0.8 points for every point of bias. The table shows five points on the scale:
+*Step by step.* The rule behind the figure fits in one line: at bias e, group A is approved at round(50 + 0.4·e) percent and group B at round(50 − 0.4·e) percent. Both rates are rounded to whole numbers. The gap is the difference between the two rounded rates, 0.8·e before rounding; it widens by about 0.8 percentage points for every point of bias. The table shows five points on the scale:
 
-| Data bias (e) | A approval | B approval | Parity gap | Label in the figure |
+| Data bias (e) | A approval | B approval | Parity gap (percentage points) | Label in the figure |
 |---|---|---|---|---|
 | 0% | 50% | 50% | 0 | Balanced data |
 | 8% | 53% | 47% | 6 | Balanced data (the limit) |
@@ -43,28 +43,28 @@ The two groups (A and B) are identical in merit; in Figure 7.1 only the bias in 
 | 50% | 70% | 30% | 40 | Skewed |
 | 100% | 90% | 10% | 80 | Skewed |
 
-1. Bias at zero percent: both groups are approved at 50 percent. The caption reads: “The data is balanced: both groups get approved at nearly the same rate (A 50%, B 50%). Same merit, same decision; that is what fair looks like.”
-2. Up to eight percent the gap stays at 6 points or less; the figure still counts this range as “balanced” and keeps the same caption.
-3. From nine percent on, the caption changes. At 50 percent you read: “Although the groups are identical in merit, the model approves A at 70% and B at 30% (40% gap). It learned this gap not from reality but from skewed data; this is how discrimination gets inherited.”
-4. At 100 percent the gap reaches 80 points. Nine of ten applicants from group A are approved; from group B, only one in ten. The applicants’ merit never changed; only the ledger the model read did.
+1. Bias at zero percent: both groups are approved at 50 percent; the gap is 0. Same merit, same decision; that is what fair looks like.
+2. At eight percent the rates work out to 53.2 and 46.8 and round to 53 and 47; the gap is 6 percentage points. The figure still counts this range as “balanced.”
+3. From 9 percent on, the label changes to “skewed.” At 50 percent the figure approves A at 70 percent and B at 30 percent: a difference of 40 percentage points. Same merit; the gap comes from the data alone.
+4. At 100 percent A is at 90 percent and B at 10 percent; the difference in approval rates is 80 percentage points (not 80 percent). Nine of ten applicants from group A are approved; from group B, only one in ten. The applicants’ merit never changed; only the bias in the figure’s rule did.
 
 *What is happening?* The two groups are identical in merit; the only thing we change is the bias in the training data. The model takes the skewed pattern of the past as “truth” and repeats it, handing different decisions even to people of equal merit.
 
-*Try it yourself.* 1) At 75 percent bias, work out the approval rate of A and B and the parity gap. 2) The figure counts the data as “balanced” while the gap is 6 points or less. At which bias level is that limit first crossed? 3) By the rule, A can never go above 95 percent and B never below 5 percent. Are those limits reached even at the end of the scale? Why? Live demo: [QR 7.1]
+*Try it yourself.* 1) At 75 percent bias, work out the approval rate of A and B and the parity gap in percentage points. 2) The figure counts the data as “balanced” while the gap is 6 percentage points or less. At which bias level is that limit first crossed? 3) By the rule, A can never go above 95 percent and B never below 5 percent. Are those limits reached even at the end of the scale? Why? Live demo: [QR 7.1]
 
 #### Technical depth
 
-Algorithmic bias mostly comes from data: historical prejudice, under-representation, labeling errors, or proxy variables correlating with protected attributes. The model learns the pattern in the distribution and reinforces it.
+Bias can arise from data, measurement and modeling choices, institutional processes, and deployment context. In the data: historical prejudice, under-representation, labeling errors, or proxy variables correlating with protected attributes. The model learns the pattern in the distribution and reinforces it. Balancing a dataset addresses only some of these sources.
 
-Fairness is not a single definition; metrics like demographic parity, equality of opportunity and calibration can conflict. Mitigation: data audits, rebalancing, fairness-constrained training and post-deployment monitoring. Figure 7.1 shows how data bias alone produces a decision gap despite identical merit.
+Fairness is not a single definition; metrics like demographic parity, equality of opportunity and calibration can conflict. Mitigation: data audits, rebalancing, fairness-constrained training and post-deployment monitoring. Figure 7.1 is an illustration of how data bias alone can produce a decision gap despite identical merit; it is not a measured training result.
 
-The model behind the figure: A = round(min(95, 50 + 0.4·e)), B = round(max(5, 50 − 0.4·e)), gap = A − B. Demographic parity is the condition P(approve | A) = P(approve | B); every value other than gap = 0 violates it. The figure attaches the label “balanced” to gap ≤ 6; that is a tolerance choice, not a definition of fairness.
+The model behind the figure: A = round(min(95, 50 + 0.4·e)), B = round(max(5, 50 − 0.4·e)), gap = A − B (percentage points). This is a toy rule: the approval rates are not learned in training but assigned by formula, and equal rates for balanced data are built in from the start. No general law linking data balance to fairness follows from it. Demographic parity is the condition P(approve | A) = P(approve | B); every value other than gap = 0 violates it. The figure attaches the label “balanced” to gap ≤ 6; that is a tolerance choice, not a definition of fairness.
 
 Bias can be measured. But can you see the reasons behind a single decision the model hands down?
 
 ### 7.3 Black box or white box?
 
-When the model says “your loan is declined,” a fair question arises: Why? Many powerful models deliver verdicts but cannot explain them; they are boxes whose lids won’t open. Yet in decisions touching human lives (credit, hiring, health), asking “why?” and seeing the answer is a matter of rights. The black box must be turned into a white one.
+When the model says “your loan is declined,” a fair question arises: Why? Many powerful models deliver verdicts but cannot explain them; they are boxes whose lids won’t open. Yet in decisions touching human lives (credit, hiring, health), asking “why?” and seeing the answer is a matter of rights. At the least, the lid must open for one decision at a time.
 
 First look at a loan decision; then open the lid in Figure 7.2 and see which factor pushed the decision which way (plus or minus).
 
@@ -73,9 +73,9 @@ First look at a loan decision; then open the lid in Figure 7.2 and see which fac
 **Figure 7.2 · White box: explain the decision**
 ![Figure 7.2](../../figures/out/en/figure-7-2-explain.svg)
 
-*Setup.* There are two loan applications. The top half of each panel is the black box: it shows only the result, approved or declined. The bottom half opens the lid on the same decision. Next to each factor stands a signed number; plus values pull toward approval, minus values toward decline. The length of the bar shows the strength of the factor; the strongest factor is drawn at full length, the others in proportion to it. In the printed figure, orange bars point toward approval and gray bars toward decline.
+*Setup.* There are two loan applications. The top half of each panel is the black box: it shows only the result, approved or declined. The bottom half opens the lid on the same decision. Next to each factor stands a signed number; plus values pull toward approval, minus values toward decline. The numbers are points; the base value is zero and so is the decision threshold. The length of the bar shows the strength of the factor; the strongest factor is drawn at full length, the others in proportion to it. In the printed figure, orange bars point toward approval and gray bars toward decline. The contributions were not computed from a real model; they are illustrative numbers chosen for the explanation.
 
-*Step by step.* The rule is one sentence: if the four contributions add up to more than zero, the loan is approved; otherwise it is declined.
+*Step by step.* The rule is one sentence: the base value is zero; if the four contributions add up to more than zero, the loan is approved; otherwise it is declined.
 
 | Applicant #1 | Contribution |
 |---|---|
@@ -94,11 +94,11 @@ First look at a loan decision; then open the lid in Figure 7.2 and see which fac
 | **Total** | **+76 → Loan approved** |
 
 1. Applicant #1 with the lid closed: “Loan declined.” No other information, and nowhere to appeal. The applicant is left alone with the result.
-2. With the lid open, the arithmetic appears. The two plus factors (+32 and +18) make +50; the two minus factors (−46 and −12) make −58. The difference is −8; it is below zero, so the loan is declined. One factor, high existing debt, wipes out every plus. An applicant who sees the table also knows what to do: appeal the debt item, or fix that item first.
+2. With the lid open, the arithmetic appears. The two plus factors (+32 and +18) make +50. The debt alone is −46; taken from the pluses, +4 is left, so the debt by itself does not decline the loan. Add the −12 of the short account history and the total is −8; below zero, declined. Debt is the largest negative contribution; together with the short account history, it outweighs the positive contributions. An applicant who sees the table also knows what to do: appeal the largest item, the debt, or fix that item first.
 3. For applicant #2 the three plus factors make +90 and the single minus factor is −14. The total is +76; approved. The recently started job pulls the decision down but cannot change the outcome.
-4. The caption under both applications is the same: “Green factors pushed toward approval, red toward decline; their total (−8 or +76) decided the outcome. Signed contributions (SHAP-like) turn the ‘black box’ into a ‘white box.’” On paper, read orange for green and gray for red.
+4. Both applications follow the same arithmetic: plus factors pushed toward approval, minus factors toward decline; their total (−8 or +76) decided the outcome. Signed contributions open the lid on one decision at a time; they do not make the whole model transparent.
 
-*What is happening?* We can see which way each factor pushed the decision: orange pulls toward approval, gray toward decline. The sum of these pluses and minuses decides the outcome. Now “why was this decided?” can be answered; the model stops being a “black box” and becomes auditable and appealable.
+*What is happening?* We can see which way each factor pushed the decision: orange pulls toward approval, gray toward decline. The sum of these pluses and minuses decides the outcome. Now “why was this decided?” can be answered for this application; the decision becomes auditable and appealable. The model as a whole may still remain a black box.
 
 *Try it yourself.* 1) The person behind application #1 pays off part of the debt, and the “High existing debt” contribution goes from −46 to −36. Does the decision change? 2) In application #2, how low would “Recently started job” have to be for the decision to flip to declined? 3) In application #1 the longest bar is “High existing debt.” At what share of that length is the “Steady income” bar drawn? Live demo: [QR 7.2]
 
@@ -106,9 +106,9 @@ First look at a loan decision; then open the lid in Figure 7.2 and see which fac
 
 Explainable AI (XAI) aims to tie a model’s output to reasons a human can understand. Methods: feature importance (e.g. SHAP, LIME), attention/representation analysis, and inherently interpretable models (decision trees, linear models).
 
-Explainability is a balancing act: higher-performing models are usually less transparent. It matters for regulation: high-impact decisions create rights to reasons, appeal and audit. Figure 7.2 simplifies signed feature contributions.
+Explainability is often a balancing act: higher-performing models are usually less transparent, but that loss is not forced in every case. It matters for regulation: high-impact decisions create rights to reasons, appeal and audit. Figure 7.2 simplifies signed feature contributions; its numbers are illustrative, not computed SHAP values.
 
-The decision rule of the figure: approve ⇔ Σᵢ cᵢ > 0. This is the plainest form of a linear model (or of the additivity property of SHAP): each cᵢ is the contribution of a single feature relative to a base value, and the contributions add up to the output. Real SHAP values are computed from the Shapley axioms (efficiency, symmetry, null contribution); the figure takes the numbers as given. Bar length is scaled by |cᵢ| / max|cᵢ|; the direction is the color of the sign.
+The decision rule of the figure: approve ⇔ φ₀ + Σᵢ cᵢ > 0. The base value φ₀ is 0 here; that is a choice made for this example, not a general rule. The output scale is points: contributions and total are read on the same scale, and −8 is not a probability but a score with a threshold at 0. SHAP explains the output a model gives for one particular input as a base value plus feature contributions, relative to a chosen reference distribution. When local accuracy holds, f(x) = φ₀ + Σᵢ φᵢ for the explained output; φ₀ is the reference (base) value, and the contributions add up on the same scale as the output (points, probability or log-odds). The 2017 SHAP paper characterizes this explanation by three conditions: local accuracy, missingness and consistency; they are more than a plain sum. Depending on the method and its assumptions, the contributions are computed exactly or approximately. This post-hoc explanation does not make the whole model directly interpretable and is not evidence of causation. The numbers in the figure were not computed from a real model; they are illustrative contributions. Bar length is scaled by |cᵢ| / max|cᵢ|; the direction is the color of the sign.
 
 Open reasons help only if the input is real. What if it is fake?
 
@@ -116,25 +116,25 @@ Open reasons help only if the input is real. What if it is fake?
 
 “I saw it with my own eyes, heard it with my own ears” used to settle things. Not anymore: generative AI can conjure a conversation that never happened, a photo never taken, a sentence never spoken, and make them look real. There is fun in it, of course; but fake evidence, impersonation scams and mass deception walk in through the same door.
 
-Below are a few situations. For each, decide: “real or fake?” Then see the tell at the back of the book and learn the ways to catch a fake.
+Below are a few situations. For each, decide: does it look real, is it suspicious, or can it not be determined from what you have? Then see the tell at the back of the book and learn the ways to verify.
 
 > **Margin note.** A single image or voice clip is no longer “proof.” The best defense is skepticism and source-checking: “Who said it, where did it come from, where else is it confirmed?”
 
 **Figure 7.3 · Real or fake?**
 ![Figure 7.3](../../figures/out/en/figure-7-3-df.svg)
 
-*Setup.* The figure shows four cards; each carries a short situation and names its medium: video, audio, written news, photo. The back of each card, the tell and the correct answer, is in the answers section at the back of the book. Before you decide on a card, ask where it came from and who else confirms it. Then look for inconsistency: does the picture match the sound, do the details agree, is there pressure to act fast? Two of the four cards are images, one is a voice, one is written news; forgery does not stay in a single medium.
+*Setup.* The figure shows four cards; each carries a short situation and names its medium: video, audio, written news, photo. The back of each card, the tell and the verification channel, is in the answers section at the back of the book. Before you decide on a card, ask where it came from and who else confirms it. Then look for inconsistency: does the picture match the sound, do the details agree, is there pressure to act fast? Two of the four cards are images, one is a voice, one is written news; forgery does not stay in a single medium. Keep two questions apart: was the content produced synthetically, and is the event it reports true? They are not the same question.
 
-*Self-test.* For each situation mark “real” or “synthetic / fake,” then give your reason in one sentence. There is no score on the page; keep your own count and see how many of the four you get right.
+*Self-test.* For each situation mark one of three options: looks real, suspicious: verify, or cannot determine. Then write two things: which warning signs the content shows, and which independent channel you would use to verify it.
 
-| # | Medium | Case | Real | Synthetic / fake |
-|---|---|---|---|---|
-| 1 | Video | In a video, a public figure says a sentence they never said; the lip movements don’t quite match the audio. | ☐ | ☐ |
-| 2 | Audio | On the phone, your “boss” urgently asks for a money transfer; the voice sounds just like them, but the intonation is slightly robotic. | ☐ | ☐ |
-| 3 | Written news | A news story on a newspaper’s site, also confirmed by several independent sources. | ☐ | ☐ |
-| 4 | Photo | In a photo, a person’s hand has six fingers and the text in the background is gibberish. | ☐ | ☐ |
+| # | Medium | Case | Looks real | Suspicious: verify | Cannot determine |
+|---|---|---|---|---|---|
+| 1 | Video | In a video, a public figure says a sentence they never said; the lip movements don’t quite match the audio. | ☐ | ☐ | ☐ |
+| 2 | Audio | On the phone, your “boss” urgently asks for a money transfer; the voice sounds just like them, but the intonation is slightly robotic. | ☐ | ☐ | ☐ |
+| 3 | Written news | A news story on a newspaper’s site, also confirmed by several independent sources. | ☐ | ☐ | ☐ |
+| 4 | Photo | In a photo, a person’s hand has six fingers and the text in the background is gibberish. | ☐ | ☐ | ☐ |
 
-The four cards have one thing in common: no single detail decides. Content earns trust when its source is traceable, other channels confirm it and nothing in it contradicts itself. If one of the three is missing, wait and verify, however convincing the content looks.
+The four cards have one thing in common: no single detail decides. Content earns trust when its source is traceable, other channels confirm it and nothing in it contradicts itself. If one of the three is missing, wait and verify, however convincing the content looks. A tell sends you to investigate; it does not by itself establish how the content was produced. A synthetic text can report a true event, and a genuine recording can be shown in a false context. Each card’s tell and verification channel are at the back of the book.
 
 *What is happening?* Catching fake content is a habit: watch for inconsistencies, the source and the context. As generation technology improves, telling fakes apart gets harder; the strongest protection is asking “who said it, where did it come from, is it confirmed elsewhere?” and never treating a single image or voice as proof.
 
@@ -142,7 +142,7 @@ The four cards have one thing in common: no single detail decides. Content earns
 
 #### Technical depth
 
-Synthetic media (deepfakes) is produced with generative models (GANs/diffusion, voice cloning, lip sync). Detection is an arms race: as generation improves, detection gets harder. Approaches: classifiers hunting generation artifacts, source verification, and content-credential standards (like C2PA provenance/watermarks).
+Synthetic media (deepfakes are one kind of it) is produced with generative models (GANs/diffusion, voice cloning, lip sync). Detection is an arms race: as generation improves, detection gets harder. Approaches: classifiers hunting generation artifacts, source verification, and content credentials. C2PA provides signed records about content provenance and editing history; watermarks can help recover those records. Neither alone proves that the content is factually true, and a missing record is not proof of forgery.
 
 At the individual level the strongest defense is media literacy: question the source, verify the context, never trust a single piece of “evidence.” Disinformation is as much a social problem as a technical one.
 
@@ -159,7 +159,7 @@ Place the uses below into the right risk tier. As risk rises, so do the obligati
 **Figure 7.4 · Classify the risk**
 ![Figure 7.4](../../figures/out/en/figure-7-4-reg.svg)
 
-*Setup.* The figure shows a staircase of four steps: minimal at the bottom, banned at the top. Next to each step is the rule for that tier. Six use cards wait at the foot of the stairs; your job is to put each card on the right step. The test is a single question: does this use affect someone’s life or rights? Each step up adds load: more documents, more audits, more human oversight.
+*Setup.* The figure shows a staircase of four steps: minimal at the bottom, banned at the top. Next to each step is the rule for that tier. Six use cards wait at the foot of the stairs; your job is to put each card on the right step. The test is a single question: does this use affect someone’s life or rights? That is the book’s teaching test; the legal classification follows the system’s intended use, the actor’s role and the relevant article or annex. Each step up adds load: more documents, more audits, more human oversight.
 
 | Tier | Rule |
 |---|---|
@@ -179,17 +179,23 @@ Place the uses below into the right risk tier. As risk rises, so do the obligati
 | 5 | A model assessing loan applications | ☐ | ☐ | ☐ | ☐ |
 | 6 | An opponent AI inside a game | ☐ | ☐ | ☐ | ☐ |
 
-Once all six cards are placed, the live demo closes with one sentence: “The same ‘AI’ label carries very different risks; that is why regulation is tiered, not uniform.” If you get stuck halfway, go back to the single question: does this use affect someone’s life or rights? Answers and reasons are at the back of the book.
+Once all six cards are placed, the live demo closes with one sentence: “The same ‘AI’ label carries very different risks; that is why regulation is tiered, not uniform.” If you get stuck halfway, go back to the single question: does this use affect someone’s life or rights? Answers, reasons and the relevant articles are at the back of the book.
 
-*What is happening?* Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) just need transparency; minimal-risk ones run free.
+*What is happening?* Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) carry transparency duties; minimal-risk ones are largely free under this law. Data-protection and other laws apply at every tier. The higher the risk, the tighter the rule.
 
 *Try it yourself.* 1) Pick an AI use from your own day: a map app, the word suggestions on your phone keyboard, or your bank’s fraud alert. Decide its tier and write your reason. 2) Can the same technology land on two different steps? Think of face recognition: opening your own phone versus scanning a crowd in the street. 3) First split the six uses into two sets: those that affect someone’s life or rights, and those that do not. Then compare the sets with the tiers; how many cards sit on the high step? Live demo: [QR 7.4]
 
 #### Technical depth
 
-The EU AI Act builds a risk-based framework: unacceptable risk (e.g. social scoring) is banned; high risk (hiring, credit, critical infrastructure) requires strict compliance, documentation and human oversight; limited risk (chatbots) carries transparency duties; minimal risk is largely free.
+The EU AI Act builds a risk-based framework: unacceptable risk (e.g. social scoring under specific conditions) is banned; high risk (hiring, creditworthiness of natural persons, critical infrastructure) requires strict compliance, documentation and human oversight; limited risk (chatbots) carries transparency duties; minimal risk is largely free. The four tiers are a simplified overview; the legal classification follows the system’s intended use, the actor’s role and the relevant article or annex.
 
-This complements personal-data regimes like GDPR (consent, purpose limitation, data minimization, the right to contest automated decisions). Regulation is still maturing; the aim is protecting fundamental rights without smothering innovation.
+This complements personal-data regimes like GDPR, whose rules (a legal basis, purpose limitation, data minimization) apply in their own right. Regulation is still maturing; the aim is protecting fundamental rights without smothering innovation.
+
+This section follows the consolidated text of Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744, version of 27 July 2026 (accessed 1 October 2026). Entry into force and the application dates of the obligations differ: the first Article 5 prohibitions have applied since 2 February 2025 and the Article 50 transparency rules since 2 August 2026; most high-risk obligations for Annex III systems start on 2 December 2027. Three fine points. Annex III 5(b) covers systems that evaluate the creditworthiness of natural persons or establish their credit score; financial-fraud detection is expressly excluded from that item. The prohibition in Article 5(1)(h) targets real-time remote biometric identification in publicly accessible spaces for law-enforcement purposes; limited exceptions and their conditions apply, and other purposes are not automatically free. The transparency obligations of Article 50 are not one “say you use AI” rule: informing people in direct interaction, machine-readable marking of synthetic output and the disclosure of deepfakes are regulated separately, and none of them replaces high-risk or other legal obligations.
+
+Under GDPR, consent is not the only basis for processing; Article 6(1) lists contract, legal obligation, vital interests, public interest and conditional legitimate interests beside it. Article 22 concerns decisions based solely on automated processing that produce legal or similarly significant effects; the exceptions for contractual necessity, legal authorization and explicit consent are conditional, and under the contract and explicit-consent exceptions the person must be able to obtain human intervention, express a view and contest the decision.
+
+Turkey’s data-protection law (KVKK, Law No. 6698) works the same way on this point: explicit consent is not the only condition for processing, and where one of the conditions in Article 5(2) holds, data may be processed without it. Article 11(1)(g) gives the person the right to object to an outcome against them that results from analysis by automated systems alone. That provision should not be read as having the same scope and exceptions as GDPR Article 22.
 
 Rules are limits drawn from the outside. Can you put what you want inside the machine, whole and exact?
 
@@ -199,7 +205,7 @@ Remember King Midas: he wished that everything he touched would turn to gold, an
 
 Pick a goal; see how the system can fulfill it in a way that is “technically correct but actually wrong.”
 
-> **Margin note.** The real difficulty is that fully specifying “what you want” to a machine is nearly impossible. That is why alignment is one of the hardest open problems of the age of powerful AI.
+> **Margin note.** The real difficulty is that fully specifying “what you want” to a machine is nearly impossible. That is why alignment is one of the hardest open problems of the age of highly capable AI systems.
 
 **Figure 7.5 · Goal versus intent**
 ![Figure 7.5](../../figures/out/en/figure-7-5-align.svg)
@@ -219,7 +225,7 @@ Pick a goal; see how the system can fulfill it in a way that is “technically c
 3. In the third row the measure is the score. Playing the game well brings points, but it is not the only way to get them. If a loop or a glitch is cheaper, the system finds it. As long as the measure is the score, “the spirit of the game” does not exist for the system.
 4. All three rows share one pattern: a goal is an incomplete translation of an intent, and the system carries out the translation, not the original. The wider the gap, the bigger the side effect. So alignment is never set once; the goal-writer and the system keep negotiating.
 
-*What is happening?* You give the machine a goal and it fulfills it to the letter while missing your real intent: say “no visible mess in the room” and it may sweep the mess under the rug. It maximizes the measure you gave it, not your purpose. Human feedback (RLHF) reduces this but never fully solves it; and the question “whose values?” is part of the problem too.
+*What is happening?* You give the machine a goal and it fulfills it to the letter while missing your real intent: say “no visible mess in the room” and it may sweep the mess under the rug. It maximizes the measure you gave it, not your purpose. Human feedback (RLHF) can reduce these problems but is not, by itself, a complete solution; and the question “whose values?” is part of the problem too.
 
 *Try it yourself.* 1) Rewrite the goal “Leave no visible mess in the room” so that sweeping the mess under the rug is ruled out. Then find the loophole in your new goal. 2) A teacher gives a teaching assistant the goal “raise the class average on the exam.” Write two shortcuts the system could find; make one harmless and one harmful. 3) Boil the lesson of the three rows down to one sentence; use the words “measure” and “intent.” Live demo: [QR 7.5]
 
@@ -234,7 +240,7 @@ That is as far as anyone can answer the five questions today. Six questions foll
 ### 7.7 Test yourself
 
 *Answers are at the back of the book.*
-1. Where does algorithmic bias mostly come from?
+1. Which of these can be a source of algorithmic bias?
    a) Screen color
    b) Skewed or incomplete training data
    c) The internet connection
@@ -273,10 +279,10 @@ That is as far as anyone can answer the five questions today. Six questions foll
 ### What to keep from this chapter
 
 - AI is not neutral; a model carries the values of the data that trained it and the people who built it.
-- A model that hands different decisions to two groups of identical merit learned discrimination not from malice but from skewed data.
-- Signed contributions make the reasons behind a decision visible; the decision becomes auditable and appealable.
-- A single image or voice clip is no longer proof; questioning the source, the context and the consistency must become a habit.
-- Regulation is tiered by risk: banned, high, limited, minimal; the higher the risk, the stricter the rule.
+- A model that hands different decisions to two groups of identical merit can inherit discrimination from skewed data, not from malice; and balancing the data alone does not fix it.
+- Signed contributions make the reasons behind one decision visible; the decision becomes auditable and appealable, while the whole model does not become transparent.
+- A single image or voice clip is no longer proof; a tell sends you to investigate, and independent verification gives the verdict.
+- Regulation is tiered by risk: banned, high, limited, minimal; the four tiers are a teaching summary, and the legal class follows the purpose and the article.
 - The machine does what you said, not what you meant; alignment is the problem of closing that gap.
 
 <!-- SOURCE-CHANGES
@@ -286,6 +292,25 @@ The two groups are identical in merit; the only thing we change is the bias in t
 When the model says “your loan is declined,” a fair question arises: Why? Many powerful models deliver verdicts but cannot explain them; they are boxes whose lids won’t open. Yet in decisions touching human lives (credit, hiring, health), asking “why?” and seeing the answer is a matter of rights. The black box must be turned into a glass one. ||| When the model says “your loan is declined,” a fair question arises: Why? Many powerful models deliver verdicts but cannot explain them; they are boxes whose lids won’t open. Yet in decisions touching human lives (credit, hiring, health), asking “why?” and seeing the answer is a matter of rights. The black box must be turned into a white one.
 First look at a loan decision; then open the lid in Figure 7.2 and see which factor pushed the decision which way (plus or minus). This is what turns a black box into a white box. ||| First look at a loan decision; then open the lid in Figure 7.2 and see which factor pushed the decision which way (plus or minus).
 Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) just need transparency; minimal-risk ones run free. The higher the risk, the tighter the rule. ||| Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) just need transparency; minimal-risk ones run free.
+We have five big questions. How do machines inherit the biases in data? Why are their decisions so often a “black box”? How do deepfakes and disinformation strain our grip on reality? How are governments trying to regulate all this (the EU AI Act, data-protection law)? And do machines truly understand our goals (alignment)? We won’t ignore the quieter effects either, like the changing nature of work and “filter bubbles.” ||| We have five big questions. How do machines inherit the biases in data? Why are their decisions so often a “black box”? How do deepfakes and disinformation strain our grip on reality? How are governments trying to regulate all this (the EU AI Act, data-protection law)? And do machines truly understand our goals (alignment)?
+The axes covered: data-driven bias and fairness, explainability/interpretability (XAI), synthetic media and disinformation, regulatory frameworks (the EU AI Act’s risk-based approach, personal-data principles of GDPR-style law) and alignment/safety. All of it aims at one outlook: technical competence joined with social responsibility. ||| The axes covered: bias and fairness, explainability/interpretability (XAI), synthetic media and disinformation, regulatory frameworks (the EU AI Act’s risk-based approach, personal-data principles of GDPR-style law) and alignment/safety. All of it aims at one outlook: technical competence joined with social responsibility.
+“Garbage in, garbage out.” For a model to be fair, its data must first be fair and representative. The responsibility usually lies not with the model but with the people who choose and assemble the data. ||| “Garbage in, garbage out.” For a model to be fair, its data must first be fair and representative; but that is only the start. People also choose the goal, the metric and the place of use. The responsibility usually lies not with the model but with the people who choose the data and the goal.
+Algorithmic bias mostly comes from data: historical prejudice, under-representation, labeling errors, or proxy variables correlating with protected attributes. The model learns the pattern in the distribution and reinforces it. ||| Bias can arise from data, measurement and modeling choices, institutional processes, and deployment context. In the data: historical prejudice, under-representation, labeling errors, or proxy variables correlating with protected attributes. The model learns the pattern in the distribution and reinforces it. Balancing a dataset addresses only some of these sources.
+Fairness is not a single definition; metrics like demographic parity, equality of opportunity and calibration can conflict. Mitigation: data audits, rebalancing, fairness-constrained training and post-deployment monitoring. The demo shows how data bias alone produces a decision gap despite identical merit. ||| Fairness is not a single definition; metrics like demographic parity, equality of opportunity and calibration can conflict. Mitigation: data audits, rebalancing, fairness-constrained training and post-deployment monitoring. The demo is an illustration of how data bias alone can produce a decision gap despite identical merit; it is not a measured training result.
+When the model says “your loan is declined,” a fair question arises: Why? Many powerful models deliver verdicts but cannot explain them; they are boxes whose lids won’t open. Yet in decisions touching human lives (credit, hiring, health), asking “why?” and seeing the answer is a matter of rights. The black box must be turned into a white one. ||| When the model says “your loan is declined,” a fair question arises: Why? Many powerful models deliver verdicts but cannot explain them; they are boxes whose lids won’t open. Yet in decisions touching human lives (credit, hiring, health), asking “why?” and seeing the answer is a matter of rights. At the least, the lid must open for one decision at a time.
+Explainability is a balancing act: higher-performing models are usually less transparent. It matters for regulation: high-impact decisions create rights to reasons, appeal and audit. The demo below simplifies signed feature contributions. ||| Explainability is often a balancing act: higher-performing models are usually less transparent, but that loss is not forced in every case. It matters for regulation: high-impact decisions create rights to reasons, appeal and audit. The demo below simplifies signed feature contributions; its numbers are illustrative, not computed SHAP values.
+We can see which way each factor pushed the decision: greens pull toward approval, reds toward decline. The sum of these pluses and minuses decides the outcome. Now “why was this decided?” can be answered; the model stops being a “black box” and becomes auditable and appealable. ||| We can see which way each factor pushed the decision: greens pull toward approval, reds toward decline. The sum of these pluses and minuses decides the outcome. Now “why was this decided?” can be answered for this application; the decision becomes auditable and appealable. The model as a whole may still remain a black box.
+Signed feature contributions (SHAP-like) show which input pushed the decision how far and in which direction: green toward approval, red toward decline. The total decides. This makes the model auditable and appealable; it turns the “black box” into a “white box.” ||| Signed feature contributions show which input pushed the decision how far and in which direction: green toward approval, red toward decline. The total decides. This makes the decision auditable and appealable; it explains one output after the fact and does not make the whole model transparent.
+Below are a few situations. For each, decide: “real or fake?” Then see the tell and learn the ways to catch a fake. ||| Below are a few situations. For each, decide: does it look real, is it suspicious, or can it not be determined from what you have? Then see the tell and learn the ways to verify.
+Synthetic media (deepfakes) is produced with generative models (GANs/diffusion, voice cloning, lip sync). Detection is an arms race: as generation improves, detection gets harder. Approaches: classifiers hunting generation artifacts, source verification, and content-credential standards (like C2PA provenance/watermarks). ||| Synthetic media (deepfakes are one kind of it) is produced with generative models (GANs/diffusion, voice cloning, lip sync). Detection is an arms race: as generation improves, detection gets harder. Approaches: classifiers hunting generation artifacts, source verification, and content credentials. C2PA provides signed records about content provenance and editing history; watermarks can help recover those records. Neither alone proves that the content is factually true, and a missing record is not proof of forgery.
+The EU AI Act builds a risk-based framework: unacceptable risk (e.g. social scoring) is banned; high risk (hiring, credit, critical infrastructure) requires strict compliance, documentation and human oversight; limited risk (chatbots) carries transparency duties; minimal risk is largely free. ||| The EU AI Act builds a risk-based framework: unacceptable risk (e.g. social scoring under specific conditions) is banned; high risk (hiring, creditworthiness of natural persons, critical infrastructure) requires strict compliance, documentation and human oversight; limited risk (chatbots) carries transparency duties; minimal risk is largely free. The four tiers are a simplified overview; the legal classification follows the system’s intended use, the actor’s role and the relevant article or annex.
+This complements personal-data regimes like GDPR (consent, purpose limitation, data minimization, the right to contest automated decisions). Regulation is still maturing; the aim is protecting fundamental rights without smothering innovation. ||| This complements personal-data regimes like GDPR, whose rules (a legal basis, purpose limitation, data minimization) apply in their own right. Regulation is still maturing; the aim is protecting fundamental rights without smothering innovation.
+Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) just need transparency; minimal-risk ones run free. ||| Not every AI carries the same risk, so uses are tiered: unacceptable ones (like social scoring) are banned; high-risk ones (credit, hiring) demand strict oversight and human supervision; limited-risk ones (chatbots) carry transparency duties; minimal-risk ones are largely free under this law. Data-protection and other laws apply at every tier. The higher the risk, the tighter the rule.
+The EU AI Act’s tier logic: banned (violates fundamental rights, e.g. social scoring) → high (credit, hiring: strict compliance + human oversight) → limited (chatbots: transparency) → minimal. The same “AI” label carries very different risks; that is why regulation is tiered, not uniform. GDPR-style law separately governs personal data. ||| The EU AI Act’s tier logic: banned (violates fundamental rights, e.g. social scoring under specific conditions) → high (hiring, creditworthiness of natural persons: strict compliance + human oversight) → limited (chatbots: transparency) → minimal. The same “AI” label carries very different risks; that is why regulation is tiered, not uniform. The four tiers are a simplified overview; the legal class follows intended use, role and the relevant article. GDPR-style law separately governs personal data.
+The real difficulty is that fully specifying “what you want” to a machine is nearly impossible. That is why alignment is one of the hardest open problems of the age of powerful AI. ||| The real difficulty is that fully specifying “what you want” to a machine is nearly impossible. That is why alignment is one of the hardest open problems of the age of highly capable AI systems.
+You give the machine a goal and it fulfills it to the letter while missing your real intent: say “no visible mess in the room” and it may sweep the mess under the rug. It maximizes the measure you gave it, not your purpose. Human feedback (RLHF) reduces this but never fully solves it; and the question “whose values?” is part of the problem too. ||| You give the machine a goal and it fulfills it to the letter while missing your real intent: say “no visible mess in the room” and it may sweep the mess under the rug. It maximizes the measure you gave it, not your purpose. Human feedback (RLHF) can reduce these problems but is not, by itself, a complete solution; and the question “whose values?” is part of the problem too.
+Specification/reward gaming: when the proxy goal diverges from the true goal, the model maximizes the metric, not the purpose. RLHF reduces this but doesn’t eliminate it; alignment is both a technical and a normative question (whose values?). ||| Specification/reward gaming: when the proxy goal diverges from the true goal, the model maximizes the metric, not the purpose. RLHF can reduce this but is not, by itself, a complete solution; alignment is both a technical and a normative question (whose values?).
+Where does algorithmic bias mostly come from? ||| Which of these can be a source of algorithmic bias?
 -->
 
 <!-- EDITORIAL NOTES
@@ -308,4 +333,5 @@ Not every AI carries the same risk, so uses are tiered: unacceptable ones (like 
 - Margin notes moved after the Simple paragraphs and before the Figure block, as in Chapter 1 and the Turkish edition.
 - 2026-09-30 humanizing pass (print/kitap/humanize-en-report.md): "the demo" → "the figure" throughout (only 7.5 keeps "the live demo" for its closing line); the "not from malice but from skewed data" slogan kept in 7.2 Simple and the takeaway only; "the higher the risk, the tighter the rule" kept in the margin note and the takeaway only; the "who said it, where did it come from…" mantra kept in the margin note and What is happening; "On screen …; on paper …" frames removed from 7.4 and 7.5 (the color mapping in 7.3 stays); 7.3 Simple now says "white" both times, the second sentence of the second paragraph dropped as a repeat; bridges and the pre-quiz line rewritten; UI strings ("Ask yourself: …") no longer quoted. Source paragraphs changed are listed in SOURCE-CHANGES above.
 - Print-only trim (same pass): the demo's technical "What is happening?" paragraph at the end of every Technical depth box (7.2 to 7.6) repeated the box's own first paragraph nearly word for word and was dropped from the print file. The digital edition keeps those texts unchanged; only the wording cuts in SOURCE-CHANGES are meant for it.
+- 2026-10-01 correction document (R051–R058, R066, R070, R091): bias sources (data, measurement/modeling, institutions, deployment) in Technical 7.2 and the margin note; Figure 7.1 gap in "percentage points", rule written with round(...), toy-rule warning, embedded captions no longer quoted (their "(40% gap)" wording belongs to the figure/demo agent); Figure 7.2 base value φ₀ = 0 (example-specific), output scale in points, debt reading "+50 − 46 = +4; with −12, −8", SHAP paragraph rebuilt as a whole (f(x) = φ₀ + Σφᵢ; local accuracy, missingness, consistency; the old "efficiency, symmetry, null contribution" summary dropped), step 4 no longer quotes the "black box → white box" caption; that claim dropped from Simple / What is happening / takeaways (section and figure titles are source text and stay); Figure 7.3 Self-test now has three options (looks real / suspicious: verify / cannot determine), no score, answers give a tell and an independent channel per card; C2PA provenance ≠ truth; AI Act simplification warning, consolidated version date, Annex III 5(b), Art. 5(1)(h), Art. 50; GDPR Art. 6/22 and KVKK Art. 5(2)/11(1)(g) as separate paragraphs (KVKK added to the EN print text for parity with TR; the Technical 7.5 box may exceed one page, typesetting to check); chapter-opening promises (work, filter bubbles) dropped; "powerful AI" → "highly capable AI systems"; the RLHF sentence; quiz 1 "mostly come from" → "can be a source of" (option order unchanged). Paragraphs for the digital edition are in SOURCE-CHANGES. The Figure 7.1 label ("parity gap N" → percentage points) and the Figure 7.3 card options are the figure/demo agent’s job.
 -->

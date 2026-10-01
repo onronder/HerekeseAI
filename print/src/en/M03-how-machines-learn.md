@@ -22,7 +22,7 @@ Learning from examples starts with knowing what an example is. When you hand a m
 
 ### 3.2 Features and labels
 
-Picture a detective: clues in one hand, and the case’s final verdict in the other. A machine learning from examples looks at the same pair. The clues are called features: measurable facts describing an example. The verdict is called the label. For an email the clues might be “word count,” “has a link,” “mentions free”; the label is “Spam” or “Normal.”
+Picture a detective: clues in one hand, and the case’s final verdict in the other. A machine learning from examples looks at the same pair. The clues are called features: measurable facts describing an example. The verdict is called the label. For an email the clues might be “word count,” “link or password request,” “mentions free”; the label is “Spam” or “Normal.”
 
 Reading hundreds of solved cases, the model learns which clue travels with which verdict. Each example in Figure 3.1 shows its clues and its correct answer.
 
@@ -31,11 +31,11 @@ Reading hundreds of solved cases, the model learns which clue travels with which
 **Figure 3.1 · See the features and the label**
 ![Figure 3.1](../../figures/out/en/figure-3-1-spam.svg)
 
-*Setup.* The figure shows four short emails and three cues for each one: does it mention “free,” does it ask for a link or a password, does it use urgent language. A filled mark (✓) means the cue is present; an open circle (○) means it is absent. The three cue columns are headed “Features (input).” The rightmost column, headed “Label (output),” gives the correct answer: Spam or Normal. All four examples are in the table below.
+*Setup.* The figure shows four short emails and three cues for each one: does it mention “free,” is there a link or password request, does it use urgent language. A link or password request means the email asks the reader to open a link or hand over a password. A filled mark (✓) means the cue is present; an open circle (○) means it is absent. The three cue columns are headed “Features (input).” The rightmost column, headed “Label (output),” gives the correct answer: Spam or Normal. All four examples are in the table below.
 
 *Step by step.*
 
-| # | Email | mentions “free” | link / password request | urgency language | Label |
+| # | Email | mentions “free” | link or password request | urgency language | Label |
 |---|---|---|---|---|---|
 | 1 | “You won a free iPhone! Click now” | ✓ | ✓ | ✓ | Spam |
 | 2 | “Meeting tomorrow at 10:00” | ○ | ○ | ○ | Normal |
@@ -48,7 +48,7 @@ Reading hundreds of solved cases, the model learns which clue travels with which
 4. Then compare the cue columns with the label. When the cue count is zero, the label is always Normal; when it is two or three, always Spam. “Free” alone does not decide: email 3 came out Spam without it. The link or password request and the urgent language, though, are present in both Spam examples.
 5. Nobody wrote this relation; you read it off the table. The model does the same, only with thousands of rows instead of four. The “two cues means spam” rule drawn from four rows is a provisional guess; a fifth example could break it.
 
-*What is happening?* An email’s clues (features) and its correct answer (label) sit side by side: mentions of “free,” a link request, urgent language... Seeing many examples, the machine learns by itself which clues go with “Spam”; nobody writes the rule, it draws it from the examples.
+*What is happening?* An email’s clues (features) and its correct answer (label) sit side by side: mentions of “free,” a link or password request, urgent language... Seeing many examples, the machine learns by itself which clues go with “Spam”; nobody writes the rule, it draws it from the examples.
 
 *Try it yourself.* 1) Mark the three cues of the email “Your password has expired; if you do not renew it today, your account will be deleted.” By the relation in the table, what is its label? 2) The email “Free coffee, let’s meet in the kitchen tomorrow at noon” is in fact Normal. If this row is added to the table, should the model trust the “free” cue more, or less? 3) Write a rule that agrees with all four rows. Does your rule also work on the email in question 2? Live demo: [QR 3.1]
 
@@ -56,9 +56,9 @@ Reading hundreds of solved cases, the model learns which clue travels with which
 
 In supervised learning, each example is a pair of a feature vector x and a label y. Features can be numeric or categorical; the model tries to learn the mapping f(x) ≈ y. Good feature engineering is one of the most decisive steps for performance in classical ML.
 
-The label’s type sets the task: a categorical label → classification, a continuous (numeric) label → regression. Figure 3.1 builds intuition for telling spam from normal email with simple features.
+The label’s type sets the task: a categorical label → classification, a quantitative (continuous) label → regression. Categories may be coded as numbers; that does not make them regression targets. Figure 3.1 builds intuition for telling spam from normal email with simple features.
 
-Feature vector x = [mentions “free”; has a link; urgency language], label y = “Spam.” In supervised learning the model tries to estimate the mapping f(x) ≈ y from these (x, y) pairs, i.e. a decision rule like P(spam | x).
+Feature vector x = [mentions “free”; link or password request; urgency language], label y = “Spam.” In supervised learning the model tries to estimate the mapping f(x) ≈ y from these (x, y) pairs, i.e. a decision rule like P(spam | x).
 
 In the spam example every email came with its correct answer. Can a machine learn without an answer key, or with no teacher at all?
 
@@ -83,7 +83,7 @@ Now take each task below to the right teacher. For each, ask: Is there an answer
 | 2 | Grouping customers by similarity | ☐ | ☐ | ☐ |
 | 3 | A robot learning to walk by trial and error | ☐ | ☐ | ☐ |
 | 4 | Predicting house prices from past (labeled) data | ☐ | ☐ | ☐ |
-| 5 | Learning a high score by playing a game | ☐ | ☐ | ☐ |
+| 5 | Learning to achieve a high score by playing a game | ☐ | ☐ | ☐ |
 | 6 | Clustering unlabeled news by topic | ☐ | ☐ | ☐ |
 
 Once all six are marked, look back at the list. Three of the tasks say “labeled” or “unlabeled” outright; in the others, what told you whether a label exists? And tasks 3 and 5 have something in common: where does the correct answer come from in each? Each column gets two tasks, and that is by design.
@@ -106,7 +106,7 @@ Supervised learning asks two basic questions. One says “how much?”: What doe
 
 Try both yourself below. In regression you’ll find the “best line” through the middle of the points; in classification you’ll draw a border between the two groups.
 
-> **Margin note.** Simple rule: if the output is a number it’s regression, if it’s a label it’s classification. “How much?” is regression, “Which one?” is classification.
+> **Margin note.** Simple rule: if the model predicts a quantity it’s regression, if it picks a category it’s classification. “How much?” is regression, “Which one?” is classification; a category stays a category even when it is coded as a number.
 
 **Figure 3.3 · Two core tasks**
 ![Figure 3.3](../../figures/out/en/figure-3-3-scatter.svg)
@@ -117,13 +117,13 @@ Try both yourself below. In regression you’ll find the “best line” through
 
 1. The regression data is nine points: (1, 1.4), (2, 1.9), (3, 2.2), (4, 3.1), (5, 3.3), (6, 4.2), (7, 4.5), (8, 5.4), (9, 5.6). As x grows, y grows, but the points do not sit on a single line.
 2. The least-squares line comes from two means: the x values average 5, the y values 3.51. Slope m = 33 / 60 = 0.55; intercept b = 3.51 − 0.55 · 5 = 0.76. The line: y = 0.55x + 0.76.
-3. How close is the line to each point? At x = 3 the line says 2.41, the point is 2.2; the gap is −0.21. At x = 8 the line says 5.16, the point is 5.4; the gap is +0.24. None of the nine gaps exceeds 0.25. The sum of the squared gaps is 0.22.
-4. Why is this sum the measure of “best”? Take a line drawn by eye, y = 0.5x + 1: the same sum rises to 0.37. Among all possible lines, the least-squares line is the one that makes this sum smallest.
+3. How close is the line to each point? The measure is the vertical gap at the same x: the observed y minus the y the line gives. That gap is called the residual; it is not the shortest (perpendicular) distance to the line. At x = 3 the line says 2.41, the point is 2.2; the residual is −0.21. At x = 8 the line says 5.16, the point is 5.4; the residual is +0.24. None of the nine residuals exceeds 0.25. The sum of the squared residuals is 0.22.
+4. Why is this sum the measure of “best”? Take a line drawn by eye, y = 0.5x + 1: the sum of squared vertical residuals rises to 0.37. Among all possible lines, the least-squares line is the one that makes this sum smallest.
 5. The classification data is two groups. Green: (1.5, 1.5), (2, 2.2), (2.6, 1.7), (3.1, 2.6), (1.9, 3). Orange: (6.5, 4.5), (7, 5.3), (7.6, 4.6), (6.9, 5.8), (8, 5.1).
 6. The boundary is the line through the points (1, 5.5) and (8.5, 1): y = 6.1 − 0.6x. Check: at x = 3.1 the boundary says 4.24; the green point at 2.6 is below it. At x = 6.5 it says 2.2; the orange point at 4.5 is above it. All ten points are on the right side.
 7. Two answers, two kinds. Regression gives a number: for x = 10, 0.55 · 10 + 0.76 = 6.26. Classification gives a side: below the boundary is green, above it is orange.
 
-*What is happening?* Two core jobs. Regression predicts a number: the “best line” runs through the middle of the points, staying as close to all of them as possible. Classification draws a border separating one group from the other.
+*What is happening?* Two core jobs. Regression predicts a number: the “best line” runs between the points; the best line is the one that makes the sum of the squared vertical gaps, each point’s gap at its own x, as small as possible. Classification draws a border separating one group from the other.
 
 *Try it yourself.* 1) By the line y = 0.55x + 0.76, what is the prediction for x = 6.5? 2) On which side of the boundary does the point (4.5, 3.5) fall: green or orange? And (5, 3)? 3) Add a far-off point such as (9, 9) to the regression data. Does the slope go up or down? Is it a problem that the line chases a single point? Live demo: [QR 3.3]
 
@@ -133,24 +133,24 @@ Regression predicts a continuous target; its simplest form is the least-squares 
 
 Figure 3.3 fits a least-squares line for regression and shows a linear decision boundary separating two clusters for classification. In reality, decision boundaries need not be linear.
 
-The closed form of the least-squares line: m = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)², b = ȳ − m·x̄. For the data of Figure 3.3 the numerator is 33 and the denominator 60.
+The closed form of the least-squares line: m = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)², b = ȳ − m·x̄. For the data of Figure 3.3 the numerator is 33 and the denominator 60. The quantity minimized is the sum of squared vertical residuals, Σ(yᵢ − m·xᵢ − b)², not the perpendicular distance to the line.
 
 So far every point came with its label or its number. Take the labels away and nothing is left but the points. Can the machine still find an order in them?
 
 ### 3.5 Clustering and anomalies
 
-Imagine being handed a huge box of buttons and told “sort these.” Nobody says which belongs where; still, you put like with like. That is clustering: the machine groups unlabeled data by similarity, all by itself. And there are always a few odd buttons that fit nowhere; anomaly detection catches those. It is how banks catch a suspicious transaction.
+Imagine being handed a huge box of buttons and told “sort these.” Nobody says which belongs where; still, you put like with like. That is clustering: the machine groups unlabeled data by similarity, all by itself. And there are always a few odd buttons that fit nowhere; anomaly detection catches those. It is one of the tools banks use to catch a suspicious transaction.
 
-The points in Figure 3.4 carry no labels at all. The machine sorts them into two clusters by similarity, and the odd one out gives itself away.
+The points in Figure 3.4 carry no labels at all. The machine sorts them into two clusters by nearest center. The point far from both clusters is marked as the outlier.
 
-> **Margin note.** What unsupervised learning can do: without anyone saying “these belong together,” the machine finds the structure itself. Banks’ fraud detection relies heavily on spotting anomalies.
+> **Margin note.** What unsupervised learning can do: without anyone saying “these belong together,” the machine finds the structure itself. Anomaly detection is one of the tools banks use in fraud analysis.
 
 **Figure 3.4 · Group unlabeled data**
 ![Figure 3.4](../../figures/out/en/figure-3-4-kmeans.svg)
 
-*Setup.* The figure shows eleven gray points and two ✕ marks. The ✕ marks are the cluster centers: center A at the top left (2.5, 7), center B at the bottom right (7, 3). The left square, “before: unlabeled points,” is the state before grouping; every point is the same gray. In the right square, “after: nearest-center groups,” each point has taken the color of its nearest center, and one point is marked as the “outlier.”
+*Setup.* The figure shows eleven gray points and two ✕ marks. The ✕ marks are the cluster centers: center A at the top left (2.5, 7), center B at the bottom right (7, 3). The left square, “before: unlabeled points,” is the state before grouping; every point is the same gray. In the right square, “after: nearest-center groups,” each point has taken the color of its nearest center, and one point is marked as the “outlier.” In this illustration both centers and the outlier are chosen in advance; the machine only computes the distances.
 
-*Step by step.* Grouping rests on a single question: which center is this point closer to? The distance comes from Pythagoras: √((x − xₘ)² + (y − yₘ)²).
+*Step by step.* Grouping rests on a single question: which center is this point closer to? The distance comes from Pythagoras: √((x − xₘ)² + (y − yₘ)²). The outlier rule is fixed in advance: a point farther than 2.4 from its nearest center counts as an outlier and joins no cluster. The order is: first assignment, then the threshold, then the center update with the remaining members.
 
 | # | Point | Distance to A | Distance to B | Cluster |
 |---|---|---|---|---|
@@ -169,10 +169,10 @@ The points in Figure 3.4 carry no labels at all. The machine sorts them into two
 1. Point 1, (1.5, 7.5): to A, √(1² + 0.5²) = 1.12; to B, √(5.5² + 4.5²) = 7.11. A is far closer; the point goes to A.
 2. Point 9, (6.8, 4): to A, √(4.3² + 3²) = 5.24; to B, √(0.2² + 1²) = 1.02. It goes to B.
 3. Point 4, (2.8, 6.2): 0.85 against 5.28, A again. Do the same calculation for the first ten points; in every one, the two distances differ by a factor of at least five. The decision is never hard.
-4. Point 11, (5, 8.5), is different. Its nearest center is A, but the distance is 2.92. The other members of A are at most 1.22 from their center; this point is more than twice as far. It is 5.85 from B. It fits neither cluster: an outlier.
-5. That was a single round. Real k-means now updates the centers: the new center of A is the mean of points 1 to 5, (2.22, 7.2). That is only 0.34 from the old center; the clusters have already settled.
+4. Point 11, (5, 8.5), is different. Its nearest center is A, but the distance is 2.92, above the threshold of 2.4. The other members of A are at most 1.22 from their center; this point is more than twice as far. It is 5.85 from B. By the rule it is an outlier and joins no cluster.
+5. That was a single round. Next comes the center update: with the outlier left out, the new center of A is the mean of points 1 to 5, (2.22, 7.2). That is only 0.34 from the old center; the clusters have already settled. One caution: standard k-means knows nothing about outliers; it assigns point 11 to A as well, and the center of A becomes (2.68, 7.42) with six members. The exclusion here is the result of the threshold rule we set.
 
-*What is happening?* The points carry no labels at all. The machine ties each point to its nearest center (✕); similar ones end up in the same cluster. The lone point far from both clusters gets flagged as an “outlier” (an odd example); banks catch fraud in much the same way.
+*What is happening?* The points carry no labels at all. The machine ties each point to its nearest center (✕); similar ones end up in the same cluster. The lone point far from both clusters gets flagged as an “outlier” (an odd example).
 
 *Try it yourself.* 1) Compute the new center of cluster B: the mean x and mean y of points 6 to 10. How far did it move from the old center (7, 3)? 2) If the point (4.5, 5.5) were added to the data, which center would it go to? Looking at its distance, would you count it as an outlier? 3) The clustering used no labels at all. The “outlier” decision, though, rests on a number and a threshold: which ones, and who chose the threshold? Live demo: [QR 3.4]
 
@@ -180,9 +180,9 @@ The points in Figure 3.4 carry no labels at all. The machine sorts them into two
 
 Clustering discovers groups by similarity without labels; methods like k-means assign points to the nearest centroid and update the centroids. Anomaly (outlier) detection identifies examples that deviate markedly from the majority distribution.
 
-Figure 3.4 shows k-means’ “assignment” step by assigning points to the nearer of two fixed centroids; it also highlights an outlier far from both clusters. Real k-means updates the centroids iteratively until convergence.
+Figure 3.4 shows k-means’ “assignment” step by assigning points to the nearer of two fixed centroids; it also highlights an outlier far from both clusters. Real k-means updates the centroids iteratively until convergence. In this illustration the cluster centers and the outlier are predefined; a real system needs a method and a threshold for detecting anomalies.
 
-The two steps as formulas: assignment c(i) = argminₖ ‖xᵢ − μₖ‖², update μₖ ← the mean of the points assigned to cluster k. In Figure 3.4 one update moves center A from (2.5, 7) to (2.22, 7.2) and center B from (7, 3) to (7.32, 3.26); a second assignment round changes no point, and the algorithm has converged.
+The two steps as formulas: assignment c(i) = argminₖ ‖xᵢ − μₖ‖², update μₖ ← the mean of the points assigned to cluster k. In Figure 3.4, once the outlier is excluded by the threshold rule, one update moves center A from (2.5, 7) to (2.22, 7.2) and center B from (7, 3) to (7.32, 3.26); a second assignment round changes no point, and the algorithm has converged. Without the threshold, standard k-means assigns point 11 to A; the center of A becomes (2.68, 7.42) with six members, and the point stays in A in the second round.
 
 In clustering the center moved once and the job was done. How does a model with millions of parameters take its “correct a little” step?
 
@@ -192,7 +192,7 @@ How does a model get “better”? First you measure how wrong it is; that is th
 
 Gradient descent is that walk: feel the slope, take a small step downhill, repeat. In the left panel of Figure 3.5 the ball descends step by step and the loss melts away. And if your stride is too long? The right panel shows what happens.
 
-> **Margin note.** Learning is this: ask “how wrong am I?”, correct a little, repeat, millions of times over. Nearly all modern AI, neural networks included, is trained this way.
+> **Margin note.** Learning is this: ask “how wrong am I?”, correct a little, repeat, millions of times over. Most of today’s models, neural networks above all, are trained this way, with gradients; some methods, such as decision trees, learn another way.
 
 **Figure 3.5 · Descending the loss valley**
 ![Figure 3.5](../../figures/out/en/figure-3-5-descent.svg)
@@ -225,7 +225,7 @@ Gradient descent is that walk: feel the slope, take a small step downhill, repea
 
 Training means adjusting the parameters to minimize a loss function L(θ). Gradient descent moves against the gradient at every step: θ ← θ − η·∇L(θ), where η is the learning rate.
 
-The learning rate is the most delicate dial: too small and convergence is slow; too large and it can oscillate around the minimum or diverge. Figure 3.5 shows descent on a convex loss curve and the overshoot a large learning rate causes. In practice surfaces aren’t convex, and stochastic gradient descent is the norm.
+The learning rate is the most delicate dial: too small and convergence is slow; too large and it can oscillate around the minimum or diverge. Figure 3.5 shows descent on a convex loss curve and the overshoot a large learning rate causes. Deep-network loss surfaces are generally nonconvex, and gradient-based methods such as stochastic gradient descent are the norm in training; some models, such as linear regression, have convex losses, and some, such as tree-based methods, do not use gradients at all.
 
 In this quadratic valley the step rule is linear: xₜ₊₁ − 5 = (1 − 0.36·η)·(xₜ − 5). The factor is 0.935 at η = 0.18 (one-directional, slow), −0.656 at η = 4.6 (damped oscillation), and its absolute value exceeds 1 for η > 5.56 (divergence). Every row of the table follows from the previous one through this single factor.
 
@@ -242,17 +242,17 @@ Now fit three models to the same data, like three students: the lazy one, the ba
 **Figure 3.6 · Same data, three models**
 ![Figure 3.6](../../figures/out/en/figure-3-6-modelfit.svg)
 
-*Setup.* All three panels hold the same nine points: (1, 3.2), (2, 2.4), (3, 3.0), (4, 2.0), (5, 2.7), (6, 1.7), (7, 2.3), (8, 1.4), (9, 2.0). The overall trend is downward, but the points jump up and down from one x to the next; that is measurement noise. The left panel, “Underfit,” is a straight line; the middle, “Good (balanced),” a gently waving curve; the right, “Overfit,” a broken line joining the nine points one by one. Under each panel stands that model’s verdict.
+*Setup.* All three panels hold the same nine points: (1, 3.2), (2, 2.4), (3, 3.0), (4, 2.0), (5, 2.7), (6, 1.7), (7, 2.3), (8, 1.4), (9, 2.0). The overall trend is downward, but the points jump up and down from one x to the next; that is measurement noise. The left panel, “Underfit,” is a straight line; the middle, “Smoother representative curve,” a gently waving curve; the right, “Overfit,” a broken line joining the nine points one by one. Under each panel stands that model’s verdict. The middle curve was not trained on the data; it was drawn by hand for the explanation.
 
 *Step by step.*
 
 1. Underfit: the line y = 3.1 − 0.18x. At x = 5 it says 2.2 against a point at 2.7; the gap is 0.5. At x = 9 it says 1.48 against 2.0. The line runs above one point and below the next; it never follows the jolts. Verdict: “Underfitting: the model is too simple to capture the pattern (high bias).”
-2. Good (balanced): the curve y = 3.0 − 0.16x + 0.15·sin(0.6x). It says 2.22 at x = 5 and 1.44 at x = 9. It does not chase the zigzag; it carries only the downward trend and a slight wave. Verdict: “Bias–variance balance: both training and validation error are low; the model generalizes well.”
+2. Smoother representative curve: y = 3.0 − 0.16x + 0.15·sin(0.6x). It says 2.22 at x = 5 and 1.44 at x = 9. It does not chase the zigzag; it carries only the downward trend and a slight wave. Verdict: “Bias–variance balance: neither so simple that it misses the pattern nor so complex that it memorizes the noise.” To call it a good generalizer, its error on data not used for training would have to be measured; the curve was drawn by hand, so that measurement does not exist here.
 3. Overfit: the broken line passes through all nine points; the training error is zero. But its shape gives it away: from 5 to 6 it drops by 1.0, from 6 to 7 it rises by 0.6. Those ups and downs are noise, not pattern; a fresh measurement would not repeat them. Verdict: “Overfitting: it passes through every point but memorizes the noise; it fails on new data (high variance).”
 4. The exam: hide points 5 and 7 and draw the same broken line through the remaining seven. At x = 5 the line joins (4, 2.0) to (6, 1.7) and says 1.85; the truth is 2.7, an error of 0.85. At x = 7 it says 1.55; the truth is 2.3, an error of 0.75. The simple line errs by 0.5 and 0.46 at the same two points. On an unseen question the memorizer does worse than the lazy one.
-5. Training error on its own misleads. A model has to be tested on data it has never seen; that is what “validation” means.
+5. Training error on its own misleads. A model has to be tested on data it has never seen; that is what “validation” means. A fair comparison trains every candidate on the same seven points and tests it on the same two. Here that was done for the broken line and the straight line; the middle curve, drawn by hand, never sat the exam.
 
-*What is happening?* Three different models are fitted to the same data. The too-simple one misses the pattern (underfitting); the too-complex one memorizes every point but stumbles on new data (overfitting). The best is right in the middle: the model that also predicts examples it has never seen.
+*What is happening?* Three different models are fitted to the same data. The too-simple one misses the pattern (underfitting); the too-complex one memorizes every point but stumbles on new data (overfitting). The best is in between: the model that also predicts examples it has never seen. These curves show the idea; which one generalizes well can only be told by the error measured on data not used for training.
 
 *Try it yourself.* 1) What do the three models say for x = 10? Look closely at the broken line. 2) Repeat the hide-and-test exam with points 2 and 8: what errors do the broken line and the straight line make at those two points? 3) The model that passes through all nine points boasts of “zero error.” What does that number prove, and what does it not prove? Live demo: [QR 3.6]
 
@@ -260,9 +260,9 @@ Now fit three models to the same data, like three students: the lazy one, the ba
 
 Overfitting is when a model also learns the noise in the training data and loses performance on unseen data; underfitting is when it is too simple to capture the pattern. These are the two ends of the bias–variance tradeoff, usually managed with train/validation splits, regularization and cross-validation.
 
-Ensemble learning combines the predictions of many models (voting, bagging, boosting) for better, more stable results than any single model; random forests and gradient boosting are the best-known examples.
+Ensemble learning combines the predictions of many models (voting, bagging, boosting); when their errors complement one another it can improve generalization, but it does not guarantee beating every individual model, and the gain is measured on validation data. Random forests and gradient boosting are the best-known examples.
 
-The hide-and-test exam of Figure 3.6 is a single-fold train/validation split: two points form the validation set, seven the training set. Cross-validation repeats this nine times, hiding each point in turn, and averages the errors.
+The hide-and-test exam of Figure 3.6 is a single-fold train/validation split: two points form the validation set, seven the training set. Cross-validation is the k-fold version of this: the data is split into k parts, each part is held out in turn, the rest trains the model and the errors are averaged; holding out each point one at a time (here k = 9) is a special case.
 
 One idea ran through this chapter: grasp the pattern instead of memorizing the examples. The six questions below check whether it stuck.
 
@@ -310,8 +310,8 @@ One idea ran through this chapter: grasp the pattern instead of memorizing the e
 - Machine learning writes no rules; it draws the rule from the examples itself.
 - Every example has two parts: the features that describe it and the correct answer, the label.
 - With labels it is supervised learning, without them unsupervised, and with rewards reinforcement learning.
-- “How much?” is regression, “which one?” is classification.
-- Clustering groups unlabeled data by similarity; a point that fits no group is an outlier.
+- “How much?” is regression (a house price), “which one?” is classification (spam or not); a category coded as a number is still classification.
+- Clustering groups unlabeled data by similarity; a point far from every cluster counts as an outlier by a threshold set in advance.
 - Gradient descent measures the loss, reads the slope, takes a small step and repeats this millions of times.
 - A model that memorizes the training data flunks new data; a good model grasps the pattern.
 
@@ -333,6 +333,22 @@ Gradient descent is exactly that walk: Feel the slope, take a small step downhil
 *What is happening?* Improving a model is like descending to a valley floor: the bigger the “loss,” the higher up you are. Each step nudges the ball downhill and the loss shrinks. But if the step is too big (a high learning rate), the ball overshoots the bottom and flies up the far slope; that is why step size matters. ||| *What is happening?* Improving a model is like descending to a valley floor: the bigger the “loss,” the higher up you are. Each step nudges the ball downhill and the loss shrinks. But if the step is too big (a high learning rate), the ball overshoots the bottom and flies up the far slope; the step size matters as much as the direction.
 The learning rate is the most delicate dial: too small and convergence is slow; too large and it can oscillate around the minimum or diverge. In Figure 3.5, follow the descent on a convex loss curve and how a large learning rate causes overshoot. In practice surfaces aren’t convex, and stochastic gradient descent is the norm. ||| The learning rate is the most delicate dial: too small and convergence is slow; too large and it can oscillate around the minimum or diverge. Figure 3.5 shows descent on a convex loss curve and the overshoot a large learning rate causes. In practice surfaces aren’t convex, and stochastic gradient descent is the norm.
 *What is happening?* We fit three different models to the same data. The too-simple one misses the pattern (underfitting); the too-complex one memorizes every point but stumbles on new data (overfitting). The best is right in the middle: the model that also predicts examples it has never seen. In short, memorizing isn’t learning. ||| *What is happening?* Three different models are fitted to the same data. The too-simple one misses the pattern (underfitting); the too-complex one memorizes every point but stumbles on new data (overfitting). The best is right in the middle: the model that also predicts examples it has never seen.
+Picture a detective: clues in one hand, and the case’s final verdict in the other. A machine learning from examples looks at the same pair. The clues are called features: measurable facts describing an example. The verdict is called the label. For an email the clues might be “word count,” “has a link,” “mentions free”; the label is “Spam” or “Normal.” ||| Picture a detective: clues in one hand, and the case’s final verdict in the other. A machine learning from examples looks at the same pair. The clues are called features: measurable facts describing an example. The verdict is called the label. For an email the clues might be “word count,” “link or password request,” “mentions free”; the label is “Spam” or “Normal.”
+The label’s type sets the task: a categorical label → classification, a continuous (numeric) label → regression. The example below builds intuition for telling spam from normal email with simple features. ||| The label’s type sets the task: a categorical label → classification, a quantitative (continuous) label → regression. Categories may be coded as numbers; that does not make them regression targets. The example below builds intuition for telling spam from normal email with simple features.
+An email’s clues (features) and its correct answer (label) sit side by side: mentions of “free,” a link request, urgent language... Seeing many examples, the machine learns by itself which clues go with “Spam”; nobody writes the rule, it draws it from the examples. ||| An email’s clues (features) and its correct answer (label) sit side by side: mentions of “free,” a link or password request, urgent language... Seeing many examples, the machine learns by itself which clues go with “Spam”; nobody writes the rule, it draws it from the examples.
+Feature vector x = [mentions “free”; has a link; urgency language], label y = “Spam.” In supervised learning the model tries to estimate the mapping f(x) ≈ y from these (x, y) pairs, i.e. a decision rule like P(spam | x). ||| Feature vector x = [mentions “free”; link or password request; urgency language], label y = “Spam.” In supervised learning the model tries to estimate the mapping f(x) ≈ y from these (x, y) pairs, i.e. a decision rule like P(spam | x).
+Simple rule: if the output is a number it’s regression, if it’s a label it’s classification. “How much?” is regression, “Which one?” is classification. ||| Simple rule: if the model predicts a quantity it’s regression, if it picks a category it’s classification. “How much?” is regression, “Which one?” is classification; a category stays a category even when it is coded as a number.
+Two core jobs. Regression predicts a number: the “best line” runs through the middle of the points, staying as close to all of them as possible. Classification draws a border separating one group from the other. ||| Two core jobs. Regression predicts a number: the “best line” runs between the points; the best line is the one that makes the sum of the squared vertical gaps, each point’s gap at its own x, as small as possible. Classification draws a border separating one group from the other.
+Imagine being handed a huge box of buttons and told “sort these.” Nobody says which belongs where; still, you put like with like. That is clustering: the machine groups unlabeled data by similarity, all by itself. And there are always a few odd buttons that fit nowhere; anomaly detection catches those. It is how banks catch a suspicious transaction. ||| Imagine being handed a huge box of buttons and told “sort these.” Nobody says which belongs where; still, you put like with like. That is clustering: the machine groups unlabeled data by similarity, all by itself. And there are always a few odd buttons that fit nowhere; anomaly detection catches those. It is one of the tools banks use to catch a suspicious transaction.
+The points below carry no labels at all. Press “Group”; let the machine sort them into two clusters by similarity, and let the odd one out give itself away. ||| The points below carry no labels at all. Press “Group”; let the machine sort them into two clusters by nearest center. The point far from both clusters is marked as the outlier.
+What unsupervised learning can do: without anyone saying “these belong together,” the machine finds the structure itself. Banks’ fraud detection relies heavily on spotting anomalies. ||| What unsupervised learning can do: without anyone saying “these belong together,” the machine finds the structure itself. Anomaly detection is one of the tools banks use in fraud analysis.
+The demo shows k-means’ “assignment” step by assigning points to the nearer of two fixed centroids; it also highlights an outlier far from both clusters. Real k-means updates the centroids iteratively until convergence. ||| The demo shows k-means’ “assignment” step by assigning points to the nearer of two fixed centroids; it also highlights an outlier far from both clusters. Real k-means updates the centroids iteratively until convergence. In this illustration the cluster centers and the outlier are predefined; a real system needs a method and a threshold for detecting anomalies.
+The points carry no labels at all. The machine ties each point to its nearest center (✕); similar ones end up in the same cluster. The lone point far from both clusters gets flagged as an “outlier” (an odd example); banks catch fraud in much the same way. ||| The points carry no labels at all. The machine ties each point to its nearest center (✕); similar ones end up in the same cluster. The lone point far from both clusters gets flagged as an “outlier” (an odd example).
+Learning is this: ask “how wrong am I?”, correct a little, repeat, millions of times over. Nearly all modern AI, neural networks included, is trained this way. ||| Learning is this: ask “how wrong am I?”, correct a little, repeat, millions of times over. Most of today’s models, neural networks above all, are trained this way, with gradients; some methods, such as decision trees, learn another way.
+The learning rate is the most delicate dial: too small and convergence is slow; too large and it can oscillate around the minimum or diverge. In the demo, watch descent on a convex loss curve and the overshoot a large learning rate causes. In practice surfaces aren’t convex, and stochastic gradient descent is the norm. ||| The learning rate is the most delicate dial: too small and convergence is slow; too large and it can oscillate around the minimum or diverge. In the demo, watch descent on a convex loss curve and the overshoot a large learning rate causes. Deep-network loss surfaces are generally nonconvex, and gradient-based methods such as stochastic gradient descent are the norm in training; some models, such as linear regression, have convex losses, and some, such as tree-based methods, do not use gradients at all.
+Ensemble learning combines the predictions of many models (voting, bagging, boosting) for better, more stable results than any single model; random forests and gradient boosting are the best-known examples. ||| Ensemble learning combines the predictions of many models (voting, bagging, boosting); when their errors complement one another it can improve generalization, but it does not guarantee beating every individual model, and the gain is measured on validation data. Random forests and gradient boosting are the best-known examples.
+Three different models are fitted to the same data. The too-simple one misses the pattern (underfitting); the too-complex one memorizes every point but stumbles on new data (overfitting). The best is right in the middle: the model that also predicts examples it has never seen. ||| Three different models are fitted to the same data. The too-simple one misses the pattern (underfitting); the too-complex one memorizes every point but stumbles on new data (overfitting). The best is in between: the model that also predicts examples it has never seen. These curves show the idea; which one generalizes well can only be told by the error measured on data not used for training.
+Learning a high score by playing a game ||| Learning to achieve a high score by playing a game
 -->
 
 <!-- EDITORIAL NOTES
@@ -355,4 +371,7 @@ The learning rate is the most delicate dial: too small and convergence is slow; 
 - 2026-09-30 humanizing pass (copy edit; see the SOURCE-CHANGES block above for the source paragraphs the author should carry into the digital edition): author "we" → "you" or impersonal throughout; "exactly" as intensifier, "really / just", "In short", "remember: …", "the power of …" removed; "How much? / Which one?" slogan now in the margin note and the takeaway only, "memorizing isn't learning" in the margin note only, "the borders aren't sharp" in the Technical text of 3.3 only; production leak in Figure 3.2 ("the six were chosen to introduce…") cut; margin-note back-references in the Figure 3.2 self-test replaced by the questions themselves; bridges and the pre-quiz sentence rewritten; colon consistency (lowercase after a colon unless a direct question or two sentences follow).
 - Technical "What is happening?" paragraphs dropped from print because they repeat the Technical text above them word for word (print only; the digital edition keeps them under the demo): 3.3 ("Three paradigms: …"), 3.4 ("In regression the target is a continuous number; “Fit the line” computes …"), 3.5 ("Unlabeled x points, two fixed centroids …"), 3.6 ("Gradient descent: θ ← θ − η·∇L(θ). The parameter moves toward the minimum (x* = 5) …"), 3.7 ("The bias–variance tradeoff: …"). The note above about the "“Fit the line”" and "“Group”" button names therefore now applies only to the digital edition; Figure 3.4 Simple "When you press “Group,”" is resolved in the SOURCE-CHANGES block.
 - 3.3 Technical "Sort the tasks below" → "Sort the tasks of Figure 3.2" (the Technical box now sits after the figure).
+- 2026-10-01 correction document (R017, R018, R019, R020, R021, R022, R023, R024, R065, R068, R093): the feature is “link or password request” everywhere (3.2 Simple, table, Setup, technical vector, answers); number=regression generalization replaced by the quantity/category distinction (3.2 Technical, 3.4 margin note, takeaway, answers 3.2/4); least squares named as vertical squared residuals (3.3 Step by step 3–4, What is happening, Technical; the sums 0.22 / 0.37 re-verified with vertical residuals); Figure 3.4: centers and outlier predefined, threshold 2.4 and the order assignment → threshold → update defined, “standard k-means assigns point 11 to A, A = (2.68, 7.42)” note (Setup, Step by step, Technical, answers); bank/anomaly generalization narrowed; 3.6 margin note and Technical “nearly all AI / all surfaces” qualified; ensemble guarantee removed; Figure 3.6 middle panel “Smoother representative curve”, verdict text and validation-data warning, cross-validation as k-fold; answers Figure 3.3: 0.55 · 6.5 = 3.575; 3.575 + 0.76 = 4.335 ≈ 4.34, “previous nine”, confidence remark with the calibration condition; Figure 3.2 task 5 “Learning to achieve a high score” (R065; the last SOURCE-CHANGES line is that demo item label, not a paragraph). Changed source paragraphs are the last 16 lines of the SOURCE-CHANGES block above.
+- 2026-10-01 R021: the digital demo’s “High” learning rate was set to 4.6 by the demo-code agent; the printed Figure 3.5 table (η = 4.6: 0.60 → 7.89 → 3.11 → 6.24 → 4.19 → 5.53 → 4.65) and the η = 6 divergence exercise are kept; the source “oscillate / overshoot” sentences are now true in the digital edition as well. The 0.92 note above is history.
+- 2026-10-01 for the figure agent: Figure 3.6 middle panel label “Good (balanced)” → “Smoother representative curve”, verdict “Bias–variance balance: neither so simple that it misses the pattern nor so complex that it memorizes the noise.”; Figure 3.2 task 5 label “Learning to achieve a high score by playing a game” (print/figures/strings/M03.mjs).
 -->

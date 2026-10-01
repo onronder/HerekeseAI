@@ -1,6 +1,7 @@
 // Bölüm 1 figürleri — etiketler ve veri: strings/M01.mjs (S = STRINGS[lang])
-import { INK, INK2, MUTED, RULE, EMBER, EMBER_SOFT, PAPER, SANS, MONO, SERIF, esc, f1, text, rect, line, circle, svg, caption, up, pct, num, bn } from '../lib.mjs';
+import { INK, INK2, MUTED, RULE, EMBER, EMBER_SOFT, PAPER, SANS, MONO, SERIF, esc, f1, text, rect, line, circle, svg, caption, up, pct, num, bn, wrapW } from '../lib.mjs';
 import STRINGS from '../strings/M01.mjs';
+import STRINGS_M03 from '../strings/M03.mjs';
 
 // ---------------------------------------------------------------- 1. Turing makinesi: film şeridi
 // Atlas-Kitap.dc.html turingStep()/turingSetStart() birebir: 6 bitlik bant, 'right' → 'add' → 'done'.
@@ -64,10 +65,11 @@ function wrap(s, maxChars) {
 
 // ---------------------------------------------------------------- 1. Çoklu zekâ: sekiz kart + YZ çubuğu
 // renderVals(): lvlBar strong 90% · mid 55% · weak 22%. Ekranda kartlar tek tek açılır; kâğıtta 2×4 ızgara.
+// R087 (2026-10-01): veri etiketi çubuğun üstünde ayrı satırda; çubuk kartın tam genişliğinde (etiket çubuğa binmez).
 const BAR = { strong: 90, mid: 55, weak: 22 };
 function intelligenceFigure(demo, { lang }) {
   const S = STRINGS[lang].intelligence;
-  const cols = 2, pad = 10, gap = 8, cw = (320 - pad * 2 - gap) / cols, ch = 52, W = 320;
+  const cols = 2, pad = 10, gap = 8, cw = (320 - pad * 2 - gap) / cols, ch = 58, W = 320;
   const rows = Math.ceil(demo.types.length / cols), H = pad * 2 + rows * ch + (rows - 1) * gap;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
   const barOf = (tp) => BAR[S.levelKey[tp.level]] ?? 0;
@@ -76,11 +78,10 @@ function intelligenceFigure(demo, { lang }) {
     body.push(rect(ox, oy, cw, ch, { fill: '#fff', stroke: RULE, sw: 0.6 }));
     body.push(text(ox + 7, oy + 13, tp.name, { size: 7.5, weight: 600 }));
     wrap(tp.desc, 40).slice(0, 2).forEach((ln, k) => body.push(text(ox + 7, oy + 23 + k * 8.5, ln, { size: 6.5, fill: INK2 })));
-    // EN etiketi ("AI: Strong · 90%") TR'den bir karakter uzun; %90 çubuğuna değmesin diye EN'de çubuk 6pt kısa
-    const p = barOf(tp), bx = ox + 7, by = oy + ch - 11, bw = lang === 'en' ? 78 : 84, bh = 4.5;
+    const p = barOf(tp), bx = ox + 7, by = oy + ch - 10, bw = cw - 14, bh = 4.5;
+    body.push(text(bx + bw, by - 3.5, S.ai(tp.level, pct(p, lang)), { font: MONO, size: 6, fill: p >= 90 ? EMBER : INK2, anchor: 'end' }));
     body.push(rect(bx, by, bw, bh, { fill: 'rgba(31,31,31,0.08)' }));
     body.push(rect(bx, by, bw * p / 100, bh, { fill: EMBER }));
-    body.push(text(ox + cw - 7, by + bh, S.ai(tp.level, pct(p, lang)), { font: MONO, size: 6, fill: p >= 90 ? EMBER : INK2, anchor: 'end' }));
   });
   const md = [`# ${demo.title}`, '', S.mdHeader, '|---|---|---|---|',
     ...demo.types.map((tp) => `| ${tp.name} | ${tp.desc} | ${tp.level} | ${pct(barOf(tp), lang)} |`), ''].join('\n');
@@ -113,8 +114,10 @@ function binaryFigure(demo, { lang }) {
   y += 14;
   body.push(line(pad, y, W - pad, y, { stroke: RULE, sw: 0.6 }));
   y += 12;
-  body.push(caption(pad, y, S.rule));
-  y += 6;
+  // R072: yönerge iki satır (EN tek satırda 320pt'yi aşıyordu; TR de aynı düzende)
+  const ruleLines = Array.isArray(S.rule) ? S.rule : [S.rule];
+  ruleLines.forEach((ln, k) => body.push(caption(pad, y + k * 9, ln)));
+  y += 6 + (ruleLines.length - 1) * 9;
   const rowsN = [5, 73, 255], sc = 14;
   rowsN.forEach((n) => {
     const bits = toBits(n);
@@ -137,24 +140,34 @@ function binaryFigure(demo, { lang }) {
 
 // ---------------------------------------------------------------- 4. Getir–Yürüt–Yaz: üç kare yan yana, evredeki parça koyu
 // renderVals(): phase i → parts[i] koyu (bg=acc). Kareler: demo.phases; parçalar: demo.parts. Sonra döngü başa döner.
+// R006 (2026-10-01): üçüncü evre "Kaydet / Yaz": sonuç yazmaca (İşlemci) ya da belleğe yazılır; Giriş / Çıkış yalnız çıkış
+// talimatında devreye girer (kutu kesikli, altında not). Evre adı ve notlar strings/M01 cycle (phases, writeActive, ioNote, writeDesc).
 function cycleFigure(demo, { lang }) {
   const S = STRINGS[lang].cycle;
-  const W = 320, pad = 10, n = demo.phases.length, fg = 8, fw = (W - pad * 2 - (n - 1) * fg) / n;
+  const W = 320, pad = 8, n = demo.phases.length, fg = 6, fw = (W - pad * 2 - (n - 1) * fg) / n;
   const bw = 72, bh = 16, bgap = 10, top = 22;
   const stackH = demo.parts.length * bh + (demo.parts.length - 1) * bgap;
-  const H = top + stackH + 40, frameBottom = top + stackH + 18;
+  const ioLines = Array.isArray(S.ioNote) ? S.ioNote : [S.ioNote];
+  const frameBottom = top + stackH + 18 + ioLines.length * 8, H = frameBottom + 22;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
+  const WRITE = n - 1; // kaydet/yaz evresi: son evre
+  const phaseName = (ph, i) => (S.phases && S.phases[i]) || ph;
   demo.phases.forEach((ph, i) => {
-    const ox = pad + i * (fw + fg), cx = ox + fw / 2;
+    const ox = pad + i * (fw + fg), cx = ox + fw / 2, isWrite = i === WRITE;
     body.push(rect(ox, pad, fw, frameBottom - pad, { fill: '#fff', stroke: RULE, sw: 0.6 }));
-    body.push(caption(cx, pad + 9, up(ph, lang), { anchor: 'middle', fill: INK }));
+    body.push(caption(cx, pad + 9, up(phaseName(ph, i), lang), { anchor: 'middle', fill: INK }));
     demo.parts.forEach((p, k) => {
-      const by = top + k * (bh + bgap), on = k === i;
-      body.push(rect(cx - bw / 2, by, bw, bh, { fill: on ? EMBER : '#fff', stroke: on ? EMBER : INK, sw: on ? 1.2 : 0.8 }));
-      body.push(text(cx, by + bh - 5, p.label, { size: 7, fill: on ? '#fff' : INK, anchor: 'middle', weight: on ? 700 : 500 }));
+      const by = top + k * (bh + bgap);
+      // kaydet/yaz evresinde: Bellek tam vurgu, İşlemci (yazmaç) yarım vurgu, Giriş / Çıkış kesikli (yalnız çıkış talimatında)
+      const on = isWrite ? k === 0 : k === i, half = isWrite && k === 1, io = isWrite && k === demo.parts.length - 1;
+      let box = rect(cx - bw / 2, by, bw, bh, { fill: on ? EMBER : half ? EMBER_SOFT : '#fff', stroke: on || half ? EMBER : io ? INK2 : INK, sw: on ? 1.2 : 0.8 });
+      if (io) box = box.replace('/>', ' stroke-dasharray="2 1.5"/>');
+      body.push(box);
+      body.push(text(cx, by + bh - 5, p.label, { size: 7, fill: on ? '#fff' : io ? INK2 : INK, anchor: 'middle', weight: on || half ? 700 : 500 }));
       if (k < demo.parts.length - 1) body.push(line(cx, by + bh + 1, cx, by + bh + bgap - 1, { stroke: INK2, sw: 0.7, marker: true }));
     });
-    body.push(text(cx, top + stackH + 12, S.active(demo.parts[i].label), { font: MONO, size: 5.5, fill: EMBER, anchor: 'middle' }));
+    body.push(text(cx, top + stackH + 12, isWrite ? S.writeActive : S.active(demo.parts[i].label), { font: MONO, size: 6, fill: EMBER, anchor: 'middle' }));
+    if (isWrite) ioLines.forEach((ln, k) => body.push(text(cx, top + stackH + 21 + k * 8, ln, { size: 6, fill: INK2, anchor: 'middle' })));
     if (i < n - 1) body.push(line(ox + fw + 1, top + stackH / 2, ox + fw + fg - 1, top + stackH / 2, { stroke: INK, sw: 0.8, marker: true }));
   });
   // döngü başa döner: son kareden ilk kareye alttan kesikli ok
@@ -162,21 +175,30 @@ function cycleFigure(demo, { lang }) {
   body.push(`<path d="M${f1(x1)} ${f1(frameBottom)} L${f1(x1)} ${f1(ly)} L${f1(x0)} ${f1(ly)} L${f1(x0)} ${f1(frameBottom + 2)}" fill="none" stroke="${INK2}" stroke-width="0.7" stroke-dasharray="2 2" marker-end="url(#arrow)"/>`);
   body.push(text(W / 2, ly - 3, S.loop, { font: MONO, size: 6, fill: INK2, anchor: 'middle' }));
   const md = [`# ${demo.title}`, '', S.mdHeader, '|---|---|---|',
-    ...demo.phases.map((ph, i) => `| ${ph} | ${demo.parts[i].label} | ${demo.parts[i].desc} |`), ''].join('\n');
+    ...demo.phases.map((ph, i) => (i === WRITE
+      ? `| ${phaseName(ph, i)} | ${S.writePart(demo.parts[1].label, demo.parts[0].label, demo.parts[2].label)} | ${S.writeDesc} |`
+      : `| ${phaseName(ph, i)} | ${demo.parts[i].label} | ${demo.parts[i].desc} |`)), '', S.mdNote, ''].join('\n');
   return [{ name: 'cycle', svg: svg(W, H, body.join('\n')), md }];
 }
 
 // ---------------------------------------------------------------- 5. Sınıflandırma sınaması: boş işaretleme tablosu (cevap gösterilmez)
 // Üç demoyu karşılar: catA/catB (M1, M2) ya da cats[] (M3). Sütun sayısı veriye göre 2 ya da 3. Veri book.json'dan (her dilde kendi metni).
-function classifyFigure(demo, { lang }) {
+// R007 (2026-10-01): M01 demosunda sütun adları "Bugün kullanılan sistem" / "Varsayımsal sistem" (strings classify.agiCats);
+// bilinçli makine kartının altında "Bilinç sorusu (ayrı)" etiketi. R073: hücre metni genişliğe göre sarılır (wrapW).
+// R065 (2. tur): görev metni override'ı bölümün strings dosyasından (M03 classify.itemOverride, EN görev 5).
+function classifyFigure(demo, { lang, mod }) {
   const S = STRINGS[lang].classify;
-  const cats = demo.cats || [demo.catA, demo.catB];
+  const OV = Number(mod.n) === 3 ? (STRINGS_M03[lang].classify || {}).itemOverride || {} : {};
+  const items = demo.items.map((it, i) => (OV[i] ? { ...it, label: OV[i] } : it));
+  const agi = Number(mod.n) === 1 && demo.catA && demo.catA.key === 'dar';
+  const cats = (demo.cats || [demo.catA, demo.catB]).map((c, j) => (agi ? { ...c, label: S.agiCats[j] } : c));
   const W = 320, pad = 8, numW = 14, catW = cats.length === 2 ? 66 : 50, itemW = W - pad * 2 - numW - cats.length * catW;
-  const maxCh = Math.min(42, Math.floor(itemW / 3.5)), lh = 8.5, rowPad = 5;
-  const hdr = cats.map((c) => wrap(c.label, Math.floor(catW / 3.6)));
+  const lh = 8.5, rowPad = 5, tagH = 8;
+  const hdr = cats.map((c) => wrapW(c.label, 6.5, catW - 6));
   const hdrLines = Math.max(...hdr.map((h) => h.length)), hdrH = hdrLines * 8 + 8;
-  const rows = demo.items.map((it) => wrap(it.label, maxCh));
-  const H = pad * 2 + hdrH + rows.reduce((a, r) => a + r.length * lh + rowPad * 2, 0);
+  const tagOf = (it) => (agi && /bilin[cç]|conscious/i.test(it.label) ? S.consciousTag : null);
+  const rows = items.map((it) => wrapW(it.label, 7, itemW - 10));
+  const H = pad * 2 + hdrH + rows.reduce((a, r, i) => a + r.length * lh + rowPad * 2 + (tagOf(items[i]) ? tagH : 0), 0);
   const body = [rect(0, 0, W, H, { fill: PAPER })];
   const x0 = pad, xItem = x0 + numW, xCat = (j) => xItem + itemW + j * catW;
   let y = pad;
@@ -190,10 +212,12 @@ function classifyFigure(demo, { lang }) {
   });
   y += hdrH;
   rows.forEach((lines, i) => {
-    const rh = lines.length * lh + rowPad * 2;
+    const tag = tagOf(items[i]);
+    const rh = lines.length * lh + rowPad * 2 + (tag ? tagH : 0);
     body.push(line(x0, y + rh, W - pad, y + rh, { stroke: RULE, sw: 0.6 }));
     body.push(text(x0 + numW / 2, y + rowPad + 6.5, i + 1, { font: MONO, size: 6.5, fill: INK2, anchor: 'middle' }));
     lines.forEach((ln, k) => body.push(text(xItem + 4, y + rowPad + 6.5 + k * lh, ln, { size: 7 })));
+    if (tag) body.push(text(xItem + 4, y + rowPad + 6.5 + lines.length * lh, tag, { font: MONO, size: 6, fill: EMBER }));
     cats.forEach((c, j) => {
       body.push(line(xCat(j), y, xCat(j), y + rh, { stroke: RULE, sw: 0.6 }));
       body.push(rect(xCat(j) + catW / 2 - 4.5, y + rh / 2 - 4.5, 9, 9, { fill: '#fff', stroke: INK, sw: 0.8 }));
@@ -204,7 +228,7 @@ function classifyFigure(demo, { lang }) {
   body.push(line(W - pad, pad, W - pad, H - pad, { stroke: INK, sw: 0.8 }));
   body.push(line(x0, H - pad, W - pad, H - pad, { stroke: INK, sw: 0.8 }));
   const md = [`# ${demo.title}`, '', `| # | ${S.example} | ${cats.map((c) => c.label).join(' | ')} |`, `|---|---|${'---|'.repeat(cats.length)}`,
-    ...demo.items.map((it, i) => `| ${i + 1} | ${it.label} | ${cats.map(() => '☐').join(' | ')} |`), '', S.mdNote, ''].join('\n');
+    ...items.map((it, i) => `| ${i + 1} | ${it.label}${tagOf(it) ? ` · ${tagOf(it)}` : ''} | ${cats.map(() => '☐').join(' | ')} |`), '', S.mdNote, ''].join('\n');
   return [{ name: 'classify', svg: svg(W, H, body.join('\n')), md }];
 }
 
@@ -228,7 +252,7 @@ function expFigure(demo, { lang }) {
     body.push(text(colX[3], yy, num(r.count, lang), { font: MONO, size: 6.5, anchor: 'end', fill: big ? EMBER : INK, weight: big ? 700 : 400 }));
     if (i < N_TABLE) body.push(line(tx, yy + 3, tx + 152, yy + 3, { stroke: RULE, sw: 0.4 }));
   });
-  body.push(text(tx, ty + 12 + (N_TABLE + 1) * rh + 12, S.note, { font: MONO, size: 5.5, fill: MUTED }));
+  body.push(text(tx, ty + 12 + (N_TABLE + 1) * rh + 12, S.note, { font: MONO, size: 6, fill: MUTED })); // R082: ≥ 6 (≈6.6 pt baskıda)
   // mini grafikler
   const gx = 180, gw = 130, gh = 76, panel = (oy, title, yOf, yTicks) => {
     const px = (d) => gx + 26 + (d / N_MAX) * (gw - 30), py = (v) => oy + gh - 12 - yOf(v) * (gh - 24);
@@ -237,11 +261,11 @@ function expFigure(demo, { lang }) {
     body.push(line(px(0), oy + 12, px(0), oy + gh - 12, { stroke: INK, sw: 0.6 }));
     [0, 13, 26].forEach((d) => {
       body.push(line(px(d), oy + gh - 12, px(d), oy + gh - 10, { stroke: INK, sw: 0.6 }));
-      body.push(text(px(d), oy + gh - 3, y0 + 2 * d, { font: MONO, size: 5.5, fill: MUTED, anchor: d === 0 ? 'start' : d === N_MAX ? 'end' : 'middle' }));
+      body.push(text(px(d), oy + gh - 3, y0 + 2 * d, { font: MONO, size: 6, fill: MUTED, anchor: d === 0 ? 'start' : d === N_MAX ? 'end' : 'middle' }));
     });
     yTicks.forEach(([v, lbl]) => {
       body.push(line(px(0) - 2, py(v), px(0), py(v), { stroke: INK, sw: 0.6 }));
-      body.push(text(px(0) - 4, py(v) + 2, lbl, { font: MONO, size: 5.5, fill: MUTED, anchor: 'end' }));
+      body.push(text(px(0) - 4, py(v) + 2, lbl, { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
     });
     // tablo aralığı (0–13) vurgulu, kalanı ince
     body.push(rect(px(0), oy + 12, px(N_TABLE) - px(0), gh - 24, { fill: EMBER_SOFT }));

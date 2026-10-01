@@ -175,6 +175,7 @@
                   </div>
                   <div style="margin-top:18px;padding:16px;border:1px solid rgba(26,26,26,0.12);background:#fff;">
                     <div style="font-family:'Space Mono',monospace;font-size:11px;color:{{ acc }};margin-bottom:6px;">{{ cyclePhaseLabel }} · {{ cyclePart.label }}</div>
+                    <sc-if value="{{ hasCycleNote }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;color:#6c6555;margin-bottom:6px;">{{ cyclePhaseNote }}</div></sc-if>
                     <p style="margin:0;font-size:15px;color:#37332a;">{{ cyclePart.desc }}</p>
                   </div>
                   <div style="text-align:center;margin-top:14px;"><button onClick="{{ cycleToggle }}" style="padding:8px 18px;border:1px solid {{ acc }};background:none;color:{{ acc }};font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;">{{ cyclePlayLabel }}</button></div>
@@ -343,6 +344,7 @@
                       </sc-for>
                     </svg>
                   </div>
+                  <div style="text-align:center;margin-top:8px;font-family:'Space Mono',monospace;font-size:10.5px;color:#8a8270;">Merkezler (✕) ve aykırı nokta bu gösterimde önceden seçilmiştir (temsili); gerçek yöntem bir eşikle hesaplar.</div>
                   <div style="text-align:center;margin-top:12px;"><button onClick="{{ kmRun }}" style="padding:9px 18px;border:none;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">{{ kmLabel }}</button></div>
                 </sc-if>
 
@@ -360,7 +362,7 @@
                       <circle cx="{{ ballX }}" cy="{{ ballY }}" r="7" fill="{{ acc }}"></circle>
                     </svg>
                   </div>
-                  <div style="text-align:center;margin-top:10px;font-family:'Space Mono',monospace;font-size:13px;color:#37332a;">Kayıp: <span style="color:{{ acc }};">{{ lossVal }}</span></div>
+                  <div style="text-align:center;margin-top:10px;font-family:'Space Mono',monospace;font-size:13px;color:#37332a;">Adım {{ descN }} · x = {{ descXVal }} · Kayıp: <span style="color:{{ acc }};">{{ lossVal }}</span></div>
                   <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;">
                     <button onClick="{{ descStep }}" style="padding:9px 18px;border:none;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Adım at</button>
                     <button onClick="{{ descAuto }}" style="padding:9px 16px;border:1px solid {{ acc }};background:{{ descAutoBg }};color:{{ descAutoFg }};font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;">{{ descAutoLabel }}</button>
@@ -383,6 +385,7 @@
                       </sc-for>
                     </svg>
                   </div>
+                  <div style="text-align:center;margin-top:8px;font-family:'Space Mono',monospace;font-size:10.5px;color:#8a8270;">Üç eğri de elle çizilmiştir (temsili); veriden eğitilmedi.</div>
                   <div style="text-align:center;margin-top:12px;font-family:'Instrument Serif',serif;font-size:19px;color:{{ fitColor }};">{{ fitVerdict }}</div>
                 </sc-if>
 
@@ -429,21 +432,27 @@
                   </div>
                 </sc-if>
 
-                <!-- BACKPROP -->
+                <!-- BACKPROP (gerçek eğitim: demo-data.json bp43) -->
                 <sc-if value="{{ d_backprop }}" hint-placeholder-val="{{ false }}">
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:10.5px;color:#8a8270;margin-bottom:12px;">{{ bpSetup }}</div>
                   <div style="display:flex;gap:18px;justify-content:center;align-items:flex-end;margin-bottom:8px;">
                     <div style="text-align:center;">
-                      <div style="font-family:'Space Mono',monospace;font-size:10px;color:#8a8270;margin-bottom:6px;">Ağın çıktısı</div>
+                      <div style="font-family:'Space Mono',monospace;font-size:10px;color:#8a8270;margin-bottom:6px;">Ağın çıktısı ŷ</div>
                       <div style="width:60px;height:120px;background:rgba(26,26,26,0.07);position:relative;"><div style="position:absolute;bottom:0;left:0;right:0;height:{{ bpOutH }};background:{{ acc }};transition:height .5s;"></div></div>
                     </div>
                     <div style="font-family:'Space Mono',monospace;font-size:11px;color:{{ acc }};padding-bottom:50px;">hata ◄</div>
                     <div style="text-align:center;">
-                      <div style="font-family:'Space Mono',monospace;font-size:10px;color:#8a8270;margin-bottom:6px;">Doğru cevap</div>
+                      <div style="font-family:'Space Mono',monospace;font-size:10px;color:#8a8270;margin-bottom:6px;">Hedef y = 0.8</div>
                       <div style="width:60px;height:120px;background:rgba(26,26,26,0.07);position:relative;"><div style="position:absolute;bottom:0;left:0;right:0;height:80%;background:#1d8a4f;"></div></div>
                     </div>
                   </div>
-                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:13px;color:#37332a;margin-top:10px;">Hata: <span style="color:{{ acc }};">{{ bpError }}</span></div>
-                  <div style="text-align:center;margin-top:12px;"><button onClick="{{ bpTrain }}" style="padding:9px 20px;border:none;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Eğit (tur {{ bpRound }})</button></div>
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:13px;color:#37332a;margin-top:10px;">ŷ = <span style="color:{{ acc }};">{{ bpYhat }}</span> · hata (y − ŷ) = {{ bpError }} · L = ½(ŷ − y)² = <span style="color:{{ acc }};">{{ bpLoss }}</span></div>
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:12px;color:#37332a;margin-top:6px;">∂L/∂z₂ = {{ bpGradZ2 }} · w₂ = {{ bpW2 }} · b₂ = {{ bpB2 }}</div>
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-top:6px;">{{ bpNext }}</div>
+                  <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;">
+                    <button onClick="{{ bpTrain }}" style="padding:9px 20px;border:none;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Eğit (tur {{ bpRound }})</button>
+                    <button onClick="{{ bpReset }}" style="padding:9px 14px;border:1px solid {{ acc }};background:none;color:{{ acc }};font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;">baştan</button>
+                  </div>
                 </sc-if>
 
                 <!-- CONV (CNN) -->
@@ -470,15 +479,16 @@
                   </div>
                 </sc-if>
 
-                <!-- RNN -->
+                <!-- RNN (gerçek yineleme: demo-data.json rnn45) -->
                 <sc-if value="{{ d_rnn }}" hint-placeholder-val="{{ false }}">
-                  <div style="display:flex;gap:8px;justify-content:center;margin-bottom:18px;">
-                    <sc-for list="{{ rnnWords }}" as="w" hint-placeholder-count="3"><span style="padding:9px 15px;border:1.5px solid {{ acc }};font-family:'Work Sans',sans-serif;font-size:14px;background:{{ w.bg }};color:{{ w.fg }};transition:all .3s;">{{ w.text }}</span></sc-for>
+                  <div style="display:flex;gap:8px;justify-content:center;margin-bottom:18px;flex-wrap:wrap;">
+                    <sc-for list="{{ rnnWords }}" as="w" hint-placeholder-count="5"><span style="padding:9px 15px;border:1.5px solid {{ acc }};font-family:'Work Sans',sans-serif;font-size:14px;background:{{ w.bg }};color:{{ w.fg }};transition:all .3s;">{{ w.text }}</span></sc-for>
                   </div>
-                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:8px;">Gizli durum / hafıza ({{ rnnDone }} kelime işlendi)</div>
-                  <div style="display:flex;gap:5px;justify-content:center;align-items:flex-end;height:60px;">
-                    <sc-for list="{{ rnnHidden }}" as="h" hint-placeholder-count="8"><div style="width:18px;background:{{ acc }};height:{{ h.h }};transition:height .4s;"></div></sc-for>
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:8px;">Gizli durum / hafıza ({{ rnnDone }} kelime işlendi) · h₀ = 0</div>
+                  <div style="display:flex;gap:14px;justify-content:center;align-items:flex-end;">
+                    <sc-for list="{{ rnnHidden }}" as="h" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:26px;height:60px;background:rgba(26,26,26,0.07);position:relative;"><div style="position:absolute;bottom:0;left:0;right:0;height:{{ h.h }};background:{{ h.bg }};transition:height .4s;"></div></div><span style="font-family:'Space Mono',monospace;font-size:11px;color:#37332a;">{{ h.label }}</span></div></sc-for>
                   </div>
+                  <div style="text-align:center;margin-top:8px;font-family:'Space Mono',monospace;font-size:10.5px;color:#8a8270;">{{ rnnFormula }}</div>
                   <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;">
                     <button onClick="{{ rnnNext }}" style="padding:9px 18px;border:none;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Sonraki kelime</button>
                     <button onClick="{{ rnnReset }}" style="padding:9px 14px;border:1px solid {{ acc }};background:none;color:{{ acc }};font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;">baştan</button>
@@ -497,7 +507,7 @@
                     <div style="text-align:center;">
                       <div style="font-family:'Space Mono',monospace;font-size:10px;color:#8a8270;margin-bottom:6px;">Ayırt edici diyor ki:</div>
                       <div style="font-family:'Instrument Serif',serif;font-size:26px;color:{{ ganVerdictColor }};">{{ ganVerdict }}</div>
-                      <div style="font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-top:6px;">sahte olasılığı</div>
+                      <div style="font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-top:6px;">sahte olasılığı (temsili, ölçülmüş değil)</div>
                       <div style="font-family:'Space Mono',monospace;font-size:20px;color:{{ acc }};">{{ ganProb }}</div>
                     </div>
                   </div>
@@ -540,32 +550,39 @@
                       </sc-for>
                     </svg>
                   </div>
+                  <div style="text-align:center;margin-top:8px;font-family:'Space Mono',monospace;font-size:10.5px;color:#8a8270;">Noktalar elle yerleştirilmiştir; eğitilmiş bir modelin gömüsü ya da PCA/t-SNE çıktısı değildir.</div>
                   <div style="text-align:center;margin-top:12px;font-size:13.5px;line-height:1.55;color:#4a4539;">{{ embedCaption }}</div>
                 </sc-if>
 
                 <!-- ATTN (attention) -->
                 <sc-if value="{{ d_attn }}" hint-placeholder-val="{{ false }}">
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:10.5px;color:#8a8270;margin-bottom:8px;">Temsili ağırlıklar · çift yönlü (encoder) tablo · her satırın toplamı 1</div>
                   <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px;">
                     <sc-for list="{{ attnTokens }}" as="t" hint-placeholder-count="5"><button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.text }}</button></sc-for>
                   </div>
                   <div style="text-align:center;font-size:13.5px;line-height:1.55;color:#4a4539;">{{ attnCaption }}</div>
                 </sc-if>
 
-                <!-- GENERATE (word by word + temperature) -->
+                <!-- GENERATE (açgözlü argmax vs sıcaklıklı örnekleme) -->
                 <sc-if value="{{ d_generate }}" hint-placeholder-val="{{ false }}">
-                  <div style="padding:14px 16px;border:1px solid rgba(26,26,26,0.12);background:#fff;font-family:'Instrument Serif',serif;font-size:20px;color:#1f1f1f;line-height:1.4;min-height:34px;margin-bottom:16px;">{{ genSentence }}</div>
+                  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
+                    <sc-for list="{{ genRows }}" as="r" hint-placeholder-count="2">
+                      <div style="display:flex;align-items:baseline;gap:12px;padding:10px 14px;border:1px solid rgba(26,26,26,0.12);background:#fff;"><span style="flex:none;width:150px;font-family:'Space Mono',monospace;font-size:10.5px;color:{{ acc }};">{{ r.name }}</span><span style="font-family:'Instrument Serif',serif;font-size:19px;color:#1f1f1f;line-height:1.3;">{{ r.sentence }}</span></div>
+                    </sc-for>
+                  </div>
+                  <div style="font-family:'Space Mono',monospace;font-size:10.5px;color:#8a8270;margin-bottom:8px;">{{ genStepLabel }}</div>
                   <div style="display:flex;flex-direction:column;gap:8px;">
                     <sc-for list="{{ genCands }}" as="c" hint-placeholder-count="4">
                       <div style="display:flex;align-items:center;gap:10px;">
                         <span style="width:78px;text-align:right;font-family:'Work Sans',sans-serif;font-size:13px;color:{{ acc }};">{{ c.word }}</span>
                         <div style="flex:1;height:22px;background:rgba(26,26,26,0.06);position:relative;"><div style="height:22px;width:{{ c.barW }};background:{{ c.bg }};transition:width .3s;"></div></div>
-                        <span style="width:38px;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;">{{ c.pct }}</span>
+                        <span style="width:170px;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;">{{ c.pct }}</span>
                       </div>
                     </sc-for>
                   </div>
-                  <div style="display:flex;gap:10px;justify-content:center;align-items:center;margin-top:16px;flex-wrap:wrap;">
+                  <div style="margin-top:10px;font-family:'Space Mono',monospace;font-size:10.5px;color:#8a8270;line-height:1.5;">{{ genNote }}</div>
+                  <div style="display:flex;gap:10px;justify-content:center;align-items:center;margin-top:14px;flex-wrap:wrap;">
                     <button onClick="{{ genGen }}" style="padding:9px 18px;border:none;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Üret →</button>
-                    <button onClick="{{ genToggle }}" style="padding:9px 14px;border:1px solid {{ acc }};background:none;color:{{ acc }};font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;">{{ genCreativeLabel }}</button>
                     <button onClick="{{ genReset }}" style="padding:9px 14px;border:1px solid {{ acc }};background:none;color:{{ acc }};font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;">baştan</button>
                   </div>
                 </sc-if>
@@ -600,7 +617,7 @@
                     </div>
                   </div>
                   <div style="max-width:320px;margin:18px auto 0;">
-                    <div style="display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:6px;"><span>gürültü</span><span>temizlenmiş ({{ diffPct }})</span></div>
+                    <div style="display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:6px;"><span>gürültü</span><span>ilerleme {{ diffPct }} · temizlenen pay {{ diffClean }}/64</span></div>
                     <div onPointerDown="{{ diffDown }}" onPointerMove="{{ diffMove }}" onPointerUp="{{ diffUp }}" style="position:relative;height:22px;display:flex;align-items:center;cursor:pointer;touch-action:none;">
                       <div style="position:absolute;left:0;right:0;height:5px;background:rgba(26,26,26,0.1);"></div>
                       <div style="position:absolute;left:0;height:5px;background:{{ acc }};width:{{ diffPct }};"></div>
@@ -612,7 +629,7 @@
 
                 <!-- CTX (context window) -->
                 <sc-if value="{{ d_ctx }}" hint-placeholder-val="{{ false }}">
-                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:10px;">Bağlam penceresi · {{ ctxUsed }} / {{ ctxMax }} kelime</div>
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:10px;">Bağlam penceresi (bu demoya özgü kayan pencere) · {{ ctxUsed }} / {{ ctxMax }} kelime</div>
                   <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:16px;border:1px solid rgba(26,26,26,0.12);background:#fff;min-height:40px;">
                     <sc-for list="{{ ctxWords }}" as="w" hint-placeholder-count="8"><span style="{{ w.style }}">{{ w.text }}</span></sc-for>
                   </div>
@@ -634,11 +651,11 @@
                       <sc-for list="{{ promptLines }}" as="l" hint-placeholder-count="5"><div style="font-size:13.5px;line-height:1.5;color:#37332a;margin-bottom:4px;">{{ l.text }}</div></sc-for>
                     </div>
                     <div>
-                      <div style="display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:5px;"><span>İstem kalitesi ({{ promptTier }})</span><span>{{ promptQualityPct }}</span></div>
+                      <div style="display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:5px;"><span>Tamamlanma: {{ promptQualityLabel }} (kalite ölçümü değil)</span><span>{{ promptTier }}</span></div>
                       <div style="height:12px;background:rgba(26,26,26,0.08);overflow:hidden;"><div style="height:12px;width:{{ promptQualityPct }};background:{{ promptBarColor }};transition:width .4s;"></div></div>
                     </div>
                     <div style="padding:14px;border:1px solid {{ acc }};background:#f2f7f7;">
-                      <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:{{ acc }};margin-bottom:8px;">MODELİN CEVABI (GÖSTERİM)</div>
+                      <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:{{ acc }};margin-bottom:8px;">MODELİN CEVABI <span style="margin-left:8px;padding:2px 7px;border:1px solid {{ acc }};font-size:9px;letter-spacing:0.08em;">temsili yanıt</span></div>
                       <div style="font-size:14px;line-height:1.55;color:#1f1f1f;white-space:pre-line;">{{ promptResponse }}</div>
                     </div>
                   </div>
@@ -646,6 +663,7 @@
 
                 <!-- RAG -->
                 <sc-if value="{{ d_rag }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-family:'Space Mono',monospace;font-size:10.5px;color:#8a8270;margin-bottom:10px;">Hazır kaynak–yanıt çiftleri · gerçek arama ya da model çağrısı yok</div>
                   <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
                     <sc-for list="{{ ragQuestions }}" as="q" hint-placeholder-count="3"><button onClick="{{ q.pick }}" style="{{ q.style }}">{{ q.label }}</button></sc-for>
                   </div>
@@ -666,7 +684,7 @@
                 <!-- AGENT (ReAct loop) -->
                 <sc-if value="{{ d_agent }}" hint-placeholder-val="{{ false }}">
                   <div style="padding:12px 14px;border-left:4px solid {{ acc }};background:#f2f7f7;margin-bottom:14px;">
-                    <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:{{ acc }};margin-bottom:4px;">GÖREV</div>
+                    <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:{{ acc }};margin-bottom:4px;">GÖREV · HAZIR SENARYO</div>
                     <div style="font-size:14px;line-height:1.5;color:#1f1f1f;">{{ agentTask }}</div>
                   </div>
                   <sc-if value="{{ agentEmpty }}" hint-placeholder-val="{{ true }}"><div style="text-align:center;font-family:'Space Mono',monospace;font-size:12px;color:#8a8270;padding:10px;">Henüz adım atılmadı.</div></sc-if>
@@ -694,7 +712,7 @@
                 <!-- ARCH (application architecture) -->
                 <sc-if value="{{ d_arch }}" hint-placeholder-val="{{ false }}">
                   <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px;">
-                    <sc-for list="{{ archParts }}" as="p" hint-placeholder-count="5"><button onClick="{{ p.pick }}" style="{{ p.style }}">{{ p.label }}</button></sc-for>
+                    <sc-for list="{{ archParts }}" as="p" hint-placeholder-count="6"><button onClick="{{ p.pick }}" style="{{ p.style }}">{{ p.label }}</button></sc-for>
                   </div>
                   <div style="padding:16px;border:1px solid {{ archColor }};background:#fff;border-left:4px solid {{ archColor }};">
                     <div style="font-family:'Instrument Serif',serif;font-size:20px;color:{{ archColor }};margin-bottom:6px;">{{ archName }}</div>
@@ -725,6 +743,7 @@
                       <div style="position:absolute;left:{{ biasPct }};top:50%;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid {{ acc }};transform:translate(-50%,-50%);"></div>
                     </div>
                   </div>
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:10.5px;color:#8a8270;margin:-6px auto 14px;max-width:420px;">{{ biasFormula }}</div>
                   <div style="display:flex;flex-direction:column;gap:12px;max-width:420px;margin:0 auto;">
                     <div>
                       <div style="display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:12px;color:#37332a;margin-bottom:4px;"><span>Grup A onay oranı</span><span>{{ biasA }}</span></div>
@@ -745,12 +764,13 @@
                   </div>
                   <div style="text-align:center;font-family:'Instrument Serif',serif;font-size:22px;color:{{ explainResultColor }};margin-bottom:14px;">{{ explainResult }}</div>
                   <sc-if value="{{ explainShow }}" hint-placeholder-val="{{ true }}">
+                    <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#37332a;margin-bottom:10px;">{{ explainBase }}</div>
                     <div style="display:flex;flex-direction:column;gap:9px;max-width:460px;margin:0 auto;">
                       <sc-for list="{{ explainFeats }}" as="f" hint-placeholder-count="4">
                         <div style="display:flex;align-items:center;gap:10px;">
                           <span style="width:150px;text-align:right;font-size:12.5px;color:#37332a;">{{ f.label }}</span>
                           <div style="flex:1;height:18px;background:rgba(26,26,26,0.06);position:relative;"><div style="height:18px;width:{{ f.barW }};background:{{ f.color }};transition:width .3s;"></div></div>
-                          <span style="width:38px;font-family:'Space Mono',monospace;font-size:12px;color:{{ f.color }};">{{ f.val }}</span>
+                          <span style="width:76px;font-family:'Space Mono',monospace;font-size:12px;color:{{ f.color }};">{{ f.val }}</span>
                         </div>
                       </sc-for>
                     </div>
@@ -761,22 +781,22 @@
                   </sc-if>
                 </sc-if>
 
-                <!-- DF (deepfake real-or-fake) -->
+                <!-- DF (deepfake: şüphe işareti + bağımsız doğrulama adımı) -->
                 <sc-if value="{{ d_df }}" hint-placeholder-val="{{ false }}">
-                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:8px;">Durum {{ dfIdxNum }} / {{ dfTotal }}</div>
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:8px;">Durum {{ dfIdxNum }} / {{ dfTotal }} · kurgu örnek · önerilen adımla eşleşen: {{ dfHits }}</div>
                   <div style="padding:16px;border:1px solid rgba(26,26,26,0.14);background:#fff;font-size:15px;line-height:1.55;color:#1f1f1f;margin-bottom:16px;">{{ dfText }}</div>
                   <sc-if value="{{ dfAnswered }}" hint-placeholder-val="{{ false }}">
                     <div style="font-family:'Instrument Serif',serif;font-size:20px;color:{{ dfVerdictColor }};text-align:center;margin-bottom:8px;">{{ dfVerdict }}</div>
                     <div style="padding:12px 14px;border-left:4px solid {{ acc }};background:#faf6f7;font-size:13.5px;line-height:1.55;color:#37332a;">💡 {{ dfTell }}</div>
+                    <div style="margin-top:8px;font-size:12.5px;color:#6c6555;line-height:1.5;">{{ dfNote }}</div>
                     <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;">
                       <sc-if value="{{ dfHasNext }}" hint-placeholder-val="{{ true }}"><button onClick="{{ dfNext }}" style="padding:9px 18px;border:none;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Sonraki →</button></sc-if>
                       <button onClick="{{ dfReset }}" style="padding:9px 14px;border:1px solid {{ acc }};background:none;color:{{ acc }};font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;">baştan</button>
                     </div>
                   </sc-if>
                   <sc-if value="{{ dfNotAnswered }}" hint-placeholder-val="{{ true }}">
-                    <div style="display:flex;gap:12px;justify-content:center;">
-                      <button onClick="{{ dfGuessReal }}" style="padding:11px 26px;border:1.5px solid #1d8a4f;background:#fff;color:#1d8a4f;font-family:'Work Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;">Gerçek</button>
-                      <button onClick="{{ dfGuessFake }}" style="padding:11px 26px;border:1.5px solid #b23b3b;background:#fff;color:#b23b3b;font-family:'Work Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;">Yapay / Sahte</button>
+                    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                      <sc-for list="{{ dfOpts }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for>
                     </div>
                   </sc-if>
                 </sc-if>
@@ -817,7 +837,7 @@
 
                 <!-- TURING (human or machine) -->
                 <sc-if value="{{ d_tur }}" hint-placeholder-val="{{ false }}">
-                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:8px;">Yazışma {{ turIdxNum }} / {{ turTotal }}</div>
+                  <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;margin-bottom:8px;">Yazışma {{ turIdxNum }} / {{ turTotal }} · <span style="padding:1px 6px;border:1px solid #8a8270;">kurgusal örnek</span></div>
                   <div style="max-width:460px;margin:0 auto 16px;">
                     <div style="font-family:'Space Mono',monospace;font-size:13px;color:#8a8270;margin-bottom:8px;">{{ turPrompt }}</div>
                     <div style="padding:14px 16px;border:1px solid rgba(26,26,26,0.14);background:#fff;border-radius:2px 14px 14px 14px;font-size:15px;line-height:1.55;color:#1f1f1f;">{{ turReply }}</div>
@@ -876,7 +896,8 @@
                       <span style="font-family:'Instrument Serif',serif;font-size:21px;color:{{ capColor }};">{{ capName }}</span>
                       <span style="font-family:'Space Mono',monospace;font-size:12px;color:#6c6555;">{{ capStatus }}</span>
                     </div>
-                    <div style="height:12px;background:rgba(26,26,26,0.08);margin-bottom:12px;"><div style="height:12px;width:{{ capBarW }};background:{{ capColor }};transition:width .4s;"></div></div>
+                    <div style="height:12px;background:rgba(26,26,26,0.08);margin-bottom:4px;"><div style="height:12px;width:{{ capBarW }};background:{{ capColor }};transition:width .4s;"></div></div>
+                    <div style="font-family:'Space Mono',monospace;font-size:10px;color:#8a8270;margin-bottom:12px;">temsili düzey · ölçülmüş zekâ puanı ya da AGI’ye ilerleme oranı değil</div>
                     <div style="font-size:14px;line-height:1.55;color:#37332a;">{{ capDesc }}</div>
                   </div>
                 </sc-if>
@@ -890,7 +911,7 @@
                     <svg viewBox="0 0 320 180" style="width:100%;max-width:420px;height:auto;background:#fff;border:1px solid rgba(26,26,26,0.1);">
                       <line x1="28" y1="152" x2="292" y2="152" stroke="rgba(26,26,26,0.25)" stroke-width="1"></line>
                       <line x1="28" y1="20" x2="28" y2="152" stroke="rgba(26,26,26,0.25)" stroke-width="1"></line>
-                      <text x="30" y="18" font-family="'Space Mono',monospace" font-size="8" fill="#8a8270">zekâ</text>
+                      <text x="30" y="18" font-family="'Space Mono',monospace" font-size="8" fill="#8a8270">zekâ (temsili, birimsiz)</text>
                       <text x="250" y="165" font-family="'Space Mono',monospace" font-size="8" fill="#8a8270">zaman →</text>
                       <sc-for list="{{ singPaths }}" as="p" hint-placeholder-count="3"><path d="{{ p.d }}" fill="none" stroke="{{ p.stroke }}" stroke-width="{{ p.width }}" stroke-opacity="{{ p.opacity }}" stroke-linecap="round"></path></sc-for>
                     </svg>
@@ -899,15 +920,16 @@
                   <div style="text-align:center;margin-top:6px;font-size:13.5px;line-height:1.55;color:#4a4539;">{{ singNote }}</div>
                 </sc-if>
 
-                <!-- RESPONSIBILITY -->
+                <!-- RESPONSIBILITY (çoklu seçim: ilk incelenecek + paylaşılan) -->
                 <sc-if value="{{ d_resp }}" hint-placeholder-val="{{ false }}">
                   <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
                     <sc-for list="{{ respScenarios }}" as="s" hint-placeholder-count="3"><button onClick="{{ s.pick }}" style="{{ s.style }}">{{ s.label }}</button></sc-for>
                   </div>
-                  <div style="font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;text-align:center;margin-bottom:8px;">Sorumluluk kimde?</div>
+                  <div style="font-family:'Space Mono',monospace;font-size:11px;color:#8a8270;text-align:center;margin-bottom:8px;">Sorumluluk kimde? Birden çok taraf seçebilirsin.</div>
                   <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
                     <sc-for list="{{ respParties }}" as="p" hint-placeholder-count="4"><button onClick="{{ p.pick }}" style="{{ p.style }}">{{ p.label }}</button></sc-for>
                   </div>
+                  <sc-if value="{{ respNotShown }}" hint-placeholder-val="{{ true }}"><div style="text-align:center;margin-top:14px;"><button onClick="{{ respEval }}" style="padding:9px 20px;border:none;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Değerlendir →</button></div></sc-if>
                   <sc-if value="{{ respPicked }}" hint-placeholder-val="{{ false }}">
                     <div style="margin-top:14px;font-family:'Instrument Serif',serif;font-size:18px;color:{{ respVerdictColor }};text-align:center;">{{ respVerdict }}</div>
                     <div style="margin-top:8px;padding:12px 14px;border:1px solid rgba(26,26,26,0.14);background:#fff;font-size:14px;line-height:1.55;color:#1f1f1f;">{{ respWho }}</div>
@@ -978,12 +1000,12 @@ class Component extends DCLogic {
     facts: { yagmur: true, soguk: false, ruzgar: false },
     grid: { method: 'bfs', explored: 0, path: [], visited: [] },
     mk: { cur: 0, days: 0, counts: [0,0,0] },
-    spamPick: 0, scTask: 'reg', scFitted: false, kmGrouped: false, descX: 0.6, descLr: 'low', fitPick: 1,
+    spamPick: 0, scTask: 'reg', scFitted: false, kmGrouped: false, descX: 0.6, descN: 0, descLr: 'low', fitPick: 1,
     neuronX: [0.6, 0.3, 0.8], neuronAct: 'sigmoid', ffIn: [1, 0, 1], ffFed: false, bpRound: 0, convFilter: 'vert', convPos: 0, rnnStep: 0, ganRound: 0,
-    tokEx: 0, embedPick: 0, attnQ: 3, genStep: 0, genCreative: false, trainStage: 0, diffStep: 0, ctxCount: 0,
+    tokEx: 0, embedPick: 0, attnQ: 3, genStep: 0, trainStage: 0, diffStep: 0, ctxCount: 0,
     promptParts: { role: false, context: false, example: false, format: false }, ragQ: 'izin', ragOn: false, agentStep: 0, archPick: 'orch', sectorPick: 'health',
-    biasVal: 0, explainPick: 0, explainShow: false, dfIdx: 0, dfAnswer: null, regAns: {}, alignPick: 0, alignShow: false,
-    turIdx: 0, turAnswer: null, crIdx: 0, crSent: false, capPick: 'narrow', singPick: 'accel', respIdx: 0, respPick: null,
+    biasVal: 0, explainPick: 0, explainShow: false, dfIdx: 0, dfAnswer: null, dfHits: 0, regAns: {}, alignPick: 0, alignShow: false,
+    turIdx: 0, turAnswer: null, crIdx: 0, crSent: false, capPick: 'narrow', singPick: 'accel', respIdx: 0, respPicks: [], respShow: false,
     quizAns: {}, quizChecked: false
   };
 
@@ -994,7 +1016,7 @@ class Component extends DCLogic {
       const sec = mod.sections[this.state.si];
       if (sec && sec.demo) {
         if (sec.demo.type === 'cycle' && this.state.cy.playing) {
-          this.setState(s => ({ cy: { ...s.cy, phase: (s.cy.phase + 1) % 3, part: (s.cy.phase + 1) % 3 } }));
+          this.setState(s => { const np = (s.cy.phase + 1) % 3; return { cy: { ...s.cy, phase: np, part: sec.demo.phaseParts ? sec.demo.phaseParts[np] : np } }; });
         }
         if (sec.demo.type === 'turing' && this._tauto) this.turingStep();
         if (sec.demo.type === 'markov' && this._mkauto) this.markovNext(sec.demo);
@@ -1017,7 +1039,7 @@ class Component extends DCLogic {
   resetDemos() {
     this._tauto = false;
     this._mkauto = false; this._descauto = false;
-    this.setState({ intelPick: 0, bits: [0,1,0,0,1,0,0,1], tu:{tape:[0,0,0,1,0,1],head:0,st:'right',start:5}, cy:{phase:0,playing:true,part:0}, cls:{}, exp:0, chainQ:-1, facts:{yagmur:true,soguk:false,ruzgar:false}, grid:{method:'bfs',explored:0,path:[],visited:[]}, mk:{cur:0,days:0,counts:[0,0,0]}, spamPick:0, scTask:'reg', scFitted:false, kmGrouped:false, descX:0.6, descLr:'low', fitPick:1, neuronX:[0.6,0.3,0.8], neuronAct:'sigmoid', ffIn:[1,0,1], ffFed:false, bpRound:0, convFilter:'vert', convPos:0, rnnStep:0, ganRound:0, tokEx:0, embedPick:0, attnQ:3, genStep:0, genCreative:false, trainStage:0, diffStep:0, ctxCount:0, promptParts:{role:false,context:false,example:false,format:false}, ragQ:'izin', ragOn:false, agentStep:0, archPick:'orch', sectorPick:'health', biasVal:0, explainPick:0, explainShow:false, dfIdx:0, dfAnswer:null, regAns:{}, alignPick:0, alignShow:false, turIdx:0, turAnswer:null, crIdx:0, crSent:false, capPick:'narrow', singPick:'accel', respIdx:0, respPick:null, quizAns:{} });
+    this.setState({ intelPick: 0, bits: [0,1,0,0,1,0,0,1], tu:{tape:[0,0,0,1,0,1],head:0,st:'right',start:5}, cy:{phase:0,playing:true,part:0}, cls:{}, exp:0, chainQ:-1, facts:{yagmur:true,soguk:false,ruzgar:false}, grid:{method:'bfs',explored:0,path:[],visited:[]}, mk:{cur:0,days:0,counts:[0,0,0]}, spamPick:0, scTask:'reg', scFitted:false, kmGrouped:false, descX:0.6, descN:0, descLr:'low', fitPick:1, neuronX:[0.6,0.3,0.8], neuronAct:'sigmoid', ffIn:[1,0,1], ffFed:false, bpRound:0, convFilter:'vert', convPos:0, rnnStep:0, ganRound:0, tokEx:0, embedPick:0, attnQ:3, genStep:0, trainStage:0, diffStep:0, ctxCount:0, promptParts:{role:false,context:false,example:false,format:false}, ragQ:'izin', ragOn:false, agentStep:0, archPick:'orch', sectorPick:'health', biasVal:0, explainPick:0, explainShow:false, dfIdx:0, dfAnswer:null, dfHits:0, regAns:{}, alignPick:0, alignShow:false, turIdx:0, turAnswer:null, crIdx:0, crSent:false, capPick:'narrow', singPick:'accel', respIdx:0, respPicks:[], respShow:false, quizAns:{} });
   }
   prevModule() { if (this.state.mi > 1) this.open(this.state.mi - 1); else this.open(0); }
   nextModule() { if (this.state.mi < this.modules().length) this.open(this.state.mi + 1); }
@@ -1069,11 +1091,12 @@ class Component extends DCLogic {
 
   descentStep() {
     this.setState(s => {
-      const lr = s.descLr === 'high' ? 0.92 : 0.18;
+      // L(x) = 0.18(x−5)² + 0.1 → L'(x) = 0.36(x−5); adım x ← x − η·L'(x). η = 4.6: 1 − 0.36·4.6 = −0.656 → işaret değiştirerek salınır, yakınsar.
+      const lr = s.descLr === 'high' ? 4.6 : 0.18;
       const grad = 0.36 * (s.descX - 5);
       let nx = s.descX - lr * grad;
-      nx = Math.max(0, Math.min(10, nx));
-      return { descX: nx };
+      nx = Math.max(0, Math.min(9, nx));
+      return { descX: nx, descN: s.descN + 1 };
     });
   }
 
@@ -1258,11 +1281,13 @@ class Component extends DCLogic {
         if (demo.type === 'cycle') {
           out.d_cycle = true;
           const { phase, part, playing } = this.state.cy;
+          const phasePart = demo.phaseParts ? demo.phaseParts[phase] : phase; // Kaydet/Yaz evresi belleği vurgular (Giriş/Çıkış değil)
           out.cycleParts = demo.parts.map((p, i) => ({
             label:p.label, arrow:i < demo.parts.length-1, pick:() => this.setState(s => ({ cy:{ ...s.cy, part:i } })),
-            bg:i===phase?acc:'#fff', fg:i===phase?'#f4eddb':'#37332a'
+            bg:i===phasePart?acc:'#fff', fg:i===phasePart?'#f4eddb':'#37332a'
           }));
           out.cyclePhaseLabel = demo.phases[phase];
+          out.cyclePhaseNote = (demo.phaseNotes || [])[phase] || ''; out.hasCycleNote = !!out.cyclePhaseNote;
           out.cyclePart = demo.parts[part];
           out.cycleToggle = () => this.setState(s => ({ cy:{ ...s.cy, playing:!s.cy.playing } }));
           out.cyclePlayLabel = playing ? '⏸ Duraklat' : '▶ Oynat';
@@ -1446,20 +1471,20 @@ class Component extends DCLogic {
           out.d_descent = true;
           const x = this.state.descX, lr = this.state.descLr;
           const L = (xx) => 0.18*(xx-5)*(xx-5) + 0.1;
-          const sx = (xx) => 20 + (xx/10)*220; const sy = (ll) => 150 - (ll/4.6)*135;
-          let d=''; for (let xx=0; xx<=10; xx+=0.5) { d += (xx===0?'M':'L') + sx(xx).toFixed(1) + ' ' + sy(L(xx)).toFixed(1) + ' '; }
+          const sx = (xx) => 20 + (xx/9)*220; const sy = (ll) => 150 - (ll/4.6)*135; // x ∈ [0, 9]; L(0) = 4.6 eksenin tepesi
+          let d=''; for (let xx=0; xx<=9; xx+=0.5) { d += (xx===0?'M':'L') + sx(xx).toFixed(1) + ' ' + sy(L(xx)).toFixed(1) + ' '; }
           out.lossPath = d.trim();
           out.ballX = sx(x).toFixed(1); out.ballY = sy(L(x)).toFixed(1);
-          out.lossVal = L(x).toFixed(2);
-          out.lrOpts = [{key:'low',label:'Düşük'},{key:'high',label:'Yüksek'}].map(o => ({
-            label:o.label, pick:() => this.setState({ descLr:o.key }),
+          out.lossVal = L(x).toFixed(2); out.descN = this.state.descN; out.descXVal = x.toFixed(2);
+          out.lrOpts = [{key:'low',label:'Düşük (η = 0.18)'},{key:'high',label:'Yüksek (η = 4.6)'}].map(o => ({
+            label:o.label, pick:() => this.setState({ descLr:o.key, descX:0.6, descN:0 }),
             style:'padding:7px 15px;border:1px solid '+acc+';font-family:\'Work Sans\',sans-serif;font-size:13px;cursor:pointer;transition:all .15s;' + (lr===o.key?'background:'+acc+';color:#f4eddb;':'background:#fff;color:'+acc+';')
           }));
           out.descStep = () => this.descentStep();
           out.descAuto = () => { this._descauto = !this._descauto; this.forceUpdate(); };
           out.descAutoLabel = this._descauto ? '⏸ Duraklat' : 'Otomatik';
           out.descAutoBg = this._descauto ? acc : 'none'; out.descAutoFg = this._descauto ? '#f4eddb' : acc;
-          out.descReset = () => { this._descauto = false; this.setState({ descX: 0.6 }); };
+          out.descReset = () => { this._descauto = false; this.setState({ descX: 0.6, descN: 0 }); };
         }
 
         if (demo.type === 'modelfit') {
@@ -1532,12 +1557,31 @@ class Component extends DCLogic {
 
         if (demo.type === 'backprop') {
           out.d_backprop = true;
-          const r = this.state.bpRound;
-          const err = 0.43 * Math.pow(0.6, r);
-          out.bpError = err.toFixed(2);
+          // Gerçek eğitim (print/kitap/qa/demo-data.json bp43 ile aynı sabitler): x = [1.0, 0.5], y = 0.8, η = 2.0,
+          // 2 gizli sigmoid nöron + 1 sigmoid çıktı, L = ½(ŷ − y)². Her tur: ileri geçiş → ∂L/∂z₂ = (ŷ − y)·ŷ(1 − ŷ) → gradyanlar → güncelleme.
+          const r = Math.min(8, this.state.bpRound);
+          const X = [1.0, 0.5], Y = 0.8, LR = 2.0, sig = z => 1 / (1 + Math.exp(-z));
+          let w1 = [[0.3, -0.2], [0.4, 0.1]], b1 = [0, 0], w2 = [0.5, -0.3], b2 = 0, st = null;
+          for (let t = 0; t <= r; t++) {
+            const h = w1.map((row, i) => sig(row[0] * X[0] + row[1] * X[1] + b1[i]));
+            const yhat = sig(w2[0] * h[0] + w2[1] * h[1] + b2);
+            const d2 = (yhat - Y) * yhat * (1 - yhat);                 // ∂L/∂z₂
+            const d1 = h.map((hv, i) => d2 * w2[i] * hv * (1 - hv));    // ∂L/∂z₁ (güncellenmemiş w₂ ile)
+            const nw2 = w2.map((w, i) => w - LR * d2 * h[i]), nb2 = b2 - LR * d2;
+            st = { yhat, L: 0.5 * (yhat - Y) * (yhat - Y), d2, w2: w2.slice(), b2, nw2, nb2 };
+            w1 = w1.map((row, i) => row.map((w, j) => w - LR * d1[i] * X[j])); b1 = b1.map((b, i) => b - LR * d1[i]);
+            w2 = nw2; b2 = nb2;
+          }
+          const f = (v, n) => v.toFixed(n).replace('-', '−');
           out.bpRound = r;
-          out.bpOutH = Math.round((0.8 - err) * 100) + '%';
-          out.bpTrain = ()=>this.setState(s=>({bpRound:s.bpRound+1}));
+          out.bpYhat = f(st.yhat, 4); out.bpError = f(Y - st.yhat, 4); out.bpLoss = f(st.L, 5); out.bpGradZ2 = f(st.d2, 5);
+          out.bpW2 = '[' + f(st.w2[0], 3) + ', ' + f(st.w2[1], 3) + ']'; out.bpB2 = f(st.b2, 3);
+          out.bpOutH = Math.round(st.yhat * 100) + '%';
+          out.bpSetup = 'x = [1.0, 0.5] · y = 0.8 · η = 2.0 · 2 gizli sigmoid nöron · L = ½(ŷ − y)² · tur ' + r + '/8';
+          out.bpNext = r < 8 ? 'Bu turun güncellemesi (w ← w − η·∂L/∂w): w₂ → [' + f(st.nw2[0], 3) + ', ' + f(st.nw2[1], 3) + '], b₂ → ' + f(st.nb2, 3) + '; W₁ ve b₁ aynı kuralla güncellenir.'
+            : 'Tur 8/8: bu örnekte eğitim hatası küçüldü; yeni örneklerde başarı ayrıca sınanmalıdır.';
+          out.bpTrain = () => this.setState(s => ({ bpRound: Math.min(8, s.bpRound + 1) }));
+          out.bpReset = () => this.setState({ bpRound: 0 });
         }
 
         if (demo.type === 'conv') {
@@ -1562,12 +1606,19 @@ class Component extends DCLogic {
 
         if (demo.type === 'rnn') {
           out.d_rnn = true;
-          const step = this.state.rnnStep;
-          const words = ['yapay','zekâ','öğreniyor'];
+          // Gerçek yineleme (print/kitap/qa/demo-data.json rnn45 ile aynı sabitler): hₜ = tanh(Wₓ xₜ + Wₕ hₜ₋₁), h₀ = 0,
+          // xₜ = kelimenin one-hot kodu (kelime k → Wₓ sütunu k mod 5). Çubuk = |h|, etiket işaretli değer.
+          const words = ['Kedi','kaçtı','çünkü','o','korkmuştu'];
+          const WX = [[0.9,-0.4,0.3,-0.7,0.5],[-0.6,0.8,-0.2,0.4,-0.9],[0.2,-0.5,0.7,0.6,-0.3],[-0.8,0.3,-0.6,0.9,0.1]];
+          const WH = [[0.5,-0.3,0.2,0.0],[0.1,0.4,-0.5,0.3],[-0.2,0.6,0.3,-0.4],[0.3,-0.1,0.4,0.5]];
+          const step = Math.min(words.length, this.state.rnnStep);
+          let h = [0, 0, 0, 0];
+          for (let t = 0; t < step; t++) { const k = t % 5; h = WX.map((row, i) => Math.tanh(row[k] + WH[i].reduce((a, w, j) => a + w * h[j], 0))); }
           out.rnnWords = words.map((t,i)=>({ text:t, bg:i<step?acc:'#fff', fg:i<step?'#f4eddb':'#37332a' }));
           out.rnnDone = step;
-          out.rnnHidden = Array.from({length:8},(_,j)=>{ let v=0; for(let k=0;k<step;k++){ v += Math.abs(Math.sin((k+1)*1.7 + j*0.9)); } v = step? (0.2 + 0.8*Math.abs(Math.sin(v))) : 0.04; return { h: Math.round(v*100)+'%' }; });
-          out.rnnNext = ()=>this.setState(s=>({rnnStep:Math.min(3,s.rnnStep+1)}));
+          out.rnnHidden = h.map(v => ({ h: Math.round(Math.abs(v) * 100) + '%', bg: v < 0 ? '#c98a1a' : acc, label: v.toFixed(2).replace('-', '−') }));
+          out.rnnFormula = 'hₜ = tanh(Wₓ xₜ + Wₕ hₜ₋₁) · xₜ = kelimenin one-hot kodu · çubuk = |h|, turuncu = negatif';
+          out.rnnNext = ()=>this.setState(s=>({rnnStep:Math.min(words.length,s.rnnStep+1)}));
           out.rnnReset = ()=>this.setState({rnnStep:0});
         }
 
@@ -1655,39 +1706,48 @@ class Component extends DCLogic {
           const row = W[q], mx = Math.max.apply(null, row);
           out.attnTokens = toks.map((t, k) => {
             const inten = row[k] / mx, isQ = k === q;
-            return { text: t, isQ,
+            return { text: t + ' ' + row[k].toFixed(2), isQ,
               style: 'padding:10px 13px;font-family:\'Work Sans\',sans-serif;font-size:14px;cursor:pointer;border:' + (isQ ? '2px solid ' + acc : '1px solid rgba(26,26,26,0.15)') + ';background:rgba(122,63,176,' + (0.10 + inten * 0.85).toFixed(2) + ');color:' + (inten > 0.55 ? '#fff' : '#37332a') + ';transition:all .25s;',
               pick: () => this.setState({ attnQ: k }) };
           });
           let best = -1, bestV = -1;
           row.forEach((v, k) => { if (k !== q && v > bestV) { bestV = v; best = k; } });
-          out.attnCaption = '“' + toks[q] + '” kelimesini seçtin (sorgu). En çok “' + toks[best] + '” kelimesine bakıyor (en koyu). Model böylece “' + toks[q] + '” kelimesinin neyle ilgili olduğunu çözüyor.';
+          const selfV = row[q], selfMax = selfV >= mx; // en koyu kutu kendi konumu olabilir (ör. ilk sözcük: 0.50)
+          out.attnCaption = '“' + toks[q] + '” sorgu. ' + (selfMax
+            ? 'En yüksek ağırlık kendi konumunda (' + selfV.toFixed(2) + '); diğer sözcükler arasında en çok “' + toks[best] + '” (' + bestV.toFixed(2) + ').'
+            : 'En yüksek ağırlık “' + toks[best] + '” sözcüğünde (' + bestV.toFixed(2) + '); kendi konumu ' + selfV.toFixed(2) + '.') + ' Ağırlıklar temsilidir; tek başına anlam ilişkisinin kanıtı değildir.';
         }
 
         if (demo.type === 'generate') {
           out.d_generate = true;
+          // Sıcaklık kuralı (print/kitap/qa/demo-data.json temp54): p = adayın mevcut olasılığı; z = ln p; q = softmax(z/T), T = 1.5.
+          // Örnekleme satırı ters-CDF ile seçer: adım i için U[i mod 8] < q₀ + … + qₖ olan ilk k. Açgözlü satır argmax p alır.
+          // U sabit düzgün sayılardır (tekrarlanabilir "zar"); gerçek sistemde her çağrıda yeniden çekilir.
           const steps = [
             { c: [['çok', 42], ['artık', 28], ['bugün', 18], ['giderek', 12]] },
             { c: [['hızlı', 38], ['güçlü', 30], ['yaygın', 20], ['akıllı', 12]] },
             { c: [['gelişiyor', 50], ['ilerliyor', 25], ['yayılıyor', 15], ['büyüyor', 10]] }
           ];
-          const creative = this.state.genCreative, gs = this.state.genStep;
-          const chosenIdx = creative ? 1 : 0;
-          const picks = [];
-          for (let i = 0; i < Math.min(gs, steps.length); i++) picks.push(steps[i].c[chosenIdx][0]);
-          out.genSentence = ('Yapay zekâ ' + picks.join(' ')).trim() + (gs >= steps.length ? '.' : ' ▍');
+          const T = 1.5, U = [0.37, 0.81, 0.12, 0.64, 0.49, 0.93, 0.26, 0.58];
+          const softT = (c) => { const z = c.map(x => Math.log(x[1] / 100)); const m = Math.max.apply(null, z); const e = z.map(zz => Math.exp((zz - m) / T)); const s = e.reduce((a, b) => a + b, 0); return e.map(v => v / s); };
+          const sampleIdx = (q, u) => { let a = 0; for (let k = 0; k < q.length; k++) { a += q[k]; if (u < a) return k; } return q.length - 1; };
+          const amax = (c) => c.reduce((bi, x, i) => x[1] > c[bi][1] ? i : bi, 0);
+          const gs = Math.min(this.state.genStep, steps.length);
+          const greedy = [], sampled = [];
+          for (let i = 0; i < gs; i++) { greedy.push(steps[i].c[amax(steps[i].c)][0]); sampled.push(steps[i].c[sampleIdx(softT(steps[i].c), U[i % 8])][0]); }
+          const sent = (arr) => ('Yapay zekâ ' + arr.join(' ')).trim() + (gs >= steps.length ? '.' : ' ▍');
+          out.genRows = [{ name: 'Açgözlü (argmax)', sentence: sent(greedy) }, { name: 'Örnekleme, T = 1.5', sentence: sent(sampled) }];
           out.genDone = gs >= steps.length;
           out.genStepNum = Math.min(gs + 1, steps.length);
           out.genTotal = steps.length;
           if (gs < steps.length) {
-            const cur = steps[gs].c, cmax = cur[0][1];
-            out.genCands = cur.map((cand, i) => ({ word: cand[0], pct: cand[1] + '%', barW: Math.round(cand[1] / cmax * 100) + '%',
-              chosen: i === chosenIdx, bg: i === chosenIdx ? acc : 'rgba(122,63,176,0.22)', fg: i === chosenIdx ? '#f4eddb' : '#37332a' }));
-          } else out.genCands = [];
-          out.genCreative = creative;
-          out.genCreativeLabel = creative ? 'Yaratıcılık: Yüksek' : 'Yaratıcılık: Düşük';
+            const cur = steps[gs].c, q = softT(cur), ai = amax(cur), si = sampleIdx(q, U[gs % 8]), qmax = Math.max.apply(null, q);
+            out.genCands = cur.map((cand, i) => ({ word: cand[0], pct: Math.round(q[i] * 100) + '% (p ' + cand[1] + '%)' + (i === ai ? ' · argmax' : '') + (i === si ? ' · örnek' : ''),
+              barW: Math.round(q[i] / qmax * 100) + '%', bg: i === si ? acc : (i === ai ? '#1d8a4f' : 'rgba(122,63,176,0.22)') }));
+            out.genStepLabel = 'Adım ' + (gs + 1) + '/' + steps.length + ' · çubuk = softmax(z/1.5) · U = ' + U[gs % 8].toFixed(2) + ' → örnekleme “' + cur[si][0] + '”, argmax “' + cur[ai][0] + '”';
+          } else { out.genCands = []; out.genStepLabel = 'Bitti: iki satır da ' + steps.length + ' kelime üretti; sözcükleri ve seçim kuralını karşılaştır.'; }
+          out.genNote = 'Açgözlü satır her adımda en yüksek p’yi alır. Örnekleme satırı z = ln p, q = softmax(z/1.5) hesaplar ve sabit U sayısıyla seçer (ters-CDF: toplam q ≥ U olan ilk aday). T pozitifken örnekleme rastlantısaldır; argmax ayrı bir seçim kuralıdır.';
           out.genGen = () => this.setState(s => ({ genStep: Math.min(steps.length, s.genStep + 1) }));
-          out.genToggle = () => this.setState(s => ({ genCreative: !s.genCreative, genStep: 0 }));
           out.genReset = () => this.setState({ genStep: 0 });
         }
 
@@ -1709,14 +1769,15 @@ class Component extends DCLogic {
           const heart = [0,1,1,0,0,1,1,0, 1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1, 0,1,1,1,1,1,1,0, 0,0,1,1,1,1,0,0, 0,0,0,1,1,0,0,0, 0,0,0,0,0,0,0,0];
           const step = this.state.diffStep, frac = step / 8;
           const rand = (i) => { const x = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); };
+          let clean = 0;
           out.diffPixels = heart.map((v, i) => {
-            const revealed = rand(i) < frac;
+            const revealed = rand(i) < frac; if (revealed) clean++;
             let bg;
             if (revealed) bg = v ? '#7a3fb0' : '#efe7f4';
             else bg = rand(i + 41) > 0.5 ? '#4a4539' : '#d8d2c6';
             return { bg };
           });
-          out.diffPct = Math.round(frac * 100) + '%';
+          out.diffPct = Math.round(frac * 100) + '%'; out.diffClean = clean; // ilerleme (adım/8) ile temizlenen piksel payı ayrı niceliklerdir
           out.diffStepNum = step;
           out.diffDown = (e) => { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) {} this._diffDrag = true; this._diffSlide(e); };
           out.diffMove = (e) => { if (this._diffDrag) this._diffSlide(e); };
@@ -1767,9 +1828,9 @@ class Component extends DCLogic {
             toggle: () => this.setState(s => ({ promptParts: { ...s.promptParts, [p.k]: !s.promptParts[p.k] } })),
             style: 'padding:8px 14px;border:1px solid ' + acc + ';font-family:\'Work Sans\',sans-serif;font-size:13px;cursor:pointer;' + (pp[p.k] ? 'background:' + acc + ';color:#f4eddb;' : 'background:#fff;color:' + acc + ';') }));
           out.promptLines = chosen.map(p => ({ text: p.text, isBase: false })).concat([{ text: base, isBase: true }]);
-          out.promptQuality = q; out.promptQualityPct = q + '%';
+          out.promptQuality = q; out.promptQualityPct = q + '%'; out.promptQualityLabel = '%' + q; // açıklık kontrol listesi: 40 + 15·parça; kalite ölçümü değil
           out.promptResponse = resp[tier];
-          out.promptTier = tier === 'high' ? 'yüksek' : (tier === 'mid' ? 'orta' : 'düşük');
+          out.promptTier = tier === 'high' ? 'yüksek tamamlanma' : (tier === 'mid' ? 'orta tamamlanma' : 'düşük tamamlanma');
           out.promptBarColor = tier === 'high' ? '#1d8a4f' : (tier === 'mid' ? '#c98a1a' : '#b23b3b');
         }
 
@@ -1815,11 +1876,12 @@ class Component extends DCLogic {
 
         if (demo.type === 'arch') {
           out.d_arch = true;
-          const cmap = { sky: '#3b82c4', indigo: '#4f46b0', teal: '#2a7d86', amber: '#c98a1a', violet: '#7a3fb0' };
+          const cmap = { sky: '#3b82c4', indigo: '#4f46b0', rose: '#b23b5e', teal: '#2a7d86', amber: '#c98a1a', violet: '#7a3fb0' };
           const parts = [
             { k: 'ui', c: 'sky', name: 'Arayüz', desc: 'Kullanıcının soruyu yazdığı, cevabı gördüğü yer (sohbet ekranı, uygulama).' },
-            { k: 'orch', c: 'indigo', name: 'Orkestrasyon', desc: 'Asıl “beyin”: istemi hazırlar, hangi aracı/bilgiyi ne zaman çağıracağına karar verir, akışı yönetir.' },
-            { k: 'rag', c: 'teal', name: 'Bilgi tabanı', desc: 'Senin verin (belgeler, notlar) burada gömü olarak durur; RAG ile ilgili parça getirilir.' },
+            { k: 'orch', c: 'indigo', name: 'Orkestrasyon', desc: 'Bileşenleri yöneten katman: istemi hazırlar, hangi aracı/bilgiyi ne zaman çağıracağına karar verir, model çağrısını yapar, akışı yönetir.' },
+            { k: 'llm', c: 'rose', name: 'Model çağrısı (LLM)', desc: 'Kullanıcı isteği, erişilen kaynak parçaları ve araç sonuçları burada modele gider; modelin çıktısı (metin ya da bir araç çağrısı isteği) buradan orkestrasyona döner.' },
+            { k: 'rag', c: 'teal', name: 'Bilgi tabanı', desc: 'Senin verin (belgeler, notlar) burada gömüleriyle birlikte özgün parça ve metadata olarak durur; RAG ile ilgili parça getirilir.' },
             { k: 'tools', c: 'amber', name: 'Araçlar', desc: 'Modelin dünyayla etkileşimi: hesap, arama, takvim, e-posta, bir API ya da kod çalıştırma.' },
             { k: 'mem', c: 'violet', name: 'Bellek', desc: 'Konuşmanın geçmişini ve kullanıcıya dair durumu tutar; bağlamın sürmesini sağlar.' }
           ];
@@ -1859,13 +1921,14 @@ class Component extends DCLogic {
           out.biasA = A + '%'; out.biasB = B + '%';
           out.biasABarW = A + '%'; out.biasBBarW = B + '%';
           out.biasGap = gap; out.biasBalanced = gap <= 6;
+          out.biasFormula = 'Temsili formül: A = 50 + 0.4·e, B = 50 − 0.4·e (e = veri önyargısı, %); ölçülmüş eğitim sonucu değil.';
           out.biasDown = (ev) => { try { ev.currentTarget.setPointerCapture(ev.pointerId); } catch (x) {} this._biasDrag = true; this._biasSlide(ev); };
           out.biasMove = (ev) => { if (this._biasDrag) this._biasSlide(ev); };
           out.biasUp = () => { this._biasDrag = false; };
           this._biasSlide = (ev) => { const r = ev.currentTarget.getBoundingClientRect(); let v = (ev.clientX - r.left) / r.width; v = Math.max(0, Math.min(1, v)); this.setState({ biasVal: Math.round(v * 100) }); };
           out.biasCaption = gap <= 6
             ? 'Veri dengeli: iki grup da neredeyse aynı oranda onay alıyor (A %' + A + ', B %' + B + '). Aynı niteliğe aynı karar; adil olan da bu.'
-            : 'İki grup tıpatıp aynı nitelikte olmasına rağmen model A’yı %' + A + ', B’yi %' + B + ' onaylıyor (fark %' + gap + '). Model bu farkı gerçeklikten değil, çarpık veriden öğrendi; ayrımcılık böyle miras kalıyor.';
+            : 'İki grup tıpatıp aynı nitelikte olmasına rağmen model A’yı %' + A + ', B’yi %' + B + ' onaylıyor (fark ' + gap + ' yüzde puan). Model bu farkı gerçeklikten değil, çarpık veriden öğrendi; ayrımcılık böyle miras kalıyor.';
         }
 
         if (demo.type === 'explain') {
@@ -1884,36 +1947,40 @@ class Component extends DCLogic {
           out.explainShow = show; out.explainNotShown = !show;
           out.explainToggle = () => this.setState({ explainShow: true });
           const mx = Math.max.apply(null, app.feats.map(f => Math.abs(f.c)));
-          out.explainFeats = app.feats.map(f => ({ label: f.label, val: (f.c > 0 ? '+' : '') + f.c, pos: f.c > 0,
+          // Toplamsal açıklama: f(x) = φ₀ + Σφᵢ; φ₀ = 0 puan bu örneğe özgü seçim, birim "puan", karar eşiği 0. Katkılar temsili (hesaplanmış SHAP değeri değil).
+          out.explainFeats = app.feats.map(f => ({ label: f.label, val: (f.c > 0 ? '+' : '−') + Math.abs(f.c) + ' puan', pos: f.c > 0,
             barW: Math.round(Math.abs(f.c) / mx * 100) + '%', color: f.c > 0 ? '#1d8a4f' : '#b23b3b' }));
-          out.explainCaption = 'Yeşil etkenler kararı onaya, kırmızılar redde itti; toplamları (' + (sum > 0 ? '+' : '') + sum + ') sonucu belirledi. İşaretli katkılar (SHAP benzeri) “kara kutu”yu “beyaz kutu”ya çevirir.';
+          out.explainBase = 'Taban değer φ₀ = 0 puan (bu örneğe özgü seçim) · karar eşiği 0 puan · birim: puan (temsili)';
+          out.explainCaption = 'Toplam: φ₀ 0' + app.feats.map(f => (f.c > 0 ? ' + ' : ' − ') + Math.abs(f.c)).join('') + ' = ' + (sum > 0 ? '+' : '−') + Math.abs(sum) + ' puan; eşik 0 → ' + (approved ? 'onay' : 'ret') + '. Yeşil etkenler onaya, kırmızılar redde itti. Katkılar temsilidir, hesaplanmış SHAP değerleri değildir; bu sonradan açıklama modeli bütünüyle şeffaf yapmaz.';
         }
 
         if (demo.type === 'df') {
           out.d_df = true;
+          // Kurgu vakalar. best = önerilen adım ('real' | 'verify' | 'cannot'); ipucu = şüphe/güven işareti; dogrulama = bağımsız kanal.
+          // Kesin "gerçek/sahte" hükmü verilmez: ipucu inceleme gerekçesidir, üretim kökeninin kanıtı değildir. Puan = önerilen adımla eşleşen seçim.
           const cases = [
-            { text: 'Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor.', fake: true, tell: 'Dudak senkronu ve yüz kenarlarındaki titreme klasik deepfake izidir.' },
-            { text: 'Telefonda “patronun” acil para transferi istiyor; sesi tıpkı ona benziyor ama tonlama biraz robotik.', fake: true, tell: 'Ses klonlama + aciliyet baskısı = tipik dolandırıcılık. İkinci bir kanaldan doğrula.' },
-            { text: 'Bir gazetenin web sitesinde yayımlanan, birden çok bağımsız kaynağın da doğruladığı bir haber.', fake: false, tell: 'Birden çok bağımsız kaynak ve izlenebilir köken güvenilirliğin işaretidir.' },
-            { text: 'Bir fotoğrafta kişinin elinde altı parmak var ve arka plandaki yazılar anlamsız harflerden oluşuyor.', fake: true, tell: 'Eller, dişler ve arka plan metni üretken modellerin hâlâ zorlandığı yerlerdir.' }
+            { text: 'Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor.', best: 'verify', ipucu: 'dudak hareketleriyle ses arasındaki uyumsuzluk', dogrulama: 'konuşmanın özgün kaydını ve yayımlayan kurumu bağımsız bir kanaldan bul' },
+            { text: 'Telefonda “patronun” acil para transferi istiyor; sesi tıpkı ona benziyor ama tonlama biraz robotik.', best: 'verify', ipucu: 'ses klonlamayla uyumlu robotik tonlama ve aciliyet baskısı', dogrulama: 'transferi bekletip patronu bilinen numarasından geri ara ya da yüz yüze teyit et' },
+            { text: 'Bir gazetenin web sitesinde yayımlanan, birden çok bağımsız kaynağın da doğruladığı bir haber.', best: 'real', ipucu: 'birden çok bağımsız kaynak ve izlenebilir köken', dogrulama: 'kaynakların her birini ayrı ayrı aç; metni insanın mı makinenin mi yazdığı bu bilgiden çıkarılamaz' },
+            { text: 'Bir fotoğrafta kişinin elinde altı parmak var ve arka plandaki yazılar anlamsız harflerden oluşuyor.', best: 'verify', ipucu: 'altı parmak ve anlamsız arka plan yazısı', dogrulama: 'ters görsel aramayla fotoğrafın özgün kaynağını bul' }
           ];
+          const opts = [{ k: 'real', label: 'Gerçek görünüyor', c: '#1d8a4f' }, { k: 'verify', label: 'Şüpheli: doğrula', c: '#c98a1a' }, { k: 'cannot', label: 'Belirlenemez', c: '#3b82c4' }];
           const idx = this.state.dfIdx, ans = this.state.dfAnswer, c = cases[idx];
-          out.dfText = c.text;
-          out.dfIdxNum = idx + 1; out.dfTotal = cases.length;
+          const lbl = {}; opts.forEach(o => lbl[o.k] = o.label);
+          out.dfText = c.text; out.dfIdxNum = idx + 1; out.dfTotal = cases.length; out.dfHits = this.state.dfHits;
           out.dfAnswered = ans !== null; out.dfNotAnswered = ans === null;
-          out.dfGuessReal = () => this.setState({ dfAnswer: 'real' });
-          out.dfGuessFake = () => this.setState({ dfAnswer: 'fake' });
+          out.dfOpts = opts.map(o => ({ label: o.label, pick: () => this.setState(s => ({ dfAnswer: o.k, dfHits: s.dfHits + (o.k === c.best ? 1 : 0) })),
+            style: 'padding:11px 20px;border:1.5px solid ' + o.c + ';background:#fff;color:' + o.c + ';font-family:\'Work Sans\',sans-serif;font-weight:600;font-size:14px;cursor:pointer;' }));
           if (ans !== null) {
-            const guessedFake = ans === 'fake';
-            const correct = guessedFake === c.fake;
-            out.dfCorrect = correct;
-            out.dfVerdict = (correct ? '✓ Doğru: ' : '✗ Yanıldın: ') + 'bu içerik ' + (c.fake ? 'yapay/sahte.' : 'gerçek.');
-            out.dfVerdictColor = correct ? '#1d8a4f' : '#b23b3b';
-            out.dfTell = c.tell;
-          } else { out.dfCorrect = false; out.dfVerdict = ''; out.dfTell = ''; }
+            const match = ans === c.best;
+            out.dfVerdict = (match ? '✓ Önerilen adımla eşleşti: ' : '○ Önerilen adım farklı: ') + lbl[c.best];
+            out.dfVerdictColor = match ? '#1d8a4f' : '#c98a1a';
+            out.dfTell = 'Bu kurgu örnekte ' + c.ipucu + ' işareti var; önerilen adım: ' + c.dogrulama + '.';
+            out.dfNote = 'İpuçları inceleme gerekçesidir; tek başına içeriğin nasıl üretildiğinin kanıtı değildir. Olayın gerçekliği ile üretim yöntemi ayrı sorulardır.';
+          } else { out.dfVerdict = ''; out.dfTell = ''; out.dfNote = ''; }
           out.dfHasNext = idx < cases.length - 1;
           out.dfNext = () => this.setState(s => ({ dfIdx: Math.min(cases.length - 1, s.dfIdx + 1), dfAnswer: null }));
-          out.dfReset = () => this.setState({ dfIdx: 0, dfAnswer: null });
+          out.dfReset = () => this.setState({ dfIdx: 0, dfAnswer: null, dfHits: 0 });
         }
 
         if (demo.type === 'reg') {
@@ -1969,9 +2036,9 @@ class Component extends DCLogic {
         if (demo.type === 'tur') {
           out.d_tur = true;
           const chats = [
-            { prompt: '“En sevdiğin yemek ne?”', reply: 'Bir yapay zekâ olarak yemek yiyemem, dolayısıyla bir favorim yok. Ancak istersen popüler yemekler hakkında bilgi verebilirim.', machine: true, tell: 'Aşırı kibar, kalıplı ve “bir yapay zekâ olarak” ifadesi tipik makine cevabıdır.' },
-            { prompt: '“Bu sabah trafiğe takıldın mı?”', reply: 'Sorma ya, köprüde tam 40 dakika kaldım, kahvem de soğudu :( en azından güzel bir podcast vardı.', machine: false, tell: 'Kişisel ayrıntı, duygu, hafif şikâyet ve doğal samimiyet insan işaretidir.' },
-            { prompt: '“17 × 24 kaç eder?”', reply: '408.', machine: true, tell: 'Anında, kusursuz ve tereddütsüz aritmetik genelde makineyi ele verir (çoğu insan biraz duraksar).' },
+            { prompt: '“En sevdiğin yemek ne?”', reply: 'Bir yapay zekâ olarak yemek yiyemem, dolayısıyla bir favorim yok. Ancak istersen popüler yemekler hakkında bilgi verebilirim.', machine: true, tell: 'Aşırı kibar, kalıplı ve “bir yapay zekâ olarak” ifadesi makineyi düşündürür; ama bir insan da böyle yazabilir.' },
+            { prompt: '“Bu sabah trafiğe takıldın mı?”', reply: 'Sorma ya, köprüde tam 40 dakika kaldım, kahvem de soğudu :( en azından güzel bir podcast vardı.', machine: false, tell: 'Kişisel ayrıntı, duygu, hafif şikâyet ve doğal samimiyet insanı düşündürür; ama bir model de böyle bir anı uydurabilir.' },
+            { prompt: '“17 × 24 kaç eder?”', reply: '408.', machine: true, tell: 'Kusursuz, tereddütsüz aritmetik bu kurguda makine olarak yazıldı; ama bir insan da doğru hesaplayabilir.' },
             { prompt: '“Hafta sonu ne yaptın?”', reply: 'Annemlere gittik, çok yedik, dönüşte de yağmura yakalandık. Klasik yani 😅', machine: false, tell: 'Belirsiz ama yaşanmış detaylar ve gündelik dil insanı düşündürür.' }
           ];
           const idx = this.state.turIdx, ans = this.state.turAnswer, c = chats[idx];
@@ -1983,8 +2050,8 @@ class Component extends DCLogic {
           if (ans !== null) {
             const correct = (ans === 'machine') === c.machine;
             out.turCorrect = correct;
-            out.turVerdict = (correct ? '✓ Doğru: ' : '✗ Yanıldın: ') + 'bu cevabı bir ' + (c.machine ? 'makine' : 'insan') + ' yazdı.';
-            out.turVerdictColor = correct ? '#1d8a4f' : '#b23b3b';
+            out.turVerdict = (correct ? '✓ Tahminin kurguyla eşleşti: ' : '○ Tahminin kurguyla eşleşmedi: ') + 'bu kurguda cevap ' + (c.machine ? 'makine' : 'insan') + ' olarak yazıldı; ipuçları kesin kanıt değildir.';
+            out.turVerdictColor = correct ? '#1d8a4f' : '#c98a1a';
             out.turTell = c.tell;
           } else { out.turCorrect = false; out.turVerdict = ''; out.turTell = ''; }
           out.turHasNext = idx < chats.length - 1;
@@ -2049,26 +2116,29 @@ class Component extends DCLogic {
 
         if (demo.type === 'responsibility') {
           out.d_resp = true;
+          // Çoklu seçim. primary = ilk incelenecek taraf(lar); shared = paylaşılan sorumluluk. Kesin hukuk hükmü değil: sonuç ülkeye, role ve olaya bağlıdır.
           const scen = [
-            { scenario: 'Sürücüsüz bir araç, üreticinin yazılım hatası yüzünden kaza yapar.', correct: 'maker', who: 'Üretici/geliştirici (ve denetim) — yazılım kusuru onların sorumluluğudur.' },
-            { scenario: 'Bir kurum, YZ tavsiyesini kör biçimde uygulayıp müşteriye zarar verir.', correct: 'org', who: 'Onu kullanan/işleten kurum — aracı denetlemeden kullanmak onların sorumluluğudur.' },
-            { scenario: 'Bir kullanıcı, bir YZ aracını kasıtlı olarak sahte içerik üretmek için kullanır.', correct: 'user', who: 'Kasıtlı kötüye kullanan kullanıcı — niyet ve eylem ona aittir.' }
+            { scenario: 'Sürücüsüz bir araç, üreticinin yazılım hatası yüzünden kaza yapar.', primary: ['maker'], shared: ['org'] },
+            { scenario: 'Bir kurum, YZ tavsiyesini kör biçimde uygulayıp müşteriye zarar verir.', primary: ['org'], shared: ['maker'] },
+            { scenario: 'Bir kullanıcı, bir YZ aracını birini aldatmak veya zarara uğratmak amacıyla sahte kanıt üretmek için kullanır.', primary: ['user'], shared: ['org'] }
           ];
           const parties = [{ k: 'maker', label: 'Üretici / geliştirici' }, { k: 'org', label: 'İşleten kurum' }, { k: 'user', label: 'Son kullanıcı' }, { k: 'ai', label: 'YZ’nin kendisi' }];
-          const idx = this.state.respIdx, picked = this.state.respPick, s = scen[idx];
-          out.respScenarios = scen.map((sc, i) => ({ label: sc.scenario, pick: () => this.setState({ respIdx: i, respPick: null }),
+          const idx = this.state.respIdx, picks = this.state.respPicks, show = this.state.respShow, s = scen[idx];
+          const name = {}; parties.forEach(p => name[p.k] = p.label);
+          out.respScenarios = scen.map((sc, i) => ({ label: sc.scenario, pick: () => this.setState({ respIdx: i, respPicks: [], respShow: false }),
             style: 'padding:9px 13px;border:1px solid ' + acc + ';font-family:\'Work Sans\',sans-serif;font-size:12.5px;cursor:pointer;text-align:left;' + (i === idx ? 'background:' + acc + ';color:#f4eddb;' : 'background:#fff;color:' + acc + ';') }));
-          out.respParties = parties.map(p => ({ label: p.label, pick: () => this.setState({ respPick: p.k }),
-            style: 'padding:8px 13px;border:1px solid ' + acc + ';font-family:\'Work Sans\',sans-serif;font-size:12.5px;cursor:pointer;' + (picked === p.k ? 'background:' + acc + ';color:#f4eddb;' : 'background:#fff;color:' + acc + ';') }));
-          out.respPicked = picked !== null;
-          out.respNotPicked = picked === null;
-          if (picked !== null) {
-            const correct = picked === s.correct;
-            out.respVerdict = correct ? '✓ Yaygın görüş de bu yönde.' : (picked === 'ai' ? '✗ “YZ’nin kendisi” hâkim görüş değildir.' : '✗ Yaygın görüş farklı.');
-            out.respVerdictColor = correct ? '#1d8a4f' : '#b23b3b';
-            out.respWho = s.who;
-          } else { out.respVerdict = ''; out.respWho = ''; }
-          out.respNote = 'Sorumluluk bugün ezici biçimde insanlara ve kurumlara atfedilir; “YZ’nin kendisi”ne hukuki sorumluluk yüklemek hâkim görüş değildir.';
+          out.respParties = parties.map(p => ({ label: (picks.includes(p.k) ? '✓ ' : '') + p.label,
+            pick: () => this.setState(st => ({ respPicks: st.respPicks.includes(p.k) ? st.respPicks.filter(k => k !== p.k) : st.respPicks.concat(p.k), respShow: false })),
+            style: 'padding:8px 13px;border:1px solid ' + acc + ';font-family:\'Work Sans\',sans-serif;font-size:12.5px;cursor:pointer;' + (picks.includes(p.k) ? 'background:' + acc + ';color:#f4eddb;' : 'background:#fff;color:' + acc + ';') }));
+          out.respPicked = show; out.respNotShown = !show;
+          out.respEval = () => { if (picks.length) this.setState({ respShow: true }); };
+          if (show) {
+            const hitP = s.primary.every(k => picks.includes(k));
+            out.respVerdict = hitP ? '✓ İlk incelenecek tarafı işaretledin.' : '○ İlk incelenecek taraf seçimin dışında kaldı.';
+            out.respVerdictColor = hitP ? '#1d8a4f' : '#c98a1a';
+            out.respWho = 'İlk incelenecek: ' + s.primary.map(k => name[k]).join(', ') + '; paylaşılan sorumluluk: ' + s.shared.map(k => name[k]).join(', ') + '; hukuki sonuç ülkeye, role ve olaya bağlıdır.';
+            out.respNote = (picks.includes('ai') ? '“YZ’nin kendisi”ne hukuki sorumluluk yüklemek bugün hâkim görüş değildir; sorumluluk insanlara ve kurumlara atfedilir. ' : '') + 'Senin seçimin: ' + picks.map(k => name[k]).join(', ') + '.';
+          } else { out.respVerdict = ''; out.respWho = ''; out.respNote = ''; }
         }
       }
 

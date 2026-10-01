@@ -8,7 +8,7 @@
 
 Yapay zekâ artık bir laboratuvar oyuncağı değil; kredi başvurularını, iş ilanlarını, haber akışını, hatta sağlık kararlarını etkiliyor. Etkisi büyüdükçe sorumluluk da büyüyor. Artık sıra teknolojinin insana dokunduğu yerde.
 
-Beş başlık var: makinelerin veriden miras aldığı önyargı, kara kutu kararlar, deepfake ve dezenformasyon, düzenleme (AB AI Act, KVKK) ve hizalama: makine amacımızı gerçekten anlıyor mu? İşin değişen doğası ve filtre balonu gibi sessiz etkiler de arada.
+Beş başlık var: makinelerin veriden miras aldığı önyargı, kara kutu kararlar, deepfake ve dezenformasyon, düzenleme (AB AI Act, KVKK) ve hizalama: makine amacımızı gerçekten anlıyor mu?
 
 > **Kenar notu.** “Yapay zekâ tarafsızdır” bir efsanedir. Bir model, kendisini eğiten verinin ve onu kuran insanların değerlerini taşır. O yüzden “nasıl çalışıyor” kadar “kime, nasıl etki ediyor” da önemlidir.
 
@@ -16,7 +16,7 @@ Beş başlık var: makinelerin veriden miras aldığı önyargı, kara kutu kara
 
 Bu bölüm YZ’nin toplumsal-teknik (sociotechnical) boyutunu ele alır: sistemler boşlukta değil, kurumların, verinin ve insanların içine gömülü çalışır; etkileri de oradan doğar.
 
-Ele alınan eksenler: veri kaynaklı yanlılık ve adalet (fairness), açıklanabilirlik/yorumlanabilirlik (XAI), sentetik medya ve dezenformasyon, düzenleyici çerçeveler (AB AI Act’in risk temelli yaklaşımı, KVKK/GDPR’ın kişisel veri ilkeleri) ve hizalama/güvenlik. Amaç, teknik bilgiyi toplumsal sorumlulukla birlikte okumak.
+Ele alınan eksenler: yanlılık (bias) ve adalet (fairness), açıklanabilirlik/yorumlanabilirlik (XAI), sentetik medya ve dezenformasyon, düzenleyici çerçeveler (AB AI Act’in risk temelli yaklaşımı, KVKK/GDPR’ın kişisel veri ilkeleri) ve hizalama/güvenlik. Amaç, teknik bilgiyi toplumsal sorumlulukla birlikte okumak.
 
 Beş başlığın ilki en sessiz olanı: model, kimse fark etmeden geçmişin defterinden neyi öğreniyor?
 
@@ -26,16 +26,16 @@ Bir model ders kitabı olarak geçmişin defterini okur. Defter çarpıksa, çal
 
 İki grup (A ve B) tıpatıp aynı nitelikte; Şekil 7.1’de yalnızca eğitim verisindeki önyargı artıp azalıyor. Modelin kararının nasıl kaydığını gör.
 
-> **Kenar notu.** “Çöp girer, çöp çıkar.” Bir modelin adil olması için önce verisinin adil ve temsili olması gerekir. Sorumluluk modelde değil, çoğu zaman veriyi seçen ve kuran insanlardadır.
+> **Kenar notu.** “Çöp girer, çöp çıkar.” Bir modelin adil olması için önce verisinin adil ve temsili olması gerekir; ama bu yalnız başlangıç. Hedefi, ölçütü ve kullanım yerini de insanlar seçer. Sorumluluk modelde değil, çoğu zaman veriyi ve hedefi seçen insanlardadır.
 
 **Şekil 7.1 · Önyargı simülasyonu**
 ![Şekil 7.1](../../figures/out/tr/sekil-7-1-bias.svg)
 
-*Kurulum.* Şekilde iki grup var: A ve B. İkisi de aynı gelire, aynı ödeme geçmişine, aynı borca sahip; niteliklerde tek bir fark yok. Değişen tek şey eğitim verisindeki önyargı; şekil bunu yüzde 0 ile yüzde 100 arasında bir ölçek olarak gösteriyor. Şekildeki üç panel ölçeğin yüzde 0, 50 ve 100 noktalarını gösteriyor. Her önyargı düzeyi için model iki gruba ayrı onay oranı veriyor. İki çubuk bu oranları yan yana koyuyor; aradaki boşluk parite farkı.
+*Kurulum.* Şekilde iki grup var: A ve B. İkisi de aynı gelire, aynı ödeme geçmişine, aynı borca sahip; niteliklerde tek bir fark yok. Değişen tek şey eğitim verisindeki önyargı; şekil bunu yüzde 0 ile yüzde 100 arasında bir ölçek olarak gösteriyor. Şekildeki üç panel ölçeğin yüzde 0, 50 ve 100 noktalarını gösteriyor. Her önyargı düzeyi için gösterim iki gruba ayrı onay oranı veriyor. İki çubuk bu oranları yan yana koyuyor; aradaki boşluk parite farkı, yüzde puan cinsinden. Bu şekildeki sayılar anlatım için seçilmiştir; eğitilmiş bir modelin ölçülmüş sonucu değildir.
 
-*Adım adım.* Gösterimin kuralı tek satır: önyargı e ise A grubunun onay oranı 50 + 0.4·e, B grubununki 50 − 0.4·e. Parite farkı bu iki oran arasındaki fark (0.8·e); önyargı her bir puan arttığında fark 0.8 puan açılıyor. Tablo, ölçeğin beş noktasında ne olduğunu gösteriyor:
+*Adım adım.* Gösterimin kuralı tek satır: önyargı e ise A grubunun onay oranı yuvarla(50 + 0.4·e), B grubununki yuvarla(50 − 0.4·e); iki oran da tam sayıya yuvarlanır. Parite farkı, yuvarlanmış iki oranın farkı; yuvarlamadan önce 0.8·e. Önyargı her bir puan arttığında fark yaklaşık 0.8 yüzde puan açılıyor. Tablo, ölçeğin beş noktasında ne olduğunu gösteriyor:
 
-| Veri önyargısı (e) | A onay | B onay | Parite farkı | Gösterimin yorumu |
+| Veri önyargısı (e) | A onay | B onay | Parite farkı (yüzde puan) | Gösterimin yorumu |
 |---|---|---|---|---|
 | %0 | %50 | %50 | 0 | Veri dengeli |
 | %8 | %53 | %47 | 6 | Veri dengeli (sınır) |
@@ -43,41 +43,41 @@ Bir model ders kitabı olarak geçmişin defterini okur. Defter çarpıksa, çal
 | %50 | %70 | %30 | 40 | Çarpık |
 | %100 | %90 | %10 | 80 | Çarpık |
 
-1. Önyargı yüzde 0: iki grup da yüzde 50 onay alıyor. Aynı niteliğe aynı karar; adil olan da bu.
-2. Önyargı yüzde 8’e kadar fark 6 puanı geçmiyor; gösterim bu aralığı hâlâ dengeli sayıyor.
-3. Yüzde 9’dan itibaren etiket çarpığa dönüyor. Yüzde 50’de model A’yı 70, B’yi 30 onaylıyor; nitelikler aynı, fark yalnız veriden.
-4. Yüzde 100’de fark 80 puana çıkıyor. A grubundan on başvurunun dokuzu onay alırken B grubundan yalnız biri alıyor. Başvuranların nitelikleri hiç değişmedi; yalnız modelin okuduğu defter değişti.
+1. Önyargı yüzde 0: iki grup da yüzde 50 onay alıyor; fark 0. Aynı niteliğe aynı karar; adil olan da bu.
+2. Önyargı yüzde 8’de oranlar 53.2 ve 46.8 hesaplanıyor, 53 ve 47’ye yuvarlanıyor; fark 6 yüzde puan. Gösterim bu aralığı hâlâ dengeli sayıyor.
+3. Yüzde 9’dan itibaren etiket çarpığa dönüyor. Yüzde 50’de gösterim A’yı 70, B’yi 30 onaylıyor; onay oranları arasındaki fark 40 yüzde puan. Nitelikler aynı, fark yalnız veriden.
+4. Yüzde 100’de A yüzde 90, B yüzde 10; onay oranları arasındaki fark 80 yüzde puan (yüzde 80 değil). A grubundan on başvurunun dokuzu onay alırken B grubundan yalnız biri alıyor. Başvuranların nitelikleri hiç değişmedi; yalnız gösterimin kuralındaki önyargı değişti.
 
 *Ne oluyor?* İki grup birebir aynı nitelikte; değiştirdiğimiz tek şey eğitim verisindeki önyargı. Model geçmişteki çarpık örüntüyü “doğru” sanıp tekrarlıyor ve aynı nitelikteki insanlara bile farklı kararlar veriyor.
 
-*Kendin dene.* 1) Önyargı yüzde 75 iken A ve B’nin onay oranını ve parite farkını kendin hesapla. 2) Gösterim, fark 6 puan ve altındayken veriyi dengeli sayıyor. Bu eşik ilk kez hangi önyargı düzeyinde aşılır? 3) Kural gereği A hiçbir zaman yüzde 95’i geçemez, B yüzde 5’in altına inemez. Ölçeğin ucunda bile bu sınırlara ulaşılıyor mu? Neden? Canlı demo: [QR 7.1]
+*Kendin dene.* 1) Önyargı yüzde 75 iken A ve B’nin onay oranını ve yüzde puan cinsinden parite farkını kendin hesapla. 2) Gösterim, fark 6 yüzde puan ve altındayken veriyi dengeli sayıyor. Bu eşik ilk kez hangi önyargı düzeyinde aşılır? 3) Kural gereği A hiçbir zaman yüzde 95’i geçemez, B yüzde 5’in altına inemez. Ölçeğin ucunda bile bu sınırlara ulaşılıyor mu? Neden? Canlı demo: [QR 7.1]
 
 #### Teknik derinlik
 
-Algoritmik yanlılık çoğunlukla veriden kaynaklanır: tarihsel önyargı, eksik temsil, etiketleme hatası veya vekil değişkenler (proxy) korunan özelliklerle ilişkilenir. Model, dağılımdaki bu örüntüyü öğrenir ve pekiştirir.
+Algoritmik yanlılık veriden, ölçüm ve modelleme tercihlerinden, kurumsal süreçlerden ve kullanım bağlamından doğabilir. Verideki kaynaklar: tarihsel önyargı, eksik temsil, etiketleme hatası veya vekil değişkenler (proxy) korunan özelliklerle ilişkilenir. Model, dağılımdaki bu örüntüyü öğrenir ve pekiştirir. Veri dengesini düzeltmek bu kaynakların yalnızca bir kısmını ele alır.
 
-Adalet (fairness) tek bir tanım değildir; demografik parite, fırsat eşitliği ve kalibrasyon gibi ölçütler bazen birbiriyle çelişir. Azaltma: veri denetimi, dengeleme, adalet-kısıtlı eğitim ve dağıtım sonrası izleme. Şekil 7.1, aynı niteliklere rağmen veri önyargısının karar farkı (gap) ürettiğini gösterir.
+Adalet (fairness) tek bir tanım değildir; demografik parite, fırsat eşitliği ve kalibrasyon gibi ölçütler bazen birbiriyle çelişir. Azaltma: veri denetimi, dengeleme, adalet-kısıtlı eğitim ve dağıtım sonrası izleme. Şekil 7.1, aynı niteliklere rağmen veri önyargısının karar farkı (gap) ürettiğini temsili olarak gösterir.
 
 Nitelikler sabit; tek değişen eğitim verisindeki yanlılık. Karar farkı (demografik parite ihlali) buradan doğar.
 
-Gösterimin modeli: A = yuvarla(min(95, 50 + 0.4·e)), B = yuvarla(max(5, 50 − 0.4·e)), gap = A − B. Demografik parite, P(onay | A) = P(onay | B) koşuludur; gap = 0 dışında her değer bu koşulu ihlal eder. Gösterim, gap ≤ 6 için “dengeli” etiketi kullanır; bu bir tolerans seçimidir, adaletin tanımı değil.
+Gösterimin modeli: A = yuvarla(min(95, 50 + 0.4·e)), B = yuvarla(max(5, 50 − 0.4·e)), gap = A − B (yüzde puan). Bu bir oyuncak kuraldır: onay oranları eğitimden gelmez, formülle atanır; eşit veride eşit oran da önceden kurulmuştur. Gösterimden veri dengesi ile adalet arasında genel bir yasa çıkarılamaz. Demografik parite, P(onay | A) = P(onay | B) koşuludur; gap = 0 dışında her değer bu koşulu ihlal eder. Gösterim, gap ≤ 6 için “dengeli” etiketi kullanır; bu bir tolerans seçimidir, adaletin tanımı değil.
 
 Önyargıyı ölçebildik. Modelin verdiği tek bir kararın gerekçesini de görebilir miyiz?
 
 ### 7.3 Kara kutu mu, beyaz kutu mu?
 
-Model “kredin reddedildi” deyince haklı bir soru yükselir: Neden? Birçok güçlü model, kararını verir ama gerekçesini anlatamaz; kapağı açılmayan bir kara kutu gibidir. Oysa insan hayatına dokunan kararlarda (kredi, işe alım, sağlık) “neden?” diye sorabilmek ve cevabını görebilmek bir hak meselesidir. Kara kutuyu camdan bir kutuya çevirmek gerekir.
+Model “kredin reddedildi” deyince haklı bir soru yükselir: Neden? Birçok güçlü model, kararını verir ama gerekçesini anlatamaz; kapağı açılmayan bir kara kutu gibidir. Oysa insan hayatına dokunan kararlarda (kredi, işe alım, sağlık) “neden?” diye sorabilmek ve cevabını görebilmek bir hak meselesidir. Kara kutunun kapağını en azından karar karar aralamak gerekir.
 
-Önce bir kredi kararına bak; sonra Şekil 7.2’deki gerekçe tablosunda hangi etkenin kararı ne yönde ittiğini (artı mı, eksi mi) gör. Kara kutu böyle beyaz kutuya döner.
+Önce bir kredi kararına bak; sonra Şekil 7.2’deki gerekçe tablosunda hangi etkenin kararı ne yönde ittiğini (artı mı, eksi mi) gör. Kapak bir karar için açılır; modelin tamamı yine kapalı kalabilir.
 
 > **Kenar notu.** Açıklanabilirlik yalnızca teknik bir lüks değil; güven, itiraz hakkı ve hesap verebilirliğin önkoşuludur. “Neden?” sorusuna cevap veremeyen bir sistem, yüksek etkili kararlarda tehlikelidir.
 
 **Şekil 7.2 · Beyaz kutu: kararı açıkla**
 ![Şekil 7.2](../../figures/out/tr/sekil-7-2-explain.svg)
 
-*Kurulum.* İki kredi başvurusu var. Her başvurunun üst yarısı kara kutu: yalnızca sonucu gösteriyor, onay ya da ret. Alt yarısı aynı kararın kapağını açıyor. Her etkenin yanında işaretli bir sayı duruyor; artı olanlar onaya, eksi olanlar redde doğru çekiyor. Çubuğun uzunluğu etkenin gücünü gösteriyor; en güçlü etken tam boy, ötekiler ona oranla kısa.
+*Kurulum.* İki kredi başvurusu var. Her başvurunun üst yarısı kara kutu: yalnızca sonucu gösteriyor, onay ya da ret. Alt yarısı aynı kararın kapağını açıyor. Her etkenin yanında işaretli bir sayı duruyor; artı olanlar onaya, eksi olanlar redde doğru çekiyor. Sayıların birimi puan; taban değer sıfır, karar eşiği de sıfır. Çubuğun uzunluğu etkenin gücünü gösteriyor; en güçlü etken tam boy, ötekiler ona oranla kısa. Katkılar gerçek bir modelden hesaplanmadı; anlatım için seçilmiş temsili sayılar.
 
-*Adım adım.* Kural tek cümle: dört katkının toplamı sıfırdan büyükse kredi onaylanır, değilse reddedilir.
+*Adım adım.* Kural tek cümle: taban değer sıfır; dört katkının toplamı sıfırdan büyükse kredi onaylanır, değilse reddedilir.
 
 | Başvuru #1 | Katkı |
 |---|---|
@@ -96,11 +96,11 @@ Model “kredin reddedildi” deyince haklı bir soru yükselir: Neden? Birçok 
 | **Toplam** | **+76 → Kredi onaylandı** |
 
 1. Başvuru #1, kapak kapalıyken: “Kredi reddedildi”. Başka hiçbir bilgi yok; itiraz edecek bir yer de yok. Başvuran, sonuçla baş başa kalıyor.
-2. Kapak açılınca hesap ortaya çıkıyor. İki artı etken (+32 ve +18) toplam +50 ediyor; iki eksi etken (−46 ve −12) toplam −58. Fark −8; sıfırın altında kaldığı için ret. Tek bir etken, yüksek mevcut borç, bütün artıları siliyor. Tabloyu gören başvuran ne yapacağını da biliyor: itiraz edecekse borç kalemine itiraz eder, düzeltecekse önce onu düzeltir.
+2. Kapak açılınca hesap ortaya çıkıyor. İki artı etken (+32 ve +18) toplam +50 ediyor. Borç tek başına −46; artılardan düşülünce +4 kalıyor, yani borç tek başına reddettirmiyor. Kısa hesap geçmişinin −12’si eklenince toplam −8; sıfırın altında, ret. Borç en büyük eksi katkı; kısa hesap geçmişiyle birlikte artıların toplamını aşıyor. Tabloyu gören başvuran ne yapacağını da biliyor: itiraz edecekse en büyük kaleme, borca itiraz eder; düzeltecekse önce onu düzeltir.
 3. Başvuru #2’de üç artı etken +90 ediyor, tek eksi etken −14. Toplam +76; onay. Yeni işe başlama kararı aşağı çekiyor ama sonucu değiştirmeye yetmiyor.
-4. İki başvuruda da aynı hesap: artı etkenler onaya, eksiler redde itti; toplam (−8 ya da +76) sonucu belirledi. İşaretli katkılar kara kutuyu böyle açıyor.
+4. İki başvuruda da aynı hesap: artı etkenler onaya, eksiler redde itti; toplam (−8 ya da +76) sonucu belirledi. İşaretli katkılar kapağı bir karar için açıyor; modelin tamamını saydam yapmıyor.
 
-*Ne oluyor?* Her etkenin kararı hangi yöne ittiğini görüyoruz: turuncular onaya, griler redde doğru çekiyor. Bu artı ve eksilerin toplamı sonucu belirliyor. Böylece “neden bu karar verildi?” sorusu cevaplanabiliyor; model “kara kutu” olmaktan çıkıp denetlenebilir ve itiraz edilebilir hâle geliyor.
+*Ne oluyor?* Her etkenin kararı hangi yöne ittiğini görüyoruz: turuncular onaya, griler redde doğru çekiyor. Bu artı ve eksilerin toplamı sonucu belirliyor. Böylece “neden bu karar verildi?” sorusu bu başvuru için cevaplanabiliyor; karar denetlenebilir ve itiraz edilebilir hâle geliyor. Modelin tamamı yine de kara kutu olarak kalabilir.
 
 *Kendin dene.* 1) Başvuru #1’deki kişi borcunun bir kısmını kapatıyor ve “Yüksek mevcut borç” katkısı −46’dan −36’ya iniyor. Karar değişir mi? 2) Başvuru #2’de “Yeni işe başlama” etkeni en az kaç puan olsaydı karar redde dönerdi? 3) Başvuru #1’de en uzun çubuk “Yüksek mevcut borç”. “Düzenli gelir” çubuğu onun yüzde kaçı uzunluğunda çizilir? Canlı demo: [QR 7.2]
 
@@ -108,11 +108,11 @@ Model “kredin reddedildi” deyince haklı bir soru yükselir: Neden? Birçok 
 
 Açıklanabilir YZ (XAI), bir modelin çıktısını insanın anlayabileceği gerekçelere bağlamayı amaçlar. Yöntemler: özellik önemi (ör. SHAP, LIME), dikkat/temsil analizi ve doğası gereği yorumlanabilir modeller (karar ağaçları, doğrusal modeller).
 
-Açıklanabilirlik bir denge işidir: yüksek başarımlı modeller genelde daha az saydamdır. Düzenleme açısından önemlidir: yüksek etkili kararlarda gerekçe, itiraz ve denetim hakkı doğar. Şekil 7.2, katkıların işaretli (signed) gösterimini basitleştirir.
+Açıklanabilirlik çoğu zaman bir denge işidir: yüksek başarımlı modeller genelde daha az saydamdır; ama bu kayıp her durumda zorunlu değildir. Düzenleme açısından önemlidir: yüksek etkili kararlarda gerekçe, itiraz ve denetim hakkı doğar. Şekil 7.2, katkıların işaretli (signed) gösterimini basitleştirir; sayılar hesaplanmış SHAP değerleri değil, temsili katkılardır.
 
-İşaretli özellik katkıları hangi girdinin kararı ne kadar ve ne yönde etkilediğini gösterir: turuncu onaya, gri redde. Toplam sonucu belirler; model böylece denetlenebilir ve itiraz edilebilir olur.
+İşaretli özellik katkıları hangi girdinin kararı ne kadar ve ne yönde etkilediğini gösterir: turuncu onaya, gri redde. Toplam sonucu belirler; karar böylece denetlenebilir ve itiraz edilebilir olur. Bu, tek bir çıktının sonradan açıklamasıdır; modelin tamamını saydam yapmaz.
 
-Şekil 7.2’deki karar kuralı: karar = onay ⇔ Σᵢ cᵢ > 0. Bu, doğrusal bir modelin (ya da SHAP’ın toplamsallık özelliğinin) en yalın hâlidir: her cᵢ tek bir özelliğin taban değere göre katkısıdır ve katkılar toplanarak çıktıyı verir. Gerçek SHAP değerleri Shapley aksiyomlarıyla (verimlilik, simetri, sıfır katkı) hesaplanır; şekil bu sayıları verili kabul eder. Çubuk uzunluğu |cᵢ| / max|cᵢ| ile ölçeklenir; yön, işaretin rengidir.
+Şekil 7.2’deki karar kuralı: karar = onay ⇔ φ₀ + Σᵢ cᵢ > 0. Taban değer φ₀ burada 0 alınmıştır; bu örneğe özgü bir seçimdir, genel kural değil. Çıktı ölçeği puandır: katkılar da toplam da aynı ölçekte okunur; −8 bir olasılık değil, eşiği 0 olan bir puandır. SHAP, bir modelin belirli bir girdiye verdiği çıktıyı, seçilen referans dağılımına göre bir taban değer ve özellik katkılarıyla açıklar. Yerel doğruluk sağlandığında açıklanan çıktı için f(x) = φ₀ + Σᵢ φᵢ olur; φ₀ referans (taban) değerdir ve katkılar çıktıyla aynı ölçekte (puan, olasılık ya da log-odds) toplanır. 2017 tarihli SHAP makalesi bu açıklamayı üç koşulla karakterize eder: yerel doğruluk, eksiklik ve tutarlılık; bunlar yalın bir toplama işleminden fazlasıdır. Katkılar, yönteme ve varsayımlara göre tam ya da yaklaşık hesaplanır. Bu sonradan açıklama, modelin tamamını doğrudan yorumlanabilir kılmaz ve nedensellik kanıtı değildir. Şekildeki sayılar gerçek bir modelden hesaplanmamıştır; temsili katkılardır. Çubuk uzunluğu |cᵢ| / max|cᵢ| ile ölçeklenir; yön, işaretin rengidir.
 
 Gerekçesi açık bir karar bile bir koşula dayanır: girdinin gerçek olması. Ya girdi sahteyse?
 
@@ -120,23 +120,23 @@ Gerekçesi açık bir karar bile bir koşula dayanır: girdinin gerçek olması.
 
 “Gözümle gördüm, kulağımla duydum” demek eskiden yeterdi. Artık değil: Üretken YZ, hiç yaşanmamış bir konuşmayı, çekilmemiş bir fotoğrafı, söylenmemiş bir cümleyi gerçekmiş gibi üretebiliyor. Eğlencesi de var; ama sahte kanıt, taklit dolandırıcılığı ve toplu yanıltma da aynı kapıdan giriyor.
 
-Aşağıda birkaç durum var. Her biri için “gerçek mi, yapay mı?” diye karar ver; sonra ipucunu görüp sahteyi yakalamanın yollarını öğren.
+Aşağıda birkaç durum var. Her biri için karar ver: gerçek görünüyor mu, şüpheli mi, yoksa eldeki bilgiyle belirlenemez mi? Sonra ipucunu görüp doğrulamanın yollarını öğren.
 
 > **Kenar notu.** Tek bir görüntü ya da ses artık “kanıt” değildir. En iyi savunma şüphecilik ve kaynak doğrulamadır: “Kim söyledi, nereden geldi, başka nerede doğrulanıyor?”
 
 **Şekil 7.3 · Gerçek mi, yapay mı?**
 ![Şekil 7.3](../../figures/out/tr/sekil-7-3-df.svg)
 
-*Kurulum.* Şekil dört kart gösteriyor; her kartta ortamı ve kısa bir durum yazıyor. Kartların arkası, ipucu ve doğru cevap, kitabın sonundaki cevaplar bölümünde. Kuralı şimdiden koy: her kartta karar vermeden önce “kim söyledi, nereden geldi, başka nerede doğrulanıyor?” diye sor. Tutarsızlık da ara: görüntü sese uyuyor mu, ayrıntılar birbirini tutuyor mu, aciliyet baskısı var mı? Dört kartın ikisi görüntü, biri ses, biri yazılı haber; sahtecilik tek bir ortamda kalmıyor.
+*Kurulum.* Şekil dört kart gösteriyor; her kartta ortamı ve kısa bir durum yazıyor. Kartların arkası, ipucu ve doğrulama yolu, kitabın sonundaki cevaplar bölümünde. Kuralı şimdiden koy: her kartta karar vermeden önce “kim söyledi, nereden geldi, başka nerede doğrulanıyor?” diye sor. Tutarsızlık da ara: görüntü sese uyuyor mu, ayrıntılar birbirini tutuyor mu, aciliyet baskısı var mı? Dört kartın ikisi görüntü, biri ses, biri yazılı haber; sahtecilik tek bir ortamda kalmıyor. İki soruyu ayrı tut: içerik yapay mı üretilmiş, anlattığı olay doğru mu? Bunlar aynı soru değil.
 
-*Kendini sına.* Her durum için “gerçek” ya da “yapay/sahte” de; sonra bir cümleyle gerekçeni yaz.
+*Kendini sına.* Her durum için üç seçenekten birini işaretle: gerçek görünüyor, şüpheli: doğrula, belirlenemez. Sonra iki şey yaz: bu içerikte hangi şüphe işaretleri var ve hangi bağımsız kanaldan doğrularsın?
 
-1. Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor. Gerçek mi, yapay mı?
-2. Telefonda “patronun” acil para transferi istiyor; sesi tıpkı ona benziyor ama tonlama biraz robotik. Gerçek mi, dolandırıcılık mı?
-3. Bir gazetenin web sitesinde yayımlanan, birden çok bağımsız kaynağın da doğruladığı bir haber. Gerçek mi, yapay mı?
-4. Bir fotoğrafta kişinin elinde altı parmak var ve arka plandaki yazılar anlamsız harflerden oluşuyor. Gerçek mi, yapay mı?
+1. Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor. Şüphe işareti ve doğrulama kanalı?
+2. Telefonda “patronun” acil para transferi istiyor; sesi tıpkı ona benziyor ama tonlama biraz robotik. Şüphe işareti ve doğrulama kanalı?
+3. Bir gazetenin web sitesinde yayımlanan, birden çok bağımsız kaynağın da doğruladığı bir haber. Şüphe işareti var mı; olayı neyle doğrularsın?
+4. Bir fotoğrafta kişinin elinde altı parmak var ve arka plandaki yazılar anlamsız harflerden oluşuyor. Şüphe işareti ve doğrulama kanalı?
 
-Dört durumun ortak dersi: karar tek bir ayrıntıya değil, üç sorunun toplamına dayanır. Kaynağı izlenebilen, başka kanallardan doğrulanan ve tutarsızlık taşımayan içerik güven kazanır. Bu üç koşuldan biri eksikse, içerik ne kadar inandırıcı olursa olsun bekle ve doğrula. Dört kartta kaç doğru? Cevaplar ve her karta ait ipucu kitabın sonunda.
+Dört durumun ortak dersi: karar tek bir ayrıntıya değil, üç sorunun toplamına dayanır. Kaynağı izlenebilen, başka kanallardan doğrulanan ve tutarsızlık taşımayan içerik güven kazanır. Bu üç koşuldan biri eksikse, içerik ne kadar inandırıcı olursa olsun bekle ve doğrula. İpucu seni incelemeye götürür; içeriğin nasıl üretildiğine tek başına hükmetmez. Yapay üretilmiş bir metin doğru bir olayı anlatabilir; gerçek bir kayıt yanlış bağlamda sunulabilir. Her kartın ipucu ve doğrulama kanalı kitabın sonunda.
 
 *Ne oluyor?* Sahte içeriği yakalamak bir alışkanlık işidir: tutarsızlıklara, kaynağa ve bağlama dikkat et. Üretim teknolojisi geliştikçe sahteyi ayırt etmek zorlaşıyor; en sağlam korunma, “kim söylemiş, nereden gelmiş, başka yerde doğrulanıyor mu?” diye sormak ve tek bir görüntüye ya da sese kanıt gözüyle bakmamaktır.
 
@@ -144,7 +144,7 @@ Dört durumun ortak dersi: karar tek bir ayrıntıya değil, üç sorunun toplam
 
 #### Teknik derinlik
 
-Sentetik medya (deepfake), üretken modellerle (GAN/difüzyon, ses klonlama, dudak senkronu) üretilir. Tespit bir silahlanma yarışıdır: üretim iyileştikçe tespit zorlaşır. Yaklaşımlar: yapay üretim izlerini arayan sınıflandırıcılar, kaynak doğrulama ve içerik kimlik bilgisi (ör. C2PA gibi dijital köken/filigran standartları).
+Sentetik medya (deepfake bunun bir türüdür), üretken modellerle (GAN/difüzyon, ses klonlama, dudak senkronu) üretilir. Tespit bir silahlanma yarışıdır: üretim iyileştikçe tespit zorlaşır. Yaklaşımlar: yapay üretim izlerini arayan sınıflandırıcılar, kaynak doğrulama ve içerik kimlik bilgisi. C2PA, içeriğin kökeni ve değişiklik geçmişiyle ilgili imzalı kayıtlar sağlar; filigranlar bu kayıtlara erişimi destekleyebilir. Hiçbiri tek başına içeriğin olgusal doğruluğunu kanıtlamaz; kayıt yokluğu da sahtelik kanıtı değildir.
 
 Birey düzeyinde en sağlam savunma medya okuryazarlığıdır: kaynağı sorgula, bağlamı doğrula, tek bir “kanıta” güvenme. Dezenformasyon teknik bir sorun olduğu kadar toplumsal bir sorundur.
 
@@ -163,7 +163,7 @@ Aşağıdaki kullanımları doğru risk düzeyine yerleştir. Risk arttıkça y�
 **Şekil 7.4 · Riski sınıflandır**
 ![Şekil 7.4](../../figures/out/tr/sekil-7-4-reg.svg)
 
-*Kurulum.* Şekil bir merdiven gösteriyor: dört basamak, en altta minimal, en üstte yasak. Her basamağın yanında o kademenin kuralı yazıyor. Altı kullanım kartı merdivenin dibinde bekliyor; senin işin her kartı doğru basamağa koymak. Ölçüt tek soru: bu kullanım birinin hayatını ya da haklarını etkiliyor mu? Merdivenin mantığı her basamağın getirdiği yükte: yukarı çıktıkça belge, denetim ve insan gözetimi eklenir.
+*Kurulum.* Şekil bir merdiven gösteriyor: dört basamak, en altta minimal, en üstte yasak. Her basamağın yanında o kademenin kuralı yazıyor. Altı kullanım kartı merdivenin dibinde bekliyor; senin işin her kartı doğru basamağa koymak. Ölçüt tek soru: bu kullanım birinin hayatını ya da haklarını etkiliyor mu? Bu, kitabın öğretici ölçütü; yasadaki sınıflandırma sistemin amaçlanan kullanımına, aktörün rolüne ve ilgili maddeye göre yapılır. Merdivenin mantığı her basamağın getirdiği yükte: yukarı çıktıkça belge, denetim ve insan gözetimi eklenir.
 
 | Kademe | Kural |
 |---|---|
@@ -181,19 +181,25 @@ Aşağıdaki kullanımları doğru risk düzeyine yerleştir. Risk arttıkça y�
 5. Kredi başvurusu değerlendiren model. Hangi kademe?
 6. Oyun içindeki rakip yapay zekâ. Hangi kademe?
 
-Takılırsan tek soruya dön: bu kullanım birinin hayatını ya da haklarını etkiliyor mu? Cevaplar ve gerekçeler kitabın sonunda.
+Takılırsan tek soruya dön: bu kullanım birinin hayatını ya da haklarını etkiliyor mu? Cevaplar, gerekçeler ve ilgili maddeler kitabın sonunda.
 
-*Ne oluyor?* Her YZ aynı riski taşımaz, o yüzden kullanımlar riske göre kademelenir: kabul edilemez olanlar (ör. sosyal puanlama) yasaklanır; yüksek riskliler (kredi, işe alım) sıkı denetim ve insan gözetimi ister; sınırlı riskliler (sohbet botu) sadece şeffaflık; minimal riskliler serbesttir. Risk arttıkça kural da sıkılaşır.
+*Ne oluyor?* Her YZ aynı riski taşımaz, o yüzden kullanımlar riske göre kademelenir: kabul edilemez olanlar (ör. sosyal puanlama) yasaklanır; yüksek riskliler (kredi, işe alım) sıkı denetim ve insan gözetimi ister; sınırlı riskliler (sohbet botu) şeffaflık yükümlülüğü taşır; minimal riskliler bu yasada büyük ölçüde serbesttir. Kişisel veri ve diğer hukuk kuralları her kademede ayrıca geçerlidir. Risk arttıkça kural da sıkılaşır.
 
 *Kendin dene.* 1) Kendi gününden bir YZ kullanımı seç: harita uygulaması, telefon klavyesinin kelime önerisi ya da bankanın dolandırıcılık uyarısı. Kademesini belirle ve gerekçeni yaz. 2) Aynı teknoloji iki farklı basamağa düşebilir mi? Yüz tanımayı düşün: telefon kilidini açmak ile sokakta kalabalığı taramak. 3) Altı kullanımı önce iki kümeye ayır: birinin hayatını ya da haklarını etkileyenler ve etkilemeyenler. Sonra kümeleri kademelerle karşılaştır; kaç kart yüksek basamakta? Canlı demo: [QR 7.4]
 
 #### Teknik derinlik
 
-AB YZ Yasası risk-temelli bir çerçeve kurar: kabul edilemez risk (ör. sosyal puanlama) yasaklanır; yüksek risk (ör. işe alım, kredi, kritik altyapı) sıkı uyum, dokümantasyon ve insan gözetimi gerektirir; sınırlı risk (ör. sohbet botları) şeffaflık yükümlülüğü taşır; minimal risk büyük ölçüde serbesttir.
+AB YZ Yasası risk-temelli bir çerçeve kurar: kabul edilemez risk (ör. belirli koşullardaki sosyal puanlama) yasaklanır; yüksek risk (ör. işe alım, gerçek kişilerin kredi değerliliği, kritik altyapı) sıkı uyum, dokümantasyon ve insan gözetimi gerektirir; sınırlı risk (ör. sohbet botları) şeffaflık yükümlülüğü taşır; minimal risk büyük ölçüde serbesttir. Bu dört kademe öğretici bir özettir; hukuki sınıflandırma sistemin amaçlanan kullanımına, aktörün rolüne ve ilgili madde ya da eke göre yapılır.
 
-Bu, KVKK/GDPR gibi kişisel veri rejimlerini tamamlar (rıza, amaç sınırlaması, veri minimizasyonu, otomatik kararlara itiraz hakkı). Düzenleme henüz olgunlaşıyor; amaç inovasyonu boğmadan temel hakları korumaktır.
+Bu, GDPR ve KVKK gibi kişisel veri rejimlerini tamamlar; onların kuralları (hukuki dayanak, amaç sınırlaması, veri minimizasyonu) ayrıca geçerlidir. Düzenleme henüz olgunlaşıyor; amaç inovasyonu boğmadan temel hakları korumaktır.
 
 Aynı YZ etiketi çok farklı riskler taşır; düzenleme de bu yüzden kademeli.
+
+Bu bölüm, (AB) 2024/1689 sayılı Tüzüğün (AB) 2026/1744 ile değiştirilmiş, 27 Temmuz 2026 tarihli konsolide sürümünü esas alır (erişim: 1 Ekim 2026). Yürürlüğe giriş ile yükümlülüklerin uygulanma tarihleri aynı değildir: Madde 5’teki ilk yasaklar 2 Şubat 2025’ten, Madde 50 şeffaflık kuralları 2 Ağustos 2026’dan beri uygulanıyor; Ek III sistemlerinin yüksek-risk yükümlülükleri büyük ölçüde 2 Aralık 2027’de başlıyor. Üç ince nokta: Ek III 5(b), gerçek kişilerin kredi değerliliğini değerlendiren ya da kredi puanı belirleyen sistemleri kapsar; finansal dolandırıcılık tespiti bu bentten açıkça istisna edilmiştir. Madde 5(1)(h)’deki yasak, kamuya açık alanda kolluk amacıyla gerçek zamanlı uzaktan biyometrik kimlik tespitini hedefler; sınırlı istisnaları ve koşulları vardır, başka amaçlar da otomatik serbest sayılmaz. Madde 50’deki şeffaflık yükümlülükleri tek bir “YZ kullandığını söyle” kuralı değildir: insanla etkileşimde bilgilendirme, sentetik çıktının makinece okunabilir işaretlenmesi ve deepfake açıklaması ayrı ayrı düzenlenir; bunlar yüksek-risk ve diğer hukuk yükümlülüklerinin yerine geçmez.
+
+GDPR’de rıza tek işleme dayanağı değildir; Madde 6(1) rızanın yanında sözleşme, hukuki yükümlülük, hayati çıkar, kamu yararı ve şartlı meşru menfaat dayanaklarını sayar. Madde 22, yalnızca otomatik işlemeye dayanan ve hukuki ya da benzer ölçüde önemli etki doğuran kararlarla ilgilidir; sözleşme gerekliliği, kanun yetkisi ve açık rıza istisnaları koşulludur; sözleşme ve açık rıza istisnalarında insan müdahalesi isteme, görüş bildirme ve karara itiraz güvenceleri gerekir.
+
+6698 sayılı KVKK’da da açık rıza tek işleme şartı değildir; m.5(2)’deki şartlardan biri varsa açık rıza aranmaksızın işleme mümkündür. m.11(1)(g), verilerin yalnızca otomatik sistemlerle analiz edilmesiyle kişinin aleyhine bir sonuç doğmasına itiraz hakkını düzenler. Bu hüküm, GDPR Madde 22 ile aynı kapsam ve istisnalara sahipmiş gibi okunmamalıdır.
 
 Kurallar dışarıdan çizilen sınırlar. Makinenin içine ne istediğimizi koyabiliyor muyuz?
 
@@ -203,7 +209,7 @@ Kral Midas’ı hatırla: “Dokunduğum her şey altın olsun” diledi ve dile
 
 Bir hedef seç; sistemin onu “teknik olarak doğru ama aslında yanlış” biçimde nasıl yerine getirebildiğini gör.
 
-> **Kenar notu.** Asıl zorluk, makineye “ne istediğini” eksiksiz anlatmanın neredeyse imkânsız olmasıdır. Bu yüzden hizalama, güçlü YZ çağının en çetin açık problemlerinden biridir.
+> **Kenar notu.** Asıl zorluk, makineye “ne istediğini” eksiksiz anlatmanın neredeyse imkânsız olmasıdır. Bu yüzden hizalama, gelişmiş YZ sistemleri çağının en çetin açık problemlerinden biridir.
 
 **Şekil 7.5 · Hedef ile niyet**
 ![Şekil 7.5](../../figures/out/tr/sekil-7-5-align.svg)
@@ -223,7 +229,7 @@ Bir hedef seç; sistemin onu “teknik olarak doğru ama aslında yanlış” bi
 3. Üçüncü satırda ölçüt puan. Oyunu iyi oynamak puan getiriyor, ama puan getiren tek yol o değil. Bir döngü ya da açık daha ucuzsa sistem onu bulur. Ölçüt puan olduğu sürece sistem için “oyunun ruhu” diye bir şey yoktur.
 4. Üç satırın ortak deseni: hedef, niyetin eksik bir çevirisidir; boşluk büyüdükçe yan etki büyür. Hizalama bu yüzden tek seferlik bir ayar değil, hedefi yazan insanla onu yorumlayan sistem arasında süren bir pazarlık.
 
-*Ne oluyor?* Makineye bir hedef verirsin, o da hedefi harfi harfine yapar ama asıl niyetini kaçırabilir: “odada çöp görünmesin” dersen çöpü halının altına süpürebilir. Verdiğin ölçütü en üst düzeye çıkarır, amacını değil. İnsan geri bildirimi (RLHF) bunu azaltır ama tümüyle çözmez; üstelik “kimin değerleri?” sorusu da işin içindedir.
+*Ne oluyor?* Makineye bir hedef verirsin, o da hedefi harfi harfine yapar ama asıl niyetini kaçırabilir: “odada çöp görünmesin” dersen çöpü halının altına süpürebilir. Verdiğin ölçütü en üst düzeye çıkarır, amacını değil. İnsan geri bildirimi (RLHF) bu sorunları azaltabilir, ancak tek başına tam çözüm sağlamaz; üstelik “kimin değerleri?” sorusu da işin içindedir.
 
 *Kendin dene.* 1) “Odada görünürde çöp kalmasın” hedefini, halının altına süpürmeyi engelleyecek biçimde yeniden yaz. Sonra yeni hedefindeki açığı bul. 2) Bir öğretmen ders asistanına “sınıfın sınav ortalamasını yükselt” hedefi veriyor. Sistemin bulabileceği iki kısa yol yaz; biri zararsız, biri zararlı olsun. 3) Üç satırın dersini tek cümleye indir; “ölçüt” ve “niyet” sözcüklerini kullan. Canlı demo: [QR 7.5]
 
@@ -240,7 +246,7 @@ Beş başlık bitti; altı soru kaldı.
 ### 7.7 Kendini test et
 
 *Cevaplar kitabın sonunda.*
-1. Algoritmik önyargı çoğunlukla nereden gelir?
+1. Algoritmik önyargı aşağıdakilerden hangisinden kaynaklanabilir?
    a) Ekran renginden
    b) Çarpık/eksik eğitim verisinden
    c) İnternet bağlantısından
@@ -279,10 +285,10 @@ Beş başlık bitti; altı soru kaldı.
 ### Bu bölümden kalanlar
 
 - Yapay zekâ tarafsız değildir; kendisini eğiten verinin ve kuran insanların değerlerini taşır.
-- Aynı nitelikteki iki gruba farklı karar veren modelde ayrımcılık veriden miras kalır; niyet aramak gerekmez.
-- İşaretli katkılar bir kararın gerekçesini görünür kılar; böylece karar denetlenebilir ve itiraz edilebilir olur.
-- Tek bir görüntü ya da ses artık kanıt değildir; kaynağı, bağlamı ve tutarlılığı sorgulamak alışkanlık olmalıdır.
-- Düzenleme riske göre kademelidir: yasak, yüksek, sınırlı, minimal; risk arttıkça kural sıkılaşır.
+- Aynı nitelikteki iki gruba farklı karar veren modelde ayrımcılık veriden miras kalabilir; niyet aramak gerekmez, veriyi dengelemek de tek başına yetmez.
+- İşaretli katkılar tek bir kararın gerekçesini görünür kılar; karar denetlenebilir ve itiraz edilebilir olur, modelin tamamı saydamlaşmaz.
+- Tek bir görüntü ya da ses artık kanıt değildir; ipucu incelemeye götürür, hükmü bağımsız doğrulama verir.
+- Düzenleme riske göre kademelidir: yasak, yüksek, sınırlı, minimal; dört kademe öğretici bir özettir, hukuki sınıf amaca ve maddeye göre belirlenir.
 - Makine verdiğin hedefi harfiyen yapar, niyetini değil; hizalama bu boşluğu kapatma sorunudur.
 
 <!-- SOURCE-CHANGES
@@ -298,6 +304,24 @@ Sentetik medyayı ayırt etmek bir alışkanlıktır: tutarsızlık, kaynak ve b
 AB AI Act kademe mantığı: yasak (temel haklara aykırı, ör. sosyal puanlama) → yüksek (kredi, işe alım: sıkı uyum + insan gözetimi) → sınırlı (sohbet botu: şeffaflık) → minimal. Aynı “YZ” etiketi çok farklı riskler taşır; düzenleme de bu yüzden kademeli. KVKK/GDPR ayrıca kişisel veri işlemeyi düzenler. ||| Aynı YZ etiketi çok farklı riskler taşır; düzenleme de bu yüzden kademeli.
 Makineye bir hedef verirsin, o da hedefi harfi harfine yapar ama asıl niyetini kaçırabilir: “odada çöp görünmesin” dersen çöpü halının altına süpürebilir. Yani verdiğin ölçütü en üst düzeye çıkarır, amacını değil. İnsan geri bildirimi (RLHF) bunu azaltır ama tümüyle çözmez; üstelik “kimin değerleri?” sorusu da işin içindedir. ||| Makineye bir hedef verirsin, o da hedefi harfi harfine yapar ama asıl niyetini kaçırabilir: “odada çöp görünmesin” dersen çöpü halının altına süpürebilir. Verdiğin ölçütü en üst düzeye çıkarır, amacını değil. İnsan geri bildirimi (RLHF) bunu azaltır ama tümüyle çözmez; üstelik “kimin değerleri?” sorusu da işin içindedir.
 Belirtim/ödül oyunlama: vekil hedef (proxy) ile gerçek hedef ayrıştığında model metriği maksimize eder, amacı değil. RLHF bunu azaltır ama tümüyle çözmez; hizalama hem teknik hem normatif (kimin değerleri?) bir sorudur. ||| Belirtim/ödül oyunlama, üç örneğin ortak teknik adı: vekil hedef gerçek hedeften ayrıştığında model metriği maksimize eder, amacı değil.
+Beş başlık var: makinelerin veriden miras aldığı önyargı, kara kutu kararlar, deepfake ve dezenformasyon, düzenleme (AB AI Act, KVKK) ve hizalama: makine amacımızı gerçekten anlıyor mu? İşin değişen doğası ve filtre balonu gibi sessiz etkiler de arada. ||| Beş başlık var: makinelerin veriden miras aldığı önyargı, kara kutu kararlar, deepfake ve dezenformasyon, düzenleme (AB AI Act, KVKK) ve hizalama: makine amacımızı gerçekten anlıyor mu?
+Ele alınan eksenler: veri kaynaklı yanlılık ve adalet (fairness), açıklanabilirlik/yorumlanabilirlik (XAI), sentetik medya ve dezenformasyon, düzenleyici çerçeveler (AB AI Act’in risk temelli yaklaşımı, KVKK/GDPR’ın kişisel veri ilkeleri) ve hizalama/güvenlik. Amaç, teknik bilgiyi toplumsal sorumlulukla birlikte okumak. ||| Ele alınan eksenler: yanlılık (bias) ve adalet (fairness), açıklanabilirlik/yorumlanabilirlik (XAI), sentetik medya ve dezenformasyon, düzenleyici çerçeveler (AB AI Act’in risk temelli yaklaşımı, KVKK/GDPR’ın kişisel veri ilkeleri) ve hizalama/güvenlik. Amaç, teknik bilgiyi toplumsal sorumlulukla birlikte okumak.
+“Çöp girer, çöp çıkar.” Bir modelin adil olması için önce verisinin adil ve temsili olması gerekir. Sorumluluk modelde değil, çoğu zaman veriyi seçen ve kuran insanlardadır. ||| “Çöp girer, çöp çıkar.” Bir modelin adil olması için önce verisinin adil ve temsili olması gerekir; ama bu yalnız başlangıç. Hedefi, ölçütü ve kullanım yerini de insanlar seçer. Sorumluluk modelde değil, çoğu zaman veriyi ve hedefi seçen insanlardadır.
+Algoritmik yanlılık çoğunlukla veriden kaynaklanır: tarihsel önyargı, eksik temsil, etiketleme hatası veya vekil değişkenler (proxy) korunan özelliklerle ilişkilenir. Model, dağılımdaki bu örüntüyü öğrenir ve pekiştirir. ||| Algoritmik yanlılık veriden, ölçüm ve modelleme tercihlerinden, kurumsal süreçlerden ve kullanım bağlamından doğabilir. Verideki kaynaklar: tarihsel önyargı, eksik temsil, etiketleme hatası veya vekil değişkenler (proxy) korunan özelliklerle ilişkilenir. Model, dağılımdaki bu örüntüyü öğrenir ve pekiştirir. Veri dengesini düzeltmek bu kaynakların yalnızca bir kısmını ele alır.
+Adalet (fairness) tek bir tanım değildir; demografik parite, fırsat eşitliği ve kalibrasyon gibi ölçütler bazen birbiriyle çelişir. Azaltma: veri denetimi, dengeleme, adalet-kısıtlı eğitim ve dağıtım sonrası izleme. Aşağıdaki demo, aynı niteliklere rağmen veri önyargısının karar farkı (gap) ürettiğini gösterir. ||| Adalet (fairness) tek bir tanım değildir; demografik parite, fırsat eşitliği ve kalibrasyon gibi ölçütler bazen birbiriyle çelişir. Azaltma: veri denetimi, dengeleme, adalet-kısıtlı eğitim ve dağıtım sonrası izleme. Aşağıdaki demo, aynı niteliklere rağmen veri önyargısının karar farkı (gap) ürettiğini temsili olarak gösterir.
+Model “kredin reddedildi” deyince haklı bir soru yükselir: Neden? Birçok güçlü model, kararını verir ama gerekçesini anlatamaz; kapağı açılmayan bir kara kutu gibidir. Oysa insan hayatına dokunan kararlarda (kredi, işe alım, sağlık) “neden?” diye sorabilmek ve cevabını görebilmek bir hak meselesidir. Kara kutuyu camdan bir kutuya çevirmek gerekir. ||| Model “kredin reddedildi” deyince haklı bir soru yükselir: Neden? Birçok güçlü model, kararını verir ama gerekçesini anlatamaz; kapağı açılmayan bir kara kutu gibidir. Oysa insan hayatına dokunan kararlarda (kredi, işe alım, sağlık) “neden?” diye sorabilmek ve cevabını görebilmek bir hak meselesidir. Kara kutunun kapağını en azından karar karar aralamak gerekir.
+Önce bir kredi kararına bak; sonra “Açıkla”yı aç ve hangi etkenin kararı ne yönde ittiğini (artı mı, eksi mi) gör. Kara kutu böyle beyaz kutuya döner. ||| Önce bir kredi kararına bak; sonra “Açıkla”yı aç ve hangi etkenin kararı ne yönde ittiğini (artı mı, eksi mi) gör. Kapak bir karar için açılır; modelin tamamı yine kapalı kalabilir.
+Açıklanabilirlik bir denge işidir: yüksek başarımlı modeller genelde daha az saydamdır. Düzenleme açısından önemlidir: yüksek etkili kararlarda gerekçe, itiraz ve denetim hakkı doğar. Aşağıdaki demo, katkıların işaretli (signed) gösterimini basitleştirir. ||| Açıklanabilirlik çoğu zaman bir denge işidir: yüksek başarımlı modeller genelde daha az saydamdır; ama bu kayıp her durumda zorunlu değildir. Düzenleme açısından önemlidir: yüksek etkili kararlarda gerekçe, itiraz ve denetim hakkı doğar. Aşağıdaki demo, katkıların işaretli (signed) gösterimini basitleştirir; sayılar hesaplanmış SHAP değerleri değil, temsili katkılardır.
+Her etkenin kararı hangi yöne ittiğini görüyoruz: yeşiller onaya, kırmızılar redde doğru çekiyor. Bu artı ve eksilerin toplamı sonucu belirliyor. Böylece “neden bu karar verildi?” sorusu cevaplanabiliyor; model “kara kutu” olmaktan çıkıp denetlenebilir ve itiraz edilebilir hâle geliyor. ||| Her etkenin kararı hangi yöne ittiğini görüyoruz: yeşiller onaya, kırmızılar redde doğru çekiyor. Bu artı ve eksilerin toplamı sonucu belirliyor. Böylece “neden bu karar verildi?” sorusu bu başvuru için cevaplanabiliyor; karar denetlenebilir ve itiraz edilebilir hâle geliyor. Modelin tamamı yine de kara kutu olarak kalabilir.
+İşaretli özellik katkıları hangi girdinin kararı ne kadar ve ne yönde etkilediğini gösterir: yeşil onaya, kırmızı redde. Toplam sonucu belirler; model böylece denetlenebilir ve itiraz edilebilir olur. ||| İşaretli özellik katkıları hangi girdinin kararı ne kadar ve ne yönde etkilediğini gösterir: yeşil onaya, kırmızı redde. Toplam sonucu belirler; karar böylece denetlenebilir ve itiraz edilebilir olur. Bu, tek bir çıktının sonradan açıklamasıdır; modelin tamamını saydam yapmaz.
+Aşağıda birkaç durum var. Her biri için “gerçek mi, yapay mı?” diye karar ver; sonra ipucunu görüp sahteyi yakalamanın yollarını öğren. ||| Aşağıda birkaç durum var. Her biri için karar ver: gerçek görünüyor mu, şüpheli mi, yoksa eldeki bilgiyle belirlenemez mi? Sonra ipucunu görüp doğrulamanın yollarını öğren.
+Sentetik medya (deepfake), üretken modellerle (GAN/difüzyon, ses klonlama, dudak senkronu) üretilir. Tespit bir silahlanma yarışıdır: üretim iyileştikçe tespit zorlaşır. Yaklaşımlar: yapay üretim izlerini arayan sınıflandırıcılar, kaynak doğrulama ve içerik kimlik bilgisi (ör. C2PA gibi dijital köken/filigran standartları). ||| Sentetik medya (deepfake bunun bir türüdür), üretken modellerle (GAN/difüzyon, ses klonlama, dudak senkronu) üretilir. Tespit bir silahlanma yarışıdır: üretim iyileştikçe tespit zorlaşır. Yaklaşımlar: yapay üretim izlerini arayan sınıflandırıcılar, kaynak doğrulama ve içerik kimlik bilgisi. C2PA, içeriğin kökeni ve değişiklik geçmişiyle ilgili imzalı kayıtlar sağlar; filigranlar bu kayıtlara erişimi destekleyebilir. Hiçbiri tek başına içeriğin olgusal doğruluğunu kanıtlamaz; kayıt yokluğu da sahtelik kanıtı değildir.
+AB YZ Yasası risk-temelli bir çerçeve kurar: kabul edilemez risk (ör. sosyal puanlama) yasaklanır; yüksek risk (ör. işe alım, kredi, kritik altyapı) sıkı uyum, dokümantasyon ve insan gözetimi gerektirir; sınırlı risk (ör. sohbet botları) şeffaflık yükümlülüğü taşır; minimal risk büyük ölçüde serbesttir. ||| AB YZ Yasası risk-temelli bir çerçeve kurar: kabul edilemez risk (ör. belirli koşullardaki sosyal puanlama) yasaklanır; yüksek risk (ör. işe alım, gerçek kişilerin kredi değerliliği, kritik altyapı) sıkı uyum, dokümantasyon ve insan gözetimi gerektirir; sınırlı risk (ör. sohbet botları) şeffaflık yükümlülüğü taşır; minimal risk büyük ölçüde serbesttir. Bu dört kademe öğretici bir özettir; hukuki sınıflandırma sistemin amaçlanan kullanımına, aktörün rolüne ve ilgili madde ya da eke göre yapılır.
+Bu, KVKK/GDPR gibi kişisel veri rejimlerini tamamlar (rıza, amaç sınırlaması, veri minimizasyonu, otomatik kararlara itiraz hakkı). Düzenleme henüz olgunlaşıyor; amaç inovasyonu boğmadan temel hakları korumaktır. ||| Bu, GDPR ve KVKK gibi kişisel veri rejimlerini tamamlar; onların kuralları (hukuki dayanak, amaç sınırlaması, veri minimizasyonu) ayrıca geçerlidir. Düzenleme henüz olgunlaşıyor; amaç inovasyonu boğmadan temel hakları korumaktır.
+Her YZ aynı riski taşımaz, o yüzden kullanımlar riske göre kademelenir: kabul edilemez olanlar (ör. sosyal puanlama) yasaklanır; yüksek riskliler (kredi, işe alım) sıkı denetim ve insan gözetimi ister; sınırlı riskliler (sohbet botu) sadece şeffaflık; minimal riskliler serbesttir. Risk arttıkça kural da sıkılaşır. ||| Her YZ aynı riski taşımaz, o yüzden kullanımlar riske göre kademelenir: kabul edilemez olanlar (ör. sosyal puanlama) yasaklanır; yüksek riskliler (kredi, işe alım) sıkı denetim ve insan gözetimi ister; sınırlı riskliler (sohbet botu) şeffaflık yükümlülüğü taşır; minimal riskliler bu yasada büyük ölçüde serbesttir. Kişisel veri ve diğer hukuk kuralları her kademede ayrıca geçerlidir. Risk arttıkça kural da sıkılaşır.
+Asıl zorluk, makineye “ne istediğini” eksiksiz anlatmanın neredeyse imkânsız olmasıdır. Bu yüzden hizalama, güçlü YZ çağının en çetin açık problemlerinden biridir. ||| Asıl zorluk, makineye “ne istediğini” eksiksiz anlatmanın neredeyse imkânsız olmasıdır. Bu yüzden hizalama, gelişmiş YZ sistemleri çağının en çetin açık problemlerinden biridir.
+Makineye bir hedef verirsin, o da hedefi harfi harfine yapar ama asıl niyetini kaçırabilir: “odada çöp görünmesin” dersen çöpü halının altına süpürebilir. Verdiğin ölçütü en üst düzeye çıkarır, amacını değil. İnsan geri bildirimi (RLHF) bunu azaltır ama tümüyle çözmez; üstelik “kimin değerleri?” sorusu da işin içindedir. ||| Makineye bir hedef verirsin, o da hedefi harfi harfine yapar ama asıl niyetini kaçırabilir: “odada çöp görünmesin” dersen çöpü halının altına süpürebilir. Verdiğin ölçütü en üst düzeye çıkarır, amacını değil. İnsan geri bildirimi (RLHF) bu sorunları azaltabilir, ancak tek başına tam çözüm sağlamaz; üstelik “kimin değerleri?” sorusu da işin içindedir.
+Algoritmik önyargı çoğunlukla nereden gelir? ||| Algoritmik önyargı aşağıdakilerden hangisinden kaynaklanabilir?
 -->
 
 <!-- REDAKSİYON NOTLARI
@@ -316,4 +340,5 @@ Belirtim/ödül oyunlama: vekil hedef (proxy) ile gerçek hedef ayrıştığınd
 - Yazar kararı (2026-09-10, figürler): ekran renkleri (yeşil/kırmızı/mavi/mor) duotone baskıya göre 'koyu/gri' ve 'turuncu' yapıldı; figür düzeni tarifleri ('kendi rengi', 'yanında rolü', 'ok çekmen') figürlerle eşleştirildi.
 - 2026-09-30 insanlaştırma geçişi: humanize-tr-report.md bulguları uygulandı (Peki/Cevap köprüleri, "tam da/işte budur", altyazı alıntıları, ekran/kâğıt sızıntıları, "yani/elbette", "kötü niyetten değil çarpık veriden" tekrarı 5→2, punchline'lar); "Cevaplar kitabın sonunda." yalnız Kendini sına şekillerinde; teknik "Ne oluyor" paragraflarında ilk teknik paragrafı tekrar eden cümleler kırpıldı (7.2, 7.3, 7.4, 7.5, 7.6). Kaynak paragraf değişiklikleri SOURCE-CHANGES bloğunda; dijital sürüme taşınacak.
 - 7.2 teknik: "Gösterimdeki karar kuralı … gösterim bu sayıları verili kabul eder" → "Şekil 7.2’deki karar kuralı … şekil bu sayıları verili kabul eder" (2026-09-30; yalnız basılı; dijitalde "Gösterimdeki/gösterim" kalır).
+- 2026-10-01 düzeltme belgesi (R051–R058, R066, R070, R091): yanlılık kaynakları (veri, ölçüm/modelleme, kurum, kullanım) teknik 7.2 ve kenar notunda; Şekil 7.1 fark "yüzde puan", kural "yuvarla(...)" ile, oyuncak kural uyarısı; Şekil 7.2 taban değer φ₀ = 0 (örneğe özgü), çıktı ölçeği puan, borç yorumu "+50 − 46 = +4; −12 ile −8", SHAP paragrafı bütün olarak yeniden kuruldu (f(x) = φ₀ + Σφᵢ; yerel doğruluk, eksiklik, tutarlılık; eski "verimlilik, simetri, sıfır katkı" özeti kalktı; B064 kayıp metnin dizgisi dizgi ajanında); "kara kutu → beyaz kutu" iddiası basit/Ne oluyor/kalanlar'dan kalktı (bölüm ve şekil başlıkları kaynak metin, kaldı); Şekil 7.3 Kendini sına üç seçenek (gerçek görünüyor / şüpheli: doğrula / belirlenemez), puanlama kalktı, cevaplar her kart için ipucu + bağımsız kanal; C2PA köken kaydı ≠ doğruluk; AI Act sadeleştirme uyarısı, konsolide sürüm tarihi, Ek III 5(b), Md.5(1)(h), Md.50; GDPR Md.6/22 ve KVKK m.5(2)/m.11(1)(g) ayrı paragraflar (teknik 7.5 kutusu bir sayfayı aşabilir; dizgi kontrol etmeli); giriş vaatleri (iş, filtre balonu) kalktı; "güçlü YZ" → "gelişmiş YZ sistemleri"; RLHF cümlesi; sınav 1 "çoğunlukla nereden gelir" → "hangisinden kaynaklanabilir" (şık sırası aynı). Dijitale giden paragraflar SOURCE-CHANGES'ta. Şekil 7.1 figür etiketi ("parite farkı N" → yüzde puan) ve Şekil 7.3 kart seçenekleri figür/demo ajanının işi.
 -->

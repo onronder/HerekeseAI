@@ -16,7 +16,7 @@ TEXT_H = 189.0 if KDP else 198.0          # mm, metin alanı yüksekliği (KDP: 
 TOP_MM, BOT_MM = (19.8 + 3.175, 19.8 + 3.175) if KDP else (20 + 3, 22 + 3)  # üst/alt kenar boşluğu + taşma (render taşma dahil); folyo bu bandın içinde
 FIG_RX = re.compile(r'^(Şekil|Figure) (\d+\.\d+)')
 MAX_DEFER = 8
-MIN_SCALE = 0.80
+MIN_SCALE = 0.90  # şekil en çok %10 küçültülür (R082: küçük etiketler)
 TOL = 10.0                                # mm: bu kadar artık boşluk kabul edilir
 
 

@@ -23,6 +23,16 @@ body = re.sub(r'<img src="\.\./\.\./figures/out/en/(figure-(\d+)-(\d+))-[^"]+\.s
               lambda m: f'<img src="img/{m.group(1)}.png" alt="{m.group(4)}">', body)
 # figcaption yalnız numara: başlık satırı zaten var, tekrar etmesin
 body = re.sub(r'<figcaption>Figure \d+\.\d+</figcaption>', '', body)
+# R099: her figüre tanımlayıcı alt metin = "Figure N.j, <başlık>. <Kurulum'un ilk cümlesi>" (görseldeki soruyu cevabı vermeden anlatır)
+def alt_fix(m):
+    pre, num, title, fig_html, post = m.group(1), m.group(2), m.group(3), m.group(4), m.group(5)
+    setup = re.search(r'<p><em>Setup\.</em>\s*(.*?)</p>', post[:4000], re.S)
+    first = ''
+    if setup:
+        txt = re.sub(r'<[^>]+>', '', setup.group(1)); first = re.split(r'(?<=[.!?])\s', txt.strip())[0]
+    alt = H.escape(f'Figure {num}, {re.sub(r"<[^>]+>", "", title).strip()}. {first}'.strip(), quote=True)
+    return pre + num + ' · ' + title + fig_html.replace(f'alt="Figure {num}"', f'alt="{alt}"') + post
+body = re.sub(r'(<p><strong>Figure )(\d+\.\d+) · ([^<]*)(</strong>\s*<figure>.*?</figure>\s*</p>)((?:(?!<figure>).){0,4000})', alt_fix, body, flags=re.S)
 # QR: görsel yerine bağlantı ("Live demo: [QR] url" → tek düğme)
 body = re.sub(r' ?Live demo: <span class="qr"><img src="[^"]*qr-(\d+)-(\d+)\.svg" alt="[^"]*"><span class="mono">([^<]+)</span></span>',
               lambda m: f'<a class="live" href="https://{H.unescape(m.group(3))}">Live demo {m.group(1)}.{m.group(2)} ↗</a>', body)

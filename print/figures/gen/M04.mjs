@@ -1,6 +1,6 @@
 // Bölüm 4 figürleri — Atlas-Kitap.dc.html renderVals() neuron/ffnet/backprop/conv/rnn/gan dallarıyla aynı sayılar.
 // Etiketler ve veriler iki dilde ../strings/M04.mjs içinden (S = STRINGS[lang]).
-import { INK, INK2, MUTED, RULE, EMBER, EMBER_SOFT, PAPER, SANS, MONO, SERIF, esc, f1, text, rect, line, circle, svg, caption, pct } from '../lib.mjs';
+import { INK, INK2, MUTED, RULE, EMBER, EMBER_SOFT, PAPER, SANS, MONO, SERIF, esc, f1, text, rect, line, circle, svg, caption, pct, DEMO, tw } from '../lib.mjs';
 import STRINGS from '../strings/M04.mjs';
 
 const sig = (z) => 1 / (1 + Math.exp(-z));
@@ -41,7 +41,7 @@ function neuronFigure(demo, { lang }) {
   body.push(text((sumX + boxW + actX) / 2, cy - 5, `z = ${fmt(z)}`, { font: MONO, size: 6, fill: EMBER, anchor: 'middle' }));
   body.push(rect(actX, boxY, boxW, boxH, { fill: '#fff', stroke: INK, sw: 0.9 }));
   body.push(text(actX + boxW / 2, boxY + 16, S.phi, { font: SERIF, size: 13, italic: true, anchor: 'middle' }));
-  body.push(text(actX + boxW / 2, boxY + 27, S.actFns, { font: MONO, size: 5.5, fill: INK2, anchor: 'middle' }));
+  body.push(text(actX + boxW / 2, boxY + 27, S.actFns, { font: MONO, size: 6, fill: INK2, anchor: 'middle' })); // R082: ≥ 6
   // çıktı
   const outX = 300;
   body.push(line(actX + boxW, cy, outX - 10, cy, { marker: true }));
@@ -104,19 +104,20 @@ function ffnetFigure(demo, { lang }) {
   return [{ name: 'ffnet', svg: svg(W, H, body.join('\n')), md }];
 }
 
-// ---------------------------------------------------------------- 4.3 Geri yayılım: 9 kare (tur 0–8), hata = 0.43·0.6ʳ, çıktı = 0.80 − hata
+// ---------------------------------------------------------------- 4.3 Geri yayılım: 9 kare (tur 0–8) — R027 (2026-10-01): gerçek eğitim turları
+// print/kitap/qa/demo-data.json bp43 (2 girdi → 2 gizli sigmoid → 1 çıktı sigmoid, L = ½(y − ŷ)², η = 2.0); eski 0.43·0.6ʳ kuralı kalktı.
 function backpropFigure(demo, { lang }) {
   const S = STRINGS[lang].backprop;
-  const TARGET = 0.8;
-  const rounds = Array.from({ length: 9 }, (_, r) => { const err = 0.43 * Math.pow(0.6, r); return { r, err, out: TARGET - err, pct: Math.round((TARGET - err) * 100) }; });
+  const BP = DEMO.bp43, TARGET = BP.hedef;
+  const rounds = BP.turlar.map((t) => ({ r: t.tur, err: t.hata, L: t.kayip, out: t.yhat, pct: Math.round(t.yhat * 100) }));
   const cols = 3, fw = 96, fh = 66, pad = 6, gx = 8, gy = 8;
   const rows = Math.ceil(rounds.length / cols);
-  const W = pad * 2 + cols * fw + (cols - 1) * gx, H = 10 * 2 + rows * fh + (rows - 1) * gy;
+  const W = pad * 2 + cols * fw + (cols - 1) * gx, H = 10 * 2 + rows * fh + (rows - 1) * gy + 18;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
   rounds.forEach((rd, i) => {
     const ox = pad + (i % cols) * (fw + gx), oy = 10 + Math.floor(i / cols) * (fh + gy);
     body.push(caption(ox, oy + 7, S.round(rd.r)));
-    body.push(text(ox + fw, oy + 7, S.error(rd.err.toFixed(2)), { font: MONO, size: 6.5, fill: EMBER, anchor: 'end' }));
+    body.push(text(ox + fw, oy + 7, S.loss(rd.L.toFixed(4)), { font: MONO, size: 6.5, fill: EMBER, anchor: 'end' }));
     // küçük ağ: 2 → 3 → 1 düğüm, çıkıştan girişe dönen hata oku (kalınlık ∝ hata)
     const nx = [ox + 6, ox + 24, ox + 42], ny = [[oy + 22, oy + 38], [oy + 16, oy + 30, oy + 44], [oy + 30]];
     for (let l = 0; l < 2; l++) ny[l].forEach((y1) => ny[l + 1].forEach((y2) => body.push(line(nx[l], y1, nx[l + 1], y2, { stroke: RULE, sw: 0.5 }))));
@@ -129,12 +130,13 @@ function backpropFigure(demo, { lang }) {
     body.push(rect(bx, by, bw, bh, { fill: '#ebe6db' }));
     body.push(rect(bx, by + bh - bh * rd.out, bw, bh * rd.out, { fill: EMBER }));
     body.push(line(bx - 5, by + bh - bh * TARGET, bx + bw + 5, by + bh - bh * TARGET, { stroke: INK, sw: 0.9 }));
-    body.push(text(bx + bw + 7, by + bh - bh * TARGET + 2, pct(80, lang), { font: MONO, size: 5.5, fill: INK }));
-    body.push(text(bx + bw / 2, by + bh + 9, pct(rd.pct, lang), { font: MONO, size: 6.5, fill: INK, anchor: 'middle', weight: 700 }));
-    if (i === 0) { body.push(text(bx + bw / 2, by - 3, S.output, { font: MONO, size: 5.5, fill: MUTED, anchor: 'middle' })); body.push(text(bx + bw + 7, by + bh - bh * TARGET - 4, S.target, { font: MONO, size: 5, fill: MUTED })); }
+    body.push(text(bx + bw + 7, by + bh - bh * TARGET + 2, TARGET.toFixed(2), { font: MONO, size: 6, fill: INK }));
+    body.push(text(bx + bw / 2, by + bh + 9, `ŷ ${rd.out.toFixed(2)}`, { font: MONO, size: 6.5, fill: INK, anchor: 'middle', weight: 700 }));
+    if (i === 0) { body.push(text(bx + bw + 2, by - 3, S.output, { font: MONO, size: 6, fill: MUTED, anchor: 'end' })); } // target label lives in the footer caption; at the R082 size it collided with the 0.80 label
   });
-  const md = [`# ${S.mdTitle} — ${demo.title}`, '', S.mdRule, '', S.mdHead, '|---|---|---|---|',
-    ...rounds.map((rd) => `| ${rd.r} | ${rd.err.toFixed(2)} | ${pct(rd.pct, lang)} | ${S.points(Math.round(rd.err * 100))} |`), ''].join('\n');
+  S.footer(BP.girdi.join(', '), TARGET.toFixed(1), BP.lr.toFixed(1)).forEach((ln, k) => body.push(text(pad, H - 12 + k * 8, ln, { font: MONO, size: 6, fill: INK2 })));
+  const md = [`# ${S.mdTitle} — ${demo.title}`, '', S.mdRule(BP.girdi.join(', '), TARGET.toFixed(1), BP.lr.toFixed(1)), '', S.mdHead, '|---|---|---|---|',
+    ...rounds.map((rd) => `| ${rd.r} | ${rd.out.toFixed(4)} | ${rd.err.toFixed(4)} | ${rd.L.toFixed(5)} |`), '', S.mdNote, ''].join('\n');
   return [{ name: 'backprop', svg: svg(W, H, body.join('\n')), md }];
 }
 
@@ -199,43 +201,48 @@ function convFigure(demo, { lang }) {
   return [{ name: 'conv', svg: svg(W, H, body.join('\n')), md }];
 }
 
-// ---------------------------------------------------------------- 4.5 RNN: 4 kare (0–3 kelime işlendi), 8 çubuk
-function rnnHidden(step) {
-  return Array.from({ length: 8 }, (_, j) => { let v = 0; for (let k = 0; k < step; k++) v += Math.abs(Math.sin((k + 1) * 1.7 + j * 0.9)); v = step ? 0.2 + 0.8 * Math.abs(Math.sin(v)) : 0.04; return Math.round(v * 100); });
-}
+// ---------------------------------------------------------------- 4.5 RNN — R031 (2026-10-01): gerçek yineleme
+// print/kitap/qa/demo-data.json rnn45[lang]: h_t = tanh(W_x x_t + W_h h_{t−1}), h₀ = 0, 4 gizli birim; kare başına bir kelime
+// (TR 5 kelime → 6 kare, EN 7 kelime → 8 kare). Çubuk boyu |h|, etiket işaretli değer; kare 0 "0.00". Eski sinüs/0,04 kuralı kalktı.
 function rnnFigure(demo, { lang }) {
-  const S = STRINGS[lang].rnn, words = S.words;
-  const frames = [0, 1, 2, 3].map((s) => ({ step: s, h: rnnHidden(s) }));
-  const cols = 2, fw = 150, fh = 98, pad = 6, gx = 8, gy = 10;
-  const W = pad * 2 + cols * fw + gx, H = 10 * 2 + 2 * fh + gy;
+  const S = STRINGS[lang].rnn;
+  const D = DEMO.rnn45[lang], words = D.filter((o) => o.kelime).map((o) => o.kelime);
+  const frames = D.map((o) => ({ step: o.adim, h: o.h, word: o.kelime }));
+  const cols = 2, fw = 150, fh = 76, pad = 6, gx = 8, gy = 8;
+  const rows = Math.ceil(frames.length / cols);
+  const W = pad * 2 + cols * fw + gx, H = 10 + rows * fh + (rows - 1) * gy + 22;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
+  const fmtH = (v) => (v < 0 ? '−' : '') + Math.abs(v).toFixed(2);
   frames.forEach((fr, i) => {
     const ox = pad + (i % cols) * (fw + gx), oy = 10 + Math.floor(i / cols) * (fh + gy);
-    body.push(caption(ox, oy + 7, S.frame(fr.step)));
-    body.push(text(ox + fw, oy + 7, S.processed(fr.step), { font: MONO, size: 6.5, fill: fr.step ? EMBER : INK2, anchor: 'end' }));
-    // kelime şeridi
-    let wx = ox; const wy = oy + 14, wh = 14;
+    body.push(rect(ox, oy, fw, fh, { fill: '#fff', stroke: RULE, sw: 0.6 }));
+    body.push(caption(ox + 4, oy + 9, S.frame(fr.step)));
+    body.push(text(ox + fw - 4, oy + 9, S.processed(fr.step), { font: MONO, size: 6.5, fill: fr.step ? EMBER : INK2, anchor: 'end' }));
+    // kelime şeridi (mono 6; işlenenler dolu, sıradaki kelime altında ok)
+    let wx = ox + 4; const wy = oy + 14, wh = 11;
     words.forEach((wd, k) => {
-      const ww = wd.length * 4.2 + 10, done = k < fr.step;
-      body.push(rect(wx, wy, ww, wh, { fill: done ? EMBER : '#fff', stroke: done ? EMBER : INK, sw: 0.7 }));
-      body.push(text(wx + ww / 2, wy + 9.5, wd, { size: 7, fill: done ? '#fff' : INK, anchor: 'middle', weight: done ? 600 : 400 }));
-      if (k === fr.step - 1) body.push(`<path d="M${f1(wx + ww / 2 - 3)} ${f1(wy + wh + 2)} L${f1(wx + ww / 2)} ${f1(wy + wh + 6)} L${f1(wx + ww / 2 + 3)} ${f1(wy + wh + 2)}z" fill="${EMBER}"/>`);
-      wx += ww + 4;
+      const ww = tw(wd, 6, 'mono') + 5, done = k < fr.step;
+      body.push(rect(wx, wy, ww, wh, { fill: done ? EMBER : '#fff', stroke: done ? EMBER : INK, sw: 0.6 }));
+      body.push(text(wx + ww / 2, wy + 8, wd, { font: MONO, size: 6, fill: done ? '#fff' : INK, anchor: 'middle', weight: done ? 700 : 400 }));
+      if (k === fr.step - 1) body.push(`<path d="M${f1(wx + ww / 2 - 2.5)} ${f1(wy + wh + 1.5)} L${f1(wx + ww / 2)} ${f1(wy + wh + 4.5)} L${f1(wx + ww / 2 + 2.5)} ${f1(wy + wh + 1.5)}z" fill="${EMBER}"/>`);
+      wx += ww + 2;
     });
-    // gizli durum çubukları
-    const bx = ox + 2, by = oy + 41, bh = 38, bw = 10, bg = 5;
-    body.push(text(ox + fw, by + bh + 8, S.memory, { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
-    body.push(line(bx - 3, by + bh, bx + 8 * (bw + bg) - bg + 3, by + bh, { stroke: RULE, sw: 0.6 }));
+    // gizli durum çubukları: |h| boyu, işaretli etiket; eksi değer koyu çubuk
+    const n = fr.h.length, bw = 16, bg = 12, bx = ox + 10, by = oy + 38, bh = 24;
+    body.push(text(ox + fw - 4, by + bh + 8, S.memory, { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
+    body.push(line(bx - 4, by + bh, bx + n * (bw + bg) - bg + 4, by + bh, { stroke: RULE, sw: 0.6 }));
     fr.h.forEach((v, j) => {
-      const x = bx + j * (bw + bg), hh = (v / 100) * bh;
+      const x = bx + j * (bw + bg), hh = Math.abs(v) * bh;
       body.push(rect(x, by, bw, bh, { fill: '#ebe6db' }));
-      body.push(rect(x, by + bh - hh, bw, hh, { fill: EMBER }));
-      body.push(text(x + bw / 2, by + bh - hh - 2, v, { font: MONO, size: 5.5, fill: INK2, anchor: 'middle' }));
-      body.push(text(x + bw / 2, by + bh + 8, `h${'₁₂₃₄₅₆₇₈'[j]}`, { font: MONO, size: 6, fill: MUTED, anchor: 'middle' }));
+      if (hh > 0) body.push(rect(x, by + bh - hh, bw, hh, { fill: v < 0 ? INK2 : EMBER }));
+      body.push(text(x + bw / 2, by + bh - hh - 2, fmtH(v), { font: MONO, size: 6, fill: INK, anchor: 'middle' }));
+      body.push(text(x + bw / 2, by + bh + 8, `h${'₁₂₃₄'[j]}`, { font: MONO, size: 6, fill: MUTED, anchor: 'middle' }));
     });
   });
-  const md = [`# ${S.mdTitle} — ${demo.title}`, '', S.mdHead, '|---|---|---|---|---|---|---|---|---|',
-    ...frames.map((fr) => `| ${fr.step ? words[fr.step - 1] : S.empty} | ${fr.h.join(' | ')} |`), '',
+  body.push(text(pad, H - 12, S.legend, { font: MONO, size: 6, fill: INK2 }));
+  body.push(text(pad, H - 4, S.formula, { font: MONO, size: 6, fill: INK2 }));
+  const md = [`# ${S.mdTitle} — ${demo.title}`, '', S.mdHead, '|---|---|---|---|---|---|',
+    ...frames.map((fr) => `| ${fr.step} | ${fr.word || S.empty} | ${fr.h.map(fmtH).join(' | ')} |`), '',
     S.mdNote, ''].join('\n');
   return [{ name: 'rnn', svg: svg(W, H, body.join('\n')), md }];
 }

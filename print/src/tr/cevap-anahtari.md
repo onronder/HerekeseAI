@@ -1,6 +1,6 @@
 # Cevap anahtarı
 
-<!-- Bu dosya print/export.py tarafından üretildi (2026-09-30); elle düzenlenmez. -->
+<!-- Bu dosya print/export.py tarafından üretildi (2026-10-01); elle düzenlenmez. -->
 
 ## Bölüm sonu quizleri
 
@@ -10,7 +10,7 @@
 
 1.8 / 2: **d** · 0 ve 1
 
-1.8 / 3: **b** · Basit kurallarla prensipte her hesaplamayı
+1.8 / 3: **b** · Yeterli zaman ve bantla, basit kurallarla hesaplanabilir her işlemi
 
 1.8 / 4: **b** · Program ve veriyi aynı bellekte tutmak
 
@@ -48,13 +48,13 @@
 
 ### 04 · Yapay Beyin
 
-4.8 / 1: **b** · Girdilerin ağırlıklı toplamı + sapma, sonra aktivasyon
+4.8 / 1: **b** · Girdilerin ağırlıklı toplamı + sabit terim, sonra aktivasyon
 
 4.8 / 2: **b** · Çok sayıda gizli katman
 
 4.8 / 3: **b** · Ağ tek bir doğrusal işleve çökerdi
 
-4.8 / 4: **b** · Hatayı geriye yayıp ağırlıkları hatayı azaltacak yönde günceller
+4.8 / 4: **b** · Kaybın her ağırlığa göre gradyanını çıkıştan girişe doğru hesaplar
 
 4.8 / 5: **d** · Görüntü
 
@@ -126,11 +126,11 @@
 
 | # | item | answer |
 |---|---|---|
-| 1 | Satranç motoru | Dar YZ · bugün var |
-| 2 | Yüz tanıma sistemi | Dar YZ · bugün var |
-| 3 | Sohbet botu (dil modeli) | Dar YZ · bugün var |
-| 4 | Her mesleği insan gibi öğrenip yapan, kendi amaçları olan makine | Genel / AGI · henüz yok |
-| 5 | Kendini fark eden, bilinçli bir YZ | Genel / AGI · henüz yok |
+| 1 | Satranç motoru | Bugün kullanılan sistem |
+| 2 | Yüz tanıma sistemi | Bugün kullanılan sistem |
+| 3 | Sohbet botu (dil modeli) | Bugün kullanılan sistem |
+| 4 | Her mesleği insan gibi öğrenip yapan, kendi amaçları olan makine | Varsayımsal sistem |
+| 5 | Kendini fark eden, bilinçli bir YZ | Bilinç sorusu |
 
 ### Şekil 2.5 — Hangi yaklaşım?
 

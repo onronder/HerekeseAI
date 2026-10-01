@@ -130,6 +130,7 @@ function capabilityFigure(demo, { lang }) {
     body.push(para(lx, ly, r.dl, { size: 7, fill: INK }, LH));
   });
   body.push(text(sx, base + 7, S.axis, { font: MONO, size: 6, fill: MUTED }));
+  body.push(text(W - pad, base + 7, S.barNote, { font: MONO, size: 6, fill: MUTED, anchor: 'end' })); // R069
   const md = [S.mdTitle(demo.title), '', ...S.mdHead,
     ...TIERS.map((x) => `| ${S.tiers[x.k].name} | ${S.tiers[x.k].status} | ${pct(x.cap, lang)} | ${S.tiers[x.k].desc} |`), '',
     S.mdNote, ''].join('\n');
@@ -181,7 +182,7 @@ function singularityFigure(demo, { lang }) {
   CURVES.forEach((cv, i) => {
     const s = style[cv.k];
     body.push(line(gx[i], gy - 2.5, gx[i] + 12, gy - 2.5, { stroke: s.stroke, sw: 1.1, dash: s.dash }));
-    body.push(text(gx[i] + 15, gy, cv.formula, { font: MONO, size: 5.5, fill: INK2 }));
+    body.push(text(gx[i] + 15, gy, cv.formula, { font: MONO, size: 6, fill: INK2 })); // R082: ≥ 6
   });
   const md = [S.mdTitle(demo.title), '', `| ${S.mdTime} | ${CURVES.map((c) => `${S.curves[c.k]}: ${c.formula}`).join(' | ')} |`, '|---|---|---|---|',
     ...T_MARKS.map((e) => `| ${e} | ${CURVES.map((c) => c.f(e).toFixed(1)).join(' | ')} |`), ''].join('\n');
@@ -193,7 +194,7 @@ function responsibilityFigure(demo, { lang }) {
   const S = STRINGS[lang].responsibility;
   const W = 320, pad = 8, colX = 166, colW = (W - pad - colX) / 4, LH = 9, headH = 30;
   const rows = S.scenarios.map((s) => { const l = wrap(s, 40); return { l, h: Math.max(l.length * LH + 12, 28) }; });
-  const y0 = pad + headH; let H = y0; rows.forEach((r) => { H += r.h; }); H += pad;
+  const y0 = pad + headH; let H = y0; rows.forEach((r) => { H += r.h; }); H += 10 + pad; // +10: paylaşılan sorumluluk dipnotu (R062)
   // sütun başlığı punto: en uzun taraf satırı 11 karakteri aşarsa (≈ colW) 6, yoksa 6.5
   const hs = Math.max(...S.parties.flat().map((l) => l.length)) > 11 ? 6 : 6.5;
   const body = [rect(0, 0, W, H, { fill: PAPER })];
@@ -218,6 +219,7 @@ function responsibilityFigure(demo, { lang }) {
   });
   S.parties.forEach((_, j) => { if (j) body.push(line(colX + colW * j, y0, colX + colW * j, y, { stroke: RULE, sw: 0.5 })); });
   body.push(line(colX, y0, colX, y, { stroke: RULE, sw: 0.5 }));
+  body.push(text(pad, y + 9, S.shared, { font: MONO, size: 6, fill: MUTED })); // R062
   const md = [S.mdTitle(demo.title), '', ...S.mdHead,
     ...S.scenarios.map((s, i) => `| ${i + 1} | ${s} |`), '', `${S.mdParties}${S.parties.map((p, j) => `(${'abcd'[j]}) ${p.join(' ')}`).join(', ')}`, ''].join('\n');
   return [{ name: demo.type, svg: svg(W, H, body.join('\n')), md }];

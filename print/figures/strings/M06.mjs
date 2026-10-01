@@ -21,16 +21,16 @@ export default {
       stackTitle: 'İSTEM: TABAN + DÖRT PARÇA',
       baseName: 'Taban istek',
       partTag: (n) => `+ parça ${n}`,
-      ladderTitle: 'KALİTE = 40 + 15·n',
+      ladderTitle: 'GÖSTERGE = 40 + 15·n', // R045: tamamlanma göstergesi, ölçülmüş kalite değil
       baseOnly: 'yalnız taban',
       addPart: (name) => `+ ${name.toLowerCase()}`,
-      note: 'Eşikler: 60 altı düşük, 60–84 orta, 85 ve üstü yüksek. Kural parçanın hangisi olduğuna bakmaz, yalnız sayısına (n) bakar.',
-      answersTitle: 'MODELİN CEVABI (GÖSTERİM) · DÜZEYE GÖRE',
+      note: 'Eşikler: 60 altı düşük, 60–84 orta, 85 ve üstü yüksek. Kural parçanın hangisi olduğuna bakmaz, yalnız sayısına (n) bakar; tamamlanma göstergesidir, ölçülmüş kalite değil.',
+      answersTitle: 'TEMSİLİ CEVAP · DÜZEYE GÖRE',
       md: {
         title: 'İstem parçaları',
         partsHead: '| Parça | İsteme eklenen cümle |',
-        stepsHead: '| n (eklenen parça) | Kalite | Düzey | Cevap |',
-        rule: 'kalite = min(100, 40 + 15·n); düzey: ≥85 yüksek, 60–84 orta, <60 düşük.',
+        stepsHead: '| n (eklenen parça) | Gösterge | Düzey | Temsili cevap |',
+        rule: 'gösterge = min(100, 40 + 15·n); düzey: ≥85 yüksek, 60–84 orta, <60 düşük. Gösterge bir tamamlanma göstergesidir, ölçülmüş kalite değil; cevaplar temsilidir, model çağrısı yoktur.',
       },
     },
     rag: {
@@ -89,14 +89,14 @@ export default {
     arch: {
       parts: [
         { name: 'Arayüz', desc: 'Kullanıcının soruyu yazdığı, cevabı gördüğü yer (sohbet ekranı, uygulama).' },
-        { name: 'Orkestrasyon', desc: 'Asıl “beyin”: istemi hazırlar, hangi aracı/bilgiyi ne zaman çağıracağına karar verir, akışı yönetir.' },
-        { name: 'Bilgi tabanı', desc: 'Senin verin (belgeler, notlar) burada gömü olarak durur; RAG ile ilgili parça getirilir.' },
+        { name: 'Orkestrasyon', desc: 'Yöneten katman: istemi hazırlar, hangi aracı/bilgiyi ne zaman çağıracağına karar verir, modeli çağırır, akışı yönetir.' }, // R049
+        { name: 'Bilgi tabanı', desc: 'Senin verin (belgeler, notlar) burada özgün parçalar, metadata’sı (hangi belge, hangi bölüm) ve arama indeksiyle (gömü ve/veya anahtar sözcük) durur; RAG ile ilgili parça getirilir.' },
         { name: 'Araçlar', desc: 'Modelin dünyayla etkileşimi: hesap, arama, takvim, e-posta, bir API ya da kod çalıştırma.' },
         { name: 'Bellek', desc: 'Konuşmanın geçmişini ve kullanıcıya dair durumu tutar; bağlamın sürmesini sağlar.' },
       ],
       flowTitle: 'AKIŞ: KULLANICI → ARAYÜZ → ORKESTRASYON → ÜÇ KOL',
       user: 'Kullanıcı',
-      brain: 'asıl “beyin”',
+      brain: 'yöneten katman', // R049
       modelCall: 'model çağrısı',
       ragTag: '(RAG)',
       modelNote: 'Model ayrı kutu değil; orkestrasyon onu çağırır.',
@@ -143,16 +143,16 @@ export default {
       stackTitle: 'PROMPT: BASE + FOUR PIECES',
       baseName: 'Base request',
       partTag: (n) => `+ piece ${n}`,
-      ladderTitle: 'QUALITY = 40 + 15·n',
+      ladderTitle: 'INDICATOR = 40 + 15·n', // R045: completeness indicator, not measured quality
       baseOnly: 'base only',
       addPart: (name) => `+ ${name.toLowerCase()}`,
-      note: 'Thresholds: below 60 low, 60–84 medium, 85 and above high. The rule ignores which piece was added; it only counts them (n).',
-      answersTitle: 'MODEL’S ANSWER (ILLUSTRATIVE) · BY TIER',
+      note: 'Thresholds: below 60 low, 60–84 medium, 85 and above high. The rule ignores which piece was added; it only counts them (n); it is a completeness indicator, not measured quality.',
+      answersTitle: 'ILLUSTRATIVE ANSWER · BY TIER',
       md: {
         title: 'Prompt pieces',
         partsHead: '| Piece | Sentence added to the prompt |',
-        stepsHead: '| n (pieces added) | Quality | Tier | Answer |',
-        rule: 'quality = min(100, 40 + 15·n); tier: ≥85 high, 60–84 medium, <60 low.',
+        stepsHead: '| n (pieces added) | Indicator | Tier | Illustrative answer |',
+        rule: 'indicator = min(100, 40 + 15·n); tier: ≥85 high, 60–84 medium, <60 low. The indicator is a completeness indicator, not measured quality; the answers are illustrative, no model is called.',
       },
     },
     rag: {
@@ -211,14 +211,14 @@ export default {
     arch: {
       parts: [
         { name: 'Interface', desc: 'Where the user types the question and sees the answer (chat screen, app).' },
-        { name: 'Orchestration', desc: 'The real “brain”: builds the prompt, decides which tool or knowledge to call and when, manages the flow.' },
-        { name: 'Knowledge base', desc: 'Your data (documents, notes) lives here as embeddings; RAG retrieves the relevant chunk.' },
+        { name: 'Orchestration', desc: 'The coordinating layer: builds the prompt, decides which tool or knowledge to call and when, calls the model, manages the flow.' }, // R049
+        { name: 'Knowledge base', desc: 'Your data (documents, notes) lives here as original chunks with their metadata (which document, which section) and a search index (embeddings and/or keywords); RAG retrieves the relevant chunk.' },
         { name: 'Tools', desc: 'The model’s link to the world: calculation, search, calendar, email, an API or running code.' },
         { name: 'Memory', desc: 'Holds the conversation history and user state; keeps the context going.' },
       ],
       flowTitle: 'FLOW: USER → INTERFACE → ORCHESTRATION → THREE ARMS',
       user: 'User',
-      brain: 'the real “brain”',
+      brain: 'coordinating layer', // R049
       modelCall: 'model call',
       ragTag: '(RAG)',
       modelNote: 'The model is not a separate box; orchestration calls it.',

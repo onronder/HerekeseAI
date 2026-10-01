@@ -22,7 +22,7 @@ Kurulum üç parçadan oluşur: bir model, parametreleri (ağırlıkları) arac�
 
 ### 3.2 Özellik ve etiket
 
-Bir dedektif düşün: elinde ipuçları var, bir de dosyanın sonucu, yani doğru cevap. Makine de örnekle öğrenirken aynı ikiliye bakar. İpuçlarına özellik denir: bir örneği tarif eden ölçülebilir bilgiler. Doğru cevaba da etiket denir. Bir e-postada ipuçları “kaç kelime”, “link var mı”, “bedava geçiyor mu” olabilir; etiketse “Spam” ya da “Normal”dir.
+Bir dedektif düşün: elinde ipuçları var, bir de dosyanın sonucu, yani doğru cevap. Makine de örnekle öğrenirken aynı ikiliye bakar. İpuçlarına özellik denir: bir örneği tarif eden ölçülebilir bilgiler. Doğru cevaba da etiket denir. Bir e-postada ipuçları “kaç kelime”, “link veya şifre isteği var mı”, “bedava geçiyor mu” olabilir; etiketse “Spam” ya da “Normal”dir.
 
 Model, yüzlerce çözülmüş dosyaya baka baka hangi ipucunun hangi cevapla gittiğini öğrenir. Şekil 3.1’deki örneklerden birine bak; ipuçlarını ve doğru cevabını gör.
 
@@ -31,11 +31,11 @@ Model, yüzlerce çözülmüş dosyaya baka baka hangi ipucunun hangi cevapla gi
 **Şekil 3.1 · Özellikleri ve etiketi gör**
 ![Şekil 3.1](../../figures/out/tr/sekil-3-1-spam.svg)
 
-*Kurulum.* Şekilde dört kısa e-posta ve her biri için üç ipucu var: “bedava” geçiyor mu, link ya da şifre istiyor mu, aciliyet dili kullanıyor mu. Üç ipucu sütununun üstünde “Özellikler (girdi)”, son sütunun üstünde “Etiket (çıktı)” yazar. Dolu işaret (✓) ipucunun var olduğunu, boş halka (○) ipucunun bulunmadığını gösterir. En sağ sütun doğru cevabı, yani etiketi verir: Spam ya da Normal. Dört örneğin tamamı aşağıdaki tabloda.
+*Kurulum.* Şekilde dört kısa e-posta ve her biri için üç ipucu var: “bedava” geçiyor mu, link veya şifre isteği var mı, aciliyet dili kullanıyor mu. Link veya şifre isteği, okurdan bir bağlantıyı açmasını ya da şifresini vermesini istemek demektir. Üç ipucu sütununun üstünde “Özellikler (girdi)”, son sütunun üstünde “Etiket (çıktı)” yazar. Dolu işaret (✓) ipucunun var olduğunu, boş halka (○) ipucunun bulunmadığını gösterir. En sağ sütun doğru cevabı, yani etiketi verir: Spam ya da Normal. Dört örneğin tamamı aşağıdaki tabloda.
 
 *Adım adım.*
 
-| # | E-posta | “bedava” geçiyor | link / şifre isteği | aciliyet dili | Etiket |
+| # | E-posta | “bedava” geçiyor | link veya şifre isteği | aciliyet dili | Etiket |
 |---|---|---|---|---|---|
 | 1 | “Bedava iPhone kazandınız! Hemen tıklayın” | ✓ | ✓ | ✓ | Spam |
 | 2 | “Toplantı yarın saat 10:00’da” | ○ | ○ | ○ | Normal |
@@ -45,10 +45,10 @@ Model, yüzlerce çözülmüş dosyaya baka baka hangi ipucunun hangi cevapla gi
 1. Tabloyu satır satır oku. Her satır bir örnektir: ilk üç işaret sütunu o örneğin özellikleri, son sütun etiketi. Model yalnız bu ikiliyi görür, e-postanın kendisini değil.
 2. Birinci e-posta üç ipucunun üçünü de taşıyor ve etiketi Spam. 3. e-posta “bedava” demiyor; ama şifre istiyor ve acele ettiriyor. O da Spam.
 3. İkinci ve dördüncü e-postada üç ipucundan hiçbiri yok. İkisi de Normal.
-4. Sütunlarla etiket arasındaki ilişkiye bak. İşaret sayısı sıfırsa etiket hep Normal; iki ya da üçse hep Spam. “Bedava” tek başına belirleyici değil: 3. e-posta onsuz da Spam çıktı. Link ya da şifre isteği ile aciliyet dili ise iki Spam örneğinde de var.
+4. Sütunlarla etiket arasındaki ilişkiye bak. İşaret sayısı sıfırsa etiket hep Normal; iki ya da üçse hep Spam. “Bedava” tek başına belirleyici değil: 3. e-posta onsuz da Spam çıktı. Link veya şifre isteği ile aciliyet dili ise iki Spam örneğinde de var.
 5. Bu ilişkiyi biz yazmadık; tablodan okuduk. Model de aynısını yapar, yalnız dört değil binlerce satırla. Dört satırdan çıkan “iki işaret varsa spam” kuralı geçici bir tahmindir; beşinci örnek onu bozabilir.
 
-*Ne oluyor?* Bir e-postayı tarif eden ipuçlarını (özellikler) ve doğru cevabı (etiket) yan yana koyuyoruz: “bedava” geçmesi, link istemesi, aciliyet dili… Makine bol örnek görerek hangi ipuçlarının “Spam” ile birlikte gittiğini kendi kendine öğrenir; kuralı biz yazmayız, o örneklerden çıkarır.
+*Ne oluyor?* Bir e-postayı tarif eden ipuçlarını (özellikler) ve doğru cevabı (etiket) yan yana koyuyoruz: “bedava” geçmesi, link veya şifre isteği, aciliyet dili… Makine bol örnek görerek hangi ipuçlarının “Spam” ile birlikte gittiğini kendi kendine öğrenir; kuralı biz yazmayız, o örneklerden çıkarır.
 
 *Kendin dene.* 1) “Şifrenizin süresi doldu, bugün yenilemezseniz hesabınız silinir” e-postasının üç ipucunu işaretle. Tablodaki ilişkiye göre etiketi ne olur? 2) “Bedava kahve için yarın öğlen mutfakta buluşalım” e-postası gerçekte Normal. Bu satır tabloya eklenirse model “bedava” ipucuna daha çok mu, daha az mı güvenmeli? 3) Dört satırın hepsiyle uyuşan, tek cümlelik bir kural yaz. Kuralın 2. sorudaki e-postada da doğru çalışıyor mu? Canlı demo: [QR 3.1]
 
@@ -56,9 +56,9 @@ Model, yüzlerce çözülmüş dosyaya baka baka hangi ipucunun hangi cevapla gi
 
 Denetimli öğrenmede her örnek, bir özellik vektörü x ile bir etiket y çiftidir. Özellikler sayısal ya da kategorik olabilir; model f(x) ≈ y eşlemesini öğrenmeye çalışır. İyi özellik seçimi (feature engineering), klasik ML’de başarımı belirleyen en önemli adımlardan biridir.
 
-Etiketin türü görevi belirler: kategorik etiket → sınıflandırma, sürekli (sayısal) etiket → regresyon. Aşağıdaki örnekte basit özelliklerle bir e-postanın spam olup olmadığını ayırt etme sezgisini göreceksin.
+Etiketin türü görevi belirler: kategorik etiket → sınıflandırma, nicel (sürekli) etiket → regresyon. Kategoriler sayıyla kodlanabilir; bu onları regresyon hedefi yapmaz. Aşağıdaki örnekte basit özelliklerle bir e-postanın spam olup olmadığını ayırt etme sezgisini göreceksin.
 
-Özellik vektörü x = [“bedava” geçiyor; link var; aciliyet dili], etiket y = “Spam”. Denetimli öğrenmede model bu (x, y) çiftlerinden f(x) ≈ y eşlemesini, yani P(spam | x) gibi bir karar kuralını kestirmeye çalışır.
+Özellik vektörü x = [“bedava” geçiyor; link veya şifre isteği; aciliyet dili], etiket y = “Spam”. Denetimli öğrenmede model bu (x, y) çiftlerinden f(x) ≈ y eşlemesini, yani P(spam | x) gibi bir karar kuralını kestirmeye çalışır.
 
 Spam örneğinde her e-postanın doğru cevabı elimizdeydi. Cevap anahtarı olmadan, hatta öğretmen olmadan da öğrenilir mi?
 
@@ -106,7 +106,7 @@ Denetimli öğrenmenin sorduğu iki temel soru var. Biri “ne kadar?” der: bu
 
 İkisini de aşağıda kendin dene. Regresyonda noktaların tam ortasından geçen “en iyi doğru”yu bulacaksın; sınıflandırmada iki grubun arasına bir sınır çizeceksin.
 
-> **Kenar notu.** Basit ayrım: çıktı bir sayıysa regresyon, çıktı bir etiketse sınıflandırma. Ev fiyatı bir sayı, spam kararı bir etikettir.
+> **Kenar notu.** Basit ayrım: model bir miktar tahmin ediyorsa regresyon, bir kategori seçiyorsa sınıflandırma. Ev fiyatı bir miktardır; spam kararı bir kategoridir, kategoriler sayıyla kodlansa bile.
 
 **Şekil 3.3 · İki temel görev**
 ![Şekil 3.3](../../figures/out/tr/sekil-3-3-scatter.svg)
@@ -117,13 +117,13 @@ Denetimli öğrenmenin sorduğu iki temel soru var. Biri “ne kadar?” der: bu
 
 1. Regresyon verisi dokuz noktadır: (1, 1.4), (2, 1.9), (3, 2.2), (4, 3.1), (5, 3.3), (6, 4.2), (7, 4.5), (8, 5.4), (9, 5.6). x büyüdükçe y büyüyor, ama noktalar tam bir doğru üstünde değil.
 2. En küçük kareler doğrusu iki sayıyla bulunur. x’lerin ortalaması 5, y’lerin ortalaması 3.51. Eğim m = 33 / 60 = 0.55; kesişim b = 3.51 − 0.55 · 5 = 0.76. Doğru: y = 0.55x + 0.76.
-3. Doğru her noktaya ne kadar yakın? x = 3’te doğru 2.41 der, nokta 2.2’dir; fark −0.21. x = 8’de doğru 5.16 der, nokta 5.4; fark +0.24. Dokuz farkın hiçbiri 0.25’i geçmez. Farkların karelerinin toplamı 0.22.
-4. Bu toplam neden “en iyi”nin ölçüsü? Göz kararı çizilmiş başka bir doğruyu dene: y = 0.5x + 1. Aynı toplam 0.37’ye çıkar. En küçük kareler doğrusu, bu toplamı olası bütün doğrular arasında en küçük yapan tek doğrudur.
+3. Doğru her noktaya ne kadar yakın? Ölçü, aynı x’teki dikey fark: gözlenen y eksi doğrunun dediği y. Buna artık denir; doğruya en kısa (dik) uzaklık değildir. x = 3’te doğru 2.41 der, nokta 2.2’dir; artık −0.21. x = 8’de doğru 5.16 der, nokta 5.4; artık +0.24. Dokuz artığın hiçbiri 0.25’i geçmez. Artıkların karelerinin toplamı 0.22.
+4. Bu toplam neden “en iyi”nin ölçüsü? Göz kararı çizilmiş başka bir doğruyu dene: y = 0.5x + 1. Dikey artıkların kareleri toplamı 0.37’ye çıkar. En küçük kareler doğrusu, bu toplamı olası bütün doğrular arasında en küçük yapan tek doğrudur.
 5. Sınıflandırma verisi iki gruptur. Koyu: (1.5, 1.5), (2, 2.2), (2.6, 1.7), (3.1, 2.6), (1.9, 3). Turuncu: (6.5, 4.5), (7, 5.3), (7.6, 4.6), (6.9, 5.8), (8, 5.1).
 6. Sınır, (1, 5.5) ile (8.5, 1) noktalarından geçen doğrudur: y = 6.1 − 0.6x. Kontrol et: x = 3.1’de sınır 4.24 der, koyu nokta 2.6 ile altında kalır. x = 6.5’te sınır 2.2 der, turuncu nokta 4.5 ile üstünde. On noktanın onu da doğru tarafta.
 7. İki cevap iki türdür. Regresyon bir sayı verir: x = 10 için 0.55 · 10 + 0.76 = 6.26. Sınıflandırma bir taraf verir: sınırın altı koyu, üstü turuncu.
 
-*Ne oluyor?* İki temel iş var. Regresyon bir sayı tahmin eder: noktaların tam ortasından geçen, hepsine en az uzaklıkta duran “en iyi doğru”yu çizeriz. Sınıflandırma ise bir grubu ötekinden ayıran bir sınır çeker.
+*Ne oluyor?* İki temel iş var. Regresyon bir sayı tahmin eder: noktaların arasından geçen “en iyi doğru”yu çizeriz; en iyi doğru, her noktanın aynı x’teki dikey farkının karelerini topladığımızda bu toplamı en küçük yapan doğrudur. Sınıflandırma ise bir grubu ötekinden ayıran bir sınır çeker.
 
 *Kendin dene.* 1) y = 0.55x + 0.76 doğrusuna göre x = 6.5 için tahmin kaç? 2) (4.5, 3.5) noktası sınırın hangi tarafında kalır; koyu mu, turuncu mu? Ya (5, 3)? 3) Regresyon verisine (9, 9) gibi uzak bir nokta eklensin. Eğim artar mı, azalır mı? Doğrunun tek bir noktanın peşinden gitmesi bir sorun mudur? Canlı demo: [QR 3.3]
 
@@ -135,7 +135,7 @@ Regresyon sürekli bir hedefi tahmin eder; en basit hâli, hata karelerinin topl
 
 Regresyonda hedef sürekli bir sayıdır; Şekil 3.3’teki doğru en küçük kareler doğrusudur. Sınıflandırmada iki grubu ayıran bir karar sınırı çizilir.
 
-En küçük kareler doğrusunun kapalı biçimi: m = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)², b = ȳ − m·x̄. Şekil 3.3’ün verisinde pay 33, payda 60’tır.
+En küçük kareler doğrusunun kapalı biçimi: m = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)², b = ȳ − m·x̄. Şekil 3.3’ün verisinde pay 33, payda 60’tır. Küçültülen nicelik dikey artıkların kareleri toplamıdır, Σ(yᵢ − m·xᵢ − b)²; doğruya dik uzaklık değil.
 
 Buraya kadar her noktanın etiketi ya da sayısı elimizdeydi. Etiketleri tamamen kaldırınca ortada yalnız noktalar kalır. Makine yine de bir düzen bulabilir mi?
 
@@ -143,16 +143,16 @@ Buraya kadar her noktanın etiketi ya da sayısı elimizdeydi. Etiketleri tamame
 
 Sana koca bir kutu düğme verip “bunları ayır” deseler ne yaparsın? Kimse hangisinin nereye ait olduğunu söylemez; yine de benzeri benzerin yanına koyarsın. Kümeleme de bu: makine, etiketsiz veriyi benzerliğe göre kendisi gruplar. Hiçbir gruba uymayan tuhaf düğmeler de vardır; anomali tespiti onları yakalar.
 
-Aşağıdaki noktaların hiçbir etiketi yok. Şekil 3.4’te makine onları benzerliğe göre iki kümeye ayırıyor, hiçbirine uymayan aykırı noktayı da işaretliyor.
+Aşağıdaki noktaların hiçbir etiketi yok. Şekil 3.4’te makine onları en yakın merkeze göre iki kümeye ayırıyor. İki kümeye de uzak kalan nokta aykırı diye işaretlenir.
 
-> **Kenar notu.** Denetimsiz öğrenmenin gücü: kimse “bunlar bir grup” demeden makine yapıyı kendisi bulur. Bankaların dolandırıcılık tespiti büyük ölçüde anomali bulmaya dayanır.
+> **Kenar notu.** Denetimsiz öğrenmenin gücü: kimse “bunlar bir grup” demeden makine yapıyı kendisi bulur. Aykırılık tespiti, bankaların dolandırıcılık analizinde kullandığı araçlardan biridir.
 
 **Şekil 3.4 · Etiketsiz veriyi grupla**
 ![Şekil 3.4](../../figures/out/tr/sekil-3-4-kmeans.svg)
 
-*Kurulum.* Şekilde on bir gri nokta ve iki ✕ işareti var. ✕’ler küme merkezleridir: A merkezi sol üstte (2.5, 7), B merkezi sağ altta (7, 3). Sol kare gruplamadan önceki hâl; her nokta aynı gri. Sağ karede noktalar en yakın merkezin rengini almış, tek bir nokta turuncu halkayla “aykırı” diye işaretlenmiş.
+*Kurulum.* Şekilde on bir gri nokta ve iki ✕ işareti var. ✕’ler küme merkezleridir: A merkezi sol üstte (2.5, 7), B merkezi sağ altta (7, 3). Sol kare gruplamadan önceki hâl; her nokta aynı gri. Sağ karede noktalar en yakın merkezin rengini almış, tek bir nokta turuncu halkayla “aykırı” diye işaretlenmiş. Bu gösterimde iki merkez de aykırı nokta da önceden seçilmiştir; makine burada yalnız uzaklıkları hesaplar.
 
-*Adım adım.* Gruplama tek bir soruya dayanır: bu nokta hangi merkeze daha yakın? Uzaklık Pisagor’la hesaplanır: √((x − xₘ)² + (y − yₘ)²).
+*Adım adım.* Gruplama tek bir soruya dayanır: bu nokta hangi merkeze daha yakın? Uzaklık Pisagor’la hesaplanır: √((x − xₘ)² + (y − yₘ)²). Aykırı için eşik baştan konur: en yakın merkeze uzaklığı 2.4’ü aşan nokta aykırı sayılır ve kümeye girmez. Sıra şöyle: önce atama, sonra eşik, sonra kalan üyelerle merkez güncellemesi.
 
 | # | Nokta | A’ya uzaklık | B’ye uzaklık | Küme |
 |---|---|---|---|---|
@@ -171,8 +171,8 @@ Aşağıdaki noktaların hiçbir etiketi yok. Şekil 3.4’te makine onları ben
 1. Nokta 1, (1.5, 7.5): A’ya √(1² + 0.5²) = 1.12, B’ye √(5.5² + 4.5²) = 7.11. A çok daha yakın; nokta A’ya gider.
 2. Nokta 9, (6.8, 4): A’ya √(4.3² + 3²) = 5.24, B’ye √(0.2² + 1²) = 1.02. B’ye gider.
 3. Nokta 4, (2.8, 6.2): 0.85’e karşı 5.28, yine A. Aynı hesabı ilk on nokta için yap; hepsinde iki uzaklık arasında en az beş kat fark var. Karar hiç zor değil.
-4. Nokta 11, (5, 8.5), farklı. En yakın merkezi A, ama uzaklığı 2.92. A’nın öteki üyeleri merkeze en çok 1.22 uzakta; bu nokta onların iki katından uzak. B’ye de 5.85 uzak. İki kümeye de uymuyor: aykırı.
-5. Bu tek turdu. Gerçek k-ortalamalar şimdi merkezleri günceller: A’nın yeni merkezi 1–5 numaralı noktaların ortalamasıdır, (2.22, 7.2). Eski merkezden yalnız 0.34 uzakta; kümeler zaten oturmuş.
+4. Nokta 11, (5, 8.5), farklı. En yakın merkezi A, ama uzaklığı 2.92; eşik 2.4’ün üstünde. A’nın öteki üyeleri merkeze en çok 1.22 uzakta; bu nokta onların iki katından uzak. B’ye de 5.85 uzak. Kurala göre aykırı: hiçbir kümeye girmez.
+5. Bu tek turdu. Sırada merkez güncellemesi var: aykırı dışarıda bırakılınca A’nın yeni merkezi 1–5 numaralı noktaların ortalamasıdır, (2.22, 7.2). Eski merkezden yalnız 0.34 uzakta; kümeler zaten oturmuş. Dikkat: standart k-ortalamalar aykırı diye bir şey bilmez; 11. noktayı da A’ya atar ve A’nın merkezi altı üyeyle (2.68, 7.42) olur. Buradaki eleme, bizim koyduğumuz eşik kuralının sonucudur.
 
 *Ne oluyor?* Noktaların hiçbir etiketi yok. Şekil 3.4’te makine her noktayı kendisine en yakın merkeze (✕) bağlar; böylece birbirine benzeyenler aynı kümede toplanır. İki kümeye de uzak kalan tek nokta “aykırı” (tuhaf örnek) diye işaretlenir.
 
@@ -182,11 +182,11 @@ Aşağıdaki noktaların hiçbir etiketi yok. Şekil 3.4’te makine onları ben
 
 Kümeleme, etiket olmadan benzerliğe göre grup keşfeder; k-ortalamalar (k-means) gibi yöntemler noktaları en yakın küme merkezine (centroid) atar ve merkezleri günceller. Anomali (aykırı değer) tespiti, çoğunluğun dağılımından belirgin biçimde sapan örnekleri belirler.
 
-Şekil 3.4’teki gösterim, noktaları iki sabit merkeze en yakınlıklarına göre atayarak k-means’in “atama” adımını gösterir; ayrıca her iki kümeye de uzak duran bir aykırı noktayı vurgular. Gerçek k-means, merkezleri yakınsayana dek iteratif olarak günceller.
+Şekil 3.4’teki gösterim, noktaları iki sabit merkeze en yakınlıklarına göre atayarak k-means’in “atama” adımını gösterir; ayrıca her iki kümeye de uzak duran bir aykırı noktayı vurgular. Gerçek k-means, merkezleri yakınsayana dek iteratif olarak günceller. Bu gösterimde küme merkezleri ve aykırı nokta önceden seçilmiştir; gerçek uygulamada aykırılık bir yöntem ve eşikle hesaplanır.
 
 Etiketsiz x noktaları, iki sabit merkez (centroid, ✕); her iki kümeye de uzak nokta aykırı (anomali) olarak işaretlenir.
 
-İki adımın formülü: atama c(i) = argminₖ ‖xᵢ − μₖ‖², güncelleme μₖ ← küme k’ye atanan noktaların ortalaması. Şekil 3.4’te bir güncelleme merkez A’yı (2.5, 7)’den (2.22, 7.2)’ye, merkez B’yi (7, 3)’ten (7.32, 3.26)’ya taşır; ikinci atama turu hiçbir noktayı değiştirmez, algoritma yakınsamıştır.
+İki adımın formülü: atama c(i) = argminₖ ‖xᵢ − μₖ‖², güncelleme μₖ ← küme k’ye atanan noktaların ortalaması. Şekil 3.4’te, aykırı nokta eşik kuralıyla dışlandıktan sonra bir güncelleme merkez A’yı (2.5, 7)’den (2.22, 7.2)’ye, merkez B’yi (7, 3)’ten (7.32, 3.26)’ya taşır; ikinci atama turu hiçbir noktayı değiştirmez, algoritma yakınsamıştır. Eşiksiz standart k-means 11. noktayı A’ya atar; A’nın merkezi altı üyeyle (2.68, 7.42) olur ve ikinci turda nokta yine A’da kalır.
 
 Kümelemede merkez bir kez kaydı ve iş bitti. Milyonlarca parametresi olan bir model o küçük düzeltme adımını nasıl atar? Sıradaki bölüm sisli bir vadide geçiyor.
 
@@ -196,7 +196,7 @@ Bir model nasıl “daha iyi” olur? Önce ne kadar yanıldığını ölçeriz;
 
 Gradyan inişi bu yürüyüştür: her adımda eğimi yokla, yokuş aşağı küçük bir adım at, tekrarla. Aşağıda topu adım adım indir, kaybın erimesini izle. Adımını çok büyük atarsan ne olur? Şekil 3.5’in sağ panelinde ne olduğuna bak.
 
-> **Kenar notu.** Öğrenmenin özü bu: “ne kadar yanlışım?” diye sor, biraz düzelt ve tekrarla; hem de milyonlarca kez. Sinir ağları da dahil neredeyse bütün modern YZ böyle eğitiliyor.
+> **Kenar notu.** Öğrenmenin özü bu: “ne kadar yanlışım?” diye sor, biraz düzelt ve tekrarla; hem de milyonlarca kez. Sinir ağları başta olmak üzere bugünün modellerinin çoğu böyle, gradyanla eğitiliyor; karar ağaçları gibi bazı yöntemlerse başka yoldan öğrenir.
 
 **Şekil 3.5 · Kayıp vadisinde iniş**
 ![Şekil 3.5](../../figures/out/tr/sekil-3-5-descent.svg)
@@ -229,7 +229,7 @@ Gradyan inişi bu yürüyüştür: her adımda eğimi yokla, yokuş aşağı kü
 
 Eğitim, parametreleri kayıp fonksiyonu L(θ)’yı en aza indirecek şekilde ayarlamaktır. Gradyan inişi her adımda gradyanın ters yönünde ilerler: θ ← θ − η·∇L(θ), burada η öğrenme oranıdır (learning rate).
 
-Öğrenme oranı işin en hassas ayarıdır: çok küçükse yakınsama yavaşlar; çok büyükse minimumun etrafında salınabilir ya da ıraksayabilir. Şekil 3.5’teki gösterimde dışbükey bir kayıp eğrisinde inişi ve büyük öğrenme oranının nasıl aşıma (overshoot) yol açtığını gözlemle. Pratikte yüzeyler dışbükey değildir ve genelde stokastik gradyan inişi kullanılır.
+Öğrenme oranı işin en hassas ayarıdır: çok küçükse yakınsama yavaşlar; çok büyükse minimumun etrafında salınabilir ya da ıraksayabilir. Şekil 3.5’teki gösterimde dışbükey bir kayıp eğrisinde inişi ve büyük öğrenme oranının nasıl aşıma (overshoot) yol açtığını gözlemle. Derin ağların kayıp yüzeyleri genellikle dışbükey değildir ve eğitimde stokastik gradyan inişi gibi gradyan tabanlı yöntemler yaygındır; doğrusal regresyon gibi bazı modellerin kaybı dışbükeydir, ağaç tabanlı yöntemler gibi bazıları ise gradyan kullanmaz.
 
 Gradyan inişi: θ ← θ − η·∇L(θ). Parametre minimuma (x* = 5) doğru ilerler, L(x) azalır. Yüksek öğrenme oranında top minimumun etrafında salınır (aşım).
 
@@ -248,17 +248,17 @@ Sınıfın ezbercisini bilirsin: eski soruların hepsini kelimesi kelimesine bil
 **Şekil 3.6 · Aynı veri, üç model**
 ![Şekil 3.6](../../figures/out/tr/sekil-3-6-modelfit.svg)
 
-*Kurulum.* Üç panelde de aynı dokuz nokta var: (1, 3.2), (2, 2.4), (3, 3.0), (4, 2.0), (5, 2.7), (6, 1.7), (7, 2.3), (8, 1.4), (9, 2.0). Genel eğilim aşağı, ama her adımda bir zıplama var; ölçümlerdeki gürültü. Sol panel “Eksik uyum”: düz bir doğru. Orta panel “İyi (dengeli)”: hafif dalgalı bir eğri. Sağ panel “Aşırı uyum”: dokuz noktayı tek tek birleştiren kırık çizgi. Her panelin altında o modelin hükmü yazar.
+*Kurulum.* Üç panelde de aynı dokuz nokta var: (1, 3.2), (2, 2.4), (3, 3.0), (4, 2.0), (5, 2.7), (6, 1.7), (7, 2.3), (8, 1.4), (9, 2.0). Genel eğilim aşağı, ama her adımda bir zıplama var; ölçümlerdeki gürültü. Sol panel “Eksik uyum”: düz bir doğru. Orta panel “Daha düzgün temsili eğri”: hafif dalgalı bir eğri; veriden eğitilmedi, anlatım için elle çizildi. Sağ panel “Aşırı uyum”: dokuz noktayı tek tek birleştiren kırık çizgi. Her panelin altında o modelin hükmü yazar.
 
 *Adım adım.*
 
 1. Eksik uyum: doğru y = 3.1 − 0.18x. x = 5’te 2.2 der, nokta 2.7’dir; fark 0.5. x = 9’da 1.48 der, nokta 2.0. Doğru noktaların bir üstüne, bir altına düşer; zıplamaları hiç tutmaz. Hüküm: “Eksik uyum: model çok basit, örüntüyü yakalayamıyor (yüksek yanlılık).”
-2. İyi (dengeli): eğri y = 3.0 − 0.16x + 0.15·sin(0.6x). x = 5’te 2.22, x = 9’da 1.44 der. Zikzağı kovalamaz; yalnız aşağı eğilimi ve hafif bir dalgayı taşır. Hüküm: “Yanlılık-varyans dengesi: hem eğitim hem doğrulama hatası düşük; model iyi genelleştirir.”
+2. Daha düzgün temsili eğri: y = 3.0 − 0.16x + 0.15·sin(0.6x). x = 5’te 2.22, x = 9’da 1.44 der. Zikzağı kovalamaz; yalnız aşağı eğilimi ve hafif bir dalgayı taşır. Hüküm: “Yanlılık-varyans dengesi: ne örüntüyü kaçıracak kadar basit ne gürültüyü ezberleyecek kadar karmaşık.” İyi genellediğini söylemek için eğitimde kullanılmamış veride hatası ölçülmeli; bu eğri elle çizildiği için o ölçüm burada yok.
 3. Aşırı uyum: kırık çizgi dokuz noktanın dokuzundan da geçer; eğitim hatası tam sıfır. Ama şekline bak: 5’ten 6’ya giderken 1.0 birim düşüyor, 6’dan 7’ye 0.6 yükseliyor. Bu iniş çıkışlar örüntü değil, gürültüdür; yeni ölçümde aynı yerde tekrarlamaz. Hüküm: “Aşırı uyum: her noktadan geçer ama gürültüyü ezberler; yeni veride başarısız (yüksek varyans).”
 4. Sınav: 5. ve 7. noktayı sakla, kalan yediyle aynı kırık çizgiyi çiz. x = 5’te çizgi (4, 2.0) ile (6, 1.7)’yi birleştirir ve 1.85 der; gerçek 2.7, hata 0.85. x = 7’de 1.55 der; gerçek 2.3, hata 0.75. Basit doğru aynı iki noktada 0.5 ve 0.46 hata yapar. Ezberci, görmediği soruda tembelden bile kötü.
-5. Eğitim hatası tek başına aldatır. Modeli hiç görmediği veriyle sınamak gerekir; buna doğrulama denir.
+5. Eğitim hatası tek başına aldatır. Modeli hiç görmediği veriyle sınamak gerekir; buna doğrulama denir. Adil bir karşılaştırma için her aday aynı yedi noktayla eğitilip aynı iki noktada sınanır. Burada bunu kırık çizgi ile düz doğru için yaptık; orta eğri elle çizildiği için sınava girmedi.
 
-*Ne oluyor?* Aynı veriye üç ayrı model uyduruyoruz. Çok basit olan örüntüyü ıskalar (eksik uyum); aşırı karmaşık olan her noktayı ezberler ama yeni veride şaşırır (aşırı uyum). En iyisi tam ortadakidir: daha önce hiç görmediği örnekleri de doğru tahmin edebilen model.
+*Ne oluyor?* Aynı veriye üç ayrı model uyduruyoruz. Çok basit olan örüntüyü ıskalar (eksik uyum); aşırı karmaşık olan her noktayı ezberler ama yeni veride şaşırır (aşırı uyum). En iyisi ikisinin arasındadır: daha önce hiç görmediği örnekleri de doğru tahmin edebilen model. Bu eğriler fikri gösterir; hangisinin iyi genellediğini ancak eğitimde kullanılmamış veride ölçülen hata söyler.
 
 *Kendin dene.* 1) x = 10 için üç model ne der? Kırık çizgi için ne olduğuna dikkat et. 2) Aynı saklama sınavını 2. ve 8. noktalarla tekrarla: kırık çizgi ve düz doğru bu iki noktada kaçar hata yapıyor? 3) Dokuz noktadan tam geçen model “sıfır hata” diye övünüyor. Bu sayı neyi kanıtlar, neyi kanıtlamaz? Canlı demo: [QR 3.6]
 
@@ -266,11 +266,11 @@ Sınıfın ezbercisini bilirsin: eski soruların hepsini kelimesi kelimesine bil
 
 Aşırı uyum, modelin eğitim verisindeki gürültüyü de öğrenip görülmemiş veride başarımını yitirmesidir; eksik uyum ise modelin örüntüyü yakalayamayacak kadar basit olmasıdır. Bunlar yanlılık-varyans dengesinin (bias–variance tradeoff) iki ucudur ve genelde eğitim/doğrulama ayrımı, düzenlileştirme (regularization) ve çapraz doğrulama ile yönetilir.
 
-Topluluk öğrenmesi (ensemble), birçok modelin tahminini birleştirerek (oylama, bagging, boosting) tek bir modelden daha iyi ve daha kararlı sonuç elde eder; rastgele orman (random forest) ve gradyan artırma (gradient boosting) en bilinen örneklerdir.
+Topluluk öğrenmesi (ensemble), birçok modelin tahminini birleştirir (oylama, bagging, boosting); hataları birbirini tamamlıyorsa genelleme iyileşebilir, ama her tekil modelden daha iyi sonuç garanti edilmez ve kazanç doğrulama verisiyle ölçülür. Rastgele orman (random forest) ve gradyan artırma (gradient boosting) en bilinen örneklerdir.
 
 Yanlılık-varyans dengesi: eksik uyum örüntüyü kaçırır, aşırı uyum gürültüyü ezberler. En iyi model her ikisini dengeleyip görülmemiş veriye genelleşendir.
 
-Şekil 3.6’daki saklama sınavı, tek katlı bir eğitim/doğrulama ayrımıdır: iki nokta doğrulama kümesi, yedi nokta eğitim kümesi. Çapraz doğrulama bunu her noktayı sırayla saklayarak dokuz kez tekrarlar ve hataların ortalamasını alır.
+Şekil 3.6’daki saklama sınavı, tek katlı bir eğitim/doğrulama ayrımıdır: iki nokta doğrulama kümesi, yedi nokta eğitim kümesi. Çapraz doğrulama bunun k-katlı hâlidir: veri k parçaya bölünür, her parça sırayla saklanır, kalanla eğitilir ve hataların ortalaması alınır; her noktayı tek tek saklamak (burada k = 9) bunun bir özel durumudur.
 
 Örnekten öğrenmek, ama ezberlemeden: bölüm bu fikrin etrafında döndü. Ne kadarı aklında kaldı, altı soruyla bak.
 
@@ -318,8 +318,8 @@ Yanlılık-varyans dengesi: eksik uyum örüntüyü kaçırır, aşırı uyum g�
 - Makine öğrenmesi kural yazmaz; kuralı örneklerden kendisi çıkarır.
 - Her örnek iki parçadır: onu tarif eden özellikler ve doğru cevap, yani etiket.
 - Etiket varsa denetimli, yoksa denetimsiz, ödülle öğreniyorsa pekiştirmeli öğrenmedir.
-- Regresyon bir sayı verir (ev fiyatı), sınıflandırma bir kategori (spam mı, değil mi).
-- Kümeleme etiketsiz veriyi benzerliğe göre gruplar; hiçbir gruba uymayan nokta aykırıdır.
+- Regresyon bir miktar tahmin eder (ev fiyatı), sınıflandırma bir kategori seçer (spam mı, değil mi); sayıyla kodlanmış kategori yine sınıflandırmadır.
+- Kümeleme etiketsiz veriyi benzerliğe göre gruplar; her kümeye de uzak kalan nokta, önceden konan bir eşiğe göre aykırı sayılır.
 - Gradyan inişi kaybı ölçer, eğime bakar, küçük bir adım atar ve bunu milyonlarca kez tekrarlar.
 - Eğitim verisini ezberleyen model yeni veride çuvallar; modeli hiç görmediği veriyle sınamak bu yüzden şart.
 
@@ -343,6 +343,19 @@ Gradyan inişi tam bu yürüyüştür: Her adımda eğimi yokla, yokuş aşağı
 Bir modeli iyileştirmek, vadinin dibine inmeye benzer: “kayıp” ne kadar büyükse o kadar yukarıdasın. Her adımda topu yokuş aşağı biraz ittiriyoruz ve kayıp küçülüyor. Ama adım çok büyük olursa (yüksek öğrenme oranı) top dibi ıskalayıp karşı yamaca fırlar; işte bu yüzden adımın boyu önemlidir. ||| Bir modeli iyileştirmek, vadinin dibine inmeye benzer: “kayıp” ne kadar büyükse o kadar yukarıdasın. Her adımda topu yokuş aşağı biraz ittiriyoruz ve kayıp küçülüyor. Ama adım çok büyük olursa (yüksek öğrenme oranı) top dibi ıskalayıp karşı yamaca fırlar; adımın boyu bu yüzden önemlidir.
 Sınıfın ezbercisini bilirsin: Eski soruların hepsini kelimesi kelimesine bilir ama soru birazcık değişince kalakalır. Modeller de bazen böyle “fazla iyi” öğrenir: Eğitim örneklerini ezberler, yenisinde sınıfta kalır. Buna aşırı uyum (overfitting) denir. Tersi de var: Çok basit kalan model örüntüyü hiç yakalayamaz (eksik uyum). İyi model tam ortada durur; ezberlemez, kavrar. ||| Sınıfın ezbercisini bilirsin: eski soruların hepsini kelimesi kelimesine bilir ama soru birazcık değişince kalakalır. Modeller de bazen böyle “fazla iyi” öğrenir: eğitim örneklerini ezberler, yenisinde sınıfta kalır. Buna aşırı uyum (overfitting) denir. Tersi de var: çok basit kalan model örüntüyü hiç yakalayamaz (eksik uyum). İyi model ikisinin arasında durur.
 Aynı veriye üç ayrı model uyduruyoruz. Çok basit olan örüntüyü ıskalar (eksik uyum); aşırı karmaşık olan her noktayı ezberler ama yeni veride şaşırır (aşırı uyum). En iyisi tam ortadakidir: daha önce hiç görmediği örnekleri de doğru tahmin edebilen model. Kısaca, ezberlemek öğrenmek değildir. ||| Aynı veriye üç ayrı model uyduruyoruz. Çok basit olan örüntüyü ıskalar (eksik uyum); aşırı karmaşık olan her noktayı ezberler ama yeni veride şaşırır (aşırı uyum). En iyisi tam ortadakidir: daha önce hiç görmediği örnekleri de doğru tahmin edebilen model.
+Bir dedektif düşün: elinde ipuçları var, bir de dosyanın sonucu, yani doğru cevap. Makine de örnekle öğrenirken aynı ikiliye bakar. İpuçlarına özellik denir: bir örneği tarif eden ölçülebilir bilgiler. Doğru cevaba da etiket denir. Bir e-postada ipuçları “kaç kelime”, “link var mı”, “bedava geçiyor mu” olabilir; etiketse “Spam” ya da “Normal”dir. ||| Bir dedektif düşün: elinde ipuçları var, bir de dosyanın sonucu, yani doğru cevap. Makine de örnekle öğrenirken aynı ikiliye bakar. İpuçlarına özellik denir: bir örneği tarif eden ölçülebilir bilgiler. Doğru cevaba da etiket denir. Bir e-postada ipuçları “kaç kelime”, “link veya şifre isteği var mı”, “bedava geçiyor mu” olabilir; etiketse “Spam” ya da “Normal”dir.
+Etiketin türü görevi belirler: kategorik etiket → sınıflandırma, sürekli (sayısal) etiket → regresyon. Aşağıdaki örnekte basit özelliklerle bir e-postanın spam olup olmadığını ayırt etme sezgisini göreceksin. ||| Etiketin türü görevi belirler: kategorik etiket → sınıflandırma, nicel (sürekli) etiket → regresyon. Kategoriler sayıyla kodlanabilir; bu onları regresyon hedefi yapmaz. Aşağıdaki örnekte basit özelliklerle bir e-postanın spam olup olmadığını ayırt etme sezgisini göreceksin.
+Bir e-postayı tarif eden ipuçlarını (özellikler) ve doğru cevabı (etiket) yan yana koyuyoruz: “bedava” geçmesi, link istemesi, aciliyet dili… Makine bol örnek görerek hangi ipuçlarının “Spam” ile birlikte gittiğini kendi kendine öğrenir; kuralı biz yazmayız, o örneklerden çıkarır. ||| Bir e-postayı tarif eden ipuçlarını (özellikler) ve doğru cevabı (etiket) yan yana koyuyoruz: “bedava” geçmesi, link veya şifre isteği, aciliyet dili… Makine bol örnek görerek hangi ipuçlarının “Spam” ile birlikte gittiğini kendi kendine öğrenir; kuralı biz yazmayız, o örneklerden çıkarır.
+Özellik vektörü x = [“bedava” geçiyor; link var; aciliyet dili], etiket y = “Spam”. Denetimli öğrenmede model bu (x, y) çiftlerinden f(x) ≈ y eşlemesini, yani P(spam | x) gibi bir karar kuralını kestirmeye çalışır. ||| Özellik vektörü x = [“bedava” geçiyor; link veya şifre isteği; aciliyet dili], etiket y = “Spam”. Denetimli öğrenmede model bu (x, y) çiftlerinden f(x) ≈ y eşlemesini, yani P(spam | x) gibi bir karar kuralını kestirmeye çalışır.
+Basit ayrım: çıktı bir sayıysa regresyon, çıktı bir etiketse sınıflandırma. Ev fiyatı bir sayı, spam kararı bir etikettir. ||| Basit ayrım: model bir miktar tahmin ediyorsa regresyon, bir kategori seçiyorsa sınıflandırma. Ev fiyatı bir miktardır; spam kararı bir kategoridir, kategoriler sayıyla kodlansa bile.
+İki temel iş var. Regresyon bir sayı tahmin eder: noktaların tam ortasından geçen, hepsine en az uzaklıkta duran “en iyi doğru”yu çizeriz. Sınıflandırma ise bir grubu ötekinden ayıran bir sınır çeker. ||| İki temel iş var. Regresyon bir sayı tahmin eder: noktaların arasından geçen “en iyi doğru”yu çizeriz; en iyi doğru, her noktanın aynı x’teki dikey farkının karelerini topladığımızda bu toplamı en küçük yapan doğrudur. Sınıflandırma ise bir grubu ötekinden ayıran bir sınır çeker.
+Aşağıdaki noktaların hiçbir etiketi yok. “Grupla”ya bas; makine onları benzerliğe göre iki kümeye ayırsın, hiçbirine uymayan aykırı noktayı da işaretlesin. ||| Aşağıdaki noktaların hiçbir etiketi yok. “Grupla”ya bas; makine onları en yakın merkeze göre iki kümeye ayırsın. İki kümeye de uzak kalan nokta aykırı diye işaretlenir.
+Denetimsiz öğrenmenin gücü: kimse “bunlar bir grup” demeden makine yapıyı kendisi bulur. Bankaların dolandırıcılık tespiti büyük ölçüde anomali bulmaya dayanır. ||| Denetimsiz öğrenmenin gücü: kimse “bunlar bir grup” demeden makine yapıyı kendisi bulur. Aykırılık tespiti, bankaların dolandırıcılık analizinde kullandığı araçlardan biridir.
+Aşağıdaki demo, noktaları iki sabit merkeze en yakınlıklarına göre atayarak k-means’in “atama” adımını gösterir; ayrıca her iki kümeye de uzak duran bir aykırı noktayı vurgular. Gerçek k-means, merkezleri yakınsayana dek iteratif olarak günceller. ||| Aşağıdaki demo, noktaları iki sabit merkeze en yakınlıklarına göre atayarak k-means’in “atama” adımını gösterir; ayrıca her iki kümeye de uzak duran bir aykırı noktayı vurgular. Gerçek k-means, merkezleri yakınsayana dek iteratif olarak günceller. Bu gösterimde küme merkezleri ve aykırı nokta önceden seçilmiştir; gerçek uygulamada aykırılık bir yöntem ve eşikle hesaplanır.
+Öğrenmenin özü bu: “ne kadar yanlışım?” diye sor, biraz düzelt ve tekrarla; hem de milyonlarca kez. Sinir ağları da dahil neredeyse bütün modern YZ böyle eğitiliyor. ||| Öğrenmenin özü bu: “ne kadar yanlışım?” diye sor, biraz düzelt ve tekrarla; hem de milyonlarca kez. Sinir ağları başta olmak üzere bugünün modellerinin çoğu böyle, gradyanla eğitiliyor; karar ağaçları gibi bazı yöntemlerse başka yoldan öğrenir.
+Öğrenme oranı işin en hassas ayarıdır: çok küçükse yakınsama yavaşlar; çok büyükse minimumun etrafında salınabilir ya da ıraksayabilir. Aşağıdaki demoda dışbükey bir kayıp eğrisinde inişi ve büyük öğrenme oranının nasıl aşıma (overshoot) yol açtığını gözlemle. Pratikte yüzeyler dışbükey değildir ve genelde stokastik gradyan inişi kullanılır. ||| Öğrenme oranı işin en hassas ayarıdır: çok küçükse yakınsama yavaşlar; çok büyükse minimumun etrafında salınabilir ya da ıraksayabilir. Aşağıdaki demoda dışbükey bir kayıp eğrisinde inişi ve büyük öğrenme oranının nasıl aşıma (overshoot) yol açtığını gözlemle. Derin ağların kayıp yüzeyleri genellikle dışbükey değildir ve eğitimde stokastik gradyan inişi gibi gradyan tabanlı yöntemler yaygındır; doğrusal regresyon gibi bazı modellerin kaybı dışbükeydir, ağaç tabanlı yöntemler gibi bazıları ise gradyan kullanmaz.
+Topluluk öğrenmesi (ensemble), birçok modelin tahminini birleştirerek (oylama, bagging, boosting) tek bir modelden daha iyi ve daha kararlı sonuç elde eder; rastgele orman (random forest) ve gradyan artırma (gradient boosting) en bilinen örneklerdir. ||| Topluluk öğrenmesi (ensemble), birçok modelin tahminini birleştirir (oylama, bagging, boosting); hataları birbirini tamamlıyorsa genelleme iyileşebilir, ama her tekil modelden daha iyi sonuç garanti edilmez ve kazanç doğrulama verisiyle ölçülür. Rastgele orman (random forest) ve gradyan artırma (gradient boosting) en bilinen örneklerdir.
+Aynı veriye üç ayrı model uyduruyoruz. Çok basit olan örüntüyü ıskalar (eksik uyum); aşırı karmaşık olan her noktayı ezberler ama yeni veride şaşırır (aşırı uyum). En iyisi tam ortadakidir: daha önce hiç görmediği örnekleri de doğru tahmin edebilen model. ||| Aynı veriye üç ayrı model uyduruyoruz. Çok basit olan örüntüyü ıskalar (eksik uyum); aşırı karmaşık olan her noktayı ezberler ama yeni veride şaşırır (aşırı uyum). En iyisi ikisinin arasındadır: daha önce hiç görmediği örnekleri de doğru tahmin edebilen model. Bu eğriler fikri gösterir; hangisinin iyi genellediğini ancak eğitimde kullanılmamış veride ölçülen hata söyler.
 -->
 
 <!-- REDAKSİYON NOTLARI
@@ -362,4 +375,7 @@ Aynı veriye üç ayrı model uyduruyoruz. Çok basit olan örüntüyü ıskalar
 - Yazar kararı (2026-09-10): kaynak metin dahil tüm "demo" sözcükleri "gösterim" ya da "Şekil N.j" yapıldı; "Aşağıdaki demo" → şekil öncesinde "Aşağıda yer alan gösterim (Şekil N.j)", sonrasında "Şekil N.j'teki gösterim".
 - Yazar kararı (2026-09-10, figürler): ekran renkleri (yeşil/kırmızı/mavi/mor) duotone baskıya göre 'koyu/gri' ve 'turuncu' yapıldı; figür düzeni tarifleri ('kendi rengi', 'yanında rolü', 'ok çekmen') figürlerle eşleştirildi.
 - 2026-09-30 insanlaştırma geçişi: "Peki …?" köprüleri, "tam olarak/tam bu/işte", "Kısaca", "unutma", "aslında … ibaret" çivileri ve "ezberlemez, kavrar" / "ne kadar? – hangisi?" / banka tekrarları azaltıldı; Şekil 3.2 Kurulum'daki meta ve cevap dağılımını ele veren cümle silindi; "kenar notundaki/teknik metindeki" iç göndermeler kaldırıldı; iki nokta sonrası küçük harf; teknik "Ne oluyor" tekrarları (3.3, 3.4, 3.5) kırpıldı. Değişen kaynak paragraflar yukarıdaki SOURCE-CHANGES bloğunda (19 satır); dijital sürüme taşınacak.
+- 2026-10-01 düzeltme belgesi (R017, R018, R019, R020, R021, R022, R023, R024, R068, R093): özellik adı her yerde “link veya şifre isteği” (3.2 basit, tablo, Kurulum, teknik vektör, cevaplar); sayı=regresyon genellemesi miktar/kategori ayrımıyla düzeltildi (3.2 teknik, 3.4 kenar notu, kalanlar, cevaplar 3.2/4); en küçük karelerde dikey artık kareleri açıkça adlandırıldı (3.3 Adım adım 3–4, Ne oluyor, teknik; toplamlar 0.22 / 0.37 dikey artıklarla yeniden doğrulandı); Şekil 3.4’te merkezler ve aykırı nokta önceden seçili, eşik 2.4 ve işlem sırası (atama → eşik → güncelleme) tanımlandı, “standart k-means 11. noktayı A’ya atar, A = (2.68, 7.42)” notu eklendi (Kurulum, Adım adım, teknik, cevaplar); banka/anomali genellemesi daraltıldı; 3.6 kenar notu ve teknik “bütün YZ gradyanla / bütün yüzeyler” koşullandı; topluluk garantisi kaldırıldı; Şekil 3.6 orta panel “Daha düzgün temsili eğri”, hüküm metni ve doğrulama verisi uyarısı, çapraz doğrulama k-katlı tanımı; cevaplar Şekil 3.3: 0.55 · 6.5 = 3.575; 3.575 + 0.76 = 4.335 ≈ 4.34, “önceki dokuz nokta”, güven yorumu kalibrasyon koşuluyla; Şekil 3.1 cevap 3 ikinci kural “‘Bedava’ geçiyorsa ya da link veya şifre isteği varsa Spam”. Değişen kaynak paragraflar yukarıdaki SOURCE-CHANGES bloğunun sonundaki 13 satırda.
+- 2026-10-01 R021: dijital gösterimdeki “Yüksek” öğrenme oranı demo-kod ajanı tarafından 4.6 yapıldı; basılı Şekil 3.5 tablosu (η = 4.6: 0.60 → 7.89 → 3.11 → 6.24 → 4.19 → 5.53 → 4.65) ve Kendin dene’deki η = 6 ıraksama örneği korundu; kaynak “salınır / aşım” cümleleri artık dijitalde de doğru. Yukarıdaki 0.92 notu tarihçedir.
+- 2026-10-01 figür ajanına: Şekil 3.6 orta panel etiketi “İyi (dengeli)” → “Daha düzgün temsili eğri”, hüküm metni “Yanlılık-varyans dengesi: ne örüntüyü kaçıracak kadar basit ne gürültüyü ezberleyecek kadar karmaşık.”; Şekil 3.4 lejandı/altyazısı isterse “merkezler ve aykırı önceden seçili” notu alabilir.
 -->

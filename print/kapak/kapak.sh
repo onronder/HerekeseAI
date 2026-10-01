@@ -18,7 +18,7 @@ for(const p of d.getPages()){const {x,y,width,height}=p.getMediaBox(); p.setBlee
 fs.writeFileSync('out/kapak-boxed.pdf', await d.save());})();
 EOJ
 GSICC="$(find /opt/homebrew /usr/local /usr/share -name default_cmyk.icc 2>/dev/null | head -1)"
-if [ -n "$ICC" ]; then PROF="$ICC"; COND="$(basename "$ICC" .icc)"; CID="FOGRA39"; else PROF="$GSICC"; COND="Ghostscript default CMYK (matbaa profili ile değiştirilecek)"; CID="Custom"; fi
+if [ -n "$ICC" ]; then PROF="$ICC"; COND="$(basename "$ICC" .icc)"; CID="FOGRA39"; else PROF="$GSICC"; COND="Ghostscript default CMYK (printer profile pending)"; CID="Custom"; fi
 TITLE_HEX=$(python3 -c 'import sys; print(sys.argv[1].encode("utf-16-be").hex().upper())' "$TITLE")
 sed -e "s|ICCPROFILE|($PROF)|" -e "s|OUTPUTCONDITIONID|$CID|" -e "s|OUTPUTCONDITION|$COND|" -e "s|TITLEHEX|$TITLE_HEX|" ../typeset/PDFX_def.ps > out/PDFX_def.ps
 gs -q -dBATCH -dNOPAUSE -dNOSAFER -dPDFX -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress \

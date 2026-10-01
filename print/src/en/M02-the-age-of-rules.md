@@ -16,7 +16,7 @@ This approach is called “classical” or “symbolic” AI. Logic, rules, sear
 
 Classical AI (symbolic AI, or GOFAI, short for “Good Old-Fashioned AI”) treats intelligence as rule-based manipulation of formal symbols. The core assumption: knowledge about the world can be represented explicitly, and reasoning can run as logical operations over those representations.
 
-This paradigm dominated from the 1950s to the 1980s and produced powerful tools such as logic programming, search algorithms and expert systems. This chapter builds them up, then shows why the “knowledge-acquisition bottleneck” and brittleness drove the shift to statistical, learning approaches (Chapter 3).
+This paradigm dominated from the 1950s to the 1980s and produced powerful tools such as logic programming, search algorithms and expert systems. This chapter builds them up, then shows why the “knowledge-acquisition bottleneck” and brittleness increased interest in learning-based approaches (Chapter 3) that were already being studied.
 
 Start with the most basic question of all: how does a machine know that Tom is a cat?
 
@@ -31,7 +31,7 @@ The best part is that the machine follows those links and reaches facts nobody e
 **Figure 2.1 · Inference along a knowledge chain**
 ![Figure 2.1](../../figures/out/en/figure-2-1-chain.svg)
 
-*Setup.* The figure shows five boxes in a single row: Tom, Cat, Mammal, Animal, Living thing. Every arrow between two boxes means “is a”: Tom is a Cat, a Cat is a Mammal, and so on. These four arrows are the machine’s entire knowledge; it knows nothing else. Under the chain are four queries; for each one the machine walks the chain from the start and states its verdict.
+*Setup.* The figure shows five boxes in a single row: Tom, Cat, Mammal, Animal, Living thing. Every arrow between two boxes means “is a”: Tom is a Cat, a Cat is a Mammal, and so on. The first arrow ties an individual to its class: Tom is an instance of the class Cat. The other arrows tie a class to a larger class: Cat is a subclass of Mammal. The figure draws both with the same arrow. These four arrows are the machine’s entire knowledge; it knows nothing else. Under the chain are four queries; for each one the machine walks the chain from the start and states its verdict.
 
 *Step by step.* Follow the query “Is Tom a Mammal?” first.
 
@@ -68,11 +68,11 @@ The verdict is “Unknown,” not “No.” The machine does not claim that Tom 
 
 In symbolic AI, knowledge is encoded via knowledge representation: semantic networks, frames, ontologies or logical propositions. Entities and their relations (e.g. is-a, has-a) are defined explicitly.
 
-Inference is the application of rules over these representations. The demonstration in Figure 2.1 uses transitivity in an is-a hierarchy: if “Tom is-a Cat” and “Cat is-a Mammal,” then “Tom is-a Mammal” can be derived. This is the essence of symbolic reasoning.
+Inference is the application of rules over these representations. The demonstration in Figure 2.1 uses transitivity in an is-a hierarchy. An ontology keeps two links apart: Tom is an instance of the class Cat (instance-of); Cat is a subclass of Mammal (subclass-of). If “Tom instance-of Cat” and “Cat subclass-of Mammal,” then “Tom instance-of Mammal” is derived, so Tom is a mammal. The figure draws both links as one arrow type, “is a.” This is the essence of symbolic reasoning.
 
 The knowledge base contains only consecutive “is-a” links. For each query the inference engine follows the chain using the transitivity rule: if the target is in the chain, “Yes”; otherwise, “Unknown.”
 
-Written formally, the transitivity rule reads: is-a(A, B) ∧ is-a(B, C) → is-a(A, C). The engine applies this rule over and over along the chain; on a five-node chain it either reaches the target or runs off the end within four steps.
+Written formally, the transitivity rule between classes reads: subclass-of(A, B) ∧ subclass-of(B, C) → subclass-of(A, C). For an instance: instance-of(a, B) ∧ subclass-of(B, C) → instance-of(a, C). The engine applies this rule over and over along the chain; on a five-node chain it either reaches the target or runs off the end within four steps.
 
 The chain only ever followed “is a” links. Getting from what a machine knows to what it should do takes another kind of sentence: if it is raining, then what?
 
@@ -125,7 +125,7 @@ Finding the way out of a maze, picking a chess move, plotting a route through to
 
 The most patient method is trying every possibility one by one, but that can be terribly slow. A heuristic takes a shortcut: it guesses “which direction looks more promising?” Figure 2.3 races the two: the uninformed one scans everywhere; the informed one points its nose at the goal.
 
-> **Margin note.** Heuristics buy speed, but at a price: they can sometimes miss the best solution. They prefer “good enough” over “perfect.”
+> **Margin note.** Greedy heuristics buy speed, but at a price: they can sometimes miss the best solution. They prefer “good enough” over “perfect.” More careful methods such as A* win the guarantee back with a suitable heuristic.
 
 **Figure 2.3 · Pathfinding: uninformed vs informed**
 ![Figure 2.3](../../figures/out/en/figure-2-3-grid.svg)
@@ -137,9 +137,9 @@ The most patient method is trying every possibility one by one, but that can be 
 1. It starts at S and queues S’s neighbors; first in, first out.
 2. It spreads in rings: cells one step from S, then two, then three. With no sense of direction, it scans the left corridor, the bottom row and the middle corridor alike.
 3. It stops when G leaves the queue. The counter reads 36 cells explored, 36 of the 37 empty cells; only column 8, row 4 was never touched.
-4. The path is read backward: 19 cells (S and G included), that is, 18 steps. This is the shortest path possible.
+4. The path is read backward: 19 cells (S and G included), that is, 18 steps. This is the path with the fewest steps possible; since every step on the grid costs the same, it is the cheapest path too.
 
-Informed search (greedy):
+Greedy informed search:
 
 1. It scores every cell by its street distance to the goal: column difference plus row difference. For S, 7 + 5 = 12.
 2. It always takes the lowest-scoring cell from the queue. It goes down the left corridor, passes under the first barrier and reaches column 4.
@@ -150,23 +150,23 @@ Informed search (greedy):
 | Method | Cells explored | Path (cells) |
 |---|---|---|
 | Uninformed (BFS) | 36 | 19 |
-| Informed (greedy) | 24 | 19 |
+| Greedy informed | 24 | 19 |
 
-The informed search visited a third fewer cells and still found the shortest path. That is luck, not a guarantee: a low-scoring dead end cost it five cells, and a more devious maze could mean a long detour. BFS’s 36 cells are the price of the guarantee.
+The greedy search visited a third fewer cells and still found the shortest path. That is luck, not a guarantee: a low-scoring dead end cost it five cells, and a more devious maze could mean a long detour. BFS’s 36 cells are the price of the guarantee. A*, which adds the distance already traveled to the score, keeps both the guarantee and the savings with the same heuristic.
 
-*What is happening?* You are racing two searchers. The uninformed one patiently scans in every direction; it finds the shortest path in the end but visits many squares. The informed one always runs toward the goal; it visits few squares but sometimes misses the shortest path. That is the trade-off between speed and guarantee.
+*What is happening?* You are racing two searchers. The uninformed one patiently scans in every direction; when every step costs the same, it finds the path with the fewest steps in the end, but it visits many squares. The greedy informed one always runs toward the goal; it visits few squares but sometimes misses the shortest path. That is the trade-off between speed and guarantee; methods such as A* win the guarantee back by counting the distance already traveled.
 
 *Try it yourself.* 1) Score two cells: column 4, row 2 and column 1, row 6. Which looks closer to the goal? Which one is on the path? 2) S scores 12, but the shortest path is 18 steps. Where does the difference come from? 3) Remove the wall in column 5, row 6: how many steps is the shortest path now? Live demo: [QR 2.3]
 
 #### Technical depth
 
-Many classical AI problems are modeled as state-space search. Uninformed search, such as breadth-first search (BFS), scans systematically without any direction information and guarantees the shortest path, but expands many nodes.
+Many classical AI problems are modeled as state-space search. Uninformed search, such as breadth-first search (BFS), scans systematically without any direction information; when all edges have the same cost it guarantees a minimum-step and therefore minimum-cost path, but it expands many nodes. Unequal edge costs require a different method.
 
-Informed search estimates closeness to the goal with a heuristic function h(n); greedy best-first uses only h (fast but no optimality guarantee), while A* balances optimality and efficiency with g(n)+h(n) (if h is admissible). In Figure 2.3, compare how many cells BFS and heuristic search each explore.
+Informed search estimates closeness to the goal with a heuristic function h(n); greedy best-first uses only h (fast but no optimality guarantee), while A* uses g(n)+h(n): with an admissible h (one that never exceeds the true distance) it finds the shortest path in tree search; graph search also needs h to be consistent, or nodes reached by a better path to be reopened. In Figure 2.3, compare how many cells BFS and heuristic search each explore.
 
 BFS (uninformed) expands layer by layer with a FIFO queue and guarantees the shortest path on an equal-cost grid. Informed (greedy best-first) search picks the node minimizing the Manhattan distance h(n) to the goal; it opens far fewer cells but does not guarantee the shortest path.
 
-On this grid, with zero-based coordinates, h(n) = |x − 7| + |y − 5|. Results: BFS expanded 36 nodes, greedy search 24; both found the 18-step shortest path. Because h never exceeds the true distance at any node (it is admissible), A* with the same h also finds the shortest path and usually expands fewer nodes than BFS.
+On this grid, with zero-based coordinates, h(n) = |x − 7| + |y − 5|. Results: BFS expanded 36 nodes, greedy search 24; both found the 18-step shortest path. Because h never exceeds the true distance at any node (it is admissible) and changes by at most 1 between neighboring cells (it is consistent), A* with the same h also finds the shortest path in graph search and usually expands fewer nodes than BFS.
 
 Search assumed that the world is certain: a wall is a wall, and the goal stays where it is. Tomorrow’s weather offers no such certainty, and knowledge that is not certain needs a different tool.
 
@@ -176,12 +176,12 @@ Strict rules stumble in the real world, because the world is uncertain. “If it
 
 Classical AI found an elegant answer: move from state to state by probability. The Markov chain is the most famous example: a weather game played with a loaded die. The table under Figure 2.4 holds a seven-day example: follow the weather there as it changes according to its odds.
 
-> **Margin note.** The Markov property: “the future depends only on the present; how you got here doesn’t matter.” It looks simple, yet it is everywhere, from weather to Google search.
+> **Margin note.** The Markov property: “given the present, the future does not depend on the earlier past; how you got here doesn’t matter.” It looks simple, yet it is everywhere, from weather to Google search.
 
 **Figure 2.4 · A weather Markov chain**
 ![Figure 2.4](../../figures/out/en/figure-2-4-markov.svg)
 
-*Setup.* The figure shows three state boxes, Sunny, Cloudy and Rainy, joined by arrows; the number on each arrow is the chance of that move, in percent. Next to them the same numbers form the transition matrix: rows are today, columns are tomorrow.
+*Setup.* The figure shows three state boxes, Sunny, Cloudy and Rainy, joined by arrows; the number on each arrow is the chance of that move, in percent. Next to them the same numbers form the transition matrix: rows are today, columns are tomorrow; every row adds up to 100.
 
 | today \ tomorrow | Sunny | Cloudy | Rainy |
 |---|---|---|---|
@@ -205,7 +205,7 @@ Now a seven-day chain. The live demo draws the numbers at random; the seven draw
 
 After seven days the tally is three sunny, two cloudy, two rainy: 43 / 29 / 29 percent. Moving to rain on day 4, the machine never looked at the three days before; “today is cloudy” and the number 91 were enough.
 
-Finally, the long run. Seven days is not much; after hundreds of days the shares settle, and you can find them without any die. Let the long-run shares be S (sunny), C (cloudy), R (rainy). A sunny day arrives by three routes: after sun (0.7·S), after cloud (0.3·C), after rain (0.2·R). If the shares are steady, that sum must again be S:
+Finally, the long run. Seven days is not much; because every state can be reached from every other in this chain, after hundreds of days the shares settle, whatever the starting day, and you can find them without any die. Let the long-run shares be S (sunny), C (cloudy), R (rainy). A sunny day arrives by three routes: after sun (0.7·S), after cloud (0.3·C), after rain (0.2·R). If the shares are steady, that sum must again be S:
 
 S = 0.7·S + 0.3·C + 0.2·R  
 C = 0.2·S + 0.4·C + 0.4·R  
@@ -213,19 +213,24 @@ R = 0.1·S + 0.3·C + 0.4·R, and S + C + R = 1.
 
 Solution: S = 6/13, C = 4/13, R = 3/13; about 46 / 31 / 23 percent. Check: 0.7·6 + 0.3·4 + 0.2·3 = 4.2 + 1.2 + 0.6 = 6. Run the live demo long enough and its bars sway around these numbers.
 
-*What is happening?* Tomorrow’s weather is predicted by looking only at today; yesterday doesn’t matter. Each day rolls a die, but the die is loaded: after a sunny day, more sun is likely. As the days pile up, the shares settle into the same proportions every time.
+*What is happening?* Tomorrow’s weather is predicted by looking only at today; once today is known, yesterday doesn’t matter. Each day rolls a die, but the die is loaded: after a sunny day, more sun is likely. As the days pile up, the shares settle into the same proportions every time.
 
 *Try it yourself.* 1) Today is rainy and the number drawn is 35: what is tomorrow’s weather? 2) Today is sunny. What is the chance of rain two days from now? Hint: work out tomorrow’s three possibilities separately, then add them. 3) If the Sunny row became 90 / 5 / 5, which way would the long-run split move? Guess first, then check with the first equation. Live demo: [QR 2.4]
 
 #### Technical depth
 
-Probabilistic models are used to reason under uncertainty. A Markov chain is a stochastic process where the next state depends only on the current state (the Markov property: independence from history); transitions are defined by a probability matrix.
+Probabilistic models are used to reason under uncertainty. A Markov chain is a stochastic process where, given the current state, the next state does not depend on earlier history (the Markov property: conditional independence given the present); transitions are defined by a probability matrix whose rows each sum to 1.
 
-Over enough steps the distribution usually converges to a stationary distribution. The idea extends to hidden Markov models, PageRank and the Markov decision processes of reinforcement learning. In Figure 2.4, observe how the long-run distribution forms.
+A finite, irreducible, aperiodic chain converges from any starting state to a unique stationary distribution; the existence of a stationary distribution alone does not guarantee convergence. The idea extends to hidden Markov models, PageRank and the Markov decision processes of reinforcement learning. In Figure 2.4, observe how the long-run distribution forms.
 
 Each new day samples from P’s current row; the transition matrix P itself never changes.
 
-The stationary distribution π solves πP = π and Σπᵢ = 1; for this P, π = (6/13, 4/13, 3/13) ≈ (0.462, 0.308, 0.231). From a sunny start the expected distribution evolves as follows: day 1 (0.70, 0.20, 0.10), day 2 (0.57, 0.26, 0.17), day 3 (0.51, 0.29, 0.20), day 5 (0.47, 0.30, 0.23). Convergence is largely complete within five days; the counter in the demonstration is a sample, so it fluctuates around these values.
+The stationary distribution π solves two equations:
+
+πP = π  
+Σπᵢ = 1
+
+For this P, π = (6/13, 4/13, 3/13) ≈ (0.462, 0.308, 0.231). Every entry of the matrix is positive, so the chain is irreducible and aperiodic; that is why this finite three-state chain converges to the same π from any start. From a sunny start the expected distribution evolves as follows: day 1 (0.70, 0.20, 0.10), day 2 (0.57, 0.26, 0.17), day 3 (0.51, 0.29, 0.20), day 5 (0.47, 0.30, 0.23). Convergence is largely complete within five days; the counter in the demonstration is a sample, so it fluctuates around these values.
 
 Probability loosened the rules a little; but a human still writes the table, the rules and the chain by hand. How much of that load can a person carry? On that question AI researchers split into two camps.
 
@@ -233,7 +238,7 @@ Probability loosened the rules a little; but a human still writes the table, the
 
 For years, AI researchers were split into two rival camps. The “neats” wanted every step proven with clean mathematics. The “scruffies” shrugged: “If it works, it’s good; we’ll find the theory later.”
 
-This quarrel isn’t only history; it continues today. Sort the statements below into the right camp. At the end it will be clear why classical AI hit its wall, and how that collision gave birth to the idea of machines that “learn.”
+This quarrel isn’t only history; it continues today. Sort the statements below into the right camp. At the end it will be clear why classical AI hit its wall, and how that collision raised interest in an idea already under study: machines that “learn.”
 
 > **Margin note.** Classical AI’s lesson: hand-writing all the world’s rules is impossible. The solution? Instead of giving the machine rules, teach it to find them in data itself. That is the next chapter.
 
@@ -248,10 +253,10 @@ This quarrel isn’t only history; it continues today. Sort the statements below
 |---|---|---|---|
 | 1 | Prove everything with formal logic | ☐ | ☐ |
 | 2 | Use working shortcuts, theorize later | ☐ | ☐ |
-| 3 | Mathematical rigour is essential | ☐ | ☐ |
+| 3 | Mathematical rigor is essential | ☐ | ☐ |
 | 4 | The real world is messy; be flexible | ☐ | ☐ |
 
-The words can mislead: “rigour” and “prove” come from one camp, “shortcuts” and “flexible” from the other, but the test is the attitude. Does the speaker want it proven first, or working first? The first is Neat, the second Scruffy. Answers and reasons are at the back of the book.
+The words can mislead: “rigor” and “prove” come from one camp, “shortcuts” and “flexible” from the other, but the test is the attitude. Does the speaker want it proven first, or working first? The first is Neat, the second Scruffy. Answers and reasons are at the back of the book.
 
 *What is happening?* Two camps, two personalities: neats want every step proven with mathematics; scruffies say “make it work first, theory comes later.” Both turned out right in places; today’s AI is a blend of the two.
 
@@ -261,9 +266,9 @@ The words can mislead: “rigour” and “prove” come from one camp, “short
 
 The “neat” vs “scruffy” distinction (attributed to Roger Schank) names a methodological tension in AI: between formal, provable, principled approaches (neats; logic and probability theory, for instance) and heuristic, engineering-driven, empirical ones (scruffies).
 
-Classical symbolic AI hit two fundamental limits: the knowledge-acquisition bottleneck (hand-writing every rule doesn’t scale) and brittleness (collapsing on unforeseen cases). These limits accelerated the shift to statistical AI (Chapter 3), which learns from data instead of hand-coding knowledge.
+Classical symbolic AI hit two fundamental limits: the knowledge-acquisition bottleneck (hand-writing every rule doesn’t scale) and brittleness (collapsing on unforeseen cases). These limits increased interest in learning-based methods that were already being studied; symbolic and learning-based approaches developed alongside one another (Rosenblatt’s perceptron dates from 1958). That is how the shift to statistical AI (Chapter 3), which learns from data instead of hand-coding knowledge, picked up speed.
 
-Classical AI’s wall, in two words: the knowledge-acquisition bottleneck and brittleness.
+Classical AI’s wall, in two ideas: the knowledge-acquisition bottleneck and brittleness.
 
 The quarrel proved both camps partly right; the next chapter tells how. First, six questions.
 
@@ -282,7 +287,7 @@ The quarrel proved both camps partly right; the next chapter tells how. First, s
    c) A rule (IF-THEN)
    d) A dataset
 
-3. Key property of heuristic methods?
+3. Key property of greedy heuristic search?
    a) They always guarantee the optimal solution
    b) They guess at random
    c) They learn from data
@@ -309,12 +314,12 @@ The quarrel proved both camps partly right; the next chapter tells how. First, s
 ### What to keep from this chapter
 
 - Classical AI stores knowledge as explicit symbols and hand-written rules.
-- An “is a” chain derives facts nobody wrote down, thanks to transitivity; for anything not in the chain it says “unknown.”
+- An “is a” chain (instance to class, class to larger class) derives facts nobody wrote down, thanks to transitivity; for anything not in the chain it says “unknown.”
 - An expert system fires the IF-THEN rules that match the facts that are on; one rule’s result can trigger another rule.
-- Uninformed search guarantees the shortest path but visits many cells; informed search visits fewer but gives no guarantee.
-- In a Markov chain tomorrow depends only on today, and in the long run the distribution settles at a fixed ratio.
+- On an equal-cost grid, uninformed search guarantees the path with the fewest steps but visits many cells; greedy informed search visits fewer but gives no guarantee; A* combines the two with an admissible heuristic.
+- In a Markov chain, once today is known, tomorrow does not depend on the earlier past; in a finite chain where every state can be reached and no cycle locks in, the long-run distribution settles at one fixed ratio.
 - Neats want proof first, scruffies want results first; modern AI took something from each.
-- Hand-writing rules does not scale and is brittle; the way out is learning the rules from data.
+- Hand-writing rules does not scale and is brittle; these limits raised interest in the learning research that ran alongside the symbolic era.
 
 <!-- SOURCE-CHANGES
 This approach is called “classical” or “symbolic” AI. Logic, rules, search and expert systems were that era’s toolbox. We are visiting it now: How did these ideas work, what did they achieve, and why did they one day hit a wall? You will try every bit of it with your own hands. ||| This approach is called “classical” or “symbolic” AI. Logic, rules, search and expert systems were that era’s toolbox. This chapter visits it: how did these ideas work, what did they achieve, and why did they one day hit a wall? You will try every bit of it with your own hands.
@@ -335,6 +340,21 @@ This quarrel isn’t just history; it continues today. Sort the statements below
 Classical AI’s lesson: hand-writing all the world’s rules is impossible. The solution? Instead of giving the machine rules, teach it to find them in data itself. That is exactly what the next chapter is about. ||| Classical AI’s lesson: hand-writing all the world’s rules is impossible. The solution? Instead of giving the machine rules, teach it to find them in data itself. That is the next chapter.
 Two camps, two personalities: neats want every step proven with mathematics; scruffies say “make it work first, theory comes later.” Both turned out right in places; today’s AI is really a blend of the two. ||| Two camps, two personalities: neats want every step proven with mathematics; scruffies say “make it work first, theory comes later.” Both turned out right in places; today’s AI is a blend of the two.
 This is a methodological tension in AI: principled/provable approaches (neat: logic, probability) versus empirical/engineering-driven ones (scruffy). Classical AI’s wall: the knowledge-acquisition bottleneck and brittleness. ||| Classical AI’s wall, in two words: the knowledge-acquisition bottleneck and brittleness.
+Classical AI’s wall, in two words: the knowledge-acquisition bottleneck and brittleness. ||| Classical AI’s wall, in two ideas: the knowledge-acquisition bottleneck and brittleness.
+This paradigm dominated from the 1950s to the 1980s and produced powerful tools such as logic programming, search algorithms and expert systems. This chapter builds them up, then shows why the “knowledge-acquisition bottleneck” and brittleness drove the shift to statistical, learning approaches (Chapter 3). ||| This paradigm dominated from the 1950s to the 1980s and produced powerful tools such as logic programming, search algorithms and expert systems. This chapter builds them up, then shows why the “knowledge-acquisition bottleneck” and brittleness increased interest in learning-based approaches (Chapter 3) that were already being studied.
+Inference is the application of rules over these representations. The demo below uses transitivity in an is-a hierarchy: if “Tom is-a Cat” and “Cat is-a Mammal,” then “Tom is-a Mammal” can be derived. This is the essence of symbolic reasoning. ||| Inference is the application of rules over these representations. The demo below uses transitivity in an is-a hierarchy. An ontology keeps two links apart: Tom is an instance of the class Cat (instance-of); Cat is a subclass of Mammal (subclass-of). If “Tom instance-of Cat” and “Cat subclass-of Mammal,” then “Tom instance-of Mammal” is derived, so Tom is a mammal. The demo draws both links as one arrow type, “is a.” This is the essence of symbolic reasoning.
+Heuristics buy speed, but at a price: they can sometimes miss the best solution. They prefer “good enough” over “perfect.” ||| Greedy heuristics buy speed, but at a price: they can sometimes miss the best solution. They prefer “good enough” over “perfect.” More careful methods such as A* win the guarantee back with a suitable heuristic.
+You are racing two searchers. The uninformed one patiently scans in every direction; it finds the shortest path in the end but visits many squares. The informed one always runs toward the goal; it visits few squares but sometimes misses the shortest path. That is the trade-off between speed and guarantee. ||| You are racing two searchers. The uninformed one patiently scans in every direction; when every step costs the same, it finds the path with the fewest steps in the end, but it visits many squares. The greedy informed one always runs toward the goal; it visits few squares but sometimes misses the shortest path. That is the trade-off between speed and guarantee; methods such as A* win the guarantee back by counting the distance already traveled.
+Many classical AI problems are modeled as state-space search. Uninformed search, such as breadth-first search (BFS), scans systematically without any direction information and guarantees the shortest path, but expands many nodes. ||| Many classical AI problems are modeled as state-space search. Uninformed search, such as breadth-first search (BFS), scans systematically without any direction information; when all edges have the same cost it guarantees a minimum-step and therefore minimum-cost path, but it expands many nodes. Unequal edge costs require a different method.
+Informed search estimates closeness to the goal with a heuristic function h(n); greedy best-first uses only h (fast but no optimality guarantee), while A* balances optimality and efficiency with g(n)+h(n) (if h is admissible). Below, compare how many cells BFS and heuristic search each explore. ||| Informed search estimates closeness to the goal with a heuristic function h(n); greedy best-first uses only h (fast but no optimality guarantee), while A* uses g(n)+h(n): with an admissible h (one that never exceeds the true distance) it finds the shortest path in tree search; graph search also needs h to be consistent, or nodes reached by a better path to be reopened. Below, compare how many cells BFS and heuristic search each explore.
+Key property of heuristic methods? ||| Key property of greedy heuristic search?
+The Markov property: “the future depends only on the present; how you got here doesn’t matter.” It looks simple, yet it is everywhere, from weather to Google search. ||| The Markov property: “given the present, the future does not depend on the earlier past; how you got here doesn’t matter.” It looks simple, yet it is everywhere, from weather to Google search.
+Tomorrow’s weather is predicted by looking only at today; yesterday doesn’t matter. Each press rolls a die, but the die is loaded: after a sunny day, more sun is likely. As the days pile up, watch the bars below settle into the same proportions every time. ||| Tomorrow’s weather is predicted by looking only at today; once today is known, yesterday doesn’t matter. Each press rolls a die, but the die is loaded: after a sunny day, more sun is likely. As the days pile up, watch the bars below settle into the same proportions every time.
+Probabilistic models are used to reason under uncertainty. A Markov chain is a stochastic process where the next state depends only on the current state (the Markov property: independence from history); transitions are defined by a probability matrix. ||| Probabilistic models are used to reason under uncertainty. A Markov chain is a stochastic process where, given the current state, the next state does not depend on earlier history (the Markov property: conditional independence given the present); transitions are defined by a probability matrix whose rows each sum to 1.
+Over enough steps the distribution usually converges to a stationary distribution. The idea extends to hidden Markov models, PageRank and the Markov decision processes of reinforcement learning. In the demo, observe how the long-run distribution forms. ||| A finite, irreducible, aperiodic chain converges from any starting state to a unique stationary distribution; the existence of a stationary distribution alone does not guarantee convergence. The idea extends to hidden Markov models, PageRank and the Markov decision processes of reinforcement learning. In the demo, observe how the long-run distribution forms.
+This quarrel isn’t only history; it continues today. Sort the statements below into the right camp. At the end it will be clear why classical AI hit its wall, and how that collision gave birth to the idea of machines that “learn.” ||| This quarrel isn’t only history; it continues today. Sort the statements below into the right camp. At the end it will be clear why classical AI hit its wall, and how that collision raised interest in an idea already under study: machines that “learn.”
+Classical symbolic AI hit two fundamental limits: the knowledge-acquisition bottleneck (hand-writing every rule doesn’t scale) and brittleness (collapsing on unforeseen cases). These limits accelerated the shift to statistical AI (Chapter 3), which learns from data instead of hand-coding knowledge. ||| Classical symbolic AI hit two fundamental limits: the knowledge-acquisition bottleneck (hand-writing every rule doesn’t scale) and brittleness (collapsing on unforeseen cases). These limits increased interest in learning-based methods that were already being studied; symbolic and learning-based approaches developed alongside one another (Rosenblatt’s perceptron dates from 1958). That is how the shift to statistical AI (Chapter 3), which learns from data instead of hand-coding knowledge, picked up speed.
+Mathematical rigour is essential ||| Mathematical rigor is essential
 -->
 
 <!-- EDITORIAL NOTES
@@ -357,5 +377,6 @@ This is a methodological tension in AI: principled/provable approaches (neat: lo
 - Word budget: new text per Figure block (Setup + Step by step + Try it yourself, tables excluded) is 361 / 373 / 435 / 413 / 315 words. Figure 2.3 (two search walkthroughs on the 11-wall grid) and Figure 2.4 (die, seven-day chain, stationary derivation; the 413 includes the three equation lines) follow the Turkish blueprint's content (372 and 329 Turkish words) and were trimmed twice; cutting further would drop blueprint steps. Author may shorten if the page budget requires.
 - Quiz option order is the export's shuffled order, kept exactly; the export draft's Turkish heading "Kendini test et" was replaced by "Test yourself".
 - Margin notes moved after the Simple paragraphs and before the Figure block, as in Chapter 1 and the Turkish edition.
+- 2026-10-01 correction document: R011 (learning not the successor of the symbolic collapse; “already being studied” + parallel development: 2.1 Technical, 2.6 Simple, 2.6 Technical, takeaways), R012 (instance-of / subclass-of kept apart: Setup, 2.2 Technical, formal rule, takeaways; answers/M02), R013 (BFS guarantee tied to equal edge costs: Technical[0], step 4, What is happening, takeaways; quiz 3 question narrowed to greedy search), R014 (greedy and A* separated: margin note, Step-by-step heading and table “Greedy informed”, What is happening, Technical admissibility + consistency/reopening in graph search; answers/M02), R015 (Markov: conditional independence given the present; finite/irreducible/aperiodic chain converges to a unique stationary distribution; rows sum to 1; πP = π and Σπᵢ = 1 on separate lines; margin note, Setup, Step by step, What is happening, Technical, takeaways), R016 (“in two words” → “in two ideas”; “rigour” → “rigor” in the Figure 2.5 table, the Self-test prose and answers/M02; the demo item label is listed in SOURCE-CHANGES for the digital edition), R066 (no bias/embedding usage in Chapters 1–2; nothing to do).
 - 2026-09-30 humanizing pass: report findings applied (M02 :21–:268, answers :33); "On screen … on paper" frames removed from Figures 2.4 and 2.5; "the digital version" → "the live demo"; the ✓/✗ verdict marks dropped and the figure's verdict lines quoted; Figure 2.5 hand-holding cut to the one-sentence test; "exactly", "That is why", "Notice", "Here is the lovely part", "just", "really", "we" removed; Figure 2.4 What is happening now says "the shares" (the EN figure has no bars); technical "What is happening?" trimmed where it repeated the Technical paragraphs (Figures 2.2, 2.4, 2.5). Source paragraph changes are listed in the SOURCE-CHANGES block above for the digital edition.
 -->

@@ -18,7 +18,14 @@ getirildikten sonra `print/assemble.py` ile tek parça kitaba birleştirilir. Ka
   hemen ardından gelen Şekil bloğu bu cümleyi kâğıtta karşılar. Yalnız açıkça anlamsız kalanlar (ör. "Kaydıracı sağa sürükle")
   en az müdahaleyle uyarlanır: "Kaydıracı sağa sürükle" → "Şekil 5.6'daki kareleri soldan sağa izle". Bu tür her uyarlama
   dosya sonundaki `<!-- REDAKSİYON NOTLARI -->` bloğuna satır olarak yazılır ki yazar görsün.
-- Sayılar: formüllerde ve tablolarda ondalık nokta (0.18), düzyazıda Türkçe yazım ("yüzde 40", "iki katına").
+- Sayılar (R095 kararı, 2026-10-01): ondalık ayırıcı düzyazıda, tabloda ve formülde nokta ("0.55", "yüzde 0.4"); virgüllü ondalık yok.
+  Binlik ayırıcı yalnız M01 tablosunda nokta ("2.300"); başka hiçbir yerde binlik ayırıcı kullanılmaz ("1200 sayfa"). Oran farkı "yüzde puan"la
+  yazılır ("80 yüzde puan"), "yüzde 80" değil. Küçük sayılar düzyazıda Türkçe yazım ("yüzde 40", "iki katına"). Kod sabitleri ve formül değişkenleri
+  mekanik olarak değiştirilmez.
+- Yabancı terim ilk geçişte Türkçe karşılığının ardından parantez içinde verilir ("yanlılık (bias)", "vektör gösterimi (embedding)"); sonra yalnız Türkçesi.
+  Aynı sözcüğün farklı kavramları ayrı karşılık alır: nöron için "sabit terim (bias)", toplumsal bağlam için "yanlılık (bias)".
+- Şekil ve karşılaştırma başlıklarında "vs" yok; "ile" ya da "karşı" kullanılır ("Hedef ile niyet", "Üretici ile ayırt edici"). Kaynak metinden gelen
+  "vs"li demo başlıkları (Şekil 2.3, 2.6, 4.6) bu kurala göre uyarlanır ve REDAKSİYON NOTLARI'na yazılır.
 - Formüller kaynaktaki Unicode biçimiyle kalır: θ ← θ − η·∇L(θ). LaTeX yok.
 - Teknik metinde kaynaktaki terimler ve formüller olduğu gibi kalır; yalnız yeni eklenen cümleler doğal akar.
 

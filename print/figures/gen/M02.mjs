@@ -1,12 +1,14 @@
 // Bölüm 2 figürleri — etiketler ve gömülü veriler strings/M02.mjs içinden (S = STRINGS[lang]).
-import { INK, INK2, MUTED, RULE, EMBER, EMBER_SOFT, PAPER, MONO, f1, text, rect, line, circle, svg, caption, num, up } from '../lib.mjs';
+import { INK, INK2, MUTED, RULE, EMBER, EMBER_SOFT, PAPER, MONO, f1, text, rect, line, circle, svg, caption, num, up, wrapW } from '../lib.mjs';
 import STRINGS from '../strings/M02.mjs';
 
 // ---------------------------------------------------------------- 3. Markov zinciri: durum diyagramı + matris
+// R088 (2026-10-01): diyagram aşağı/büyük (cy=96, R=50, r=18): güneşli öz-ilmeğin "70" etiketi şeklin içinde kalır,
+// "Yağmurlu" daireye sığar. R082: tüm okunacak etiketler ≥ 6 (bugün/yarın oku 5 → 6).
 function markovFigure(demo, { lang }) {
   const S = STRINGS[lang].markov;
   const ST = demo.states, M = demo.matrix, n = ST.length;
-  const W = 320, H = 150, cx = 90, cy = 78, R = 46, r = 15;
+  const W = 320, H = 156, cx = 92, cy = 96, R = 50, r = 18;
   const pos = ST.map((_, i) => { const a = -Math.PI / 2 + (i * 2 * Math.PI) / n; return { x: cx + R * Math.cos(a), y: cy + R * Math.sin(a) }; });
   const body = [rect(0, 0, W, H, { fill: PAPER })];
   // geçişler (i≠j): düz ok, çıkış yakınına yüzde etiketi; kalınlık olasılıkla orantılı
@@ -30,9 +32,9 @@ function markovFigure(demo, { lang }) {
     body.push(text(p.x, p.y + 3, ST[i], { size: 7, anchor: 'middle', weight: 600 }));
   });
   // matris
-  const mx = 172, my = 30, cw = 32, ch = 16;
+  const mx = 180, my = 40, cw = 32, ch = 16;
   body.push(caption(mx, my - 9, up(S.matrix, lang)));  // 2026-09-30: Türkçe İ için yerel-duyarlı büyük harf (temel çıktı güncellendi)
-  body.push(text(mx + cw - 2, my + ch - 5, `${S.today} ↓  ${S.tomorrow} →`, { font: MONO, size: 5, fill: MUTED, anchor: 'end' }));
+  body.push(text(mx + cw - 2, my + ch - 5, `${S.today} ↓ ${S.tomorrow} →`, { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
   ST.forEach((s, j) => body.push(text(mx + cw * (j + 1) + cw / 2, my + ch - 5, s, { font: MONO, size: 6, fill: INK2, anchor: 'middle' })));
   ST.forEach((s, i) => {
     body.push(text(mx + cw / 2, my + ch * (i + 1) + ch - 5, s, { font: MONO, size: 6, fill: INK2, anchor: 'middle' }));
@@ -134,38 +136,42 @@ function expertFigure(demo, { lang }) {
   body.push(caption(pad + 26, ry - 3, S.if));
   body.push(caption(pad + 168, ry - 3, S.then));
   const flame = (fx, fy) => `<path d="M${f1(fx)} ${f1(fy + 4)} c-2.2 -2.4 -0.6 -4.6 0.6 -6.2 c0.2 1.6 1.2 2 1.9 1.3 c0.2 -0.8 -0.1 -1.6 -0.4 -2.3 c2.6 1.6 3.3 4.7 1.3 7 c-1 1.1 -2.5 1.1 -3.4 0.2z" fill="${EMBER}"/>`;
+  // R073: "zincir" rozeti kimlik sütununda ayrı satırda (öneri metniyle çakışmaz); öneri metni alev simgesinden önce biter
   R.forEach((r, i) => {
-    const y = ry + 2 + i * (rh + rg), on = A.fired[i];
+    const y = ry + 2 + i * (rh + rg), on = A.fired[i], chained = r.id.includes('⛓');
     body.push(rect(pad, y, cw, rh, { fill: on ? EMBER_SOFT : '#fff', stroke: on ? EMBER : RULE, sw: on ? 1 : 0.6 }));
-    body.push(text(pad + 5, y + rh / 2 + 2.3, r.id.slice(0, 2), { font: MONO, size: 6.5, fill: on ? EMBER : INK2, weight: 700 }));
+    body.push(text(pad + 5, chained ? y + 7 : y + rh / 2 + 2.3, r.id.slice(0, 2), { font: MONO, size: 6.5, fill: on ? EMBER : INK2, weight: 700 }));
+    if (chained) body.push(text(pad + 3, y + rh - 2.5, S.chain, { font: MONO, size: 5.5, fill: on ? EMBER : MUTED, spacing: -0.4 })); // 6.2 pt'de koşul metnine değmesin
     body.push(text(pad + 26, y + rh / 2 + 2.3, plain(r.cond), { size: 6.8, fill: on ? INK : INK2 }));
     body.push(text(pad + 158, y + rh / 2 + 2.3, '→', { font: MONO, size: 7, fill: on ? EMBER : MUTED, anchor: 'middle' }));
     body.push(text(pad + 168, y + rh / 2 + 2.3, plain(r.then), { size: 6.8, fill: on ? INK : INK2, weight: on ? 600 : 400 }));
-    if (r.id.includes('⛓')) body.push(text(pad + cw - 14, y + rh / 2 + 2.3, S.chain, { font: MONO, size: 5, fill: on ? EMBER : MUTED, anchor: 'end' }));
     if (on) body.push(flame(pad + cw - 10, y + rh / 2 - 1));
   });
   // öneri satırı (senaryo A)
   const ay = ry + 2 + R.length * (rh + rg) + 4;
   body.push(rect(pad, ay, cw, 16, { fill: EMBER }));
-  body.push(text(pad + 6, ay + 7, S.advice, { font: MONO, size: 5, fill: PAPER, spacing: 1.2 }));
+  body.push(text(pad + 6, ay + 7, S.advice, { font: MONO, size: 6, fill: PAPER, spacing: 1.2 })); // R082: ≥ 6
   body.push(text(pad + 6, ay + 13.5, A.advice.join(' · '), { size: 7, fill: PAPER, weight: 600 }));
-  // üç senaryo tablosu
-  const ty = ay + 30, th = 13, cols = [pad, pad + 50, pad + 108, pad + 146];
+  // üç senaryo tablosu (R073: öneri satırı sütun genişliğine göre sarılır; satır yüksekliği içeriğe göre)
+  const ty = ay + 30, cols = [pad, pad + 50, pad + 108, pad + 146], advW = pad + cw - cols[3] - 2, lh = 8;
   body.push(caption(pad, ty, S.three));
   S.cols.forEach((h, i) => body.push(text(cols[i], ty + 11, h, { font: MONO, size: 6, fill: MUTED })));
   body.push(line(pad, ty + 14, pad + cw, ty + 14, { stroke: INK, sw: 0.6 }));
   const rows = [];
+  let y = ty + 14;
   scen.forEach((s, k) => {
-    const y = ty + 14 + k * th, ids = R.filter((_, i) => s.fired[i]).map((r) => r.id.slice(0, 2));
+    const ids = R.filter((_, i) => s.fired[i]).map((r) => r.id.slice(0, 2));
+    const adv = wrapW(s.advice.join(' · '), 6.5, advW), th = Math.max(13, adv.length * lh + 5);
     if (k) body.push(line(pad, y, pad + cw, y, { stroke: RULE, sw: 0.5 }));
     const facts = s.on.map((k2) => S.short[k2]).join(', ');
     body.push(text(cols[0], y + 9.3, s.name, { size: 6.8, weight: 600 }));
     body.push(text(cols[1], y + 9.3, facts, { size: 6.8 }));
     body.push(text(cols[2], y + 9.3, ids.join(', '), { font: MONO, size: 6.5, fill: EMBER, weight: 700 }));
-    body.push(text(cols[3], y + 9.3, s.advice.join(' · '), { size: 6.5 }));
+    adv.forEach((ln, j) => body.push(text(cols[3], y + 9.3 + j * lh, ln, { size: 6.5 })));
     rows.push(`| ${s.name} | ${facts} | ${ids.join(', ')} | ${s.advice.join(' · ')} |`);
+    y += th;
   });
-  const H = ty + 14 + scen.length * th + 6;
+  const H = y + 6;
   body[0] = rect(0, 0, W, H, { fill: PAPER });
   const md = [`# ${demo.title}`, '', S.mdHead, '|---|---|---|---|', ...rows, '', S.mdNote, ''].join('\n');
   return [{ name: 'expert', svg: svg(W, H, body.join('\n')), md }];
