@@ -3,11 +3,13 @@
 # Aynı makine/ağ; her URL 3 tekrar. Sonuç lab verisidir, saha (CrUX) değildir.
 BASE="${1:?base url}"; OUT="${2:?çıktı}"; mkdir -p "$OUT"
 export CHROME_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+# Korumalı Vercel önizlemesi: VERCEL_PROTECTION_BYPASS ortam değişkeni (değer yazdırılmaz)
+EXTRA=""; [ -n "$VERCEL_PROTECTION_BYPASS" ] && EXTRA="{\"x-vercel-protection-bypass\":\"$VERCEL_PROTECTION_BYPASS\"}"
 for p in / /en /demo/demo /demo/demo-en; do
   n=$(echo "$p" | tr '/' '_'); [ "$n" = "_" ] && n=_root
   for i in 1 2 3; do
     npx -y lighthouse@12 "$BASE$p" --quiet --only-categories=performance --chrome-flags="--headless=new" \
-      --output=json --output-path="$OUT/$n-$i.json" >/dev/null 2>&1 || echo "BLOCKED $p $i"
+      --output=json --output-path="$OUT/$n-$i.json" ${EXTRA:+--extra-headers="$EXTRA"} >/dev/null 2>&1 || echo "BLOCKED $p $i"
   done
 done
 node -e '

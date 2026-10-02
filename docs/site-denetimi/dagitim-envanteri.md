@@ -23,7 +23,7 @@ Site denetimi planı rev. 2 §D. Bu dosya `store/` dışında olduğu için yay�
 1. `python3 tools/site/print_guard.py --snapshot` → `python3 tools/site/gen_site.py` → `python3 build.py` → `print_guard.py --check` (fark 0).
 2. `node tools/site_qa/site_test.mjs` (yerel, geliştirme) → `node print/kitap/qa/ui_test.mjs` (kitap gerilemesi).
 3. Yazar: `site-audit-1` dalını push eder → Vercel preview URL'si.
-4. `BASE_URL=<preview> node tools/site_qa/site_test.mjs` → kabul kanıtı (`tools/site_qa/site-test.json`, `kabul_kaniti: true`).
+4. `BASE_URL=<preview> node tools/site_qa/site_test.mjs` → kabul kanıtı (`tools/site_qa/site-test-preview.json`, `kabul_kaniti: true`; üretim için `site-test-uretim.json`).
 5. `sh tools/site/lh.sh <preview> docs/site-denetimi/lighthouse/after` (lab, "önce" ile aynı koşul).
 6. Yazar: `main`'e merge/push, ardından `python3 upload_book.py` (okuyucu şablonu).
 7. Üretim smoke testi: `BASE_URL=https://book.onuronder.com node tools/site_qa/site_test.mjs` (salt okunur).

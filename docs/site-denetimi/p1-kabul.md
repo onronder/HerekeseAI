@@ -1,7 +1,8 @@
 # P1 kabul raporu: ön yüz, erişilebilirlik, SEO (2026-10-02)
 
 Başlangıç commit'i `d0da601` (değişiklikler commit edilmedi; yazar dal açıp push eder).
-**Durum: teknik olarak hazır, kabul bekliyor.** Kabul kanıtı Vercel preview'de çalışacak `site_test.mjs` sonucudur; yerel öykünme geliştirme kanıtıdır.
+**Durum: preview'de kabul edildi (commit `a668357`); tek düzeltme (EN nav kayması) yeniden push ve preview teyidi bekliyor.**
+Kabul kanıtı Vercel preview'de çalışan `site_test.mjs` sonucudur; yerel öykünme geliştirme kanıtıdır.
 
 ## Değişiklikler
 
@@ -49,6 +50,35 @@ Başlangıç commit'i `d0da601` (değişiklikler commit edilmedi; yazar dal aç�
   - üretim başlıkları ve `docs/`'un dağıtım dışı olduğu (yalnız preview'de ölçülür).
 - Browser pane görsel kontrolü: demo 375 px ve EN ana sayfa 320 px.
 
+### Vercel preview: `BASE_URL=https://herkese-ai-git-site-audit-1-onur-onders-projects.vercel.app` (commit `a668357`) → **50 PASS · 0 FAIL · 2 BLOCKED**
+- Gerçek Vercel davranışı doğrulandı:
+  - `/yasal.html`, `/en/`, `/hakkimizda/`, `/index.html`, `/en/?ref=qr`, `/demo/demo.html` → 308 ile tek adımda kanonik 200 (query korunuyor);
+  - bilinmeyen yollar gerçek **404** ve iki dilli sayfa;
+  - sitemap'teki 8 URL'nin hepsi 200;
+  - HSTS `max-age=63072000`, CSP ve nosniff mevcut;
+  - `docs/` dağıtımda yok (404);
+  - 90 QR sayfası temiz;
+  - 8 sayfada axe ciddi/kritik ihlal 0;
+  - JS hatası yok.
+- Önizlemede okuyucu vekili sayfaları (dist/web) yok; bu üç satır yalnız yerelde koşar.
+- Önizleme yanıtları Vercel'in `x-robots-tag: noindex` başlığını taşır (beklenen). Üretimde indeks hedefleri üretim smoke testinde kontrol edilir.
+- Önizleme korumasının (Vercel Authentication) yazar tarafından test için kapatıldığı not edilmiştir; **testten sonra yeniden açılmalı.**
+
+### Performans bulgusu ve düzeltme
+- **Preview ile canlı (simüle Lighthouse, 5×):** ana sayfa LCP medyanı preview 2,77 sn, canlı 2,15 sn. EN'de preview'de her turda **CLS 0,029** (canlı 0).
+- **Ayrıştırma (aynı makine, aynı yerel sunucu, eski `d0da601` ile yeni kod):**
+  - TR simüle LCP birebir aynı (4205/4206 ms): preview ile canlı arasındaki TR farkı **ortamdan**, koddan değil.
+  - EN'de gerçek gerileme: nav'a eklenen satır sarması, JS'in sonradan yazdığı "SIGN IN" bağlantısıyla satırı ikiye bölüyor ve kapak gövdesini kaydırıyordu.
+- **Düzeltme:** hesap bağlantısı HTML'de baştan yazılıyor (`store/index.html`, `store/en/index.html` `#account-line`); JS aynı içeriği yazar. Sonuç: EN CLS **0,029 → 0** (yerel, 3/3).
+- **Gerçek yavaşlatma (devtools throttling, 5×, eski ile yeni):**
+  - LCP medyanı TR 2427 → 2499 ms (+72);
+  - EN 2454 → 2506 ms (+52);
+  - FCP +40–60 ms.
+
+  Fark `store.js`'in 10,5 KB büyümesiyle (sıkıştırılmış ~3 KB) tutarlı ve küçük. Simüle yöntemdeki 300–450 ms fark bir ölçüm büyütmesiydi.
+  Ham veri: `lighthouse/ab-devtools/`.
+- TR ana sayfadaki **CLS 0,04** (`.cover-grid`) eski kodda da var; yeni değil. Ayrı iyileştirme adayı (font yükleme ile kapak gridi kayması).
+
 ### Gerileme
 - `node print/kitap/qa/ui_test.mjs` → **18/18** (kitap davranışı).
 - `python3 tools/site/print_guard.py --check` → **fark 0** (772 dosya; `print/` ve `BASKI.md` build'den etkilenmedi).
@@ -57,22 +87,22 @@ Başlangıç commit'i `d0da601` (değişiklikler commit edilmedi; yazar dal aç�
 
 | Rota | Önce (canlı) skor | LCP | CLS | TBT | Aktarım | Sonra (preview) |
 |---|---|---|---|---|---|---|
-| `/` | 0,98 | 2091 ms | 0,040 | 0 ms | 271 KB | `[BLOCKED: preview URL'si]` |
-| `/en` | 1,00 | 1877 ms | 0,000 | 0 ms | 237 KB | `[ ]` |
-| `/demo/demo` | 0,95 | 2310 ms | 0,077 | 0 ms | 274 KB | `[ ]` |
-| `/demo/demo-en` | 1,00 | 1758 ms | 0,016 | 1 ms | 199 KB | `[ ]` |
+| `/` | 0,98 | 2091 ms | 0,040 | 0 ms | 271 KB | 0,96 · 2813 ms · 0,040 · 0 ms · 275 KB (ortam farkı; kod A/B'de eşit) |
+| `/en` | 1,00 | 1877 ms | 0,000 | 0 ms | 237 KB | 0,97 · 2661 ms · **0,029** · 0 ms · 242 KB → kayma düzeltildi, yeniden ölçülecek |
+| `/demo/demo` | 0,95 | 2310 ms | 0,077 | 0 ms | 274 KB | 0,99 · 1944 ms · 0,046 · 0 ms · 277 KB |
+| `/demo/demo-en` | 1,00 | 1758 ms | 0,016 | 1 ms | 199 KB | 0,98 · 2213 ms · 0,016 · 0 ms · 201 KB |
 
 Bunlar lab verisidir, saha (CrUX) değildir. "Sonra" ölçümü preview'de aynı komutla alınır: `sh tools/site/lh.sh <preview> docs/site-denetimi/lighthouse/after`.
 
 ### CK04 depolama (canlı, anonim, 6 sayfa)
 Depolama yok, çerez yok, yalnız birinci taraf istek (`depolama-envanteri.md`).
 
-## Kabul için kalan adımlar (yazar)
-1. Dal ve push (`print/` ve `BASKI.md` hariç) → Vercel preview URL'si.
-2. `BASE_URL=<preview> node tools/site_qa/site_test.mjs` → `kabul_kaniti: true` ve 0 FAIL.
-3. `sh tools/site/lh.sh <preview> docs/site-denetimi/lighthouse/after`.
-4. `main`'e merge, ardından `python3 upload_book.py` (okuyucu yeni şablonla).
-5. Üretim smoke testi: `BASE_URL=https://book.onuronder.com node tools/site_qa/site_test.mjs`.
+## Kalan adımlar
+1. ✅ Dal ve push → preview (`a668357`) → kabul testi 50 PASS / 0 FAIL.
+2. Yazar: EN kayma düzeltmesini aynı dala push eder. Ardından preview'de kabul testi ve `/en` lab ölçümü yeniden alınır (`tools/site_qa/site-test-preview.json`).
+3. Yazar: Vercel Authentication'ı yeniden açar.
+4. Yazar: `main`'e merge, ardından `python3 upload_book.py` (okuyucu yeni şablonla).
+5. Üretim smoke testi: `BASE_URL=https://book.onuronder.com node tools/site_qa/site_test.mjs` (`site-test-uretim.json`).
 
 ## Bilinen sınırlar ve açık kalanlar
 - Yasal metinlerdeki "en geç 24 saat" ifadeleri (ön bilgilendirme ve teslimat) değişmedi; yeni dil P3 taslağında (`sartlar-onay-tr.md` §4). SSS ve ekran mesajları taahhütsüz dile geçti; yasal metin daha üst sınır vermeye devam ediyor (çelişmez, ama tek karar tablosuna bağlanması hukuk onayını bekliyor).

@@ -2,8 +2,10 @@
 // Kullanım:
 //   node tools/site_qa/site_test.mjs                       → yerel (store/ için Vercel cleanUrls/404 öykünmesi; GELİŞTİRME kanıtı)
 //   BASE_URL=https://<preview>.vercel.app node tools/site_qa/site_test.mjs   → Vercel preview (KABUL kanıtı)
+//   Önizleme Vercel Deployment Protection arkasındaysa: VERCEL_PROTECTION_BYPASS ortam değişkeni (Vercel → Settings →
+//   Deployment Protection → Protection Bypass for Automation). Değer yalnız istek başlığına konur; rapora ve loga yazılmaz.
 // Yerel öykünme kendi yönlendirme kuralını uyguladığı için Vercel'in gerçek davranışını kanıtlamaz; rota ve başlık
-// sonuçları yalnız BASE_URL ile kabul sayılır. Çıktı: tools/site_qa/site-test.json + tools/site_qa/shots/*.png
+// sonuçları yalnız BASE_URL ile kabul sayılır. Çıktı: tools/site_qa/site-test-{yerel,preview,uretim}.json + tools/site_qa/shots/*.png
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
@@ -46,10 +48,20 @@ if (!REMOTE) {
   await new Promise((r) => server.listen(0, '127.0.0.1', r));
   BASE = `http://127.0.0.1:${server.address().port}`;
 }
-const fetchNoRedirect = (url) => fetch(url, { redirect: 'manual' });
+const BYPASS = process.env.VERCEL_PROTECTION_BYPASS || '';
+const BYPASS_H = BYPASS ? { 'x-vercel-protection-bypass': BYPASS, 'x-vercel-set-bypass-cookie': 'true' } : {};
+const fetchNoRedirect = (url) => fetch(url, { redirect: 'manual', headers: BYPASS_H });
 
+if (REMOTE) {
+  const probe = await fetchNoRedirect(BASE + '/');
+  if (probe.status === 401 || (probe.status >= 300 && probe.status < 400 && /vercel\.com\/sso-api|_vercel_sso/.test(probe.headers.get('location') || ''))) {
+    console.error(`Önizleme Vercel Deployment Protection arkasında (HTTP ${probe.status}). VERCEL_PROTECTION_BYPASS ortam değişkenini ayarlayıp tekrar çalıştırın.`);
+    process.exit(2);
+  }
+}
 const browser = await puppeteer.launch({ headless: 'new', executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
 const page = await browser.newPage();
+if (BYPASS) await page.setExtraHTTPHeaders(BYPASS_H);
 const pageErrors = []; page.on('pageerror', (e) => pageErrors.push(String(e).slice(0, 200)));
 // Supabase çağrıları testte gerçek projeye gitmez: anonim oturum, istekler engellenir (form testleri kendi yanıtını kurar)
 let supaHandler = null;
@@ -255,7 +267,7 @@ T('K12', '.html, sonda / ve query varyantları tek adımda kanonik 200 adrese gi
 const nf = [];
 for (const u of ['/yok-boyle-bir-sayfa', '/en/yok-boyle-bir-sayfa', '/d/yok']) { const r = await fetchNoRedirect(BASE + u); const t = await r.text(); nf.push({ u, status: r.status, marka: /Sayfa bulunamadı/.test(t) && /Page not found/.test(t) }); }
 T('K12', 'bilinmeyen yollar gerçek HTTP 404 ve iki dilli 404.html (ana sayfaya 200 ile düşmüyor)', nf.every((x) => x.status === 404 && x.marka), nf);
-const smx = await (await fetch(BASE + '/sitemap.xml')).text();
+const smx = await (await fetchNoRedirect(BASE + '/sitemap.xml')).text();
 const locs = [...smx.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 const want = routes.routes.filter((r) => r.index).map((r) => routes.site + r.url).sort();
 const smStat = [];
@@ -281,7 +293,10 @@ T('K12', `${qrN} QR sayfası: görünür bağlantılar yalnız ${'/'} (TR) ve /e
 if (REMOTE) {
   const hd = await fetchNoRedirect(BASE + '/');
   const hs = { hsts: hd.headers.get('strict-transport-security'), csp: !!hd.headers.get('content-security-policy'), nosniff: hd.headers.get('x-content-type-options') };
-  T('K12', 'üretim başlıkları: HSTS max-age=63072000 (kapsam genişletilmedi), CSP, nosniff', hs.hsts === 'max-age=63072000' && hs.csp && hs.nosniff === 'nosniff', hs);
+  // *.vercel.app alan adında HSTS'i platform kendi değeriyle yazar; birebir kontrol yalnız özel alan adında
+  const platformHost = /\.vercel\.app$/.test(new URL(BASE).host);
+  T('K12', `başlıklar: HSTS ${platformHost ? '(vercel.app: platform değeri, max-age ≥ 63072000)' : 'max-age=63072000 (kapsam genişletilmedi)'}, CSP, nosniff`,
+    (platformHost ? /max-age=(6307200\d|[7-9]\d{7}|\d{9,})/.test(hs.hsts || '') : hs.hsts === 'max-age=63072000') && hs.csp && hs.nosniff === 'nosniff', hs);
   const d = await fetchNoRedirect(BASE + '/docs/site-denetimi/veri-envanteri.md');
   T('K12', 'taslak belgeler (docs/) dağıtımda yok', d.status === 404, d.status);
 } else BLOCK('K12', 'üretim başlıkları (HSTS/CSP) ve docs/ dağıtım dışı', 'yalnız BASE_URL (Vercel preview) ile ölçülür');
@@ -290,7 +305,9 @@ T('genel', 'sayfa JavaScript hatası yok', pageErrors.length === 0, pageErrors.s
 await browser.close(); if (server) server.close();
 let commit = ''; try { commit = execSync('git rev-parse --short HEAD', { cwd: ROOT }).toString().trim() + (execSync('git status --porcelain store build.py Atlas-Kitap.dc.html', { cwd: ROOT }).toString().trim() ? '+değişiklik' : ''); } catch (e) {}
 const sum = { tarih: new Date().toISOString(), commit, ortam: ENV, kabul_kaniti: !!REMOTE, PASS: R.filter((r) => r.status === 'PASS').length, FAIL: R.filter((r) => r.status === 'FAIL').length, BLOCKED: R.filter((r) => r.status === 'BLOCKED').length, testler: R };
-fs.writeFileSync(path.join(ROOT, 'tools/site_qa/site-test.json'), JSON.stringify(sum, null, 1));
+// Ortam başına ayrı kanıt dosyası: yerel geliştirme turu kabul kanıtının (preview/üretim) üzerine yazmasın
+const OUTNAME = !REMOTE ? 'site-test-yerel.json' : /book\.onuronder\.com/.test(REMOTE) ? 'site-test-uretim.json' : 'site-test-preview.json';
+fs.writeFileSync(path.join(ROOT, 'tools/site_qa', OUTNAME), JSON.stringify(sum, null, 1));
 for (const r of R) console.log(r.status === 'PASS' ? '✔' : r.status === 'BLOCKED' ? '·' : '✘', r.id, r.test, r.status === 'FAIL' ? JSON.stringify(r.actual).slice(0, 400) : '');
 console.log(`${sum.PASS} PASS · ${sum.FAIL} FAIL · ${sum.BLOCKED} BLOCKED · ortam ${ENV}${REMOTE ? '' : ' (geliştirme; kabul için BASE_URL=<preview>)'}`);
 process.exit(sum.FAIL ? 1 : 0);
