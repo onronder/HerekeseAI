@@ -1,7 +1,0 @@
-Kindle Previewer 4 CLI, 2026-10-02
-Girdi EPUB SHA-256: 626bda8e2848892767b3cd2ed22409ea33d5c0fdb8d0c9813b68beabe9a95acd
-macOS yerel ayarı: tr_TR · gömülü JRE user.language: ayarsız=tr, ayarlı=en
-A (ayarsız): exit 1 · "Not Supported","Error","0","0" · Java istisnası (Can't find bundle for base name com.amazon.language.resources.epubprocessor.ınfo_en): 36 · CLI 'Failed to get Mobi message stores': 1
-B (JAVA_TOOL_OPTIONS): exit 0 · "Supported","Success","0","0" · ayarı alan Java alt süreci: 4 · aynı istisna: 0 · aynı CLI uyarısı: 0
-C (export edilmeden atama, yaygın hata): exit 1 · "Not Supported","Error","0","0" · ayarı alan Java alt süreci: 0 · CLI 'Failed to get Mobi message stores': 1
-Çıktı: print/kitap/en/AI-for-Everyone-preview.kpf

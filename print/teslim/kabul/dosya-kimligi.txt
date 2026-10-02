@@ -1,5 +1,0 @@
-TR iç blok: e2e389204f0f9fa293a157d79957fec74bdb83487e45eaedc3a599354212f271  (print/kitap/ic-blok.pdf)
-TR kapak: 46f11ca2f294401439508e5add77c0a5bc5bd54677fe9f37ac74efad4e64ac0a  (print/kitap/kapak.pdf)
-EN iç blok: d96e7d5a10137e7c9218e1e5ee05bd8b987cfca8bfaa9e7fe50d2c794f89bf20  (print/kitap/en/kdp-interior.pdf)
-EN kapak: 900240e5a642453a8311d125dfebdb14bbd085df746e2707cc8d7a432cf432a6  (print/kitap/en/kdp-cover.pdf)
-EN EPUB: 626bda8e2848892767b3cd2ed22409ea33d5c0fdb8d0c9813b68beabe9a95acd  (print/kitap/en/AI-for-Everyone.epub)
