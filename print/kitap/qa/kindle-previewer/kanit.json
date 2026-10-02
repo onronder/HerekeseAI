@@ -1,6 +1,0 @@
-{"tarih": "2026-10-02T08:14:35Z", "epub_sha256": "626bda8e2848892767b3cd2ed22409ea33d5c0fdb8d0c9813b68beabe9a95acd", "macos_AppleLocale": "tr_TR",
- "gomulu_jre_user_language": {"ayarsiz": "tr", "JAVA_TOOL_OPTIONS": "en"},
- "A_ayarsiz": {"exit": 1, "ozet": "Not Supported,Error,0,0", "java_istisnasi_inf_o": 36, "istisna_ornegi": "Can't find bundle for base name com.amazon.language.resources.epubprocessor.ınfo_en", "cli_mobi_message_stores_uyarisi": 1},
- "B_JAVA_TOOL_OPTIONS": {"exit": 0, "ozet": "Supported,Success,0,0", "ayari_alan_java_alt_sureci": 4, "java_istisnasi_inf_o": 0, "cli_mobi_message_stores_uyarisi": 0},
- "C_export_edilmemis_atama": {"exit": 1, "ozet": "Not Supported,Error,0,0", "ayari_alan_java_alt_sureci": 0, "cli_mobi_message_stores_uyarisi": 1},
- "kpf": "print/kitap/en/AI-for-Everyone-preview.kpf"}

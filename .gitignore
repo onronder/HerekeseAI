@@ -1,3 +1,7 @@
+# Baskı el yazması ve matbaa/KDP dosyaları herkese açık depoya girmez (yerelde tutulur)
+/print/
+/BASKI.md
+
 dist/
 Herkes-Icin-Yapay-Zeka-v2.html
 supabase/.temp/
