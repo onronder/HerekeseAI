@@ -14,3 +14,7 @@ print/kindle/out/
 # site denetimi test aracı önbelleği ve çıktıları
 tools/site_qa/.cache/
 tools/site_qa/shots/
+# site denetimi: çalışma belgeleri, test kanıtı ve hash manifesti yerelde kalır (herkese açık depo)
+docs/site-denetimi/
+tools/site_qa/site-test*.json
+tools/site/print-guard.json
