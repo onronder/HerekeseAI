@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://book.onuronder.com/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://book.onuronder.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://book.onuronder.com/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://book.onuronder.com/"/>
+  </url>
+  <url>
+    <loc>https://book.onuronder.com/en</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://book.onuronder.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://book.onuronder.com/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://book.onuronder.com/"/>
+  </url>
+  <url>
+    <loc>https://book.onuronder.com/hakkimizda</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://book.onuronder.com/hakkimizda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://book.onuronder.com/en/about"/>
+  </url>
+  <url>
+    <loc>https://book.onuronder.com/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://book.onuronder.com/hakkimizda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://book.onuronder.com/en/about"/>
+  </url>
+  <url>
+    <loc>https://book.onuronder.com/yasal</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://book.onuronder.com/yasal"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://book.onuronder.com/en/legal"/>
+  </url>
+  <url>
+    <loc>https://book.onuronder.com/en/legal</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://book.onuronder.com/yasal"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://book.onuronder.com/en/legal"/>
+  </url>
+  <url>
+    <loc>https://book.onuronder.com/demo/demo</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://book.onuronder.com/demo/demo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://book.onuronder.com/demo/demo-en"/>
+  </url>
+  <url>
+    <loc>https://book.onuronder.com/demo/demo-en</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://book.onuronder.com/demo/demo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://book.onuronder.com/demo/demo-en"/>
+  </url>
+</urlset>

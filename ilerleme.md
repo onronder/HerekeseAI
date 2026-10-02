@@ -792,3 +792,17 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   Yeni kapılar: tablo-devam-basliksiz (check.sh + dogrulama2), kapak sırtı = iç blok sayfası, teslim kopyası hash'i, EPUB kapağı = Kindle JPEG.
   Bu kapılar iki gerçek açık yakaladı ve kapattı: EN iç blok 278 s.'ye çıkınca kapak 276'da kalmıştı; EPUB eski kapak JPEG'ini taşıyordu.
   SON: TR 256 s., EN 278 s. (sırt 15,90 mm), iki check.sh geçti, epubcheck 0, Previewer CLI+arayüz geçti; dogrulama33 33/33, dogrulama2 19/19.
+
+## SİTE DENETİMİ P1 (2026-10-02) — ön yüz, erişilebilirlik, SEO · teknik hazır, preview kabulü bekliyor
+- Girdi: yazarın "Site Denetimi ve Çalışma Planı" + "Uygulama Planı İncelemesi" belgeleri; plan rev. 2 (`~/.claude/plans/sunny-prancing-brooks.md`).
+  Yazar kararları: backend (P2) test ortamı kurulana dek ertelendi; teslim süresi dili yumuşatıldı; indeks: satış+hakkında+demo+yasal.
+- Şablon (Atlas TR/EN): `@media (max-width:860px)` + reduced-motion + `lang`; ücretli okuyucu da mobilde düzeldi (upload_book.py gerekir).
+  build.py: okuyucu kapağı ve QR kaynağındaki kırık TR/EN linkleri kaldırıldı; demo head'i rota manifestinden.
+- Mağaza: nav/fiyat paneli 320 px, kontrast (btn-ember #c2541d), APG kadran ve diyalog (inert), form single-flight + istek nesli,
+  reset/updateUser hata kontrolü, DELIVERY karar tablosu (SSS birebir), satın alma sonucu yalnız sunucudan, 404.html.
+- SEO: tools/site/routes.json → gen_site.py (head blokları, sitemap.xml lastmod'suz, robots.txt, llms.txt); /en/ → /en (Auth redirect'leri bilinçli /en/).
+- Test: tools/site_qa/site_test.mjs yerel 51 PASS/0 FAIL/3 BLOCKED; ui_test 18/18; print_guard fark 0. Lighthouse önce: docs/site-denetimi/lighthouse/before.
+- Kardeş site deposu (book-sales dalı): eski 4 kitap fonksiyonu kaldırıldı + guard notu (commit edilmedi).
+- Belgeler docs/site-denetimi/: p1-kabul.md, dagitim-envanteri.md, csp-istisnasi.md, veri/depolama envanteri, gizlilik-tr/privacy-en (TASLAK),
+  sartlar-onay-tr.md (TASLAK), karar-kapilari.md, odeme-hak-tasarimi.md (P2, kod yok).
+- Yazar adımları: dal push → preview → BASE_URL=<preview> site_test → main → upload_book.py → üretim smoke.

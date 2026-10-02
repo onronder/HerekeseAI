@@ -10,3 +10,7 @@ print/typeset/out/
 print/kapak/node_modules/
 print/kapak/out/
 print/kindle/out/
+
+# site denetimi test aracı önbelleği ve çıktıları
+tools/site_qa/.cache/
+tools/site_qa/shots/

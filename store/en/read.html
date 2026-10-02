@@ -14,7 +14,7 @@
 <body data-page="reader" data-lang="en" data-booklang="en" class="page-full">
 
   <div class="reader-bar">
-    <a href="/en/" class="mono muted" style="text-decoration:none;">← Back</a>
+    <a href="/en" class="mono muted" style="text-decoration:none;">← Back</a>
     <span class="title">AI for Everyone</span>
     <span class="lang mono">
       <button data-lang="tr">TR</button><span class="muted">·</span><button data-lang="en" class="active">EN</button>
@@ -31,7 +31,7 @@
 
 <!-- AUTH MODAL -->
 <div class="modal-backdrop" id="auth-backdrop">
-  <div class="modal modal-inner">
+  <div class="modal modal-inner" role="dialog" aria-modal="true" aria-labelledby="auth-title">
     <button class="close" id="auth-close" aria-label="Close">×</button>
     <div id="auth-body"></div>
   </div>

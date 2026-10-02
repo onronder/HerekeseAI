@@ -3,15 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- SEO:BEGIN (tools/site/gen_site.py üretir; elle düzenlemeyin) -->
 <title>AI for Everyone — An Interactive Digital Book</title>
-<meta name="description" content="The book about AI you don't just read; you try it with your own hands: 45 live demos, 8 chapters, Simple + Technical reading modes, English and Turkish together.">
+<meta name="description" content="The book about AI you don&#x27;t just read; you try it with your own hands: 45 live demos, 8 chapters, Simple + Technical reading modes, English and Turkish together.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://book.onuronder.com/en">
+<link rel="alternate" hreflang="tr" href="https://book.onuronder.com/">
+<link rel="alternate" hreflang="en" href="https://book.onuronder.com/en">
+<link rel="alternate" hreflang="x-default" href="https://book.onuronder.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://book.onuronder.com/en">
 <meta property="og:title" content="AI for Everyone — the book you read with your hands">
 <meta property="og:description" content="45 live demos: run a Turing machine, train a neural network, wipe away diffusion noise. 8 chapters, two reading depths, EN + TR.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://book.onuronder.com/en/">
-<link rel="alternate" hreflang="tr" href="https://book.onuronder.com/">
-<link rel="alternate" hreflang="en" href="https://book.onuronder.com/en/">
-<link rel="alternate" hreflang="x-default" href="https://book.onuronder.com/">
+<meta property="og:locale" content="en_US">
+<!-- SEO:END -->
 <link rel="stylesheet" href="/assets/fonts.css">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -56,7 +61,7 @@
             again, it works out the pattern <em>itself</em>. You never write the rules.</p>
             <p id="dial-teknik" class="mono-p">It studies labeled examples: an input x paired with its correct answer y. A <span class="ember">loss function</span> measures how wrong each guess is; gradient descent shrinks that loss step by step until it has learned the mapping f(x;&nbsp;θ) from x to y.</p>
           </div>
-          <div class="dial-strip" id="dial-strip">
+          <div class="dial-strip" id="dial-strip" role="slider" tabindex="0" aria-label="Reading depth" aria-valuemin="0" aria-valuemax="100" aria-valuenow="12">
             <div class="dial-track"></div>
             <div class="dial-fill" id="dial-fill"></div>
             <div class="dial-knob" id="dial-knob"></div>
@@ -102,6 +107,7 @@
   <!-- ============ DEMO TICKER ============ -->
   <section class="ticker-sec">
     <p class="mono sec-eyebrow wrap">A Few of the Forty-Five Live Demos</p>
+    <div class="wrap ticker-ctl"><button type="button" class="ticker-toggle" id="ticker-toggle" aria-pressed="false">Pause the strip</button></div>
     <div class="ticker" aria-hidden="true">
       <div class="ticker-track">
         <span>Make a Turing machine add 1</span><span>Write numbers with eight bulbs</span>
@@ -168,9 +174,7 @@
     <h2 class="serif sec-title">Frequently asked</h2>
     <div class="faq">
       <details><summary>I have paid; when does the book unlock?</summary>
-        <p class="a">As soon as iyzico confirms your payment, we unlock the book on your account
-        and send you a confirmation email. Access opens within seconds once the payment is approved; payments held for iyzico's security review are unlocked
-        within 24. Using your account email address at checkout speeds things up.</p></details>
+        <p class="a">As soon as iyzico verifies your payment, we unlock the book on your account and send you a confirmation email. This usually takes seconds. Payments that iyzico holds for a security review are usually cleared the same day; if it takes longer, we will let you know by email.</p></details>
       <details><summary>How do I read it? Is there a download?</summary>
         <p class="a">The book is read online: you sign in to your account and read in your browser.
         There is no file to download; you always read the latest edition, and your book is
@@ -219,7 +223,7 @@
 
   <!-- AUTH MODAL -->
   <div class="modal-backdrop" id="auth-backdrop">
-  <div class="modal modal-inner">
+  <div class="modal modal-inner" role="dialog" aria-modal="true" aria-labelledby="auth-title">
     <button class="close" id="auth-close" aria-label="Close">×</button>
     <div id="auth-body"></div>
   </div>

@@ -1,0 +1,67 @@
+{
+ "tarih": "2026-10-02T10:29:55.386Z",
+ "base": "https://book.onuronder.com",
+ "profil": "temiz anonim (incognito), giriş yok",
+ "sayfalar": {
+  "/": {
+   "localStorage": [],
+   "sessionStorage": [],
+   "indexedDB": [],
+   "documentCookie": [],
+   "cookies": [],
+   "ag_alan_adlari": [
+    "book.onuronder.com"
+   ]
+  },
+  "/en": {
+   "localStorage": [],
+   "sessionStorage": [],
+   "indexedDB": [],
+   "documentCookie": [],
+   "cookies": [],
+   "ag_alan_adlari": [
+    "book.onuronder.com"
+   ]
+  },
+  "/demo/demo#m=1&s=0": {
+   "localStorage": [],
+   "sessionStorage": [],
+   "indexedDB": [],
+   "documentCookie": [],
+   "cookies": [],
+   "ag_alan_adlari": [
+    "book.onuronder.com"
+   ]
+  },
+  "/demo/demo-en#m=1&s=1": {
+   "localStorage": [],
+   "sessionStorage": [],
+   "indexedDB": [],
+   "documentCookie": [],
+   "cookies": [],
+   "ag_alan_adlari": [
+    "book.onuronder.com"
+   ]
+  },
+  "/d/b8544b96e9": {
+   "localStorage": [],
+   "sessionStorage": [],
+   "indexedDB": [],
+   "documentCookie": [],
+   "cookies": [],
+   "ag_alan_adlari": [
+    "book.onuronder.com"
+   ]
+  },
+  "/yasal": {
+   "localStorage": [],
+   "sessionStorage": [],
+   "indexedDB": [],
+   "documentCookie": [],
+   "cookies": [],
+   "ag_alan_adlari": [
+    "book.onuronder.com"
+   ]
+  }
+ }
+}
