@@ -1,0 +1,15 @@
+# Herkes İçin Yapay Zekâ / AI for Everyone
+
+> Onur Önder'in interaktif dijital kitabı: kurallardan derin öğrenmeye yapay zekâ, 8 bölüm ve 45 canlı demo; Basit ve Teknik okuma modları, Türkçe ve İngilizce. Kitabın tamamı satın alındıktan sonra okunur; aşağıdaki bağlantılar kamuya açıktır.
+
+## Türkçe
+- [Ana sayfa](https://book.onuronder.com/): kitabın tanıtımı, içindekiler, fiyat ve sık sorulan sorular
+- [Ücretsiz demo](https://book.onuronder.com/demo/demo): ilk bölümden üç konu, canlı demolarıyla
+- [Hakkımızda](https://book.onuronder.com/hakkimizda): kitap, yazar ve satıcı
+- [Yasal metinler](https://book.onuronder.com/yasal): ön bilgilendirme, mesafeli satış, teslimat ve iade, lisans, gizlilik
+
+## English
+- [Home](https://book.onuronder.com/en): about the book, contents, price and FAQ
+- [Free demo](https://book.onuronder.com/demo/demo-en): three topics from the first chapter with their live demos
+- [About](https://book.onuronder.com/en/about): the book, the author and the seller
+- [Legal information](https://book.onuronder.com/en/legal): summary of the terms (the Turkish text is binding)

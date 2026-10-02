@@ -1,0 +1,39 @@
+{
+  "site": "https://book.onuronder.com",
+  "kararlar": {
+    "indeks": "Yazar kararı 2026-10-02: satış, hakkında, demo ve yasal sayfalar (TR+EN) indekslenir. Okuyucu, satın alma, yönetim, giriş ve 90 QR sayfası noindex kalır ve sitemap'e girmez.",
+    "x_default": "Yalnız ana sayfa çiftinde x-default = / (dil seçimi ana sayfadan). Hakkında, yasal ve demo çiftlerinde x-default konmaz.",
+    "lastmod": "Sitemap'te lastmod yok: build her dosyayı yeniden yazdığı için dosya tarihi anlamlı içerik değişikliğini göstermez.",
+    "url_bicimi": "Vercel cleanUrls=true, trailingSlash=false: final URL'ler uzantısız ve sonda / yok (/en, /en/about)."
+  },
+  "routes": [
+    {"id": "home-tr", "file": "store/index.html", "lang": "tr", "url": "/", "index": true, "alt": "home-en", "x_default": true,
+     "title": "Herkes İçin Yapay Zekâ — İnteraktif Dijital Kitap",
+     "description": "Yapay zekâyı okuyup geçmediğin, elinle denediğin kitap: 45 canlı demo, 8 bölüm, Basit + Teknik okuma modları, TR + EN birlikte.",
+     "og_title": "Herkes İçin Yapay Zekâ — okumakla kalmayıp elinle denediğin kitap",
+     "og_description": "45 canlı demo: Turing makinesi çalıştır, sinir ağı eğit, difüzyon gürültüsünü temizle. 8 bölüm, iki okuma derinliği, TR + EN."},
+    {"id": "home-en", "file": "store/en/index.html", "lang": "en", "url": "/en", "index": true, "alt": "home-tr", "x_default": true,
+     "title": "AI for Everyone — An Interactive Digital Book",
+     "description": "The book about AI you don't just read; you try it with your own hands: 45 live demos, 8 chapters, Simple + Technical reading modes, English and Turkish together.",
+     "og_title": "AI for Everyone — the book you read with your hands",
+     "og_description": "45 live demos: run a Turing machine, train a neural network, wipe away diffusion noise. 8 chapters, two reading depths, EN + TR."},
+    {"id": "about-tr", "file": "store/hakkimizda.html", "lang": "tr", "url": "/hakkimizda", "index": true, "alt": "about-en",
+     "title": "Hakkımızda — Herkes İçin Yapay Zekâ",
+     "description": "Herkes İçin Yapay Zekâ kitabı, yazarı ve satıcısı hakkında bilgiler."},
+    {"id": "about-en", "file": "store/en/about.html", "lang": "en", "url": "/en/about", "index": true, "alt": "about-tr",
+     "title": "About — AI for Everyone",
+     "description": "About the book AI for Everyone, its author, and its seller."},
+    {"id": "legal-tr", "file": "store/yasal.html", "lang": "tr", "url": "/yasal", "index": true, "alt": "legal-en",
+     "title": "Yasal Metinler — Herkes İçin Yapay Zekâ",
+     "description": "Herkes İçin Yapay Zekâ dijital kitabı için ön bilgilendirme formu, mesafeli satış sözleşmesi, teslimat ve iade koşulları, kullanım lisansı ve gizlilik bilgileri."},
+    {"id": "legal-en", "file": "store/en/legal.html", "lang": "en", "url": "/en/legal", "index": true, "alt": "legal-tr",
+     "title": "Legal Information — AI for Everyone",
+     "description": "Pre-contract information, distance sales terms, delivery and refunds, license and privacy information for the AI for Everyone digital book."},
+    {"id": "demo-tr", "file": "store/demo/demo.html", "lang": "tr", "url": "/demo/demo", "index": true, "alt": "demo-en", "generated_by": "build.py",
+     "title": "Ücretsiz demo — Herkes İçin Yapay Zekâ",
+     "description": "Kitabın ilk bölümünden üç konu ücretsiz ve canlı demolarıyla: Giriş, Zekâ Nedir? ve Düşünmek = Hesaplamak. Basit ve Teknik okuma modları."},
+    {"id": "demo-en", "file": "store/demo/demo-en.html", "lang": "en", "url": "/demo/demo-en", "index": true, "alt": "demo-tr", "generated_by": "build.py",
+     "title": "Free demo — AI for Everyone",
+     "description": "Three topics from the first chapter, free and with their live demos: Intro, Intelligence, and Thinking = Computing. Simple and Technical reading modes."}
+  ]
+}

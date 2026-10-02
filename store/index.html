@@ -3,15 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- SEO:BEGIN (tools/site/gen_site.py üretir; elle düzenlemeyin) -->
 <title>Herkes İçin Yapay Zekâ — İnteraktif Dijital Kitap</title>
 <meta name="description" content="Yapay zekâyı okuyup geçmediğin, elinle denediğin kitap: 45 canlı demo, 8 bölüm, Basit + Teknik okuma modları, TR + EN birlikte.">
-<meta property="og:title" content="Herkes İçin Yapay Zekâ — okumakla kalmayıp elinle denediğin kitap">
-<meta property="og:description" content="45 canlı demo: Turing makinesi çalıştır, sinir ağı eğit, difüzyon gürültüsünü temizle. 8 bölüm, iki okuma derinliği, TR + EN.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://book.onuronder.com/">
+<link rel="alternate" hreflang="tr" href="https://book.onuronder.com/">
+<link rel="alternate" hreflang="en" href="https://book.onuronder.com/en">
+<link rel="alternate" hreflang="x-default" href="https://book.onuronder.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://book.onuronder.com/">
-<link rel="alternate" hreflang="tr" href="https://book.onuronder.com/">
-<link rel="alternate" hreflang="en" href="https://book.onuronder.com/en/">
-<link rel="alternate" hreflang="x-default" href="https://book.onuronder.com/">
+<meta property="og:title" content="Herkes İçin Yapay Zekâ — okumakla kalmayıp elinle denediğin kitap">
+<meta property="og:description" content="45 canlı demo: Turing makinesi çalıştır, sinir ağı eğit, difüzyon gürültüsünü temizle. 8 bölüm, iki okuma derinliği, TR + EN.">
+<meta property="og:locale" content="tr_TR">
+<!-- SEO:END -->
 <link rel="stylesheet" href="/assets/fonts.css">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -26,7 +31,7 @@
       <div class="cover-meta">
         <span>İnteraktif Dijital Kitap</span>
         <span class="cover-meta-mid">İlk Basım · 8 Bölüm · ISBN 978-625-00-5299-0</span>
-        <span class="cover-meta-r"><a href="/en/" class="muted" style="text-decoration:none;">EN</a><span class="cover-meta-sep"> · </span><a href="#satin-al" class="ember-link">Satın Al</a><span class="cover-meta-sep"> · </span><span id="account-line"></span></span>
+        <span class="cover-meta-r"><a href="/en" class="muted" style="text-decoration:none;">EN</a><span class="cover-meta-sep"> · </span><a href="#satin-al" class="ember-link">Satın Al</a><span class="cover-meta-sep"> · </span><span id="account-line"><a href="#" id="signin-link" style="color:#8c8470;text-decoration:none;">GİRİŞ</a></span></span>
       </div>
     </div>
 
@@ -56,7 +61,7 @@
             aradaki örüntüyü <em>kendi</em> çıkarır. Kuralları sen yazmazsın.</p>
             <p id="dial-teknik" class="mono-p">Girdi x ile doğru cevap y’den oluşan etiketli örneklere bakar; tahminin ne kadar yanıldığını <span class="ember">kayıp fonksiyonu</span> ölçer. Bu kaybı gradyan inişiyle adım adım azaltır ve x’i y’ye götüren f(x;&nbsp;θ) eşlemesini öğrenir.</p>
           </div>
-          <div class="dial-strip" id="dial-strip">
+          <div class="dial-strip" id="dial-strip" role="slider" tabindex="0" aria-label="Okuma derinliği" aria-valuemin="0" aria-valuemax="100" aria-valuenow="12">
             <div class="dial-track"></div>
             <div class="dial-fill" id="dial-fill"></div>
             <div class="dial-knob" id="dial-knob"></div>
@@ -102,6 +107,7 @@
   <!-- ============ DEMO ŞERİDİ ============ -->
   <section class="ticker-sec">
     <p class="mono sec-eyebrow wrap">Kırk Beş Canlı Demodan Bazıları</p>
+    <div class="wrap ticker-ctl"><button type="button" class="ticker-toggle" id="ticker-toggle" aria-pressed="false">Şeridi durdur</button></div>
     <div class="ticker" aria-hidden="true">
       <div class="ticker-track">
         <span>Turing makinesine 1 ekletmek</span><span>Sekiz ampulle sayı yazmak</span>
@@ -167,10 +173,7 @@
     <h2 class="serif sec-title">Sık sorulanlar</h2>
     <div class="faq">
       <details><summary>Ödeme yaptım; kitap ne zaman açılır?</summary>
-        <p class="a">Ödemen iyzico tarafından doğrulanır doğrulanmaz kitabı hesabında açıyor,
-        sana da bir bilgilendirme e-postası gönderiyoruz. Ödeme onaylanır onaylanmaz erişim saniyeler içinde açılır; iyzico'nun güvenlik incelemesine
-        aldığı ödemelerde bu süre en geç 24 saattir. Ödeme sırasında hesabında kayıtlı e-posta adresini
-        kullanırsan süreç daha da hızlanır.</p></details>
+        <p class="a">Ödemen iyzico tarafından doğrulanır doğrulanmaz kitabı hesabında açıyor, sana da bir bilgilendirme e-postası gönderiyoruz. Bu genellikle saniyeler içinde olur. iyzico'nun güvenlik incelemesine aldığı ödemeler genellikle aynı gün sonuçlanır; gecikirse e-postayla bilgilendiririz.</p></details>
       <details><summary>Kitabı nasıl okurum? İndirme var mı?</summary>
         <p class="a">Kitap çevrimiçi okunur: hesabınla giriş yapar, tarayıcından okursun.
         İndirilecek bir dosya yoktur; bu sayede her zaman en güncel sürümü okur, kitabına
@@ -219,7 +222,7 @@
 
   <!-- AUTH MODAL -->
   <div class="modal-backdrop" id="auth-backdrop">
-  <div class="modal modal-inner">
+  <div class="modal modal-inner" role="dialog" aria-modal="true" aria-labelledby="auth-title">
     <button class="close" id="auth-close" aria-label="Kapat">×</button>
     <div id="auth-body"></div>
   </div>

@@ -1,0 +1,6 @@
+# Tarama politikası: kamu sayfaları taranabilir. Özel içerik (okuyucu, satın alma, yönetim) sunucu yetkilendirmesi
+# ve private storage ile korunur; o sayfalar noindex taşır. robots.txt bir erişim kontrolü değildir.
+User-agent: *
+Allow: /
+
+Sitemap: https://book.onuronder.com/sitemap.xml

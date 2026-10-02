@@ -8,7 +8,9 @@
   const $ = (sel) => document.querySelector(sel);
   const page = document.body.dataset.page;
   const L = document.body.dataset.lang === "en" ? "en" : "tr";
-  const HOME = L === "en" ? "/en/" : "/";
+  const HOME = L === "en" ? "/en" : "/";
+  // Supabase Auth izinli yönlendirme listesi /en/ biçiminde kayıtlı; e-posta bağlantıları bu adresi kullanır (/en/ → /en 308 zararsız)
+  const AUTH_HOME = L === "en" ? "/en/" : "/";
   const READER = L === "en" ? "/en/read" : "/oku";
   const PRICING = (C.PRICING && C.PRICING[L]) || { label: C.PRICE || "", url: C.IYZILINK_URL || null };
   const PURCHASE = (C.PURCHASE_PAGE && C.PURCHASE_PAGE[L]) || (L === "en" ? "/en/purchase" : "/satin-alma");
@@ -17,6 +19,24 @@
   try { checkoutBeta = localStorage.getItem("book_checkout_beta") === "1"; } catch (e) {}
   const CHECKOUT_ON = !!C.CHECKOUT_ENABLED || checkoutBeta;
 
+  // Teslim mesajları tek kaynaktan (site denetimi F06/FAQ14). Kesin süre taahhüdü yok; yasal metindeki madde ayrıca onaylanır.
+  const DELIVERY = {
+    tr: {
+      faq: "Ödemen iyzico tarafından doğrulanır doğrulanmaz kitabı hesabında açıyor, sana da bir bilgilendirme e-postası gönderiyoruz. " +
+        "Bu genellikle saniyeler içinde olur. iyzico'nun güvenlik incelemesine aldığı ödemeler genellikle aynı gün sonuçlanır; gecikirse e-postayla bilgilendiririz.",
+      review: "iyzico ödemeyi inceliyor; sonuçlanınca kitap açılır ve e-posta gelir. İnceleme genellikle aynı gün sonuçlanır; gecikirse e-postayla bilgilendiririz.",
+      slow: "Ödemen alındıysa kitap genellikle birkaç dakika içinde açılır ve e-posta gelir. Bu sayfayı yenileyebilirsin; sonuç netleşmeden yeni bir ödeme başlatma.",
+      legacy: "Ödemen alındıktan sonra kitabın açılır ve sana e-posta gelir; bu genellikle aynı gün olur.",
+    },
+    en: {
+      faq: "As soon as iyzico verifies your payment, we unlock the book on your account and send you a confirmation email. " +
+        "This usually takes seconds. Payments that iyzico holds for a security review are usually cleared the same day; if it takes longer, we will let you know by email.",
+      review: "iyzico is reviewing the payment; once cleared the book unlocks and you get an email. Reviews usually clear the same day; if it takes longer, we will let you know by email.",
+      slow: "If your payment went through, the book usually unlocks within a few minutes and you get an email. You can refresh this page; please don't start a new payment until the result is clear.",
+      legacy: "Once your payment is received, the book unlocks and you get an email; this usually happens the same day.",
+    },
+  }[L];
+
   const T = {
     tr: {
       signinTitle: "Giriş yap", signupTitle: "Hesap oluştur",
@@ -24,8 +44,7 @@
       openBook: "Kitabı Aç", signinShort: "GİRİŞ", signoutShort: "çıkış",
       owned: (e) => `Kitap bu hesapta açık: <strong>${e}</strong>. İyi okumalar!`,
       pay: (e) => `Ödeme sayfasında e-posta olarak <strong>${e}</strong> adresini kullan; ` +
-        `erişimini bu hesaba tanımlayacağız. Ödemen alındıktan sonra kitabın genellikle birkaç saat içinde açılır ` +
-        `ve sana e-posta gelir.`,
+        `erişimini bu hesaba tanımlayacağız. ` + DELIVERY.legacy,
       soon: (e) => `Hesabın hazır: <strong>${e}</strong>. Ödeme sayfamız çok yakında açılıyor; ` +
         `açılır açılmaz bu adrese haber vereceğiz.`,
       loading: "KİTABIN AÇILIYOR…", err: "Bir aksilik oldu.", retry: "Tekrar dene",
@@ -70,10 +89,16 @@
       purchaseOk: "Kitabın açıldı.", purchaseOkNote: "Bilgilendirme e-postası gönderildi. İyi okumalar!", purchaseRead: "Oku",
       purchaseFail: "Ödeme tamamlanamadı.", purchaseFailNote: "Kartından çekim yapılmadı. İstersen tekrar deneyebilirsin.",
       purchaseRetry: "Tekrar dene",
-      purchaseReview: "Ödemen alındı, güvenlik incelemesinde.", purchaseReviewNote: "iyzico ödemeyi inceliyor; sonuçlanınca kitap açılır ve e-posta gelir. Bu genellikle aynı gün tamamlanır.",
-      purchaseSlow: "Doğrulama uzun sürüyor.", purchaseSlowNote: "Ödemen alındıysa kitap birkaç dakika içinde açılır ve e-posta gelir. Bu sayfayı yenileyebilirsin.",
+      purchaseReview: "Ödemen alındı, güvenlik incelemesinde.", purchaseReviewNote: DELIVERY.review,
+      purchaseSlow: "Doğrulama uzun sürüyor.", purchaseSlowNote: DELIVERY.slow,
       purchaseRefresh: "Yenile", purchaseSignin: "Sonucu görmek için giriş yap.",
       purchaseSupport: (m) => `Sorun yaşarsan: <a href="mailto:${m}" style="color:#e85d3a;">${m}</a>`,
+      purchaseNone: "Bu hesapta tamamlanmış bir satın alma görünmüyor.", purchaseNoneNote: "Ödeme yaptıysan ve kitap açılmadıysa bize yaz; yeni bir ödeme başlatmadan önce durumu birlikte kontrol edelim.",
+      errOffline: "Bağlantı kurulamadı. İnternet bağlantını kontrol edip tekrar dene.",
+      dialBasit: "BASİT", dialTeknik: "TEKNİK",
+      dialValue: (n, m) => `Okuma derinliği %${n}, ${m === "t" ? "Teknik" : "Basit"} mod`,
+      tickerPause: "Şeridi durdur", tickerPlay: "Şeridi oynat",
+      consentLegal: `Ön bilgilendirme formu ve mesafeli satış sözleşmesi: <a href="/yasal" target="_blank" rel="noopener" style="color:#e85d3a;">yasal metinler</a>.`,
     },
     en: {
       signinTitle: "Sign in", signupTitle: "Create an account",
@@ -81,8 +106,7 @@
       openBook: "Open the Book", signinShort: "SIGN IN", signoutShort: "sign out",
       owned: (e) => `The book is unlocked on this account: <strong>${e}</strong>. Happy reading!`,
       pay: (e) => `On the payment page, use <strong>${e}</strong> as your email address; ` +
-        `we will grant access to this account. Once your payment is received, the book usually unlocks ` +
-        `within a few hours and you will get an email.`,
+        `we will grant access to this account. ` + DELIVERY.legacy,
       soon: (e) => `Your account is ready: <strong>${e}</strong>. Our payment page opens very soon; ` +
         `we will let you know at this address the moment it does.`,
       loading: "OPENING YOUR BOOK…", err: "Something went wrong.", retry: "Try again",
@@ -127,10 +151,16 @@
       purchaseOk: "Your book is unlocked.", purchaseOkNote: "A confirmation email has been sent. Happy reading!", purchaseRead: "Read",
       purchaseFail: "Payment could not be completed.", purchaseFailNote: "Your card was not charged. You can try again.",
       purchaseRetry: "Try again",
-      purchaseReview: "Payment received, under security review.", purchaseReviewNote: "iyzico is reviewing the payment; once cleared the book unlocks and you get an email. This usually completes the same day.",
-      purchaseSlow: "Verification is taking a while.", purchaseSlowNote: "If your payment went through, the book unlocks within a few minutes and you get an email. You can refresh this page.",
+      purchaseReview: "Payment received, under security review.", purchaseReviewNote: DELIVERY.review,
+      purchaseSlow: "Verification is taking a while.", purchaseSlowNote: DELIVERY.slow,
       purchaseRefresh: "Refresh", purchaseSignin: "Sign in to see the result.",
       purchaseSupport: (m) => `If something is wrong: <a href="mailto:${m}" style="color:#e85d3a;">${m}</a>`,
+      purchaseNone: "There is no completed purchase on this account.", purchaseNoneNote: "If you paid and the book has not unlocked, write to us; let's check the status together before you start a new payment.",
+      errOffline: "Couldn't connect. Check your internet connection and try again.",
+      dialBasit: "SIMPLE", dialTeknik: "TECHNICAL",
+      dialValue: (n, m) => `Reading depth ${n}%, ${m === "t" ? "Technical" : "Simple"} mode`,
+      tickerPause: "Pause the strip", tickerPlay: "Play the strip",
+      consentLegal: `Pre-contract information and distance sales terms: <a href="/en/legal" target="_blank" rel="noopener" style="color:#e85d3a;">legal information</a>.`,
     },
   }[L];
 
@@ -179,12 +209,20 @@
   }
 
   // ---- hesap modalı (giriş / kayıt / şifre sıfırlama — Supabase akışları) ----
+  // Erişilebilir diyalog (APG): açıkken arka plan inert, Tab döngüsü, Escape, odak dönüşü.
+  // authGen: modal yeniden çizilince ya da kapanınca artar; geç dönen eski yanıt ekrana uygulanmaz.
   let authMode = "signin";
   let onAuthed = null;
+  let authGen = 0;
+  let authOpener = null;
+  let authInflight = false;
 
   const F = (id, label, type, auto) =>
     `<div class="field"><label for="${id}">${label}</label>` +
     `<input id="${id}" type="${type}" autocomplete="${auto}" required></div>`;
+
+  // Durum bölgesi form çizilirken boş olarak bulunur; metin sonradan bir kez yazılır (ekran okuyucu duyurusu).
+  const MSG = `<p class="form-msg" id="auth-msg" role="status" aria-live="polite" aria-atomic="true"></p>`;
 
   function authTemplate(mode) {
     const head = (title, desc) =>
@@ -197,7 +235,7 @@
         F("auth-email", T.emailLabel, "email", "email") +
         F("auth-password", T.passLabel, "password", "new-password") +
         F("auth-password2", T.pass2Label, "password", "new-password") +
-        `<p class="form-msg" id="auth-msg"></p>` +
+        MSG +
         `<button class="btn" type="submit" id="auth-submit">${T.signupTitle}</button>` +
         `<div class="acc-links"><span></span><button type="button" class="acc-link" data-go="signin">${T.switchToSignin}</button></div>` +
         `</form>`;
@@ -206,7 +244,7 @@
       return head(T.forgotTitle, T.forgotDesc) +
         `<form id="auth-form">` +
         F("auth-email", T.emailLabel, "email", "email") +
-        `<p class="form-msg" id="auth-msg"></p>` +
+        MSG +
         `<button class="btn" type="submit" id="auth-submit">${T.forgotSend}</button>` +
         `<div class="acc-links"><button type="button" class="acc-link" data-go="signin">${T.backToSignin}</button><span></span></div>` +
         `</form>`;
@@ -216,7 +254,7 @@
         `<form id="auth-form">` +
         F("auth-password", T.passLabel, "password", "new-password") +
         F("auth-password2", T.pass2Label, "password", "new-password") +
-        `<p class="form-msg" id="auth-msg"></p>` +
+        MSG +
         `<button class="btn" type="submit" id="auth-submit">${T.resetDo}</button>` +
         `</form>`;
     }
@@ -224,18 +262,27 @@
       `<form id="auth-form">` +
       F("auth-email", T.emailLabel, "email", "email") +
       F("auth-password", T.passLabel, "password", "current-password") +
-      `<p class="form-msg" id="auth-msg"></p>` +
+      MSG +
       `<button class="btn" type="submit" id="auth-submit">${T.signinTitle}</button>` +
       `<div class="acc-links"><button type="button" class="acc-link" data-go="forgot">${T.forgotLink}</button>` +
       `<button type="button" class="acc-link" data-go="signup">${T.switchToSignup}</button></div>` +
       `</form>`;
   }
 
-  function say(kind, text) {
+  function clearInvalid() {
+    document.querySelectorAll("#auth-form [aria-invalid]").forEach((f) => {
+      f.removeAttribute("aria-invalid"); f.removeAttribute("aria-describedby");
+    });
+  }
+  // fieldId verilirse alan hatalı işaretlenir ve mesaja bağlanır (aria-invalid + aria-describedby)
+  function say(kind, text, fieldId) {
     const m = $("#auth-msg");
     if (!m) return;
+    clearInvalid();
     m.className = "form-msg " + kind;
     m.textContent = text;
+    const f = fieldId && document.getElementById(fieldId);
+    if (f) { f.setAttribute("aria-invalid", "true"); f.setAttribute("aria-describedby", "auth-msg"); f.focus(); }
   }
 
   function mapAuthError(err) {
@@ -248,55 +295,79 @@
     return T.errGeneric;
   }
 
+  function isOffline(err) {
+    return navigator.onLine === false || /failed to fetch|networkerror|load failed|network/i.test((err && err.message) || "");
+  }
+  // Tek gönderim (single-flight): Enter, çift tıklama ve programatik submit aynı bayrağa takılır.
+  // fn(stale): stale() true dönerse modal bu arada kapandı/yeniden çizildi; sonuç ekrana uygulanmaz.
   async function busy(fn) {
+    if (authInflight) return;
+    authInflight = true;
+    const gen = authGen;
+    const stale = () => gen !== authGen;
     const btn = $("#auth-submit");
-    const label = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = T.working;
-    try { await fn(); } finally { btn.disabled = false; btn.textContent = label; }
+    const label = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = T.working; }
+    try { await fn(stale); }
+    catch (e) { if (!stale()) say("err", isOffline(e) ? T.errOffline : T.errGeneric); }
+    finally {
+      authInflight = false;
+      if (btn && btn.isConnected) { btn.disabled = false; btn.textContent = label; }
+    }
   }
 
   function renderAuth(mode) {
     authMode = mode;
+    authGen++;
+    authInflight = false;
     $("#auth-body").innerHTML = authTemplate(mode);
     document.querySelectorAll(".acc-link").forEach((b) => (b.onclick = () => renderAuth(b.dataset.go)));
+    document.querySelectorAll("#auth-form input").forEach((f) => f.addEventListener("input", () => {
+      if (f.hasAttribute("aria-invalid")) { f.removeAttribute("aria-invalid"); f.removeAttribute("aria-describedby"); }
+    }));
     $("#auth-form").onsubmit = (e) => {
       e.preventDefault();
-      if (mode === "signin") return busy(async () => {
+      if (mode === "signin") return busy(async (stale) => {
         const { error } = await sb.auth.signInWithPassword({
           email: $("#auth-email").value.trim(), password: $("#auth-password").value,
         });
-        if (error) return say("err", mapAuthError(error));
+        if (stale()) return;
+        if (error) return say("err", isOffline(error) ? T.errOffline : mapAuthError(error));
         closeAuth();
         if (onAuthed) onAuthed();
         refresh();
       });
-      if (mode === "signup") return busy(async () => {
+      if (mode === "signup") return busy(async (stale) => {
         const name = $("#auth-name").value.trim().replace(/\s+/g, " ");
         const pass = $("#auth-password").value;
-        if (name.length < 3 || !name.includes(" ")) return say("err", T.errName);
-        if (pass.length < 8) return say("err", T.errPassLen);
-        if (pass !== $("#auth-password2").value) return say("err", T.errPassMatch);
+        if (name.length < 3 || !name.includes(" ")) return say("err", T.errName, "auth-name");
+        if (pass.length < 8) return say("err", T.errPassLen, "auth-password");
+        if (pass !== $("#auth-password2").value) return say("err", T.errPassMatch, "auth-password2");
         const { data, error } = await sb.auth.signUp({
           email: $("#auth-email").value.trim(), password: pass,
-          options: { data: { full_name: name, lang: L }, emailRedirectTo: window.location.origin + HOME },
+          options: { data: { full_name: name, lang: L }, emailRedirectTo: window.location.origin + AUTH_HOME },
         });
-        if (error) return say("err", mapAuthError(error));
+        if (stale()) return;
+        if (error) return say("err", isOffline(error) ? T.errOffline : mapAuthError(error));
         if (data.user && !data.session) { renderAuth("signin"); say("ok", T.signupDone); return; }
         closeAuth(); if (onAuthed) onAuthed(); refresh();
       });
-      if (mode === "forgot") return busy(async () => {
-        await sb.auth.resetPasswordForEmail($("#auth-email").value.trim(), {
-          redirectTo: window.location.origin + HOME,
+      if (mode === "forgot") return busy(async (stale) => {
+        // Bilinmeyen hesapta Supabase hata vermez; mesaj nötr kalır. Ağ/limit hatasında sahte başarı gösterilmez.
+        const { error } = await sb.auth.resetPasswordForEmail($("#auth-email").value.trim(), {
+          redirectTo: window.location.origin + AUTH_HOME,
         });
+        if (stale()) return;
+        if (error) return say("err", isOffline(error) ? T.errOffline : (/rate limit|too many/i.test(error.message || "") ? T.errRate : T.errGeneric));
         say("ok", T.forgotSent);
       });
-      if (mode === "reset") return busy(async () => {
+      if (mode === "reset") return busy(async (stale) => {
         const pass = $("#auth-password").value;
-        if (pass.length < 8) return say("err", T.errPassLen);
-        if (pass !== $("#auth-password2").value) return say("err", T.errPassMatch);
+        if (pass.length < 8) return say("err", T.errPassLen, "auth-password");
+        if (pass !== $("#auth-password2").value) return say("err", T.errPassMatch, "auth-password2");
         const { error } = await sb.auth.updateUser({ password: pass });
-        if (error) return say("err", mapAuthError(error));
+        if (stale()) return;
+        if (error) return say("err", isOffline(error) ? T.errOffline : mapAuthError(error));
         if (page === "confirm") {
           say("ok", T.resetDone);
           setTimeout(() => { window.location.href = HOME; }, 1500);
@@ -305,22 +376,69 @@
         renderAuth("signin"); say("ok", T.resetDone);
       });
     };
-    const first = $("#auth-form input");
-    if (first) first.focus();
+    // Odak yalnız diyalog görünürken taşınır (görünmez öğeye focus() etkisizdir)
+    if ($("#auth-backdrop").classList.contains("show")) focusFirst();
   }
 
-  function openAuth(cb, mode) {
-    onAuthed = cb || null;
-    renderAuth(mode || "signin");
-    $("#auth-backdrop").classList.add("show");
+  const TABBABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  function tabbables() {
+    return [...document.querySelectorAll("#auth-backdrop .modal " + TABBABLE.split(",").join(",#auth-backdrop .modal "))]
+      .filter((el) => el.offsetParent !== null || el === document.activeElement);
   }
-  function closeAuth() { $("#auth-backdrop").classList.remove("show"); }
+  function focusFirst() {
+    const first = $("#auth-form input") || tabbables()[0];
+    (first || $("#auth-backdrop .modal")).focus();
+  }
+  function setBackgroundInert(on) {
+    const bd = $("#auth-backdrop");
+    [...document.body.children].forEach((el) => {
+      if (el === bd || el.tagName === "SCRIPT") return;
+      if (on) el.setAttribute("inert", ""); else el.removeAttribute("inert");
+    });
+  }
+  function openAuth(cb, mode) {
+    const bd = $("#auth-backdrop");
+    onAuthed = cb || null;
+    if (!bd.classList.contains("show")) {
+      authOpener = document.activeElement && document.activeElement !== document.body ? document.activeElement : null;
+      bd.classList.add("show");
+      setBackgroundInert(true);
+    }
+    renderAuth(mode || "signin");
+  }
+  function closeAuth() {
+    const bd = $("#auth-backdrop");
+    if (!bd.classList.contains("show")) return;
+    authGen++;
+    authInflight = false;
+    bd.classList.remove("show");
+    setBackgroundInert(false);
+    // Odak dönüşü: açan öğe hâlâ sayfadaysa ona; değilse hesap bağlantısına ya da sayfa başlığına
+    let target = authOpener && authOpener.isConnected ? authOpener : null;
+    if (!target) target = document.querySelector("#account-line a, .reader-bar a, h1, h2");
+    if (target) {
+      if (!target.matches(TABBABLE)) target.setAttribute("tabindex", "-1");
+      target.focus();
+    }
+    authOpener = null;
+  }
 
   function wireAuthModal() {
     const bd = $("#auth-backdrop");
     if (!bd) return;
+    const dlg = bd.querySelector(".modal");
+    dlg.setAttribute("tabindex", "-1");
     $("#auth-close").onclick = closeAuth;
     bd.addEventListener("click", (e) => { if (e.target === bd) closeAuth(); });
+    bd.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { e.preventDefault(); closeAuth(); return; }
+      if (e.key !== "Tab") return;
+      const t = tabbables();
+      if (!t.length) { e.preventDefault(); dlg.focus(); return; }
+      const first = t[0], last = t[t.length - 1];
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === dlg)) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
   }
 
   // ---- satış sayfası ----
@@ -357,7 +475,7 @@
     const acct = $("#account-line");
     if (acct) {
       if (user) {
-        acct.innerHTML = `<span class="muted">${esc(user.email)}</span> · <a href="#" id="signout" style="color:#8c8470;">${T.signoutShort}</a>`;
+        acct.innerHTML = `<span class="muted acct-email" title="${esc(user.email)}">${esc(user.email)}</span><span class="acct-sep" aria-hidden="true"> · </span><a href="#" id="signout" style="color:#8c8470;">${T.signoutShort}</a>`;
         $("#signout").onclick = async (e) => { e.preventDefault(); await sb.auth.signOut(); refresh(); };
       } else {
         acct.innerHTML = `<a href="#" id="signin-link" style="color:#8c8470;text-decoration:none;">${T.signinShort}</a>`;
@@ -378,34 +496,47 @@
           `<p class="muted" style="font-size:12px;margin:6px 0 0;">${T.gsmHint}</p></div>` +
           `<label style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;cursor:pointer;">` +
           `<input type="checkbox" id="consent-box" style="margin-top:3px;accent-color:#e85d3a;">` +
-          `<span style="font-size:13px;line-height:1.55;color:#b8b0a0;">${T.consentLabel}</span></label>` +
+          `<span style="font-size:13px;line-height:1.55;color:#b8b0a0;">${T.consentLabel} ${T.consentLegal}</span></label>` +
           `<button class="btn btn-ember" id="consent-go" style="margin-top:14px;">${T.consentGo}</button>` +
-          `<p class="form-msg" id="consent-msg" style="margin-top:10px;"></p>`;
+          `<p class="form-msg" id="consent-msg" role="status" aria-live="polite" aria-atomic="true" style="margin-top:10px;"></p>`;
+        const cbox = $("#consent-box");
+        cbox.addEventListener("change", () => { cbox.removeAttribute("aria-invalid"); cbox.removeAttribute("aria-describedby"); });
+        let starting = false;
         $("#consent-go").onclick = async () => {
+          if (starting) return;
           const m = $("#consent-msg");
-          if (!$("#consent-box").checked) { m.className = "form-msg err"; m.textContent = T.consentNeed; return; }
+          if (!cbox.checked) {
+            m.className = "form-msg err"; m.textContent = T.consentNeed;
+            cbox.setAttribute("aria-invalid", "true"); cbox.setAttribute("aria-describedby", "consent-msg"); cbox.focus();
+            return;
+          }
+          starting = true;
           const btn = $("#consent-go");
           btn.disabled = true; btn.textContent = T.working; m.className = "form-msg"; m.textContent = "";
-          const r = await callFn("create-checkout", { lang: L, consent: true, gsm: $("#gsm-box").value });
+          let r;
+          try { r = await callFn("create-checkout", { lang: L, consent: true, gsm: $("#gsm-box").value }); }
+          catch (e) { r = { ok: false, status: 0, json: {}, offline: isOffline(e) }; }
+          if (!btn.isConnected) return; // bu arada görünüm yeniden çizildi (çıkış, sahiplik değişimi)
           if (r.ok && r.json.alreadyOwned) { refreshIndex(); return; }
           if (r.ok && r.json.paymentPageUrl) { location.href = r.json.paymentPageUrl; return; }
+          starting = false;
           btn.disabled = false; btn.textContent = T.consentGo;
           m.className = "form-msg err";
-          m.innerHTML = esc(T.checkoutStartFail) + " " + T.purchaseSupport(SUPPORT);
+          m.innerHTML = esc(r.offline ? T.errOffline : T.checkoutStartFail) + " " + T.purchaseSupport(SUPPORT);
         };
       } else if (PRICING.url) {
         state.innerHTML = T.pay(esc(user.email)) +
           `<label style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;cursor:pointer;">` +
           `<input type="checkbox" id="consent-box" style="margin-top:3px;accent-color:#e85d3a;">` +
-          `<span style="font-size:13px;line-height:1.55;color:#b8b0a0;">${T.consentLabel}</span></label>` +
+          `<span style="font-size:13px;line-height:1.55;color:#b8b0a0;">${T.consentLabel} ${T.consentLegal}</span></label>` +
           `<button class="btn btn-ember" id="consent-go" style="margin-top:14px;">${T.consentGo}</button>` +
-          `<p class="form-msg" id="consent-msg" style="margin-top:10px;"></p>`;
+          `<p class="form-msg" id="consent-msg" role="status" aria-live="polite" aria-atomic="true" style="margin-top:10px;"></p>`;
         $("#consent-go").onclick = async () => {
-          if (!$("#consent-box").checked) {
-            const m = $("#consent-msg"); m.className = "form-msg err"; m.textContent = T.consentNeed;
-            return;
-          }
-          await sb.auth.updateUser({ data: { withdrawal_consent_at: new Date().toISOString() } });
+          const m = $("#consent-msg");
+          if (!$("#consent-box").checked) { m.className = "form-msg err"; m.textContent = T.consentNeed; return; }
+          // Eski iyzilink yolu (CHECKOUT_ENABLED=false). Onay kaydı yazılamazsa ödeme sayfası açılmaz.
+          const { error } = await sb.auth.updateUser({ data: { withdrawal_consent_at: new Date().toISOString() } });
+          if (error) { m.className = "form-msg err"; m.textContent = isOffline(error) ? T.errOffline : T.errGeneric; return; }
           window.open(PRICING.url, "_blank", "noopener");
         };
       } else {
@@ -472,7 +603,7 @@
       const inject = `<script>window.__DEEPLINK=${JSON.stringify(deep)};<\/script>`;
       html = html.includes("</body>") ? html.replace("</body>", inject + "</body>") : html + inject;
       const iframe = document.createElement("iframe");
-      iframe.title = "Herkes İçin Yapay Zekâ";
+      iframe.title = bookLang === "en" ? "AI for Everyone" : "Herkes İçin Yapay Zekâ";
       iframe.setAttribute("sandbox", "allow-scripts");
       iframe.srcdoc = html;
       const body = $("#reader-body");
@@ -480,7 +611,7 @@
       body.appendChild(iframe);
       wrap.innerHTML = "";
     } catch (e) {
-      console.error(e);
+      console.error("reader:", (e && e.message) || "error"); // ayrıntı (token/yanıt gövdesi) konsola yazılmaz
       wrap.innerHTML = `<p class="muted">${T.err}</p><button class="btn" onclick="location.reload()">${T.retry}</button>`;
     }
   }
@@ -535,21 +666,23 @@
       `<a class="muted" style="font-size:13px;" href="${HOME}">${T.toHome}</a>`);
     const slow = () => show(T.purchaseSlow, T.purchaseSlowNote + "<br>" + T.purchaseSupport(SUPPORT),
       `<button class="btn" onclick="location.reload()">${T.purchaseRefresh}</button>`);
-    if (!orderId) { if (await hasBook(user.id)) ok(); else fail(); return; }
+    const none = () => show(T.purchaseNone, T.purchaseNoneNote + "<br>" + T.purchaseSupport(SUPPORT),
+      `<a class="muted" style="font-size:13px;" href="${HOME}">${T.toHome}</a>`);
+    if (!orderId) { if (await hasBook(user.id)) ok(); else none(); return; }
     show(T.purchaseVerifying, "");
     // Sonuç sunucudan: order-status (gerekirse iyzico ile mutabakat). Tarayıcıdaki status yalnız ipucu.
     const deadline = Date.now() + 45000;
-    let sawReview = false;
+    // Karar yalnız sunucunun doğruladığı durumdan; URL'deki status ipucu sonucu belirlemez. 404 = bu hesaba ait sipariş yok.
     while (Date.now() < deadline) {
-      const r = await callFn("order-status", { orderId });
+      let r;
+      try { r = await callFn("order-status", { orderId }); } catch (e) { r = { ok: false, status: 0, json: {} }; }
       if (r.ok) {
         const st = r.json.status;
         if (r.json.entitled || st === "paid") { ok(); return; }
         if (st === "failed" || st === "expired") { fail(); return; }
-        if (st === "review") { sawReview = true; review(); return; }
-      } else if (r.status === 404) { fail(); return; }
-      if (hint === "fail" && !sawReview) { fail(); return; } // callback zaten başarısız dedi; sunucu da onaylamadı
-      await new Promise((res) => setTimeout(res, 2000));
+        if (st === "review") { review(); return; }
+      } else if (r.status === 404) { none(); return; }
+      await new Promise((res) => setTimeout(res, hint === "fail" ? 1000 : 2000));
     }
     slow();
   }
@@ -640,16 +773,30 @@
     const fill = $("#dial-fill"), knob = $("#dial-knob");
     const basit = $("#dial-basit"), teknik = $("#dial-teknik"), mode = $("#dial-mode");
     let dragging = false;
+    let cur = 0;
+    // Tek yol: pointer ve klavye aynı fonksiyonla görseli ve ARIA değerlerini günceller (APG slider)
     function setPct(p) {
-      p = Math.max(0, Math.min(1, p));
+      p = Math.round(Math.max(0, Math.min(1, p)) * 100) / 100;
+      cur = p;
       const pct = (p * 100).toFixed(1) + "%";
       fill.style.width = pct;
       knob.style.left = pct;
       const tek = p >= 0.5;
       basit.style.opacity = tek ? 0 : 1;
       teknik.style.opacity = tek ? 1 : 0;
-      mode.textContent = tek ? "TEKNİK" : "BASİT";
+      basit.setAttribute("aria-hidden", tek ? "true" : "false");
+      teknik.setAttribute("aria-hidden", tek ? "false" : "true");
+      mode.textContent = tek ? T.dialTeknik : T.dialBasit;
+      const n = Math.round(p * 100);
+      strip.setAttribute("aria-valuenow", String(n));
+      strip.setAttribute("aria-valuetext", T.dialValue(n, tek ? "t" : "b"));
     }
+    strip.addEventListener("keydown", (e) => {
+      const step = { ArrowRight: 0.1, ArrowUp: 0.1, ArrowLeft: -0.1, ArrowDown: -0.1, PageUp: 0.25, PageDown: -0.25 }[e.key];
+      if (step !== undefined) { e.preventDefault(); setPct(cur + step); return; }
+      if (e.key === "Home") { e.preventDefault(); setPct(0); }
+      if (e.key === "End") { e.preventDefault(); setPct(1); }
+    });
     function fromEvent(e) {
       const r = strip.getBoundingClientRect();
       setPct((e.clientX - r.left) / r.width);
@@ -662,6 +809,20 @@
     strip.addEventListener("pointermove", (e) => { if (dragging) fromEvent(e); });
     strip.addEventListener("pointerup", () => { dragging = false; });
     setPct(0.12);
+  }
+
+  // ---- demo şeridi: görünür durdur/oynat (hareket azaltma tercihinde CSS zaten durdurur) ----
+  function initTicker() {
+    const btn = $("#ticker-toggle"), sec = document.querySelector(".ticker-sec");
+    if (!btn || !sec) return;
+    const sync = () => {
+      const paused = sec.classList.contains("paused");
+      btn.setAttribute("aria-pressed", paused ? "true" : "false");
+      btn.textContent = paused ? T.tickerPlay : T.tickerPause;
+    };
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) sec.classList.add("paused");
+    btn.onclick = () => { sec.classList.toggle("paused"); sync(); };
+    sync();
   }
 
   // ---- e-posta bağlantısı doğrulama sayfası (/auth/confirm) ----
@@ -706,7 +867,7 @@
     if (page === "index") {
       // Basılı kitaptaki QR'lar ve eski paylaşımlar: /#m=N&s=K → okuyucuya (sahip değilse giriş/satın alma görünür)
       if (/^#m=\d/.test(location.hash)) { location.replace(READER + location.hash); return; }
-      refreshIndex(); initCoverDial();
+      refreshIndex(); initCoverDial(); initTicker();
       if (new URLSearchParams(location.search).has("buy")) {
         history.replaceState(null, "", location.pathname + location.hash);
         buyFlow();

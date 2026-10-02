@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,6 +19,39 @@
     @keyframes riseIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
     @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
     @keyframes popIn{0%{opacity:0;transform:scale(.85);}60%{transform:scale(1.04);}100%{opacity:1;transform:scale(1);}}
+    /* Dar ekran düzeni (site denetimi MOB05A). Şablon inline stil kullandığı için hedefler, adı yorumda yazılı
+       belirli yerleşim kapsayıcılarının stil kalıplarıdır; !important yalnız bunlara uygulanır. */
+    @media (max-width: 860px){
+      /* bk-cover: kapak üst şeridi, gövde ve iki sütunlu kapak gridi */
+      [style*="max-width:1120px;margin:0 auto;padding:36px 48px 0"],
+      [style*="max-width:1120px;margin:0 auto;padding:46px 48px 0"]{padding-left:20px!important;padding-right:20px!important;}
+      [style*="max-width:1120px;margin:0 auto;padding:36px 48px 0"] > div{flex-wrap:wrap!important;gap:6px 14px!important;}
+      [style*="grid-template-columns:1.05fr 0.95fr"]{grid-template-columns:minmax(0,1fr)!important;gap:32px!important;}
+      /* bk-topbar: bölüm üst çubuğu */
+      [style*="max-width:1080px;margin:0 auto;padding:11px 40px"]{padding:9px 14px!important;flex-wrap:wrap!important;gap:6px 10px!important;}
+      /* bk-hero: bölüm başlığı alanı */
+      [style*="max-width:1080px;margin:0 auto;padding:60px 40px 56px"]{padding:34px 20px 32px!important;}
+      [style*="max-width:1080px;margin:0 auto;padding:60px 40px 56px"] > div{gap:16px!important;}
+      /* bk-main: kenar menüsü + metin gridi → tek sütun */
+      [style*="grid-template-columns:minmax(280px,412px) 1fr"]{grid-template-columns:minmax(0,1fr)!important;gap:28px!important;padding:24px 16px 64px!important;}
+      /* bk-side: yapışkan kenar menüsü → akışta; bölüm listeleri yatay kaydırılan satır */
+      [style*="position:sticky;top:64px"]{position:static!important;min-width:0;}
+      [style*="position:sticky;top:64px"] [style*="flex:0 0 176px"]{flex:1 1 100%!important;min-width:0;}
+      [style*="position:sticky;top:64px"] [style*="display:flex;flex-direction:column"]{flex-direction:row!important;overflow-x:auto;gap:6px;padding-bottom:6px;-webkit-overflow-scrolling:touch;}
+      [style*="position:sticky;top:64px"] [style*="display:flex;flex-direction:column"] > button{flex:none!important;width:auto!important;white-space:nowrap;}
+      /* bk-text: metin sütunu */
+      [style*="flex:1 1 560px;min-width:0;max-width:660px"]{flex-basis:100%!important;}
+      /* bk-toc: kapak içindekiler satırı; sağdaki not alt satıra iner */
+      button:has(> [style*="text-align:right;max-width:240px"]){flex-wrap:wrap!important;}
+      [style*="font-size:14px;color:#8c8470;flex:none;text-align:right;max-width:240px"]{flex:1 1 100%!important;max-width:none!important;text-align:left!important;}
+      [style*="font-size:46px;line-height:1"][style*="width:84px"]{width:56px!important;font-size:38px!important;}
+      /* bk-split: demo içi iki sütunlu paneller */
+      [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:minmax(0,1fr)!important;}
+    }
+    /* Hareket azaltma: animasyon kapanır, son durum görünür kalır */
+    @media (prefers-reduced-motion: reduce){
+      *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+    }
   </style>
 </helmet>
 
@@ -30,7 +63,7 @@
     <div style="position:absolute;inset:0;opacity:0.5;background-image:linear-gradient(rgba(242,234,215,0.035) 1px,transparent 1px);background-size:100% 38px;pointer-events:none;"></div>
     <div style="position:relative;max-width:1120px;margin:0 auto;padding:36px 48px 0;">
       <div style="display:flex;align-items:center;justify-content:space-between;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.18em;color:#8c8470;text-transform:uppercase;animation:fadeIn 1.1s ease both;border-bottom:1px solid rgba(242,234,215,0.14);padding-bottom:14px;">
-        <span>An Interactive Digital Book</span><span style="color:#c7b88f;">First Edition · 8 Chapters · ISBN 978-625-00-5299-0</span><span><a href="./index.html" style="color:#8c8470;text-decoration:none;">TR</a> · <a href="./en.html" style="color:#e85d3a;text-decoration:none;">EN</a></span>
+        <span>An Interactive Digital Book</span><span style="color:#c7b88f;">First Edition · 8 Chapters · ISBN 978-625-00-5299-0</span><span></span>
       </div>
     </div>
     <div style="position:relative;max-width:1120px;margin:0 auto;padding:46px 48px 0;">
@@ -87,7 +120,7 @@
   <sc-if value="{{ isModule }}" hint-placeholder-val="{{ false }}">
   <div data-screen-label="{{ mod.screenLabel }}">
 
-        <div style="background:#1a1a1a;color:#f2ead7;"><div style="max-width:720px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;"><a href="/en/" style="font-family:'Instrument Serif',serif;font-size:20px;color:#f2ead7;text-decoration:none;">AI for Everyone</a><span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#b8b0a0;">Figure 3.3</span></div></div>
+        <div style="background:#1a1a1a;color:#f2ead7;"><div style="max-width:720px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;"><a href="/en" style="font-family:'Instrument Serif',serif;font-size:20px;color:#f2ead7;text-decoration:none;">AI for Everyone</a><span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#b8b0a0;">Figure 3.3</span></div></div>
 <div style="background:#f4efe6;color:#262626;">
       <div style="position:relative;max-width:720px;margin:0 auto;padding:28px 20px 60px;display:block;">
 
@@ -974,7 +1007,7 @@
           </sc-if>
 
 
-          <div style="margin-top:40px;padding:22px 24px;border:1px solid rgba(26,26,26,0.16);background:#faf7ef;max-width:640px;"><div style="font-family:'Instrument Serif',serif;font-size:22px;color:#1f1f1f;margin-bottom:6px;">This demo is the live companion to the printed book.</div><p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#4a4539;">The full book, with all 45 live demos and both reading depths, lives in the digital edition.</p><a href="/en/" style="display:inline-block;padding:11px 20px;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:14px;text-decoration:none;">Go to the digital book →</a></div>
+          <div style="margin-top:40px;padding:22px 24px;border:1px solid rgba(26,26,26,0.16);background:#faf7ef;max-width:640px;"><div style="font-family:'Instrument Serif',serif;font-size:22px;color:#1f1f1f;margin-bottom:6px;">This demo is the live companion to the printed book.</div><p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#4a4539;">The full book, with all 45 live demos and both reading depths, lives in the digital edition.</p><a href="/en" style="display:inline-block;padding:11px 20px;background:{{ acc }};color:#f4eddb;font-family:'Work Sans',sans-serif;font-weight:600;font-size:14px;text-decoration:none;">Go to the digital book →</a></div>
         </div>
         <sc-if value="{{ hasTip }}" hint-placeholder-val="{{ false }}">
           <aside style="flex:1 1 200px;max-width:232px;position:sticky;top:96px;padding-left:16px;border-left:3px solid {{ acc }};">

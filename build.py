@@ -120,14 +120,14 @@ DEMO_UPCOMING = {
 
 DEMO_METALINK = {
     "tr": ("/#satin-al", "Ücretsiz demo · Tamamı ₺349"),
-    "en": ("/en/#buy", "Free demo · Full edition ₺349"),
+    "en": ("/en#buy", "Free demo · Full edition ₺349"),
 }
 
 # Kilitli satır tıklaması: landing'e dön, store.js ?buy=1'i görüp buyFlow'u başlatır
 # (giriş yoksa üyelik modalı; girişliyse satın alma kutusu; sahipse /oku).
 DEMO_BUYLINK = {
     "tr": "/?buy=1#satin-al",
-    "en": "/en/?buy=1#buy",
+    "en": "/en?buy=1#buy",
 }
 
 
@@ -168,6 +168,12 @@ def demo_variant(src_html: str, lang: str = "tr") -> str:
     assert n == 1, "kilitli open handler sayısı beklenenden farklı: %d" % n
     out, n = re.subn("cursor:default", "cursor:pointer", out)
     assert n == 3, "kilitli cursor stili sayısı beklenenden farklı: %d" % n
+    # head: tools/site/routes.json (SEO10/SEO13)
+    sys.path.insert(0, str(ROOT / "tools" / "site"))
+    import seo
+    vp = '<meta name="viewport" content="width=device-width, initial-scale=1">'
+    assert out.count(vp) == 1, "demo: viewport meta bulunamadı"
+    out = out.replace(vp, vp + "\n" + seo.head_block(seo.load(), "demo-" + lang), 1)
     return out
 
 
@@ -197,6 +203,8 @@ def gated_variant(single_html: str, wm_label: str) -> str:
     (book-content Edge Function) alıcı bilgisiyle doldurulur.
     """
     out = single_html
+    out, n = re.subn(r'<a href="\./Herkes-Icin-Yapay-Zeka-TR\.html"[^>]*>TR</a> · <a href="\./AI-for-Everyone-EN\.html"[^>]*>EN</a>', "", out)
+    assert n == 1, "gated: kapak dil bağlantısı bulunamadı (%d)" % n
     extras = GATED_EXTRAS.replace("%%WM_LABEL%%", wm_label).replace("\\u00b7", "·")
     out = out.replace("</body>", extras + "\n</body>", 1)
     # içeriğe dağıtılmış ek gizli işaret (kapak kökünden hemen sonra)
@@ -219,7 +227,7 @@ QR_TEXT = {
     "en": {"brand": "AI for Everyone", "fig": "Figure", "live": "Live demo · companion to the printed book",
            "cta_title": "This demo is the live companion to the printed book.",
            "cta_body": "The full book, with all 45 live demos and both reading depths, lives in the digital edition.",
-           "cta_btn": "Go to the digital book", "home": "/en/"},
+           "cta_btn": "Go to the digital book", "home": "/en"},
 }
 
 
@@ -312,6 +320,8 @@ def qr_variant(web_html: str, lang: str, key: str, sec: dict, slug: str) -> str:
     a = out.index('          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:48px;')
     b = out.index("          </div>\n", a) + len("          </div>\n")
     out = out[:a] + cta + out[b:]
+    out, n = re.subn(r'<a href="\./index\.html"[^>]*>TR</a> · <a href="\./en\.html"[^>]*>EN</a>', "", out)
+    assert n == 1, "qr: kapak dil bağlantısı bulunamadı (%d)" % n
     # 5) başlık, robots, support.js yolu, derin bağlantı kilidi
     title = f'{t["fig"]} {key} · {sec["title"]}'
     out = out.replace('<meta name="viewport" content="width=device-width, initial-scale=1">',

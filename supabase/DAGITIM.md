@@ -88,3 +88,10 @@ Her adımda DB: Dashboard → Table Editor → `book_orders` (status, source, iy
 ## İş bölümü
 - Yazar: anahtarlar, `supabase login`, secrets, panel ayarları, gerçek ödeme testi.
 - Claude: kod, tarayıcıdan sandbox akış testi, log okuma, hata düzeltme; istenirse `functions deploy` (secret gerektirmez).
+
+## Tek dağıtım yolu (site denetimi, 2026-10-02)
+- Kitap fonksiyonlarının tek kaynağı bu dizindir (`Final/supabase/functions`). Kardeş `site` deposunun `book-sales` dalındaki eski
+  kopyalar (book-content, book-token, create-checkout, iyzico-callback, `_shared/iyzico.ts`) kaldırıldı; orada
+  `supabase/functions/KITAP-FONKSIYONLARI.md` notu var. `site` deposundan yalnız ana sitenin fonksiyonları dağıtılır.
+- Aynı proje (`dtsgewamjkcojffustrg`) iki depodan beslendiği için deploy'u tek kişi yapar; komut her zaman Final kökünden çalışır.
+- Bilinen sunucu tarafı iyileştirmeleri (P2) yerel çalışma belgelerinde izlenir; bu dosyada ayrıntı tutulmaz.
