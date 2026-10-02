@@ -94,8 +94,4 @@ Her adımda DB: Dashboard → Table Editor → `book_orders` (status, source, iy
   kopyalar (book-content, book-token, create-checkout, iyzico-callback, `_shared/iyzico.ts`) kaldırıldı; orada
   `supabase/functions/KITAP-FONKSIYONLARI.md` notu var. `site` deposundan yalnız ana sitenin fonksiyonları dağıtılır.
 - Aynı proje (`dtsgewamjkcojffustrg`) iki depodan beslendiği için deploy'u tek kişi yapar; komut her zaman Final kökünden çalışır.
-- `has_role(_user_id, _role)` herhangi bir kullanıcı kimliği için sorgulanabiliyor (site migration'ı, ayrı EXECUTE kısıtı yok).
-  Bu, bir kimliğin admin olup olmadığını öğrenmeye izin verir; RLS politikaları da bu fonksiyonu kullandığı için EXECUTE hakkı
-  körlemesine kaldırılmaz. Çözüm P2'de (`docs/site-denetimi/odeme-hak-tasarimi.md`): `auth.uid()` kullanan dar bir `is_admin()`.
-- Webhook imzası (V3) iyzico'da açılana dek `IYZICO_WEBHOOK_REQUIRE_SIGNATURE=false` geçici bir istisnadır; bitiş koşulu
-  `docs/site-denetimi/karar-kapilari.md` V3 satırında.
+- Bilinen sunucu tarafı iyileştirmeleri (P2) yerel çalışma belgelerinde izlenir; bu dosyada ayrıntı tutulmaz.
