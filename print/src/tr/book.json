@@ -192,7 +192,7 @@
      "label": "Dar mı Genel mi?",
      "h2": "Dar YZ mi, Genel YZ mi?",
      "basit": [
-      "Filmlerdeki gibi her şeyi anlayan bir yapay zekâ henüz yok. Bugünkü YZ sistemleri “dar” (narrow) sayılır: eğitildiği işlerde ustadır, o işlerin bir adım dışında acemidir. Satranç motoru seni yener ama ondan bir çorba tarifi isteyemezsin.",
+      "Filmlerdeki gibi her şeyi anlayan bir yapay zekâ henüz yok. Bugünkü YZ sistemleri “dar” (narrow) sayılır: eğitildiği işlerde ustadır; o işlerden uzaklaştıkça çabucak zorlanır. Satranç motoru seni yener ama ondan bir çorba tarifi isteyemezsin.",
       "Alanlar arasında geniş ve aktarılabilir yetenekleri olan, insan gibi her alanda öğrenebilen varsayımsal sisteme “genel yapay zekâ” (AGI) denir; öylesi daha yapılmadı. Çok iş yapmak tek başına genel olmak demek değildir; bilinç ise apayrı bir soru. Aşağıdaki örnekleri sen ayır: hangisi bugün var, hangisi hâlâ bilim kurgu?"
      ],
      "teknik": [
@@ -1707,7 +1707,7 @@
       "AB YZ Yasası risk-temelli bir çerçeve kurar: kabul edilemez risk (ör. belirli koşullardaki sosyal puanlama) yasaklanır; yüksek risk (ör. işe alım, gerçek kişilerin kredi değerliliği, kritik altyapı) sıkı uyum, dokümantasyon ve insan gözetimi gerektirir; sınırlı risk (ör. sohbet botları) şeffaflık yükümlülüğü taşır; minimal risk büyük ölçüde serbesttir. Bu dört kademe öğretici bir özettir; hukuki sınıflandırma sistemin amaçlanan kullanımına, aktörün rolüne ve ilgili madde ya da eke göre yapılır.",
       "Bu, GDPR ve KVKK gibi kişisel veri rejimlerini tamamlar; onların kuralları (hukuki dayanak, amaç sınırlaması, veri minimizasyonu) ayrıca geçerlidir. Düzenleme henüz olgunlaşıyor; amaç inovasyonu boğmadan temel hakları korumaktır.",
       "Bu bölüm, (AB) 2024/1689 sayılı Tüzüğün, 24 Temmuz 2026’da AB Resmî Gazetesi’nde yayımlanıp 27 Temmuz 2026’da yürürlüğe giren (AB) 2026/1744 sayılı Tüzükle değiştirilmiş konsolide sürümünü esas alır (erişim: 1 Ekim 2026). Yürürlüğe giriş ile yükümlülüklerin uygulanma tarihleri aynı değildir. Madde 5’teki ilk yasaklar 2 Şubat 2025’ten, Madde 50 şeffaflık kuralları 2 Ağustos 2026’dan beri uygulanıyor. 2 Ağustos 2026’dan önce piyasaya sürülmüş ve sentetik ses, görüntü, video ya da metin üreten sistemler, Madde 50(2)’deki işaretleme yükümlülüğüne 2 Aralık 2026’ya kadar uymalıdır (Madde 111(4)). Değişiklikle eklenen yeni yasaklar 2 Aralık 2026’dan itibaren uygulanır: tanınabilir bir kişinin rızası olmadan mahrem ya da cinsel içerikli görüntüsünü üretmek ve çocuk istismarı materyali üretmek (Madde 5(1)(ba), (bb)). Yüksek-risk yükümlülükleri Ek III sistemleri için 2 Aralık 2027’de, Ek I’deki ürün mevzuatı kapsamındaki sistemler için 2 Ağustos 2028’de başlar.",
-      "Dört ince nokta. Ek III 5(b), gerçek kişilerin kredi değerliliğini değerlendiren ya da kredi puanı belirleyen sistemleri kapsar; finansal dolandırıcılık tespiti bu bentten açıkça istisna edilmiştir. Ek III’teki bir sistem, karar sonucunu önemli ölçüde etkilemiyorsa yüksek riskli sayılmayabilir: dar bir usul işi, tamamlanmış bir insan işini iyileştirme, karar örüntüsündeki sapmayı yakalama ya da bir hazırlık işi (Madde 6(3)). Ama gerçek kişilerin profilini çıkaran bir Ek III sistemi her zaman yüksek risklidir ve bu istisnaya başvuran sağlayıcı değerlendirmesini piyasaya sürmeden önce belgelemelidir. Madde 5(1)(h)’deki yasak, kamuya açık alanda kolluk amacıyla gerçek zamanlı uzaktan biyometrik kimlik tespitini hedefler; sınırlı istisnaları ve koşulları vardır, başka amaçlar da otomatik serbest sayılmaz. Madde 50 tek bir “YZ kullandığını söyle” kuralı değildir ve yükümlülüğü role göre dağıtır: insanla doğrudan etkileşimde bilgilendirme (50(1)) ve sentetik çıktının makinece okunabilir işaretlenmesi (50(2)) sağlayıcının; duygu tanıma ya da biyometrik kategorizasyon sisteminin bildirilmesi (50(3)) ile deepfake’in ve kamuyu bilgilendirmek için yayımlanan yapay metnin açıklanması (50(4)) sistemi kullanan uygulayıcının yükümlülüğüdür. Sanat, hiciv ya da kurgu eserlerde açıklama sınırlıdır; insan editoryal denetiminden geçen metin 50(4)’ün metin kuralının dışında kalır. Bu yükümlülükler yüksek-risk ve diğer hukuk yükümlülüklerinin yerine geçmez.",
+      "Dört ince nokta. Ek III 5(b), gerçek kişilerin kredi değerliliğini değerlendiren ya da kredi puanı belirleyen sistemleri kapsar; finansal dolandırıcılık tespiti bu bentten açıkça istisna edilmiştir. Ek III’teki bir sistem, karar sonucunu önemli ölçüde etkilemiyorsa yüksek riskli sayılmayabilir: dar bir usul işi, tamamlanmış bir insan işini iyileştirme, karar örüntüsündeki sapmayı yakalama ya da bir hazırlık işi (Madde 6(3)). Ama gerçek kişilerin profilini çıkaran bir Ek III sistemi her zaman yüksek risklidir ve bu istisnaya başvuran sağlayıcı değerlendirmesini piyasaya sürmeden önce belgelemelidir. Madde 5(1)(h)’deki yasak, kamuya açık alanda kolluk amacıyla gerçek zamanlı uzaktan biyometrik kimlik tespitini hedefler; sınırlı istisnaları ve koşulları vardır, başka amaçlar da otomatik serbest sayılmaz. Madde 50 tek bir “YZ kullandığını söyle” kuralı değildir ve yükümlülüğü role göre dağıtır: insanla doğrudan etkileşimde bilgilendirme (50(1)) ve sentetik çıktının makinece okunabilir işaretlenmesi (50(2)) sağlayıcının; duygu tanıma ya da biyometrik kategorizasyon sisteminin bildirilmesi (50(3)) ile deepfake’in ve kamuyu bilgilendirmek için yayımlanan yapay metnin açıklanması (50(4)) sistemi kullanan uygulayıcının yükümlülüğüdür. Sanat, hiciv ya da kurgu eserlerde açıklama sınırlıdır; insan incelemesinden ya da editoryal denetimden geçmiş ve yayımının editoryal sorumluluğunu bir gerçek ya da tüzel kişinin taşıdığı metin 50(4)’ün metin kuralının dışında kalır; iki koşul birlikte aranır. Bu yükümlülükler yüksek-risk ve diğer hukuk yükümlülüklerinin yerine geçmez.",
       "GDPR’de rıza tek işleme dayanağı değildir; Madde 6(1) rızanın yanında sözleşme, hukuki yükümlülük, hayati çıkar, kamu yararı ve şartlı meşru menfaat dayanaklarını sayar. Madde 22, yalnızca otomatik işlemeye dayanan ve hukuki ya da benzer ölçüde önemli etki doğuran kararlarla ilgilidir; sözleşme gerekliliği, kanun yetkisi ve açık rıza istisnaları koşulludur; sözleşme ve açık rıza istisnalarında insan müdahalesi isteme, görüş bildirme ve karara itiraz güvenceleri gerekir.",
       "6698 sayılı KVKK’da da açık rıza tek işleme şartı değildir; m.5(2)’deki şartlardan biri varsa açık rıza aranmaksızın işleme mümkündür. m.11(1)(g), verilerin yalnızca otomatik sistemlerle analiz edilmesiyle kişinin aleyhine bir sonuç doğmasına itiraz hakkını düzenler. Bu hüküm, GDPR Madde 22 ile aynı kapsam ve istisnalara sahipmiş gibi okunmamalıdır."
      ],
@@ -2063,7 +2063,7 @@
   ],
   "diffuse": [
    "Tamamen gürültüyle başlıyoruz — karıncalı bir ekran. Kaydıracı sağa sürükle, model gürültüyü adım adım temizlesin.",
-   "Gürültü tamamen temizlendi ve görsel ortaya çıktı (bir kalp). Difüzyon tam olarak böyle çalışır: gürültüden şekle.",
+   "Gürültü tamamen temizlendi ve görsel ortaya çıktı (bir kalp). Difüzyonun temel fikri, sadeleştirilmiş hâliyle budur: adım adım gürültüden şekle. Gerçek modelde gürültü öğrenilmiş bir ağla tahmin edilip çıkarılır; burada pikseller önceden belirlenmiş bir sırayla açılıyor.",
    "/8: gürültünün bir kısmı temizlendi, şekil belirmeye başladı. Her adım biraz daha “doğru” pikselleri ortaya çıkarıyor."
   ],
   "ctx": [
@@ -2157,7 +2157,7 @@
    "Yapay üretim izi var (kanıt değil)",
    "Bu bilgiyle anlaşılmaz",
    "Kanal: hangi bağımsız doğrulamayı yaparsın?",
-   "Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor.",
+   "Bir videoda tanınmış biri, hiçbir kaynakta doğrulanmayan bir cümleyi söylerken görülüyor; dudak hareketleri sese tam oturmuyor.",
    "Videoyu paylaşan hesabın altındaki yorumlara bak",
    "Aynı videoyu başka bir sosyal medya hesabında ara",
    "Konuşmanın özgün kaydını ve yayımlayan kurumu bağımsız bir kanaldan bul",
@@ -2188,8 +2188,8 @@
    "İpuçları inceleme gerekçesidir; tek başına içeriğin nasıl üretildiğinin kanıtı değildir. Olayın gerçekliği ile üretim yöntemi ayrı sorulardır; ikisinde de karar bağımsız bir kanaldan gelir."
   ],
   "reg": [
-   "Vatandaşları davranışına göre puanlayan devlet sistemi",
-   "Amaç: kişileri sosyal davranışına göre puanlamak; aktör: devlet. Madde 5(1)(c), puanın bağlamından kopuk ya da orantısız olumsuz muameleye yol açtığı durumları yasaklar; her puanlama koşulsuz yasak değildir.",
+   "Sosyal davranış puanıyla ilgisiz alanlarda orantısız yaptırım uygulayan devlet sistemi",
+   "Amaç: kişileri sosyal davranışına göre puanlamak; aktör: devlet (yasak yalnız kamuya özgü değildir). Madde 5(1)(c), puanın verinin toplandığı bağlamla ilgisiz alanlarda ya da davranışla orantısız veya gerekçesiz olumsuz muameleye yol açtığı durumları yasaklar; bu senaryo iki koşulu da taşıyor. Her puanlama koşulsuz yasak değildir.",
    "İşe alımda adayları otomatik eleyen sistem",
    "Amaç: başvuruları süzmek ve adayları değerlendirmek; aktör: sistemi kullanan işveren (uygulayıcı) ve geliştiren sağlayıcı. Ek III 4(a) kapsamında yüksek risk; yükümlülükler 2 Aralık 2027’den itibaren uygulanır.",
    "Müşteriyle konuşan sohbet botu",

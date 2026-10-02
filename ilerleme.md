@@ -768,7 +768,27 @@ async grab(label): chip(label).click → Basit modu metni + Teknik modu metni; c
   3.4/3.6 başlık payı, 4.3, 7.2, 7.4, 8.2, 2.2 düzeltildi). Kindle: Figure Data eki, aria-describedby → <section id>, Kindle Previewer 4 CLI
   dönüşümü başarılı (Türkçe yerel ayar hatası: JAVA_TOOL_OPTIONS=-Duser.language=en). Teslim notları ölçümden: print/teslim/guncelle.py.
   SON (2026-10-02): TR 256 s. (tam 16 forma, Notlar yok; TrimBox 160,00 × 240,00 mm), EN KDP 278 s. (kapak.en.json pages 278), EPUB
-  epubcheck 0 + Kindle Previewer 4 Success/0/0; iki dilde check.sh "tüm denetimler geçti" (0 kayıp cümle, QR 45/45, PDF şekil metni ≥ 6,51 pt);
+  epubcheck 0 + Kindle Previewer 4 Success/0/0; iki dilde check.sh "tüm denetimler geçti" (0 kayıp cümle, QR 45/45, PDF normal şekil metni ≥ 6,51 pt; matematik üst/alt simgesi ve Type 3 yedek glif bu hedefin dışında, N002);
   dogrulama33.py 33/33; qa_evidence: 90/90 canlı URL, dizin HTML = PDF. Açık dış koşullar: matbaa ICC + bağımsız preflight (R080), künye
   matbaa satırı + EN ISBN (R081), EAN doğrulayıcı (R079), fiziksel prova/sırt (R082, R084), ekran okuyucu + cihaz (R099). Yazara:
   python3 upload_book.py + git push (dijital değişiklikler; print/ ve BASKI.md push edilmez).
+- İKİNCİ DOĞRULAMA TURU (2026-10-02; yazarın "İkinci 99 Kayıt Doğrulama Raporu"): açık 5 kusur + 6 dış kabul grubu + N001–N008.
+  R056 sosyal puanlama kartı Madde 5(1)(c) koşullarıyla, 50(4) editoryal sorumluluk koşulu; R064 EN sayaç en-US/million/billion (27 durum testi,
+  EN 61 bölüm × 2 mod tarayıcı taraması temiz); R071 başlık yalnızlığı: hooks.js onOverflow tabloyu taşır + check_table_heads.py (raporun 8 vakasını
+  eski PDF'te birebir yakaladı; yeni PDF'lerde 0); R073 Şekil 6.3 etiket + geometri denetimine çizgi teması; R094 önsöz "çoğu/most"; N006 vaka 1 dili;
+  N002 punto iddiası daraltıldı; N003 sekil-iliski-45.json (672 kritik değer, 45/45); N005 Previewer kök nedeni tr_TR (A/B + 4 JVM kanıtı, preview.sh);
+  R098 eki: EPUB kaynakça bağlantıları tıklanabilir. Dış kabul paketi print/teslim/kabul/ (protokol + QR 45×2×2, küçük glif, erişilebilirlik tabloları).
+  SON: TR 256 s., EN 276 s.; iki dilde check.sh geçti; dogrulama2.py 19/19, dogrulama33.py 33/33; EPUB 0 hata; KPF yeni EPUB'dan.
+- YENİDEN DENETİM (2026-10-02, "%100 karşılandığından emin ol"): belge 853 paragraf baştan okundu, her "Kalan/Kapanış koşulu" bir teste bağlandı.
+  Sabit True testler kaldırıldı: R002/R055/R056/R060/R062/R064 artık gerçek headless Chrome sonucundan (ui_test.mjs 18/18: R062 3 senaryo × çoklu seçim
+  + "YZ'nin kendisi" uyarısı; N007 EN 61 bölüm × 2 mod = 122 görünüm taraması), R040 bağımsız CDF denetimi, R081 yer tutucu kümesi, R098 Crossref
+  (1937, s2-42, 230-265) + PDF Link/URI = 0 (PDF/X-1a) + EPUB 27 bağlantı. KPF içindeki book.epub hash = güncel EPUB; Previewer arayüz A/B
+  (PREVIEW_GUI=1; ayarsız önizleme yok, ayarlı 8,5 MB önizleme, günlük 0 hata, 4 JVM). sekil_tarama.py: 45 TR + 45 EN şekil 180 dpi, indeks hash'li;
+  N008 600 dpi yakın planda temiz. R007/R069 isteğe bağlı netlik (M01) ve R042 dijital difüzyon yazısı uygulandı, REDAKSİYON/EDITORIAL notlarında.
+  Tam yeniden üretim: TR 256 s., EN 276 s., iki check.sh geçti, epubcheck 0, 90/90 canlı URL; dogrulama33 33/33, dogrulama2 19/19.
+- İKİNCİ YENİDEN DENETİM (2026-10-02): N005 asıl Java hatası yakalandı (ayarsızda MissingResourceException "epubprocessor.ınfo_en" ×36 +
+  CLI "Failed to get Mobi message stores"; ayarlıda 0) ve incelemecinin başarısız denemesi yeniden üretildi (C: export edilmeden atama → ayar
+  Java'ya ulaşmıyor, aynı hata); preview.sh A/B/C. N006 vaka 1 dili sadeleşti (TR "söylerken görülüyor", EN "…no source confirms").
+  Yeni kapılar: tablo-devam-basliksiz (check.sh + dogrulama2), kapak sırtı = iç blok sayfası, teslim kopyası hash'i, EPUB kapağı = Kindle JPEG.
+  Bu kapılar iki gerçek açık yakaladı ve kapattı: EN iç blok 278 s.'ye çıkınca kapak 276'da kalmıştı; EPUB eski kapak JPEG'ini taşıyordu.
+  SON: TR 256 s., EN 278 s. (sırt 15,90 mm), iki check.sh geçti, epubcheck 0, Previewer CLI+arayüz geçti; dogrulama33 33/33, dogrulama2 19/19.

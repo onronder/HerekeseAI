@@ -1,0 +1,686 @@
+{
+ "epub": "print/kitap/en/AI-for-Everyone.epub",
+ "sekil": 45,
+ "kabul": 45,
+ "sorunlu": [],
+ "kritik_deger_toplam": 672,
+ "govdede_toplam": 571,
+ "not": "Mekanik etiket eşlemesi (fig_coverage.py) ayrı bir göstergedir; bu kayıt değer/işaret/sıra/bağlantı eşliğidir. Gerçek ekran okuyucu testi ayrıca gerekir.",
+ "sekiller": {
+  "1.1": {
+   "kritik_deger": 3,
+   "govdede": 3,
+   "ekte": 3,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "1.2": {
+   "kritik_deger": 13,
+   "govdede": 13,
+   "ekte": 13,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "1.3": {
+   "kritik_deger": 9,
+   "govdede": 7,
+   "ekte": 9,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "1.4": {
+   "kritik_deger": 3,
+   "govdede": 3,
+   "ekte": 3,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "1.5": {
+   "kritik_deger": 5,
+   "govdede": 5,
+   "ekte": 5,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "1.6": {
+   "kritik_deger": 103,
+   "govdede": 63,
+   "ekte": 103,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "2.1": {
+   "kritik_deger": 3,
+   "govdede": 3,
+   "ekte": 3,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "2.2": {
+   "kritik_deger": 0,
+   "govdede": 0,
+   "ekte": 0,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "2.3": {
+   "kritik_deger": 4,
+   "govdede": 4,
+   "ekte": 4,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "2.4": {
+   "kritik_deger": 5,
+   "govdede": 5,
+   "ekte": 5,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "2.5": {
+   "kritik_deger": 4,
+   "govdede": 4,
+   "ekte": 4,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "3.1": {
+   "kritik_deger": 6,
+   "govdede": 6,
+   "ekte": 6,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "3.2": {
+   "kritik_deger": 6,
+   "govdede": 6,
+   "ekte": 6,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "3.3": {
+   "kritik_deger": 43,
+   "govdede": 33,
+   "ekte": 43,
+   "eksik": [],
+   "isaretli": 2,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "3.4": {
+   "kritik_deger": 43,
+   "govdede": 43,
+   "ekte": 43,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "3.5": {
+   "kritik_deger": 46,
+   "govdede": 35,
+   "ekte": 46,
+   "eksik": [],
+   "isaretli": 10,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "3.6": {
+   "kritik_deger": 36,
+   "govdede": 22,
+   "ekte": 36,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "4.1": {
+   "kritik_deger": 6,
+   "govdede": 6,
+   "ekte": 6,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "4.2": {
+   "kritik_deger": 14,
+   "govdede": 14,
+   "ekte": 14,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "4.3": {
+   "kritik_deger": 36,
+   "govdede": 27,
+   "ekte": 36,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "4.4": {
+   "kritik_deger": 5,
+   "govdede": 5,
+   "ekte": 5,
+   "eksik": [],
+   "isaretli": 2,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "4.5": {
+   "kritik_deger": 31,
+   "govdede": 31,
+   "ekte": 31,
+   "eksik": [],
+   "isaretli": 9,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "4.6": {
+   "kritik_deger": 27,
+   "govdede": 27,
+   "ekte": 27,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "5.1": {
+   "kritik_deger": 6,
+   "govdede": 6,
+   "ekte": 6,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "5.2": {
+   "kritik_deger": 28,
+   "govdede": 28,
+   "ekte": 28,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "5.3": {
+   "kritik_deger": 9,
+   "govdede": 9,
+   "ekte": 9,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "5.4": {
+   "kritik_deger": 30,
+   "govdede": 18,
+   "ekte": 30,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "5.5": {
+   "kritik_deger": 3,
+   "govdede": 3,
+   "ekte": 3,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "5.6": {
+   "kritik_deger": 29,
+   "govdede": 29,
+   "ekte": 29,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "5.7": {
+   "kritik_deger": 7,
+   "govdede": 7,
+   "ekte": 7,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "6.1": {
+   "kritik_deger": 10,
+   "govdede": 10,
+   "ekte": 10,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "6.2": {
+   "kritik_deger": 11,
+   "govdede": 11,
+   "ekte": 11,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "6.3": {
+   "kritik_deger": 7,
+   "govdede": 7,
+   "ekte": 7,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "6.4": {
+   "kritik_deger": 5,
+   "govdede": 5,
+   "ekte": 5,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "6.5": {
+   "kritik_deger": 3,
+   "govdede": 3,
+   "ekte": 3,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "7.1": {
+   "kritik_deger": 10,
+   "govdede": 10,
+   "ekte": 10,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "7.2": {
+   "kritik_deger": 13,
+   "govdede": 13,
+   "ekte": 13,
+   "eksik": [],
+   "isaretli": 4,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "7.3": {
+   "kritik_deger": 4,
+   "govdede": 4,
+   "ekte": 4,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "7.4": {
+   "kritik_deger": 6,
+   "govdede": 6,
+   "ekte": 6,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "7.5": {
+   "kritik_deger": 0,
+   "govdede": 0,
+   "ekte": 0,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "8.1": {
+   "kritik_deger": 8,
+   "govdede": 8,
+   "ekte": 8,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "8.2": {
+   "kritik_deger": 3,
+   "govdede": 3,
+   "ekte": 3,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "8.3": {
+   "kritik_deger": 3,
+   "govdede": 0,
+   "ekte": 3,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "8.4": {
+   "kritik_deger": 23,
+   "govdede": 23,
+   "ekte": 23,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  },
+  "8.5": {
+   "kritik_deger": 3,
+   "govdede": 3,
+   "ekte": 3,
+   "eksik": [],
+   "isaretli": 0,
+   "isaret_korundu": true,
+   "sira_korundu": true,
+   "baglantilar": {
+    "aria_kurulum": true,
+    "gorsel_to_ek": true,
+    "ek_to_gorsel": true
+   },
+   "kabul": true
+  }
+ }
+}

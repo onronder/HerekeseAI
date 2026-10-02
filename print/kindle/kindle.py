@@ -110,6 +110,11 @@ def fig_appendix():
 _i = body.find('<h1>Index</h1>')
 assert _i > 0, 'Index başlığı yok'
 body = body[:_i] + fig_appendix() + body[_i:]
+# R098: kaynakçadaki düz URL'ler e-kitapta tıklanabilir bağlantı (basılı PDF/X bağlantı açıklaması taşımaz)
+_b = body.find('<h1>Bibliography and Further Reading</h1>'); _e = body.find('<h1>', _b + 10)
+if _b >= 0:
+    seg = re.sub(r'(?<![">])(https?://[^\s<]+?)([.,;)]?)(?=[\s<])', lambda m: f'<a href="{m.group(1)}">{m.group(1)}</a>{m.group(2)}', body[_b:_e])
+    body = body[:_b] + seg + body[_e:]
 # sayfa sonu ve dizin notu
 body = body.replace('<hr class="pb">', '')
 body = body.replace('Page numbers are added at typesetting.', 'Entries link to the section where the term appears.')

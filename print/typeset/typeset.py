@@ -412,6 +412,9 @@ def build(pad=0, plan=None):
             rows = [m.start() for m in re.finditer(r'<tr[ >]', t[tb:])]
             if len(rows) >= 4 and t.startswith('<tr>', tb + rows[1]):
                 j = tb + rows[1]; t = t[:j] + '<tr data-break-before="avoid">' + t[j + 4:]
+            # N001: başlık satırı (thead) ilk veri satırından ayrılmaz; başlık sayfa dibinde tek başına kalmaz
+            if rows and t.startswith('<tr>', tb + rows[0]):
+                j = tb + rows[0]; t = t[:j] + '<tr data-break-before="avoid">' + t[j + 4:]
         return t
     body = re.sub(r'<table[^>]*>.*?</table>', last_row_keep, body, flags=re.S)
     # R089: matematik ifadeleri satır sonunda terim ortasından bölünmez (√(…) ve +/− içeren kısa fonksiyon terimleri)

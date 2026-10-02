@@ -39,7 +39,7 @@ export default {
     },
     df: {
       cases: [
-        { text: 'Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor.', medium: 'VİDEO' },
+        { text: 'Bir videoda tanınmış biri, hiçbir kaynakta doğrulanmayan bir cümleyi söylerken görülüyor; dudak hareketleri sese tam oturmuyor.', medium: 'VİDEO' },
         { text: 'Telefonda “patronun” acil para transferi istiyor; sesi tıpkı ona benziyor ama tonlama biraz robotik.', medium: 'SES' },
         { text: 'Bir gazetenin web sitesinde yayımlanan, birden çok bağımsız kaynağın da doğruladığı bir haber.', medium: 'YAZILI HABER' },
         { text: 'Bir fotoğrafta kişinin elinde altı parmak var ve arka plandaki yazılar anlamsız harflerden oluşuyor.', medium: 'FOTOĞRAF' },
@@ -57,7 +57,7 @@ export default {
         { k: 'minimal', label: 'Minimal', rule: 'Büyük ölçüde serbest' },
       ],
       uses: [
-        'Vatandaşları davranışına göre puanlayan devlet sistemi',
+        'Sosyal davranış puanıyla ilgisiz alanlarda orantısız yaptırım uygulayan devlet sistemi',
         'İşe alımda adayları otomatik eleyen sistem',
         'Müşteriyle konuşan sohbet botu',
         'E-postada spam filtresi',
@@ -122,7 +122,7 @@ export default {
     },
     df: {
       cases: [
-        { text: 'In a video, a public figure says a sentence they never said; the lip movements don’t quite match the audio.', medium: 'VIDEO' },
+        { text: 'A video shows a public figure saying a sentence that no source confirms; the lip movements don’t quite match the audio.', medium: 'VIDEO' },
         { text: 'On the phone, your “boss” urgently asks for a money transfer; the voice sounds just like them, but the intonation is slightly robotic.', medium: 'AUDIO' },
         { text: 'A news story on a newspaper’s site, also confirmed by several independent sources.', medium: 'WRITTEN NEWS' },
         { text: 'In a photo, a person’s hand has six fingers and the text in the background is gibberish.', medium: 'PHOTO' },
@@ -140,7 +140,7 @@ export default {
         { k: 'minimal', label: 'Minimal', rule: 'Largely free' },
       ],
       uses: [
-        'A state system scoring citizens by behavior',
+        'A state social-behavior score that triggers disproportionate penalties in unrelated areas',
         'A system auto-screening job candidates',
         'A chatbot talking to customers',
         'A spam filter in email',

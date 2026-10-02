@@ -1,12 +1,12 @@
 {
  "hash": {
-  "tr_pdf": "4d74bf636ab84c3ed6c6ad9e8e12204d29eb467f4faeeb02f71719553a6921ba",
-  "tr_cover": "d0105410e03d822a6217f4b9c9aaae0719c94a5b20172ac4003706505932b696",
-  "en_pdf": "7cd8ae257dd6ea98e187e5b680c9cc0450821e42516e4068ca18d6fb42fa2605",
-  "en_cover": "f1faef62abb0881e4a89fe225f34b7b519da6ea0c9139b74b34c37c02baa116c",
-  "epub": "eba97ad69af17f3bb4fe7d83163a163fea65cb856da674fa32158ab218a19fd0",
-  "tr_html": "3c38107d4787f45a9ac79788cf4701f37d15b6c3d4da9695ea50193122285e3b",
-  "en_html": "cf6983dcee265f8101246c1b18af0fc384a6ea232a2f76b5eb66adfbf3b65a01"
+  "tr_pdf": "e2e389204f0f9fa293a157d79957fec74bdb83487e45eaedc3a599354212f271",
+  "tr_cover": "46f11ca2f294401439508e5add77c0a5bc5bd54677fe9f37ac74efad4e64ac0a",
+  "en_pdf": "d96e7d5a10137e7c9218e1e5ee05bd8b987cfca8bfaa9e7fe50d2c794f89bf20",
+  "en_cover": "900240e5a642453a8311d125dfebdb14bbd085df746e2707cc8d7a432cf432a6",
+  "epub": "626bda8e2848892767b3cd2ed22409ea33d5c0fdb8d0c9813b68beabe9a95acd",
+  "tr_html": "57e370834a8a302e24c42eb8c91814e8739da4a5332f556068a1fb9ef9d60b35",
+  "en_html": "2a33e6388f0f8472583bf1d31846037eb2da8a815e8146dd08d71372ec8116e1"
  },
  "pages": {
   "tr_pdf": "256",
@@ -25,13 +25,13 @@
  "checkers": {
   "style_tr": "TOPLAM: 45 şekil, 0 sorun",
   "style_en": "TOTAL: 45 figures, 0 issues",
-  "consistency": "Chapter 3: TR 4647 / EN 5804 words · 1 issues\n    tables: TR 3 vs EN 4\nChapter 4: TR 5582 / EN 6881 words · 1 issues\n    figure 4.5 numbers · only TR: [] · only EN: ['0.09', '0.39', '0.55', '0.67', '0.77', '0.86', '7']\nChapter 5: TR 6400 / EN 8111 words · 1 issues\n    figure 5.1 numbers · only TR: ['8'] · only EN: ['1.4', '1.8', '2.75', '6']\nChapter 6: TR 4654 / EN 5811 words · 0 issues\nChapter 7: TR 4229 / EN 5505 words · 1 issues\n    tables: TR 5 vs EN 7\nChapter 8: TR 3847 / EN 4880 words · 1 issues\n    tables: TR 5 vs EN 7\nTOTAL issues: 6",
+  "consistency": "Chapter 3: TR 4647 / EN 5804 words · 1 issues\n    tables: TR 3 vs EN 4\nChapter 4: TR 5582 / EN 6881 words · 1 issues\n    figure 4.5 numbers · only TR: [] · only EN: ['0.09', '0.39', '0.55', '0.67', '0.77', '0.86', '7']\nChapter 5: TR 6400 / EN 8111 words · 1 issues\n    figure 5.1 numbers · only TR: ['8'] · only EN: ['1.4', '1.8', '2.75', '6']\nChapter 6: TR 4654 / EN 5811 words · 0 issues\nChapter 7: TR 4253 / EN 5530 words · 1 issues\n    tables: TR 5 vs EN 7\nChapter 8: TR 3847 / EN 4880 words · 1 issues\n    tables: TR 5 vs EN 7\nTOTAL issues: 6",
   "verbatim_tr": "TOTAL not verbatim: 83 (her biri REDAKSİYON NOTLARI'ta gerekçeli olmalı)",
   "verbatim_en": "TOTAL not verbatim: 94 (her biri EDITORIAL NOTES'ta gerekçeli olmalı)"
  },
  "integrity": {
-  "tr": "tr: 4567 cümle denetlendi · PDF'de bulunamayan 0",
-  "en": "en: 4597 cümle denetlendi · PDF'de bulunamayan 0"
+  "tr": "tr: 4572 cümle denetlendi · PDF'de bulunamayan 0",
+  "en": "en: 4601 cümle denetlendi · PDF'de bulunamayan 0"
  },
  "qr": {
   "tr": "QR sessiz alan: 45 kod ölçüldü · en dar 3.73 mm · < 2,7 mm olan: 0\nQR okunan: 45 · beklenen ile eşleşen: 45/45 · eksik: 0 · yabancı: 0",
@@ -46,7 +46,7 @@
  },
  "ean_bar_mm": 23.37,
  "ink": {
-  "tr_pdf": "0.00000  0.06906  0.06906  0.10630 CMYK OK",
+  "tr_pdf": "0.00000  0.07009  0.07009  0.10733 CMYK OK",
   "en_pdf": "0.00000  0.07420  0.07420  0.11569 CMYK OK",
   "tr_cover": "0.00000  0.05913  0.05913  0.99037 CMYK OK",
   "en_cover": "0.00000  0.05927  0.05927  0.97520 CMYK OK"
@@ -55,15 +55,15 @@
   "tr_pdf": {
    "rich_black_cmy": 0,
    "k_only_black": 0,
-   "gray_black": 1236,
-   "other_cmyk": 3205,
+   "gray_black": 1233,
+   "other_cmyk": 3204,
    "streams": 458
   },
   "en_pdf": {
    "rich_black_cmy": 0,
    "k_only_black": 0,
-   "gray_black": 1294,
-   "other_cmyk": 3290,
+   "gray_black": 1299,
+   "other_cmyk": 3279,
    "streams": 453
   },
   "tr_cover": {
@@ -82,8 +82,8 @@
   }
  },
  "layout": {
-  "tr": "kitap-tasma:0 thead-tekrar:13 kutu-devam:26 dizin-tekrar-silinen:4 dizin-cozulmeyen:0 tablo-kucuk-bolunen:0 tablo-tek-satir:0 sekil-min-pt:6.60",
-  "en": "kitap-tasma:0 thead-tekrar:17 kutu-devam:26 dizin-tekrar-silinen:6 dizin-cozulmeyen:0 tablo-kucuk-bolunen:0 tablo-tek-satir:0 sekil-min-pt:6.59"
+  "tr": "kitap-tasma:0 thead-tekrar:11 kutu-devam:29 dizin-tekrar-silinen:3 dizin-cozulmeyen:0 tablo-kucuk-bolunen:0 tablo-tek-satir:0 tablo-yalniz-baslik:0 tablo-baslik-tasindi:2 tablo-devam:11 tablo-devam-basliksiz:0 sekil-min-pt:6.60",
+  "en": "kitap-tasma:0 thead-tekrar:10 kutu-devam:27 dizin-tekrar-silinen:6 dizin-cozulmeyen:0 tablo-kucuk-bolunen:0 tablo-tek-satir:0 tablo-yalniz-baslik:0 tablo-baslik-tasindi:5 tablo-devam:10 tablo-devam-basliksiz:0 sekil-min-pt:6.59"
  },
  "boxes": {
   "tr_pdf": {

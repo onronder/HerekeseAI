@@ -55,7 +55,7 @@ for rid, ad in (('R090', 'RNN'), ('R091', 'SHAP')):
     put(rid, 'uygulandı' if ok_int else 'kısmen', '`print.css` `.h4box[data-split-to]` dolgu/kenarlık kuralı kaldırıldı; `hooks.js` onOverflow (heceli sözcük ortasında kesme yok), bölünen kutuda alt kenarlık yok, görünmez sütun ölçümü; kapı `check_text_integrity.py` + taşma ölçümü `check.sh`',
         f"{ad} kutusu dahil kaynak cümlelerin tamamı PDF metninde: TR {first(K['integrity']['tr'])} · EN {first(K['integrity']['en'])}; taşan sayfa TR {kw('tr','kitap-tasma')} / EN {kw('en','kitap-tasma')}")
 ep = K.get('epub', {})
-put('R099', 'uygulandı (Kindle Previewer/cihaz testi yazarda)', '`print/kindle/kindle.py` (alt metin = şekil başlığı + Kurulum ilk cümlesi), `build.sh`',
+put('R099', 'uygulandı (Previewer CLI + arayüz A/B geçti; ekran okuyucu ve gerçek cihaz testi yazarda)', '`print/kindle/kindle.py` (alt metin = şekil başlığı + Kurulum ilk cümlesi), `build.sh`',
     f"epubcheck: {' '.join(ep.get('epubcheck','').split())[:160]}; şekil {ep.get('figures')}, tanımlayıcı alt metin {ep.get('alt_descriptive')}; yer tutucu {ep.get('placeholders')}")
 doi = B.get('doi_handle_api', {})
 if doi:

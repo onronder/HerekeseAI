@@ -1,6 +1,6 @@
 # Cevap anahtarı
 
-<!-- Bu dosya print/export.py tarafından üretildi (2026-10-01); elle düzenlenmez. -->
+<!-- Bu dosya print/export.py tarafından üretildi (2026-10-02); elle düzenlenmez. -->
 
 ## Bölüm sonu quizleri
 

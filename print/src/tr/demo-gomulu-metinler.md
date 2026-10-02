@@ -1,7 +1,7 @@
 # Demolara gömülü öğretici metinler
 
-<!-- Bu dosya print/export.py tarafından üretildi (2026-10-01); elle düzenlenmez. -->
-_202 parça · 14302 karakter_
+<!-- Bu dosya print/export.py tarafından üretildi (2026-10-02); elle düzenlenmez. -->
+_202 parça · 14642 karakter_
 
 ## Şekil 1.1 — Çoklu zekâyı keşfet (`intelligence`)
 
@@ -146,7 +146,7 @@ _202 parça · 14302 karakter_
 ## Şekil 5.6 — Gürültüden görsele (`diffuse`)
 
 - Tamamen gürültüyle başlıyoruz — karıncalı bir ekran. Kaydıracı sağa sürükle, model gürültüyü adım adım temizlesin.
-- Gürültü tamamen temizlendi ve görsel ortaya çıktı (bir kalp). Difüzyon tam olarak böyle çalışır: gürültüden şekle.
+- Gürültü tamamen temizlendi ve görsel ortaya çıktı (bir kalp). Difüzyonun temel fikri, sadeleştirilmiş hâliyle budur: adım adım gürültüden şekle. Gerçek modelde gürültü öğrenilmiş bir ağla tahmin edilip çıkarılır; burada pikseller önceden belirlenmiş bir sırayla açılıyor.
 - /8: gürültünün bir kısmı temizlendi, şekil belirmeye başladı. Her adım biraz daha “doğru” pikselleri ortaya çıkarıyor.
 
 ## Şekil 5.7 — Bağlam penceresi (`ctx`)
@@ -249,7 +249,7 @@ _202 parça · 14302 karakter_
 - Yapay üretim izi var (kanıt değil)
 - Bu bilgiyle anlaşılmaz
 - Kanal: hangi bağımsız doğrulamayı yaparsın?
-- Bir videoda tanınmış biri hiç söylemediği bir cümleyi söylüyor; dudak hareketleri sese tam oturmuyor.
+- Bir videoda tanınmış biri, hiçbir kaynakta doğrulanmayan bir cümleyi söylerken görülüyor; dudak hareketleri sese tam oturmuyor.
 - Videoyu paylaşan hesabın altındaki yorumlara bak
 - Aynı videoyu başka bir sosyal medya hesabında ara
 - Konuşmanın özgün kaydını ve yayımlayan kurumu bağımsız bir kanaldan bul
@@ -281,8 +281,8 @@ _202 parça · 14302 karakter_
 
 ## Şekil 7.4 — Riski sınıflandır (`reg`)
 
-- Vatandaşları davranışına göre puanlayan devlet sistemi
-- Amaç: kişileri sosyal davranışına göre puanlamak; aktör: devlet. Madde 5(1)(c), puanın bağlamından kopuk ya da orantısız olumsuz muameleye yol açtığı durumları yasaklar; her puanlama koşulsuz yasak değildir.
+- Sosyal davranış puanıyla ilgisiz alanlarda orantısız yaptırım uygulayan devlet sistemi
+- Amaç: kişileri sosyal davranışına göre puanlamak; aktör: devlet (yasak yalnız kamuya özgü değildir). Madde 5(1)(c), puanın verinin toplandığı bağlamla ilgisiz alanlarda ya da davranışla orantısız veya gerekçesiz olumsuz muameleye yol açtığı durumları yasaklar; bu senaryo iki koşulu da taşıyor. Her puanlama koşulsuz yasak değildir.
 - İşe alımda adayları otomatik eleyen sistem
 - Amaç: başvuruları süzmek ve adayları değerlendirmek; aktör: sistemi kullanan işveren (uygulayıcı) ve geliştiren sağlayıcı. Ek III 4(a) kapsamında yüksek risk; yükümlülükler 2 Aralık 2027’den itibaren uygulanır.
 - Müşteriyle konuşan sohbet botu

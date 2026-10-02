@@ -39,6 +39,7 @@ Teslim dosyaları (bu klasörün bir üstünde, `print/kitap/`):
 2. Dijital prova (soft proof) → sayfa sırası, koşan başlıklar, dizin sayfa numaraları.
 3. **1 fiziksel prova** (tercihen gerçek kâğıt): QR okutma, aksan rengi, iç kenar (metin sırta gömülmüyor), sırt yazısı hizası. †
 4. Onay sonrası baskı adedi ve bandrol.
+5. Kabul kayıtları: `print/teslim/kabul/KABUL-PROTOKOLU.md` (barkod tarayıcı + verifier, hedef ICC ve bağımsız preflight, kâğıt/sırt onayı, 45 QR × 2 telefon, küçük glif sayfaları). Doldurulan tablolar o klasörde saklanır.
 
 ## Yeniden üretim (yazar tarafında)
 ```bash

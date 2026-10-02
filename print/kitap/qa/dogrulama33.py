@@ -26,6 +26,14 @@ OUT = {'tr_pdf': 'print/kitap/ic-blok.pdf', 'tr_cover': 'print/kitap/kapak.pdf',
        'tr_html': 'Atlas-Kitap.dc.html', 'en_html': 'Atlas-Kitap-EN.dc.html',
        'tr_web': 'dist/web/index.html', 'en_web': 'dist/web/en.html'}
 HASH = {k: sha(v) for k, v in OUT.items()}
+# gerçek tarayıcı testi sonuçları (node print/kitap/qa/ui_test.mjs → ui-test.json); dosya dist/web'den eskiyse test geçersiz sayılır
+_UI = json.load(open(f'{QA}/ui-test.json', encoding='utf-8')) if os.path.exists(f'{QA}/ui-test.json') else {'testler': []}
+_UI_FRESH = os.path.exists(f'{QA}/ui-test.json') and all(os.path.getmtime(f'{QA}/ui-test.json') >= os.path.getmtime(OUT[k]) for k in ('tr_web', 'en_web'))
+
+
+def ui(rid):
+    r = [t for t in _UI['testler'] if t['id'] == rid]
+    return _UI_FRESH and len(r) == 2 and all(t['ok'] for t in r), {t['lang']: t['ok'] for t in r} | {'ui-test.json güncel': _UI_FRESH}
 
 
 def norm(t):
@@ -128,7 +136,7 @@ rec('R002', 'İnsan/makine karşılaştırması: çubuklar temsili', [
     T('dijital EN şablonda kalıcı uyarı', cap_en in template_part(ENH), cap_en in template_part(ENH)),
     T('derlenmiş web (dist/web) TR/EN', cap_tr in dig(OUT['tr_web']) and cap_en in dig(OUT['en_web']), 'var' if cap_tr in dig(OUT['tr_web']) else 'yok'),
     present(['temsili'], ['TR PDF']), present(['illustrative'], ['EN PDF', 'EPUB']),
-    T('tarayıcı (dist/web, TR ve EN): uyarı zekâ bölümünde görünür', True, 'TR #m=1&s=1 ve EN #m=1&s=1 sayfa metninde bulundu (Browser pane, 2026-10-01)'),
+    T('headless Chrome (dist/web TR ve EN, ui_test.mjs): uyarı Basit ve Teknik modda görünür', *ui('R002'), 'tr: True, en: True'),
 ], ['Atlas-Kitap.dc.html (zekâ şablonu)', 'Atlas-Kitap-EN.dc.html (zekâ şablonu)'])
 
 # ---------------------------------------------------------------- R004
@@ -226,7 +234,7 @@ for ps in P:
     for v in e: c += v / s; row.append(f'{round(c, 2):.2f}')
     cdfs.append(' · '.join(row))
 rec('R040', 'Sıcaklıklı örnekleme: CDF tam değerden tek yuvarlama', [
-    T('bağımsız hesap (z = ln p, softmax(z/1.5))', True, cdfs),
+    T('bağımsız hesap (z = ln p, softmax(z/1.5)): her satır artan ve 1,00 ile biter', all(c.split(' · ')[-1] == '1.00' and c.split(' · ') == sorted(c.split(' · ')) for c in cdfs), cdfs),
     present(cdfs, ['TR PDF', 'EPUB']),
     T('EN PDF: her satırın birikimli toplamları sırayla aynı sayfada (dar hücrede sarılan son değer araya giren hücrelerden sonra gelebilir)',
       all(any(re.search(r'.{0,60}?'.join(re.escape(v) for v in c.split(' · ')), pg) for pg in ENP) for c in cdfs), cdfs),
@@ -279,7 +287,7 @@ rec('R055', 'Deepfake: olay, köken ve bağımsız kanal ayrı puanlanır', [
     T('TR: 4 vaka; her vakada olay/köken cevabı ve tam bir doğru kanal', len(dft) == 4 and df_ok(dft), [(k['e'], k['o'], sum(1 for c in k['ch'] if c[1])) for k in dft]),
     T('EN: 4 vaka; aynı yapı', len(dfe) == 4 and df_ok(dfe), [(k['e'], k['o'], sum(1 for c in k['ch'] if c[1])) for k in dfe]),
     T('üç ayrı puan (dfScore e/o/c) ve sayaç metni', 'dfScore' in TRH and 'eşleşen: olay' in TRH and 'dfScore' in ENH, 'kodda var'),
-    T('tarayıcı testi (TR, vaka 1)', True, '✓ Olay · ✓ Köken · ○ Kanal (önerilen gösterildi); sayaç "eşleşen: olay 1 · köken 1 · kanal 0"'),
+    T('headless Chrome (TR ve EN, 4 vaka × 3 cevap yolu; beklenen değerler cases JSON\'dan)', *ui('R055'), 'tr: True, en: True'),
 ], ['Atlas-Kitap(-EN).dc.html (df şablonu + mantık)'])
 
 # ---------------------------------------------------------------- R056
@@ -321,20 +329,21 @@ rec('R071', 'Tablolar: başlık tekrarı, kısa tablo/tek satır bölünmez', [
 rec('R073', 'Şekil etiketi çakışma/kesilme', [
     T('check_i18n temiz', 'temiz' in run('node print/figures/check_i18n.mjs'), run('node print/figures/check_i18n.mjs')[-80:]),
     T('90 şekil geometri denetimi (gerçek fontlarla getBBox: kenar payı ≥ 1 birim, metin kutuları binmiyor)', 'temiz' in (g := run('node print/figures/check_fig_geom.mjs all')), g.split('\n')[-1]),
-    T('görsel tarama: TR/EN 2.1, 3.5, 4.1, 4.4, 4.6, 5.2, 6.2, 7.3, 7.4, 8.2 (dizgi ölçeğinde render)', len(glob.glob(f'{QA}/sekil-tarama/*-sekil-*.png') + glob.glob(f'{QA}/sekil-tarama/en-figure-*.png')) >= 40,
-      len(glob.glob(f'{QA}/sekil-tarama/*-sekil-*.png') + glob.glob(f'{QA}/sekil-tarama/en-figure-*.png'))),
+    T('görsel tarama: 45 TR + 45 EN şekil, son PDF\'lerden 180 dpi (sekil_tarama.py; indeks.json hash = güncel PDF)',
+      (lambda st: all(len(st[l]['sekiller']) == 45 and st[l]['sha256'] == sha(st[l]['pdf']) for l in ('tr', 'en')))(json.load(open(f'{QA}/sekil-tarama/indeks.json', encoding='utf-8'))),
+      len(glob.glob(f'{QA}/sekil-tarama/*.png'))),
 ], ['print/figures/check_fig_geom.mjs (yeni denetim)', 'M02.mjs (2.2 öneri şeridi)', 'M03.mjs (3.3 gizli satır etiketleri kaldırıldı, 3.4 ve 3.6 başlık payı, 3.5 etiket yerleşimi)',
      'M04.mjs (4.1 iki satır, 4.3 hedef etiketi, 4.6 P(sahte); EN "x/64 match")', 'M05.mjs (embed hale)', 'M07.mjs (7.2 iki satır etiket + alt not aralığı, 7.4 kart genişliği)', 'M08.mjs (8.2 kural satırı)'],
     'R082 fiziksel prova ayrı (yazar/matbaa).')
 PFS = {lang: json.loads(run(f'node {QA}/pdf_fontsize.mjs "{OUT[k]}"').split('\n')[-1]) for lang, k in (('tr', 'tr_pdf'), ('en', 'en_pdf'))}
-rec('R082', 'Şekil puntosu dizgi ölçeğinde ≥ 6,5 pt', [
+rec('R082', 'Normal metin ve şekil yazısı dizgi ölçeğinde ≥ 6,5 pt (tasarım hedefi; matematik üst/alt simgesi ve Type 3 yedek glif kapsam dışı, N002)', [
     T(f'{lang.upper()} dizgi (DOM, hooks): en küçük şekil metni', float(kwv('sekil-min-pt', lang) or 0) >= 6.58,
       kwv('sekil-min-pt', lang), '≥ 6.58 (hedef 6.6; KDP şekil genişliği 120 mm ile 6.59)') for lang in ('tr', 'en')
 ] + [
-    T(f'{lang.upper()} PDF içerik akışı (Tf × Tm × CTM): 5,5–6,5 pt arası metin yok', PFS[lang]['band_5_5_to_lim'] == 0,
-      {k: PFS[lang][k] for k in ('normal_min_ge55', 'band_5_5_to_lim', 'sup_sub_lt55', 'type3_fallback')}, 'band 0; en küçük ≥ 6.50') for lang in ('tr', 'en')
+    T(f'{lang.upper()} PDF içerik akışı (Tf × Tm × CTM): normal yazıda 5,5–6,5 pt arası gösterim yok; 5,5 altı yalnız üst/alt simge ve Type 3 (ayrı sayılır)', PFS[lang]['band_5_5_to_lim'] == 0 and float(PFS[lang]['normal_min_ge55']) >= 6.5,
+      {k: PFS[lang][k] for k in ('normal_min_ge55', 'band_5_5_to_lim', 'sup_sub_lt55', 'type3_fallback')}, 'band 0; normal yazının en küçüğü ≥ 6.50; bütün metin ≥ 6,5 pt iddiası yok') for lang in ('tr', 'en')
 ], ['print/figures/lib.mjs (MIN_TEXT)', 'print/typeset/typeset.py (FIG_MIN_PT, data-minscale)', 'print/typeset/gapplan.py (fig_min)', 'print/typeset/hooks.js'],
-    '%100 ölçekte fiziksel prova (matbaa provası / KDP proof copy).')
+    '%100 ölçekte fiziksel prova (matbaa provası / KDP proof copy); küçük glif sayfaları print/teslim/kabul/kucuk-glif-{tr,en}.csv.')
 
 # ---------------------------------------------------------------- R076: dizin hedef sayfaları
 def ix_pages(seg, term):
@@ -380,7 +389,10 @@ oc = run(f'strings "{OUT["tr_pdf"]}" | grep -m1 -o "OutputCondition *([^)]*)"')
 rec('R080', 'Renk profili ve bağımsız preflight', [T('OutputCondition ASCII', 'printer profile pending' in oc or 'FOGRA' in oc, oc)],
     ['print/typeset/PDFX_def.ps', 'dizgi.sh (ICC=)'], 'Matbaanın yazılı ICC kabulü + aynı hash üzerinde bağımsız PDF/X preflight raporu (Acrobat/callas). ICC gelince: ICC=<profil> sh print/typeset/dizgi.sh …')
 ph_tr = sorted(set(re.findall(r'\[matbaa[^\]]*\]', TRT))); ph_en = sorted(set(re.findall(r'\[ISBN\]', ENT)))
-rec('R081', 'Künye: matbaa bilgisi ve EN ISBN', [T('kalan yer tutucular yalnız bunlar', True, {'tr': ph_tr, 'en': ph_en})],
+PH = r'\[(?:matbaa|ISBN|YENİ ISBN|ay, yıl|isim|TO WRITE|YAZILACAK|TODO|XX)[^\]]*\]'
+oth_tr = sorted(set(re.findall(PH, TRT)) - set(ph_tr)); oth_en = sorted(set(re.findall(PH, ENT)) - set(ph_en))
+rec('R081', 'Künye: matbaa bilgisi ve EN ISBN', [T('kalan yer tutucular yalnız bunlar (TR yalnız [matbaa…], EN yalnız [ISBN]; başka yer tutucu yok)',
+    len(ph_tr) == 1 and len(ph_en) == 1 and not oth_tr and not oth_en, {'tr': ph_tr, 'en': ph_en, 'diger_tr': oth_tr, 'diger_en': oth_en})],
     ['print/src/tr/on/00-kunye.md', 'print/src/en/front/00-title.md'], 'Matbaa adı/adres/sertifika no (TR) ve EN paperback ISBN yazar kararı; girilince assemble + dizgi + check.')
 
 # ---------------------------------------------------------------- R084: kutular
@@ -435,8 +447,14 @@ rec('R095', 'Yazım birliği: başlıklarda vs yok; bozuk cümleler', [
 rec('R098', 'Kaynakça: AI Act sürümü, Turing 1936/1937', [
     present(['2024/1689/2026-07-27', '2026/1744'], ['TR PDF', 'EN PDF', 'EPUB']),
     present(['1937'], ['TR PDF', 'EN PDF']),
-    T('Crossref: 10.1112/plms/s2-42.1.230 yayın yılı', True, run('curl -s -m 20 https://api.crossref.org/works/10.1112/plms/s2-42.1.230 | python3 -c "import json,sys; m=json.load(sys.stdin)[\'message\']; print(m[\'title\'][0][:60], m[\'issued\'][\'date-parts\'], m[\'volume\'], m[\'page\'])"')),
-], ['print/src/tr/arka/kaynakca.md', 'print/src/en/back/bibliography.md'])
+    T('Crossref: 10.1112/plms/s2-42.1.230 yayın yılı 1937, cilt s2-42, sayfa 230-265', *(lambda o: ('[[1937]]' in o and 's2-42' in o and '230-265' in o, o))(run('curl -s -m 20 https://api.crossref.org/works/10.1112/plms/s2-42.1.230 | python3 -c "import json,sys; m=json.load(sys.stdin)[\'message\']; print(m[\'title\'][0][:60], m[\'issued\'][\'date-parts\'], m[\'volume\'], m[\'page\'])"'))),
+    *[T(f'{n}: PDF/X-1a gereği bağlantı açıklaması yok (Link/URI 0); kaynakçanın {nsrc} adresi metin olarak basılı', la == 0 and nu >= nsrc, {'Link/URI': la, 'basili_adres_satiri': nu})
+      for n, f, nsrc in (('TR PDF', OUT['tr_pdf'], len(re.findall(r'https?://', open('print/src/tr/arka/kaynakca.md', encoding='utf-8').read()))),
+                         ('EN PDF', OUT['en_pdf'], len(re.findall(r'https?://', open('print/src/en/back/bibliography.md', encoding='utf-8').read()))))
+      for la, nu in [(len(re.findall(rb'/Subtype\s*/Link|/URI', open(f, 'rb').read())), len(re.findall(r'https?://', run(f'pdftotext "{f}" -'))))]],
+    T('EPUB: kaynakça adresleri tıklanabilir <a href> (PDF/X kısıtı yok)', len(re.findall(r'<a href="https?://', xh_all := ' '.join(EPX.values()))) >= 25, len(re.findall(r'<a href="https?://', xh_all))),
+], ['print/src/tr/arka/kaynakca.md', 'print/src/en/back/bibliography.md', 'print/kindle/kindle.py (EPUB <a href>)'],
+    'Bilinçli sınır: basılı PDF\'lerde tıklanabilir bağlantı yoktur. PDF/X-1a (ISO 15930-1) TrimBox/BleedBox içinde TrapNet ve PrinterMark dışındaki açıklamalara izin vermez; adresler tam metin (ve şekillerde QR) olarak basılıdır. Tıklanabilir bağlantılar EPUB\'dadır.')
 
 # ---------------------------------------------------------------- R099
 xh = ' '.join(EPX.values())
@@ -544,7 +562,7 @@ for rid in ORDER:
         md.append(f'| {t["test"].replace("|", "/")} | {str(t["expected"]).replace("|", "/")} | {obs.replace("|", "/")[:400]} | {"✔" if t["ok"] else "✘"} |')
     md.append('')
 md += ['## Kanıt dosyaları', '', '- `print/kitap/qa/dogrulama-33.json`: bütün testlerin ham sonucu, PDF Keywords sayaçları, sayfa kutuları, şekil kapsamı.',
-       '- `print/kitap/qa/sekil-tarama/`: dizgi ölçeğinde şekil renderları (TR 2.1, 3.5, 4.1, 4.4, 4.6, 5.2, 6.2, 8.2; EN eşdeğerleri).',
+       '- `print/kitap/qa/sekil-tarama/`: 45 TR + 45 EN şeklin son PDF sayfaları, 180 dpi (`sekil_tarama.py`, `indeks.json`).',
        '- `print/kitap/qa/kanit.json`: genel üretim kanıtı (qa_evidence.py: QR 90/90, renk ayrımı, metin bütünlüğü, canlı adresler).',
        '- `sh print/typeset/check.sh tr matbaa` ve `sh print/typeset/check.sh en kdp` çıktıları (bu rapordaki hash\'lerle aynı dosyalar).', '',
        'Bu rapor kitabın hiçbir hata içeremeyeceği garantisi ya da matbaa/KDP yayın onayı değildir; dış koşullar özet tablosunda açıkça listelidir.']

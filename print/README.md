@@ -51,7 +51,8 @@ Gereksinimler: Chrome (yerel), Node (`print/typeset` ve `print/kapak` altında `
 - `typeset/dizgi.sh`: pagedjs-cli (yerel Chrome) → `boxes.mjs` (pdf-lib: net ölçü verilir; Chrome'un sayfa ölçüsü yuvarlaması sol üst köşe sabit
   tutularak düzeltilir → MediaBox = BleedBox tam 166 × 246 mm, TrimBox tam 160 × 240 mm; KDP 6 × 9 in) → Ghostscript
   `-dPDFX` + CMYK (`-dUseFastColor`: siyah → yalnız K) + `PDFX_def.ps` (OutputIntent; `ICC=` ile matbaa profili) → 16'nın katına otomatik
-  tamamlama (Notlar sayfaları). Bağlantı ek açıklamaları (`-dPreserveAnnots=false`) PDF/X'e uymaz, düşürülür.
+  tamamlama (Notlar sayfaları). Bağlantı ek açıklamaları (`-dPreserveAnnots=false`) PDF/X'e uymaz, düşürülür (ISO 15930-1: sayfa içinde yalnız TrapNet/PrinterMark);
+  kaynakça adresleri tam metin basılır, tıklanabilir bağlantılar EPUB'dadır (R098; `dogrulama33.py` Link/URI = 0 denetimi).
 - **Sayfa yerleşimi (2026-09-30, "yüzen şekil" öykünmesi):** `dizgi.sh` ilk dizgiden sonra `measure.mjs` (puppeteer; üst düzey öğe yükseklikleri) +
   `gapplan.py` (30 dpi render → sayfa sonu boşlukları) ile bir plan üretir (`out/defer.json`) ve yeniden dizer (en çok 24 tur, değişmeyince durur):
   sığmayan şekil bloğu (başlık + figür + altındaki QR satırı) ya %20'ye kadar küçültülür ya da boşluğu dolduracak kadar izleyen öğenin
@@ -129,4 +130,22 @@ python3 print/kitap/qa/dogrulama33.py   # 2026-10-01 doğrulama raporundaki 33 a
 python3 print/qa_evidence.py            # genel üretim kanıtı → qa/kanit.json (QR, renk, EAN, dizin, canlı adresler, epubcheck)
 ```
 `print/teslim/guncelle.py`, `kapak.en.json → pages` iç blokla eşit değilse durur (önce `kapak.sh en kdp`).
+
+İkinci doğrulama turu (2026-10-02) ekleri:
+```
+python3 print/kitap/qa/dogrulama2.py     # ikinci raporun açık 11 grubu + N001–N008 → qa/dogrulama-2.json + dogrulama-2-raporu.md
+python3 print/teslim/kabul_hazirla.py    # dış kabul tabloları (QR 45 × 2 telefon × 2 dil, küçük glif sayfaları, erişilebilirlik) → print/teslim/kabul/
+sh print/kindle/preview.sh               # Kindle Previewer 4: A/B (yerel ayar) + Java alt sürecine ayarın ulaştığının kanıtı + KPF
+python3 print/kitap/qa/fig_relations.py  # 45 şekil: kritik değer (işaretli), sıra, görsel↔Kurulum↔ek bağlantıları (anlam eşliği kaydı)
+node print/kitap/qa/ui_test.mjs          # gerçek tarayıcı (headless Chrome) UI testi: R002/R012/R043/R055/R056/R060/R062/R064 + EN Türkçe kalıntı (N007) → qa/ui-test.json
+python3 print/kitap/qa/sekil_tarama.py   # 45 TR + 45 EN şeklin son PDF sayfaları 180 dpi → qa/sekil-tarama/ (indeks.json PDF hash'li)
+PREVIEW_GUI=1 sh print/kindle/preview.sh # CLI A/B'ye ek olarak Previewer arayüzünde A/B (uygulama kapatılıp yeniden açılır) → qa/kindle-previewer/gui/
+```
+- Tablolar (N001): Paged.js thead ile ilk veri satırı arasındaki "avoid" işaretini uygulamıyor; `hooks.js` onOverflow kesme ilk veri satırından önce
+  düşüyorsa kesmeyi tablonun (ve önündeki kısa etiket paragrafının) öncesine çeker (`tablo-baslik-tasindi`). `check_table_heads.py` PDF'ten bağımsız
+  ölçer (başlık her devam sayfasında tekrarlandığı için sayfa sonu ve sonraki sayfa başı aynı karakter kümesiyse başlık yalnız kalmıştır) ve `check.sh` kapısıdır.
+- Kindle Previewer kök nedeni (N005): macOS yerel ayarı tr_TR iken gömülü OpenJDK 11 `user.language=tr` ile açılır, dönüşüm "Not Supported/Error" verir;
+  `JAVA_TOOL_OPTIONS="-Duser.language=en -Duser.country=US"` ile başarılı. `preview.sh` üç durumu kaydeder: A ayarsız (Java istisnası `MissingResourceException … epubprocessor.ınfo_en` + CLI "Failed to get Mobi message stores"),
+  B ayarlı (Success; ayar 4 Java alt sürecine ulaştı, istisna 0), C export edilmeden atama (ayar Java'ya ulaşmaz → A ile aynı hata; ikinci rapordaki başarısız deneme).
+- Punto iddiası (N002): "normal metin ve şekil yazısı ≥ 6,5 pt"; matematik üst/alt simgeleri ve Type 3 yedek glifler hedef dışıdır, `kabul/kucuk-glif-*.csv` provada okunur.
 

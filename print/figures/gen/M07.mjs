@@ -167,13 +167,14 @@ function regFigure(demo, { lang }) {
   body.push(line(axx, ladderBot - 2, axx, ladderTop + 4, { stroke: INK2, sw: 0.7, marker: true }));
   body.push(`<text transform="translate(${f1(axx - 4)} ${f1(ladderBot - 4)}) rotate(-90)" font-family="${MONO}" font-size="6.2" fill="${MUTED}" letter-spacing="0.4">${esc(S.axis)}</text>`);
   // altı kullanım kartı, merdivenin dibinde
-  const cy0 = ladderBot + 22, cw = (W - 2 * pad - 10) / 2, chh = 46, cgap = 6;  // iki sütun + 10 aralık, sağda da pad kalır (R073: sağ kart kenara yapışıyordu)
+  const cy0 = ladderBot + 22, cw = (W - 2 * pad - 10) / 2, cgap = 6;
+  const useLines = S.uses.map((u) => wrap(u, 33)), chh = 46 + Math.max(0, Math.max(...useLines.map((l) => l.length)) - 2) * 9.5;  // R056: uzun kart metni için yükseklik  // iki sütun + 10 aralık, sağda da pad kalır (R073: sağ kart kenara yapışıyordu)
   body.push(caption(pad, cy0 - 8, S.kicker));
   S.uses.forEach((u, i) => {
     const x0 = pad + (i % 2) * (cw + 10), y0 = cy0 + Math.floor(i / 2) * (chh + cgap);
     body.push(rect(x0, y0, cw, chh, { fill: '#fff', stroke: RULE, sw: 0.8 }));
     body.push(text(x0 + 7, y0 + 15, `${i + 1}`, { font: MONO, size: 8, fill: EMBER, weight: 700 }));
-    body.push(lines(x0 + 18, y0 + 15, wrap(u, 33), {}, 9.5));
+    body.push(lines(x0 + 18, y0 + 15, useLines[i], {}, 9.5));
     body.push(text(x0 + 18, y0 + chh - 7, S.tier, { font: MONO, size: 5.5, fill: MUTED, spacing: 0.8 }));
     body.push(rect(x0 + 50, y0 + chh - 15, 60, 11, { fill: 'none', stroke: INK, sw: 0.6 }));
   });

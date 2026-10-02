@@ -17,6 +17,10 @@ Bu klasördeki her şey matbaaya gider. Başka dosya gerekmez.
 2. **Sırt genişliği.** Matbaa kâğıt gramajına göre sırtı verir (80 g/m² için ≈ 14,2 mm varsayıldı). Değer farklıysa
    `print/kapak/kapak.json → spine_mm` güncellenir ve kapak yeniden üretilir: `sh print/kapak/kapak.sh && sh print/typeset/check.sh tr matbaa`.
 
+## Kabul kayıtları
+
+`print/teslim/kabul/` klasöründeki protokol ve tablolar (QR testi 45 × 2 telefon, küçük glif sayfaları, barkod verifier, preflight, sırt onayı) baskı onayından önce doldurulur.
+
 ## Matbaaya söylenecekler (kısa)
 
 - İç blok: 256 sayfa = tam 16 forma (16'lık); yarım forma yok. Tamamlama sayfası ("Notlar") yok; metin forma sınırında biter.

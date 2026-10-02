@@ -2,7 +2,7 @@
  "R071": {
   "durum": "uygulandı",
   "yer": "`print/typeset/hooks.js` renderNode (bölünen tablo parçasına kaynak thead klonu); `print.css` `table.small, ol.short {break-inside: avoid}`",
-  "kanit": "Tekrarlanan tablo başlığı: TR 13, EN 17 (PDF Keywords, hooks.js sayımı); ≤ 4 satırlı tablolar ve CNN matrisi bölünmez; metin bütünlüğü TR 0 / EN 0 kayıp"
+  "kanit": "Tekrarlanan tablo başlığı: TR 11, EN 10 (PDF Keywords, hooks.js sayımı); ≤ 4 satırlı tablolar ve CNN matrisi bölünmez; metin bütünlüğü TR 0 / EN 0 kayıp"
  },
  "R074": {
   "durum": "uygulandı",
@@ -12,7 +12,7 @@
  "R075": {
   "durum": "uygulandı",
   "yer": "`print/typeset/hooks.js` afterRendered: aynı sayfaya çözülen dizin bağlantıları silinir",
-  "kanit": "Silinen tekrar numara: TR 4, EN 6; PDF dizininde “n, n” tekrarı TR 0, EN 0; EPUB bağlantıları bölüm bazında korunur"
+  "kanit": "Silinen tekrar numara: TR 3, EN 6; PDF dizininde “n, n” tekrarı TR 0, EN 0; EPUB bağlantıları bölüm bazında korunur"
  },
  "R076": {
   "durum": "uygulandı",
@@ -22,7 +22,7 @@
  "R077": {
   "durum": "uygulandı",
   "yer": "`print/typeset/PDFX_def.ps` `{} setblackgeneration {} setundercolorremoval` (iç blok ve kapak aynı dosya); kapak INK #000",
-  "kanit": "İçerik akışı sayımı (`print/typeset/color_ops.py`): zengin siyah (C,M,Y > 0.9) {'tr_pdf': 0, 'en_pdf': 0, 'tr_cover': 0, 'en_cover': 0}; yalnız-K siyah `0 g` {'tr_pdf': 1236, 'en_pdf': 1294, 'tr_cover': 3, 'en_cover': 1}; inkcov s.15/kapak (C M Y K): {'tr_pdf': '0.00000  0.06906  0.06906  0.10630 CMYK OK', 'en_pdf': '0.00000  0.07420  0.07420  0.11569 CMYK OK', 'tr_cover': '0.00000  0.05913  0.05913  0.99037 CMYK OK', 'en_cover': '0.00000  0.05927  0.05927  0.97520 CMYK OK'} — siyah metin, QR ve EAN yalnız K kalıbında"
+  "kanit": "İçerik akışı sayımı (`print/typeset/color_ops.py`): zengin siyah (C,M,Y > 0.9) {'tr_pdf': 0, 'en_pdf': 0, 'tr_cover': 0, 'en_cover': 0}; yalnız-K siyah `0 g` {'tr_pdf': 1233, 'en_pdf': 1299, 'tr_cover': 3, 'en_cover': 1}; inkcov s.15/kapak (C M Y K): {'tr_pdf': '0.00000  0.07009  0.07009  0.10733 CMYK OK', 'en_pdf': '0.00000  0.07420  0.07420  0.11569 CMYK OK', 'tr_cover': '0.00000  0.05913  0.05913  0.99037 CMYK OK', 'en_cover': '0.00000  0.05927  0.05927  0.97520 CMYK OK'} — siyah metin, QR ve EAN yalnız K kalıbında"
  },
  "R078": {
   "durum": "uygulandı",
@@ -52,7 +52,7 @@
  "R083": {
   "durum": "uygulandı",
   "yer": "`hooks.js` renderNode “Teknik derinlik · devam / Technical depth · continued”; `print.css` `.h4box[data-split-to]` alt kenarlık yok",
-  "kanit": "Devam etiketi: TR 26, EN 26; metin bütünlüğü TR 0 / EN 0 kayıp; sayfa taşması TR 0 / EN 0"
+  "kanit": "Devam etiketi: TR 29, EN 27; metin bütünlüğü TR 0 / EN 0 kayıp; sayfa taşması TR 0 / EN 0"
  },
  "R084": {
   "durum": "uygulandı (sırt matbaa teyidinde)",
@@ -72,15 +72,15 @@
  "R090": {
   "durum": "uygulandı",
   "yer": "`print.css` `.h4box[data-split-to]` dolgu/kenarlık kuralı kaldırıldı; `hooks.js` onOverflow (heceli sözcük ortasında kesme yok), bölünen kutuda alt kenarlık yok, görünmez sütun ölçümü; kapı `check_text_integrity.py` + taşma ölçümü `check.sh`",
-  "kanit": "RNN kutusu dahil kaynak cümlelerin tamamı PDF metninde: TR tr: 4567 cümle denetlendi · PDF'de bulunamayan 0 · EN en: 4597 cümle denetlendi · PDF'de bulunamayan 0; taşan sayfa TR 0 / EN 0"
+  "kanit": "RNN kutusu dahil kaynak cümlelerin tamamı PDF metninde: TR tr: 4572 cümle denetlendi · PDF'de bulunamayan 0 · EN en: 4601 cümle denetlendi · PDF'de bulunamayan 0; taşan sayfa TR 0 / EN 0"
  },
  "R091": {
   "durum": "uygulandı",
   "yer": "`print.css` `.h4box[data-split-to]` dolgu/kenarlık kuralı kaldırıldı; `hooks.js` onOverflow (heceli sözcük ortasında kesme yok), bölünen kutuda alt kenarlık yok, görünmez sütun ölçümü; kapı `check_text_integrity.py` + taşma ölçümü `check.sh`",
-  "kanit": "SHAP kutusu dahil kaynak cümlelerin tamamı PDF metninde: TR tr: 4567 cümle denetlendi · PDF'de bulunamayan 0 · EN en: 4597 cümle denetlendi · PDF'de bulunamayan 0; taşan sayfa TR 0 / EN 0"
+  "kanit": "SHAP kutusu dahil kaynak cümlelerin tamamı PDF metninde: TR tr: 4572 cümle denetlendi · PDF'de bulunamayan 0 · EN en: 4601 cümle denetlendi · PDF'de bulunamayan 0; taşan sayfa TR 0 / EN 0"
  },
  "R099": {
-  "durum": "uygulandı (Kindle Previewer/cihaz testi yazarda)",
+  "durum": "uygulandı (Previewer CLI + arayüz A/B geçti; ekran okuyucu ve gerçek cihaz testi yazarda)",
   "yer": "`print/kindle/kindle.py` (alt metin = şekil başlığı + Kurulum ilk cümlesi), `build.sh`",
   "kanit": "epubcheck: EPUBCheck completed; şekil 45, tanımlayıcı alt metin 45; yer tutucu []"
  },

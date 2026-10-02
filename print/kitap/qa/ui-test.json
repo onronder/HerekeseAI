@@ -1,0 +1,249 @@
+{
+ "tarih": "2026-10-02T08:05:41.316Z",
+ "tarayici": "Google Chrome (headless, puppeteer-core)",
+ "gecen": 18,
+ "toplam": 18,
+ "testler": [
+  {
+   "id": "R002",
+   "lang": "tr",
+   "test": "zekâ çubuğu uyarısı Basit ve Teknik modda görünür",
+   "ok": true,
+   "obs": {
+    "basit": true,
+    "teknik": true
+   }
+  },
+  {
+   "id": "R012",
+   "lang": "tr",
+   "test": "ilk bağ \"örneği\", sonraki üç bağ \"alt sınıfı\"",
+   "ok": true,
+   "obs": {
+    "ornegi": 1,
+    "alt": 3
+   }
+  },
+  {
+   "id": "R064",
+   "lang": "tr",
+   "test": "sayaç 27 durumda dile uygun biçim (tıklayarak)",
+   "ok": true,
+   "obs": {
+    "ornek": [
+     [
+      "0",
+      "2.300"
+     ],
+     [
+      "9",
+      "1.2 milyon"
+     ],
+     [
+      "13",
+      "18.8 milyon"
+     ],
+     [
+      "20",
+      "2.4 milyar"
+     ],
+     [
+      "26",
+      "154.4 milyar"
+     ]
+    ],
+    "hatali": []
+   }
+  },
+  {
+   "id": "R043",
+   "lang": "tr",
+   "test": "9. kelimede durum satırı gösterime özgü ve hata/kırpma/özetleme seçeneklerini ayırıyor",
+   "ok": true,
+   "obs": {
+    "bolum": 7
+   }
+  },
+  {
+   "id": "R055",
+   "lang": "tr",
+   "test": "4 vaka × 3 cevap yolu: olay/köken/kanal ayrı puanlanıyor, sayaç beklenene eşit",
+   "ok": true,
+   "obs": [
+    {
+     "yol_sayisi": 12
+    }
+   ]
+  },
+  {
+   "id": "R056",
+   "lang": "tr",
+   "test": "kart 1 koşullu etiket; \"Yasak\" doğru; gerekçe 5(1)(c) ve kamuya özgü olmama",
+   "ok": true,
+   "obs": {
+    "bolum": 4
+   }
+  },
+  {
+   "id": "R060",
+   "lang": "tr",
+   "test": "kurgu etiketi görünür; cevap sonrası geri bildirim geliyor",
+   "ok": true,
+   "obs": {
+    "bolum": 1
+   }
+  },
+  {
+   "id": "R062",
+   "lang": "tr",
+   "test": "3 senaryo: çoklu seçimle ilk incelenecek + ortak sorumluluk; \"YZ'nin kendisi\" seçimi uyarı veriyor",
+   "ok": true,
+   "obs": [
+    {
+     "senaryo": "Sürücüsüz bir araç, üreticinin",
+     "coklu_secim_dogru": true,
+     "yalniz_YZ_uyari": true
+    },
+    {
+     "senaryo": "Bir kurum, YZ tavsiyesini kör ",
+     "coklu_secim_dogru": true,
+     "yalniz_YZ_uyari": true
+    },
+    {
+     "senaryo": "Bir kullanıcı, bir YZ aracını ",
+     "coklu_secim_dogru": true,
+     "yalniz_YZ_uyari": true
+    }
+   ]
+  },
+  {
+   "id": "R002",
+   "lang": "en",
+   "test": "zekâ çubuğu uyarısı Basit ve Teknik modda görünür",
+   "ok": true,
+   "obs": {
+    "basit": true,
+    "teknik": true
+   }
+  },
+  {
+   "id": "R012",
+   "lang": "en",
+   "test": "ilk bağ \"örneği\", sonraki üç bağ \"alt sınıfı\"",
+   "ok": true,
+   "obs": {
+    "ornegi": 1,
+    "alt": 3
+   }
+  },
+  {
+   "id": "R064",
+   "lang": "en",
+   "test": "sayaç 27 durumda dile uygun biçim (tıklayarak)",
+   "ok": true,
+   "obs": {
+    "ornek": [
+     [
+      "0",
+      "2,300"
+     ],
+     [
+      "9",
+      "1.2 million"
+     ],
+     [
+      "13",
+      "18.8 million"
+     ],
+     [
+      "20",
+      "2.4 billion"
+     ],
+     [
+      "26",
+      "154.4 billion"
+     ]
+    ],
+    "hatali": []
+   }
+  },
+  {
+   "id": "R043",
+   "lang": "en",
+   "test": "9. kelimede durum satırı gösterime özgü ve hata/kırpma/özetleme seçeneklerini ayırıyor",
+   "ok": true,
+   "obs": {
+    "bolum": 7
+   }
+  },
+  {
+   "id": "R055",
+   "lang": "en",
+   "test": "4 vaka × 3 cevap yolu: olay/köken/kanal ayrı puanlanıyor, sayaç beklenene eşit",
+   "ok": true,
+   "obs": [
+    {
+     "yol_sayisi": 12
+    }
+   ]
+  },
+  {
+   "id": "R056",
+   "lang": "en",
+   "test": "kart 1 koşullu etiket; \"Yasak\" doğru; gerekçe 5(1)(c) ve kamuya özgü olmama",
+   "ok": true,
+   "obs": {
+    "bolum": 4
+   }
+  },
+  {
+   "id": "R060",
+   "lang": "en",
+   "test": "kurgu etiketi görünür; cevap sonrası geri bildirim geliyor",
+   "ok": true,
+   "obs": {
+    "bolum": 1
+   }
+  },
+  {
+   "id": "R062",
+   "lang": "en",
+   "test": "3 senaryo: çoklu seçimle ilk incelenecek + ortak sorumluluk; \"YZ'nin kendisi\" seçimi uyarı veriyor",
+   "ok": true,
+   "obs": [
+    {
+     "senaryo": "A self-driving car crashes bec",
+     "coklu_secim_dogru": true,
+     "yalniz_YZ_uyari": true
+    },
+    {
+     "senaryo": "An organization blindly applie",
+     "coklu_secim_dogru": true,
+     "yalniz_YZ_uyari": true
+    },
+    {
+     "senaryo": "A user uses an AI tool to crea",
+     "coklu_secim_dogru": true,
+     "yalniz_YZ_uyari": true
+    }
+   ]
+  },
+  {
+   "id": "N007",
+   "lang": "en",
+   "test": "EN 8 modül, tüm bölümler × Basit + Teknik (122 görünüm): Türkçe karakter/sözcük 0 (özel adlar hariç)",
+   "ok": true,
+   "obs": {
+    "gorunum": 122,
+    "bulgu": []
+   }
+  },
+  {
+   "id": "genel",
+   "lang": "tr+en",
+   "test": "sayfa JavaScript hatası yok",
+   "ok": true,
+   "obs": []
+  }
+ ]
+}

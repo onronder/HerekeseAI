@@ -1,20 +1,20 @@
 # 2026-10-01 doğrulama raporu: 33 açık kaydın kapanışı
 
-Üretim zamanı: 2026-10-02T00:03 · üretici: `print/kitap/qa/dogrulama33.py` · ham sonuç: `dogrulama-33.json`
+Üretim zamanı: 2026-10-02T11:23 · üretici: `print/kitap/qa/dogrulama33.py` · ham sonuç: `dogrulama-33.json`
 
 ## Çıktılar ve hash (SHA-256)
 
 | Çıktı | Dosya | Sayfa | SHA-256 |
 |---|---|---|---|
-| tr_pdf | `print/kitap/ic-blok.pdf` | 256 | `4d74bf636ab84c3ed6c6ad9e8e12204d29eb467f4faeeb02f71719553a6921ba` |
-| tr_cover | `print/kitap/kapak.pdf` | 1 | `d0105410e03d822a6217f4b9c9aaae0719c94a5b20172ac4003706505932b696` |
-| en_pdf | `print/kitap/en/kdp-interior.pdf` | 278 | `7cd8ae257dd6ea98e187e5b680c9cc0450821e42516e4068ca18d6fb42fa2605` |
-| en_cover | `print/kitap/en/kdp-cover.pdf` | 1 | `f1faef62abb0881e4a89fe225f34b7b519da6ea0c9139b74b34c37c02baa116c` |
-| epub | `print/kitap/en/AI-for-Everyone.epub` |  | `eba97ad69af17f3bb4fe7d83163a163fea65cb856da674fa32158ab218a19fd0` |
-| tr_html | `Atlas-Kitap.dc.html` |  | `3c38107d4787f45a9ac79788cf4701f37d15b6c3d4da9695ea50193122285e3b` |
-| en_html | `Atlas-Kitap-EN.dc.html` |  | `cf6983dcee265f8101246c1b18af0fc384a6ea232a2f76b5eb66adfbf3b65a01` |
-| tr_web | `dist/web/index.html` |  | `b5bb0447831839a2404e10f23cdef7b1dc93550608739530b3717fdd322fdf83` |
-| en_web | `dist/web/en.html` |  | `e9c434b7604064717c31b47f3f50bd4e9ceb5d2eb555cae3dbdfec9d5a653505` |
+| tr_pdf | `print/kitap/ic-blok.pdf` | 256 | `e2e389204f0f9fa293a157d79957fec74bdb83487e45eaedc3a599354212f271` |
+| tr_cover | `print/kitap/kapak.pdf` | 1 | `46f11ca2f294401439508e5add77c0a5bc5bd54677fe9f37ac74efad4e64ac0a` |
+| en_pdf | `print/kitap/en/kdp-interior.pdf` | 278 | `d96e7d5a10137e7c9218e1e5ee05bd8b987cfca8bfaa9e7fe50d2c794f89bf20` |
+| en_cover | `print/kitap/en/kdp-cover.pdf` | 1 | `900240e5a642453a8311d125dfebdb14bbd085df746e2707cc8d7a432cf432a6` |
+| epub | `print/kitap/en/AI-for-Everyone.epub` |  | `626bda8e2848892767b3cd2ed22409ea33d5c0fdb8d0c9813b68beabe9a95acd` |
+| tr_html | `Atlas-Kitap.dc.html` |  | `57e370834a8a302e24c42eb8c91814e8739da4a5332f556068a1fb9ef9d60b35` |
+| en_html | `Atlas-Kitap-EN.dc.html` |  | `2a33e6388f0f8472583bf1d31846037eb2da8a815e8146dd08d71372ec8116e1` |
+| tr_web | `dist/web/index.html` |  | `c180994aae1dfd436b8bd1d3f65f5044cceec9fc59f51b1cca29ef99bf7f2cf8` |
+| en_web | `dist/web/en.html` |  | `51e16adfa4952330cc86866aa33f48f8b509cd0458c83142cb634ce9b77336cb` |
 
 ## Özet
 
@@ -45,13 +45,13 @@
 | R079 | EAN-13: modül, normal ve koruma çubuğu | ✔ 4/4 | Basılı provada ISO/IEC 15416 doğrulayıcı (verifier) ölçümü: matbaa/yazar. |
 | R080 | Renk profili ve bağımsız preflight | ✔ 1/1 | Matbaanın yazılı ICC kabulü + aynı hash üzerinde bağımsız PDF/X preflight raporu (Acrobat/callas). ICC gelince: ICC=<profil> sh print/typeset/dizgi.sh … |
 | R081 | Künye: matbaa bilgisi ve EN ISBN | ✔ 1/1 | Matbaa adı/adres/sertifika no (TR) ve EN paperback ISBN yazar kararı; girilince assemble + dizgi + check. |
-| R082 | Şekil puntosu dizgi ölçeğinde ≥ 6,5 pt | ✔ 4/4 | %100 ölçekte fiziksel prova (matbaa provası / KDP proof copy). |
+| R082 | Normal metin ve şekil yazısı dizgi ölçeğinde ≥ 6,5 pt (tasarım hedefi; matematik üst/alt simgesi ve Type 3 yedek glif kapsam dışı, N002) | ✔ 4/4 | %100 ölçekte fiziksel prova (matbaa provası / KDP proof copy); küçük glif sayfaları print/teslim/kabul/kucuk-glif-{tr,en}.csv. |
 | R084 | Üretim ölçüsü: kutular ve teslim notu | ✔ 4/4 | Kâğıt/cilt/sırt kalınlığının matbaa tarafından yazılı onayı; KDP seçilen kâğıt/renkle kapak şablonu kabulü. |
 | R085 | Teslim notu: font gömme ve alt küme | ✔ 3/3 | Bağımsız preflight (R080 ile). |
 | R089 | Formül dizgisi: terim ortasından satır kırımı yok | ✔ 3/3 | yok |
 | R095 | Yazım birliği: başlıklarda vs yok; bozuk cümleler | ✔ 3/3 | yok |
 | R097 | Sözlük–bölüm anlam eşliği | ✔ 5/5 | yok |
-| R098 | Kaynakça: AI Act sürümü, Turing 1936/1937 | ✔ 3/3 | yok |
+| R098 | Kaynakça: AI Act sürümü, Turing 1936/1937 | ✔ 6/6 | Bilinçli sınır: basılı PDF'lerde tıklanabilir bağlantı yoktur. PDF/X-1a (ISO 15930-1) TrimBox/BleedBox içinde TrapNet ve PrinterMark dışındaki açıklamalara izin vermez; adresler tam metin (ve şekillerde QR) olarak basılıdır. Tıklanabilir bağlantılar EPUB'dadır. |
 | R099 | EPUB: alt metin, okuma sırası, şekil verisi eşliği | ✔ 8/8 | Gerçek ekran okuyucu (VoiceOver/TalkBack) ve fiziksel Kindle cihaz testi: yazar (Kindle Previewer 4 dönüşümü yapıldı). |
 
 ## Kayıt kayıt
@@ -71,7 +71,7 @@
 | derlenmiş web (dist/web) TR/EN |  | var | ✔ |
 | var: temsili — TR PDF | her kanalda var | hepsinde var | ✔ |
 | var: illustrative — EN PDF, EPUB | her kanalda var | hepsinde var | ✔ |
-| tarayıcı (dist/web, TR ve EN): uyarı zekâ bölümünde görünür |  | TR #m=1&s=1 ve EN #m=1&s=1 sayfa metninde bulundu (Browser pane, 2026-10-01) | ✔ |
+| headless Chrome (dist/web TR ve EN, ui_test.mjs): uyarı Basit ve Teknik modda görünür | tr: True, en: True | {"tr": true, "en": true, "ui-test.json güncel": true} | ✔ |
 
 ### R004 · Turing makinesi: özel/evrensel, hesaplanabilirlik
 
@@ -205,7 +205,7 @@
 
 | Test | Beklenen | Gözlenen | Sonuç |
 |---|---|---|---|
-| bağımsız hesap (z = ln p, softmax(z/1.5)) |  | ["0.36 · 0.64 · 0.84 · 1.00", "0.34 · 0.62 · 0.84 · 1.00", "0.41 · 0.67 · 0.86 · 1.00"] | ✔ |
+| bağımsız hesap (z = ln p, softmax(z/1.5)): her satır artan ve 1,00 ile biter |  | ["0.36 · 0.64 · 0.84 · 1.00", "0.34 · 0.62 · 0.84 · 1.00", "0.41 · 0.67 · 0.86 · 1.00"] | ✔ |
 | var: 0.36 · 0.64 · 0.84 · 1.00 / 0.34 · 0.62 · 0.84 · 1.00 / 0.41 · 0.67 · 0.86 · 1.00 — TR PDF, EPUB | her kanalda var | hepsinde var | ✔ |
 | EN PDF: her satırın birikimli toplamları sırayla aynı sayfada (dar hücrede sarılan son değer araya giren hücrelerden sonra gelebilir) |  | ["0.36 · 0.64 · 0.84 · 1.00", "0.34 · 0.62 · 0.84 · 1.00", "0.41 · 0.67 · 0.86 · 1.00"] | ✔ |
 | yok: 0.34 · 0.63 · 0.85 — TR PDF, EN PDF, EPUB | hiçbir kanalda yok | hiçbirinde yok | ✔ |
@@ -284,7 +284,7 @@
 | TR: 4 vaka; her vakada olay/köken cevabı ve tam bir doğru kanal |  | [[["check"], ["trace"], 1], [["check"], ["trace", "unk"], 1], [["yes"], ["unk"], 1], [["check"], ["trace"], 1]] | ✔ |
 | EN: 4 vaka; aynı yapı |  | [[["check"], ["trace"], 1], [["check"], ["trace", "unk"], 1], [["yes"], ["unk"], 1], [["check"], ["trace"], 1]] | ✔ |
 | üç ayrı puan (dfScore e/o/c) ve sayaç metni |  | kodda var | ✔ |
-| tarayıcı testi (TR, vaka 1) |  | ✓ Olay · ✓ Köken · ○ Kanal (önerilen gösterildi); sayaç "eşleşen: olay 1 · köken 1 · kanal 0" | ✔ |
+| headless Chrome (TR ve EN, 4 vaka × 3 cevap yolu; beklenen değerler cases JSON'dan) | tr: True, en: True | {"tr": true, "en": true, "ui-test.json güncel": true} | ✔ |
 
 ### R056 · AI Act: amaç/aktör/madde, geçişler, roller
 
@@ -350,20 +350,20 @@
 
 **Durum:** testler geçti; dış koşul yok.
 
-**Değişen kaynak (güncel satır):** `print/typeset/typeset.py:404`; `print/typeset/typeset.py:409`; `print/typeset/hooks.js:109`; `print/typeset/check.sh:52`.
+**Değişen kaynak (güncel satır):** `print/typeset/typeset.py:404`; `print/typeset/typeset.py:409`; `print/typeset/hooks.js:137`; `print/typeset/check.sh:52`.
 
 **Ek dosyalar:** print/typeset/typeset.py (table_class, last_row_keep: ikinci ve son veri satırı); print/typeset/hooks.js (sayaçlar); print/typeset/check.sh (kapı).
 
 | Test | Beklenen | Gözlenen | Sonuç |
 |---|---|---|---|
-| TR Keywords: kısa tablo bölünmesi 0, tek satır parça 0, başlık tekrarı > 0 |  | {"tablo-kucuk-bolunen": "0", "tablo-tek-satir": "0", "thead-tekrar": "13"} | ✔ |
-| EN Keywords: kısa tablo bölünmesi 0, tek satır parça 0, başlık tekrarı > 0 |  | {"tablo-kucuk-bolunen": "0", "tablo-tek-satir": "0", "thead-tekrar": "17"} | ✔ |
+| TR Keywords: kısa tablo bölünmesi 0, tek satır parça 0, başlık tekrarı > 0 |  | {"tablo-kucuk-bolunen": "0", "tablo-tek-satir": "0", "thead-tekrar": "11"} | ✔ |
+| EN Keywords: kısa tablo bölünmesi 0, tek satır parça 0, başlık tekrarı > 0 |  | {"tablo-kucuk-bolunen": "0", "tablo-tek-satir": "0", "thead-tekrar": "10"} | ✔ |
 
 ### R073 · Şekil etiketi çakışma/kesilme
 
 **Durum:** testler geçti; dış koşul açık: R082 fiziksel prova ayrı (yazar/matbaa).
 
-**Değişen kaynak (güncel satır):** `print/figures/check_fig_geom.mjs:2`; `print/figures/gen/M03.mjs:201`; `print/figures/gen/M03.mjs:228`; `print/figures/gen/M04.mjs:130`; `print/figures/gen/M07.mjs:75`; `print/figures/gen/M07.mjs:170`; `print/figures/gen/M08.mjs:91`; `print/figures/gen/M02.mjs:152`.
+**Değişen kaynak (güncel satır):** `print/figures/check_fig_geom.mjs:2`; `print/figures/gen/M03.mjs:201`; `print/figures/gen/M03.mjs:228`; `print/figures/gen/M04.mjs:130`; `print/figures/gen/M07.mjs:75`; `print/figures/gen/M07.mjs:171`; `print/figures/gen/M08.mjs:91`; `print/figures/gen/M02.mjs:152`.
 
 **Ek dosyalar:** print/figures/check_fig_geom.mjs (yeni denetim); M02.mjs (2.2 öneri şeridi); M03.mjs (3.3 gizli satır etiketleri kaldırıldı, 3.4 ve 3.6 başlık payı, 3.5 etiket yerleşimi); M04.mjs (4.1 iki satır, 4.3 hedef etiketi, 4.6 P(sahte); EN "x/64 match"); M05.mjs (embed hale); M07.mjs (7.2 iki satır etiket + alt not aralığı, 7.4 kart genişliği); M08.mjs (8.2 kural satırı).
 
@@ -371,7 +371,7 @@
 |---|---|---|---|
 | check_i18n temiz |  | temiz | ✔ |
 | 90 şekil geometri denetimi (gerçek fontlarla getBBox: kenar payı ≥ 1 birim, metin kutuları binmiyor) |  | temiz: metin kutuları kenara taşmıyor ve birbirine binmiyor | ✔ |
-| görsel tarama: TR/EN 2.1, 3.5, 4.1, 4.4, 4.6, 5.2, 6.2, 7.3, 7.4, 8.2 (dizgi ölçeğinde render) |  | 64 | ✔ |
+| görsel tarama: 45 TR + 45 EN şekil, son PDF'lerden 180 dpi (sekil_tarama.py; indeks.json hash = güncel PDF) |  | 90 | ✔ |
 
 ### R076 · Dizin hedefleri kavram bağlamında ve aynı sayfada
 
@@ -427,13 +427,13 @@
 
 | Test | Beklenen | Gözlenen | Sonuç |
 |---|---|---|---|
-| kalan yer tutucular yalnız bunlar |  | {"tr": ["[matbaa adı, adres, sertifika no]"], "en": ["[ISBN]"]} | ✔ |
+| kalan yer tutucular yalnız bunlar (TR yalnız [matbaa…], EN yalnız [ISBN]; başka yer tutucu yok) |  | {"tr": ["[matbaa adı, adres, sertifika no]"], "en": ["[ISBN]"], "diger_tr": [], "diger_en": []} | ✔ |
 
-### R082 · Şekil puntosu dizgi ölçeğinde ≥ 6,5 pt
+### R082 · Normal metin ve şekil yazısı dizgi ölçeğinde ≥ 6,5 pt (tasarım hedefi; matematik üst/alt simgesi ve Type 3 yedek glif kapsam dışı, N002)
 
-**Durum:** testler geçti; dış koşul açık: %100 ölçekte fiziksel prova (matbaa provası / KDP proof copy).
+**Durum:** testler geçti; dış koşul açık: %100 ölçekte fiziksel prova (matbaa provası / KDP proof copy); küçük glif sayfaları print/teslim/kabul/kucuk-glif-{tr,en}.csv.
 
-**Değişen kaynak (güncel satır):** `print/kitap/qa/pdf_fontsize.mjs:86`; `print/figures/lib.mjs:61`; `print/typeset/typeset.py:161`; `print/typeset/gapplan.py:103`; `print/typeset/hooks.js:109`; `print/typeset/check.sh:51`.
+**Değişen kaynak (güncel satır):** `print/kitap/qa/pdf_fontsize.mjs:86`; `print/figures/lib.mjs:61`; `print/typeset/typeset.py:161`; `print/typeset/gapplan.py:103`; `print/typeset/hooks.js:137`; `print/typeset/check.sh (ifade bulunamadı: PDF metni ≥ 6,5 pt)`.
 
 **Ek dosyalar:** print/figures/lib.mjs (MIN_TEXT); print/typeset/typeset.py (FIG_MIN_PT, data-minscale); print/typeset/gapplan.py (fig_min); print/typeset/hooks.js.
 
@@ -441,8 +441,8 @@
 |---|---|---|---|
 | TR dizgi (DOM, hooks): en küçük şekil metni | ≥ 6.58 (hedef 6.6; KDP şekil genişliği 120 mm ile 6.59) | 6.60 | ✔ |
 | EN dizgi (DOM, hooks): en küçük şekil metni | ≥ 6.58 (hedef 6.6; KDP şekil genişliği 120 mm ile 6.59) | 6.59 | ✔ |
-| TR PDF içerik akışı (Tf × Tm × CTM): 5,5–6,5 pt arası metin yok | band 0; en küçük ≥ 6.50 | {"normal_min_ge55": "6.555", "band_5_5_to_lim": 0, "sup_sub_lt55": 56, "type3_fallback": 142} | ✔ |
-| EN PDF içerik akışı (Tf × Tm × CTM): 5,5–6,5 pt arası metin yok | band 0; en küçük ≥ 6.50 | {"normal_min_ge55": "6.510", "band_5_5_to_lim": 0, "sup_sub_lt55": 64, "type3_fallback": 140} | ✔ |
+| TR PDF içerik akışı (Tf × Tm × CTM): normal yazıda 5,5–6,5 pt arası gösterim yok; 5,5 altı yalnız üst/alt simge ve Type 3 (ayrı sayılır) | band 0; normal yazının en küçüğü ≥ 6.50; bütün metin ≥ 6,5 pt iddiası yok | {"normal_min_ge55": "6.555", "band_5_5_to_lim": 0, "sup_sub_lt55": 56, "type3_fallback": 142} | ✔ |
+| EN PDF içerik akışı (Tf × Tm × CTM): normal yazıda 5,5–6,5 pt arası gösterim yok; 5,5 altı yalnız üst/alt simge ve Type 3 (ayrı sayılır) | band 0; normal yazının en küçüğü ≥ 6.50; bütün metin ≥ 6,5 pt iddiası yok | {"normal_min_ge55": "6.510", "band_5_5_to_lim": 0, "sup_sub_lt55": 64, "type3_fallback": 140} | ✔ |
 
 ### R084 · Üretim ölçüsü: kutular ve teslim notu
 
@@ -477,7 +477,7 @@
 
 **Durum:** testler geçti; dış koşul yok.
 
-**Değişen kaynak (güncel satır):** `print/typeset/typeset.py:419`; `print/typeset/print.css:31`.
+**Değişen kaynak (güncel satır):** `print/typeset/typeset.py:422`; `print/typeset/print.css:31`.
 
 **Ek dosyalar:** print/typeset/typeset.py (MATH_RX: √(…), f(…), (a − b), |a − b| → span.math); print/typeset/print.css (span.math nowrap).
 
@@ -519,17 +519,20 @@
 
 ### R098 · Kaynakça: AI Act sürümü, Turing 1936/1937
 
-**Durum:** testler geçti; dış koşul yok.
+**Durum:** testler geçti; dış koşul açık: Bilinçli sınır: basılı PDF'lerde tıklanabilir bağlantı yoktur. PDF/X-1a (ISO 15930-1) TrimBox/BleedBox içinde TrapNet ve PrinterMark dışındaki açıklamalara izin vermez; adresler tam metin (ve şekillerde QR) olarak basılıdır. Tıklanabilir bağlantılar EPUB'dadır.
 
 **Değişen kaynak (güncel satır):** `print/src/tr/arka/kaynakca.md:27`; `print/src/en/back/bibliography.md:27`; `print/src/tr/arka/kaynakca.md:10`.
 
-**Ek dosyalar:** print/src/tr/arka/kaynakca.md; print/src/en/back/bibliography.md.
+**Ek dosyalar:** print/src/tr/arka/kaynakca.md; print/src/en/back/bibliography.md; print/kindle/kindle.py (EPUB <a href>).
 
 | Test | Beklenen | Gözlenen | Sonuç |
 |---|---|---|---|
 | var: 2024/1689/2026-07-27 / 2026/1744 — TR PDF, EN PDF, EPUB | her kanalda var | hepsinde var | ✔ |
 | var: 1937 — TR PDF, EN PDF | her kanalda var | hepsinde var | ✔ |
-| Crossref: 10.1112/plms/s2-42.1.230 yayın yılı |  | On Computable Numbers, with an Application to the Entscheidu [[1937]] s2-42 230-265 | ✔ |
+| Crossref: 10.1112/plms/s2-42.1.230 yayın yılı 1937, cilt s2-42, sayfa 230-265 |  | On Computable Numbers, with an Application to the Entscheidu [[1937]] s2-42 230-265 | ✔ |
+| TR PDF: PDF/X-1a gereği bağlantı açıklaması yok (Link/URI 0); kaynakçanın 27 adresi metin olarak basılı |  | {"Link/URI": 0, "basili_adres_satiri": 28} | ✔ |
+| EN PDF: PDF/X-1a gereği bağlantı açıklaması yok (Link/URI 0); kaynakçanın 27 adresi metin olarak basılı |  | {"Link/URI": 0, "basili_adres_satiri": 28} | ✔ |
+| EPUB: kaynakça adresleri tıklanabilir <a href> (PDF/X kısıtı yok) |  | 117 | ✔ |
 
 ### R099 · EPUB: alt metin, okuma sırası, şekil verisi eşliği
 
@@ -548,12 +551,12 @@
 | şekil etiketlerinin metinde karşılığı (sayılar yuvarlama duyarlı) |  | {"kapsam_%": 98.3, "%80_alti": {}} | ✔ |
 | yok: green group — EPUB | hiçbir kanalda yok | hiçbirinde yok | ✔ |
 | var: dark group — EPUB | her kanalda var | hepsinde var | ✔ |
-| Kindle Previewer 4 dönüşümü aynı EPUB üzerinde (Success, 0 hata, 0 kalite sorunu) |  | "AI-for-Everyone_epub","Supported","Success","0","0" | ✔ |
+| Kindle Previewer 4 dönüşümü aynı EPUB üzerinde (Success, 0 hata, 0 kalite sorunu) |  | Çıktı: print/kitap/en/AI-for-Everyone-preview.kpf | ✔ |
 
 ## Kanıt dosyaları
 
 - `print/kitap/qa/dogrulama-33.json`: bütün testlerin ham sonucu, PDF Keywords sayaçları, sayfa kutuları, şekil kapsamı.
-- `print/kitap/qa/sekil-tarama/`: dizgi ölçeğinde şekil renderları (TR 2.1, 3.5, 4.1, 4.4, 4.6, 5.2, 6.2, 8.2; EN eşdeğerleri).
+- `print/kitap/qa/sekil-tarama/`: 45 TR + 45 EN şeklin son PDF sayfaları, 180 dpi (`sekil_tarama.py`, `indeks.json`).
 - `print/kitap/qa/kanit.json`: genel üretim kanıtı (qa_evidence.py: QR 90/90, renk ayrımı, metin bütünlüğü, canlı adresler).
 - `sh print/typeset/check.sh tr matbaa` ve `sh print/typeset/check.sh en kdp` çıktıları (bu rapordaki hash'lerle aynı dosyalar).
 

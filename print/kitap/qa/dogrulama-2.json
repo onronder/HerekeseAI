@@ -1,0 +1,904 @@
+{
+ "tarih": "2026-10-02T11:23:30",
+ "hash": {
+  "TR iç blok": "e2e389204f0f9fa293a157d79957fec74bdb83487e45eaedc3a599354212f271",
+  "TR kapak": "46f11ca2f294401439508e5add77c0a5bc5bd54677fe9f37ac74efad4e64ac0a",
+  "EN iç blok": "d96e7d5a10137e7c9218e1e5ee05bd8b987cfca8bfaa9e7fe50d2c794f89bf20",
+  "EN kapak": "900240e5a642453a8311d125dfebdb14bbd085df746e2707cc8d7a432cf432a6",
+  "EN EPUB": "626bda8e2848892767b3cd2ed22409ea33d5c0fdb8d0c9813b68beabe9a95acd",
+  "EN KPF": "32513562c98c0f73de114e634cf568fcb73fb8876907da382287748894857e64",
+  "TR dijital": "57e370834a8a302e24c42eb8c91814e8739da4a5332f556068a1fb9ef9d60b35",
+  "EN dijital": "2a33e6388f0f8472583bf1d31846037eb2da8a815e8146dd08d71372ec8116e1",
+  "TR web": "c180994aae1dfd436b8bd1d3f65f5044cceec9fc59f51b1cca29ef99bf7f2cf8",
+  "EN web": "51e16adfa4952330cc86866aa33f48f8b509cd0458c83142cb634ce9b77336cb"
+ },
+ "keywords": {
+  "tr": "kitap-tasma:0 thead-tekrar:11 kutu-devam:29 dizin-tekrar-silinen:3 dizin-cozulmeyen:0 tablo-kucuk-bolunen:0 tablo-tek-satir:0 tablo-yalniz-baslik:0 tablo-baslik-tasindi:2 tablo-devam:11 tablo-devam-basliksiz:0 sekil-min-pt:6.60",
+  "en": "kitap-tasma:0 thead-tekrar:10 kutu-devam:27 dizin-tekrar-silinen:6 dizin-cozulmeyen:0 tablo-kucuk-bolunen:0 tablo-tek-satir:0 tablo-yalniz-baslik:0 tablo-baslik-tasindi:5 tablo-devam:10 tablo-devam-basliksiz:0 sekil-min-pt:6.59"
+ },
+ "kayitlar": {
+  "R056": {
+   "baslik": "AI Act: sosyal puanlama koşulları ve Madde 50(4) editoryal sorumluluk",
+   "tur": "AÇIK KUSUR",
+   "degisiklik": "Şekil 7.4 kart 1 ve dijital kart Madde 5(1)(c)'nin olumsuz muamele koşullarını taşıyor; cevap ve gerekçe iki koşulu ve yasağın kamuya özgü olmadığını söylüyor; Madde 50(4) metin istisnası iki koşullu.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "var: Sosyal davranış puanıyla ilgisiz alanlarda orantısız yaptırı — TR PDF, TR dijital, TR web",
+     "ok": true,
+     "observed": "hepsinde var",
+     "expected": "her kanalda var"
+    },
+    {
+     "test": "var: A state social-behavior score that triggers disproportionate — EN PDF, EPUB, EN dijital, EN web",
+     "ok": true,
+     "observed": "hepsinde var",
+     "expected": "her kanalda var"
+    },
+    {
+     "test": "headless Chrome (ui_test.mjs): kart 1 etiketi görünür, \"Yasak\" seçimi doğru, gerekçe 5(1)(c) ve kamuya özgü olmama (TR ve EN)",
+     "ok": true,
+     "observed": {
+      "sonuc": {
+       "tr": true,
+       "en": true
+      },
+      "ui-test.json dist/web'den yeni": true,
+      "tarih": "2026-10-02T08:05:41.316Z"
+     },
+     "expected": ""
+    },
+    {
+     "test": "var: verinin toplandığı bağlamla ilgisiz alanlarda | yasak yalnız kamu otoritelerine özgü değildir — TR PDF",
+     "ok": true,
+     "observed": "hepsinde var",
+     "expected": "her kanalda var"
+    },
+    {
+     "test": "var: in contexts unrelated to where the data was collected | the ban is not limited to public authorities — EN PDF, EPUB",
+     "ok": true,
+     "observed": "hepsinde var",
+     "expected": "her kanalda var"
+    },
+    {
+     "test": "var: yayımının editoryal sorumluluğunu bir gerçek ya da tüzel kiş | iki koşul birlikte aranır — TR PDF, TR dijital",
+     "ok": true,
+     "observed": "hepsinde var",
+     "expected": "her kanalda var"
+    },
+    {
+     "test": "var: a natural or legal person holds editorial responsibility for | both conditions must hold — EN PDF, EPUB, EN dijital",
+     "ok": true,
+     "observed": "hepsinde var",
+     "expected": "her kanalda var"
+    },
+    {
+     "test": "yok: Vatandaşları davranışına göre puanlayan devlet sistemi | A state system scoring citizens by behavior | social scoring by a public authority is prohibited | insan editoryal denetiminden geçen metin | text under human editorial control is outside — TR PDF, EN PDF, EPUB, TR dijital, EN dijital",
+     "ok": true,
+     "observed": "hiçbirinde yok",
+     "expected": "hiçbir kanalda yok"
+    }
+   ],
+   "refs": [
+    [
+     "print/src/tr/M07-yapay-zeka-ve-toplum.md",
+     "Sosyal davranış puanıyla"
+    ],
+    [
+     "print/src/tr/M07-yapay-zeka-ve-toplum.md",
+     "iki koşul birlikte aranır"
+    ],
+    [
+     "print/src/en/M07-ai-and-society.md",
+     "both conditions must hold"
+    ],
+    [
+     "print/src/tr/cevaplar/M07.md",
+     "yasak yalnız kamu otoritelerine"
+    ],
+    [
+     "print/src/en/answers/M07.md",
+     "not limited to public authorities"
+    ],
+    [
+     "print/figures/strings/M07.mjs",
+     "Sosyal davranış puanıyla"
+    ],
+    [
+     "Atlas-Kitap.dc.html",
+     "Sosyal davranış puanıyla"
+    ],
+    [
+     "Atlas-Kitap-EN.dc.html",
+     "both conditions must hold"
+    ]
+   ],
+   "dis_kosul": "Bütün kitap için hukuki uygunluk sertifikası değildir; hukukçu onayı yazara önerilir."
+  },
+  "R064": {
+   "baslik": "EN arayüzünde Türkçe kalan metin (üstel büyüme sayacı)",
+   "tur": "AÇIK KUSUR · N007",
+   "degisiklik": "EN expCount getter: en-US binlik ayraç ve million/billion; TR getter: basılı kitapla aynı ondalık nokta (R095).",
+   "ok": true,
+   "testler": [
+    {
+     "test": "EN Atlas getter 27 durum (d = 0…26) biçim",
+     "ok": true,
+     "observed": [
+      {
+       "d": 0,
+       "year": 1971,
+       "out": "2,300"
+      },
+      {
+       "d": 9,
+       "year": 1989,
+       "out": "1.2 million"
+      },
+      {
+       "d": 13,
+       "year": 1997,
+       "out": "18.8 million"
+      },
+      {
+       "d": 20,
+       "year": 2011,
+       "out": "2.4 billion"
+      },
+      {
+       "d": 26,
+       "year": 2023,
+       "out": "154.4 billion"
+      }
+     ],
+     "expected": ""
+    },
+    {
+     "test": "EN derlenmiş web getter 27 durum",
+     "ok": true,
+     "observed": [
+      "2,300",
+      "1.2 million",
+      "18.8 million",
+      "2.4 billion",
+      "154.4 billion"
+     ],
+     "expected": ""
+    },
+    {
+     "test": "TR getter 27 durum (2.300 · 1.2 milyon · 2.4 milyar)",
+     "ok": true,
+     "observed": [
+      "2.300",
+      "1.2 milyon",
+      "18.8 milyon",
+      "2.4 milyar",
+      "154.4 milyar"
+     ],
+     "expected": ""
+    },
+    {
+     "test": "headless Chrome (ui_test.mjs): sayaç düğmesine 26 kez tıklanarak 27 görünür durum, TR ve EN biçimi",
+     "ok": true,
+     "observed": {
+      "sonuc": {
+       "tr": true,
+       "en": true
+      },
+      "ui-test.json dist/web'den yeni": true,
+      "tarih": "2026-10-02T08:05:41.316Z"
+     },
+     "expected": ""
+    },
+    {
+     "test": "headless Chrome (ui_test.mjs): EN 61 bölüm × Basit + Teknik = 122 görünümde Türkçe karakter/sözcük 0 (özel adlar hariç)",
+     "ok": true,
+     "observed": {
+      "sonuc": {
+       "en": true
+      },
+      "ui-test.json dist/web'den yeni": true,
+      "tarih": "2026-10-02T08:05:41.316Z"
+     },
+     "expected": ""
+    },
+    {
+     "test": "yok: milyon | milyar | toLocaleString('tr-TR') — EN dijital, EN web",
+     "ok": true,
+     "observed": "hiçbirinde yok",
+     "expected": "hiçbir kanalda yok"
+    }
+   ],
+   "refs": [
+    [
+     "Atlas-Kitap-EN.dc.html",
+     "R064: EN number format"
+    ],
+    [
+     "Atlas-Kitap.dc.html",
+     "R095: ondalık nokta"
+    ],
+    [
+     "print/kitap/qa/exp_getter_test.mjs",
+     "expCount"
+    ]
+   ],
+   "dis_kosul": ""
+  },
+  "R071": {
+   "baslik": "Tablolar: başlık ile ilk veri satırı birlikte; kısa tablo ve tek satır bölünmez",
+   "tur": "AÇIK KUSUR · N001",
+   "degisiklik": "Uzun tabloda ilk, ikinci ve son veri satırı komşusundan ayrılmaz (data-break-before=\"avoid\"); hooks.js yalnız başlıklı parçayı sayar, check.sh kapısı.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "TR DOM sayaçları: kısa tablo bölünmesi 0, tek veri satırlı parça 0, yalnız başlıklı parça 0",
+     "ok": true,
+     "observed": {
+      "tablo-kucuk-bolunen": "0",
+      "tablo-tek-satir": "0",
+      "tablo-yalniz-baslik": "0",
+      "thead-tekrar": "11"
+     },
+     "expected": ""
+    },
+    {
+     "test": "EN DOM sayaçları: kısa tablo bölünmesi 0, tek veri satırlı parça 0, yalnız başlıklı parça 0",
+     "ok": true,
+     "observed": {
+      "tablo-kucuk-bolunen": "0",
+      "tablo-tek-satir": "0",
+      "tablo-yalniz-baslik": "0",
+      "thead-tekrar": "10"
+     },
+     "expected": ""
+    },
+    {
+     "test": "TR DOM: önceki sayfadan devam eden her tablo parçasında sütun başlığı var (tablo-devam-basliksiz 0)",
+     "ok": true,
+     "observed": {
+      "tablo-devam": "11",
+      "tablo-devam-basliksiz": "0"
+     },
+     "expected": ""
+    },
+    {
+     "test": "EN DOM: önceki sayfadan devam eden her tablo parçasında sütun başlığı var (tablo-devam-basliksiz 0)",
+     "ok": true,
+     "observed": {
+      "tablo-devam": "10",
+      "tablo-devam-basliksiz": "0"
+     },
+     "expected": ""
+    },
+    {
+     "test": "TR PDF bağımsız ölçüm: sayfanın son satırı bir tablo başlığı olan sayfa yok (48 başlıklı tablo)",
+     "ok": true,
+     "observed": "yok",
+     "expected": ""
+    },
+    {
+     "test": "EN PDF bağımsız ölçüm: sayfanın son satırı bir tablo başlığı olan sayfa yok (54 başlıklı tablo)",
+     "ok": true,
+     "observed": "yok",
+     "expected": ""
+    }
+   ],
+   "refs": [
+    [
+     "print/typeset/typeset.py",
+     "N001: başlık satırı"
+    ],
+    [
+     "print/typeset/hooks.js",
+     "tablo-yalniz-baslik"
+    ],
+    [
+     "print/typeset/check.sh",
+     "tablo-yalniz-baslik:0"
+    ]
+   ],
+   "dis_kosul": ""
+  },
+  "R073": {
+   "baslik": "Şekil etiketleri: çakışma, kesilme, çizgi teması",
+   "tur": "AÇIK KUSUR · N008",
+   "degisiklik": "Şekil 6.3 \"çıktı/output\" etiketi Gözlem düğümünün altına; geometri denetimi çerçeve/elips çizgi temasını da ölçüyor (köşe rozetleri hariç).",
+   "ok": true,
+   "testler": [
+    {
+     "test": "90 şekil geometri denetimi (kenar payı, metin–metin, metin–çerçeve/elips çizgisi)",
+     "ok": true,
+     "observed": "temiz: metin kutuları kenara taşmıyor ve birbirine binmiyor",
+     "expected": ""
+    },
+    {
+     "test": "dizgi ölçeğinde 180 dpi görüntüler: 45 TR + 45 EN şekil, son PDF'lerle aynı SHA-256 (sekil_tarama.py)",
+     "ok": true,
+     "observed": {
+      "tr": {
+       "sekil": 45,
+       "Sekil 6.3 sayfa": [
+        153
+       ]
+      },
+      "en": {
+       "sekil": 45,
+       "Sekil 6.3 sayfa": [
+        167
+       ]
+      },
+      "png": 90
+     },
+     "expected": ""
+    }
+   ],
+   "refs": [
+    [
+     "print/figures/gen/M06.mjs",
+     "N008"
+    ],
+    [
+     "print/figures/check_fig_geom.mjs",
+     "çizgi teması"
+    ],
+    [
+     "print/figures/gen/M07.mjs",
+     "R056: uzun kart metni"
+    ]
+   ],
+   "dis_kosul": "Fiziksel prova R082 kapsamında."
+  },
+  "R094": {
+   "baslik": "Önsöz ve EPUB: tarihsel ardıllık kapakla tutarlı",
+   "tur": "AÇIK KUSUR · N004",
+   "degisiklik": "TR/EN önsöz \"her biri/each one\" yerine \"çoğu/most … bazıları yan yana\"; EPUB önsözü aynı kaynaktan.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "yok: Her biri bir öncekinin yetmediği yerde doğdu | Each one was born where the one before it hit a wall | follow the order of history — TR PDF, EN PDF, EPUB",
+     "ok": true,
+     "observed": "hiçbirinde yok",
+     "expected": "hiçbir kanalda yok"
+    },
+    {
+     "test": "var: Bunların çoğu bir öncekinin yetmediği yerde doğdu, bazıları  — TR PDF",
+     "ok": true,
+     "observed": "hepsinde var",
+     "expected": "her kanalda var"
+    },
+    {
+     "test": "var: Most of them were born where the one before hit a wall, and  — EN PDF, EPUB",
+     "ok": true,
+     "observed": "hepsinde var",
+     "expected": "her kanalda var"
+    }
+   ],
+   "refs": [
+    [
+     "print/src/tr/on/02-onsoz.md",
+     "Bunların çoğu"
+    ],
+    [
+     "print/src/en/front/02-preface.md",
+     "Most of them were born"
+    ]
+   ],
+   "dis_kosul": ""
+  },
+  "N006": {
+   "baslik": "Deepfake vaka 1: anlatıcı bilgisi ve doğrulama belirsizliği (isteğe bağlı öneri, uygulandı)",
+   "tur": "REDAKSİYON",
+   "degisiklik": "Vaka metni artık anlatıcının bilemeyeceği bir kesinlik içermiyor: \"hiçbir kaynakta doğrulanmayan bir cümleyi söylerken\".",
+   "ok": true,
+   "testler": [
+    {
+     "test": "yok: hiç söylemediği bir cümleyi söylüyor | says a sentence they never said — TR PDF, EN PDF, EPUB, TR dijital, EN dijital",
+     "ok": true,
+     "observed": "hiçbirinde yok",
+     "expected": "hiçbir kanalda yok"
+    },
+    {
+     "test": "var: hiçbir kaynakta doğrulanmayan bir cümleyi söylerken — TR PDF, TR dijital",
+     "ok": true,
+     "observed": "hepsinde var",
+     "expected": "her kanalda var"
+    },
+    {
+     "test": "var: a sentence that no source confirms; — EN PDF, EPUB, EN dijital",
+     "ok": true,
+     "observed": "hepsinde var",
+     "expected": "her kanalda var"
+    }
+   ],
+   "refs": [
+    [
+     "print/src/tr/M07-yapay-zeka-ve-toplum.md",
+     "hiçbir kaynakta doğrulanmayan"
+    ],
+    [
+     "print/figures/strings/M07.mjs",
+     "hiçbir kaynakta doğrulanmayan"
+    ],
+    [
+     "Atlas-Kitap.dc.html",
+     "hiçbir kaynakta doğrulanmayan"
+    ]
+   ],
+   "dis_kosul": ""
+  },
+  "R082": {
+   "baslik": "Şekil puntosu: iddianın kapsamı ve %100 prova",
+   "tur": "EK VE DIŞ KABUL · N002",
+   "degisiklik": "İddia daraltıldı: \"normal metin ve şekil yazısı ≥ 6,5 pt\"; matematik üst/alt simgeleri ve Type 3 yedek glifler hedef dışı olarak sayılıp listeleniyor (kabul/kucuk-glif-*.csv).",
+   "ok": true,
+   "testler": [
+    {
+     "test": "TR PDF: normal yazıda 5,5–6,5 pt arası gösterim yok",
+     "ok": true,
+     "observed": {
+      "normal_min_ge55": "6.555",
+      "band_5_5_to_lim": 0,
+      "sup_sub_lt55": 56,
+      "type3_fallback": 142
+     },
+     "expected": ""
+    },
+    {
+     "test": "EN PDF: normal yazıda 5,5–6,5 pt arası gösterim yok",
+     "ok": true,
+     "observed": {
+      "normal_min_ge55": "6.510",
+      "band_5_5_to_lim": 0,
+      "sup_sub_lt55": 64,
+      "type3_fallback": 140
+     },
+     "expected": ""
+    },
+    {
+     "test": "check.sh ve rapor iddiası kapsamlı (\"normal metin ve şekil yazısı\"; istisnalar sayılıyor)",
+     "ok": true,
+     "observed": "check.sh mesajı",
+     "expected": ""
+    },
+    {
+     "test": "küçük glif sayfaları prova tablosunda",
+     "ok": true,
+     "observed": "print/teslim/kabul/kucuk-glif-{tr,en}.csv",
+     "expected": ""
+    }
+   ],
+   "refs": [
+    [
+     "print/typeset/check.sh",
+     "Hedef dışı"
+    ],
+    [
+     "print/kitap/qa/pdf_fontsize.mjs",
+     "band_5_5_to_lim"
+    ],
+    [
+     "print/teslim/kabul/KABUL-PROTOKOLU.md",
+     "R082"
+    ]
+   ],
+   "dis_kosul": "%100 fiziksel prova ve küçük glif okunurluğu (kabul/KABUL-PROTOKOLU.md, kucuk-glif-*.csv)."
+  },
+  "R099": {
+   "baslik": "EPUB erişilebilirliği, şekil eşdeğerliği, bağımsız Previewer dönüşümü",
+   "tur": "EK VE DIŞ KABUL · N003, N005",
+   "degisiklik": "Şekil eşliği ayrı kabul kaydı (değer/işaret/sıra/bağlantı); etiket yüzdesi \"mekanik eşleme\" olarak adlandırıldı; Previewer kök nedeni A/B ve JVM kanıtıyla belirlendi, preview.sh tekrarlanabilir.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "epubcheck",
+     "ok": true,
+     "observed": "Messages: 0 fatals / 0 errors / 0 warnings / 0 infos",
+     "expected": ""
+    },
+    {
+     "test": "45 şekil ilişki kaydı: kritik değer (işaretli), sıra, görsel→Kurulum, görsel↔ek",
+     "ok": true,
+     "observed": {
+      "sekil": 45,
+      "kabul": 45,
+      "kritik_deger_toplam": 672,
+      "govdede_toplam": 571
+     },
+     "expected": ""
+    },
+    {
+     "test": "mekanik etiket eşleme ayrı gösterge olarak etiketli",
+     "ok": true,
+     "observed": {
+      "olcum": "mekanik etiket eşleme (N003): esnek meti",
+      "yuzde": 98.3
+     },
+     "expected": ""
+    },
+    {
+     "test": "N005 kök neden: aynı EPUB, ayarsız → Error; JAVA_TOOL_OPTIONS → Success; ayar Java alt süreçlerine ulaştı",
+     "ok": true,
+     "observed": {
+      "tarih": "2026-10-02T08:14:35Z",
+      "epub_sha256": "626bda8e2848892767b3cd2ed22409ea33d5c0fdb8d0c9813b68beabe9a95acd",
+      "macos_AppleLocale": "tr_TR",
+      "gomulu_jre_user_language": {
+       "ayarsiz": "tr",
+       "JAVA_TOOL_OPTIONS": "en"
+      },
+      "A_ayarsiz": {
+       "exit": 1,
+       "ozet": "Not Supported,Error,0,0",
+       "java_istisnasi_inf_o": 36,
+       "istisna_ornegi": "Can't find bundle for base name com.amazon.language.resources.epubprocessor.ınfo_en",
+       "cli_mobi_message_stores_uyarisi": 1
+      },
+      "B_JAVA_TOOL_OPTIONS": {
+       "exit": 0,
+       "ozet": "Supported,Success,0,0",
+       "ayari_alan_java_alt_sureci": 4,
+       "java_istisnasi_inf_o": 0,
+       "cli_mobi_message_stores_uyarisi": 0
+      },
+      "C_export_edilmemis_atama": {
+       "exit": 1,
+       "ozet": "Not Supported,Error,0,0",
+       "ayari_alan_java_alt_sureci": 0,
+       "cli_mobi_message_stores_uyarisi": 1
+      },
+      "kpf": "print/kitap/en/AI-for-Everyone-preview.kpf"
+     },
+     "expected": ""
+    },
+    {
+     "test": "N005 asıl Java hatası: ayarsızda MissingResourceException \"epubprocessor.ınfo_en\" (Türkçe küçük harf) ve CLI \"Failed to get Mobi message stores\"; ayarlıda ikisi de 0",
+     "ok": true,
+     "observed": {
+      "A_ayarsiz": {
+       "exit": 1,
+       "ozet": "Not Supported,Error,0,0",
+       "java_istisnasi_inf_o": 36,
+       "istisna_ornegi": "Can't find bundle for base name com.amazon.language.resources.epubprocessor.ınfo_en",
+       "cli_mobi_message_stores_uyarisi": 1
+      },
+      "B_JAVA_TOOL_OPTIONS": {
+       "exit": 0,
+       "ozet": "Supported,Success,0,0",
+       "ayari_alan_java_alt_sureci": 4,
+       "java_istisnasi_inf_o": 0,
+       "cli_mobi_message_stores_uyarisi": 0
+      }
+     },
+     "expected": ""
+    },
+    {
+     "test": "N005 incelemecinin sonucu yeniden üretildi: değişken export edilmeden atanınca ayar Java'ya ulaşmıyor (0 alt süreç) ve aynı Error + \"Failed to get Mobi message stores\" çıkıyor",
+     "ok": true,
+     "observed": {
+      "exit": 1,
+      "ozet": "Not Supported,Error,0,0",
+      "ayari_alan_java_alt_sureci": 0,
+      "cli_mobi_message_stores_uyarisi": 1
+     },
+     "expected": ""
+    },
+    {
+     "test": "EPUB kapak görseli = güncel Kindle kapak JPEG'i (kapak sırtı değişince EPUB yeniden üretilmiş)",
+     "ok": true,
+     "observed": {
+      "epub_kapak": "5293334d2b13ff27",
+      "kdp_ebook_cover": "5293334d2b13ff27"
+     },
+     "expected": ""
+    },
+    {
+     "test": "KPF içindeki book.epub, güncel EPUB ile aynı (SHA-256) ve KPF conversionLog'da hata satırı yok",
+     "ok": true,
+     "observed": {
+      "kpf_icindeki_epub": "626bda8e2848892767b3cd2ed22409ea33d5c0fdb8d0c9813b68beabe9a95acd",
+      "guncel_epub": "626bda8e2848892767b3cd2ed22409ea33d5c0fdb8d0c9813b68beabe9a95acd",
+      "hata_satiri": 0
+     },
+     "expected": ""
+    },
+    {
+     "test": "Previewer arayüzü (GUI) A/B: ayarsız açılış hata/önizleme yok, JAVA_TOOL_OPTIONS ile önizleme üretildi ve hata satırı 0",
+     "ok": true,
+     "observed": "A_ayarsiz: önizleme yok · hata satırı -\nB_ayarli: önizleme 8539716 bayt · hata satırı 0\nB: ayarı alan Java alt süreci 4",
+     "expected": ""
+    },
+    {
+     "test": "kaynakça bağlantıları EPUB'da tıklanabilir (R098 eki)",
+     "ok": true,
+     "observed": 117,
+     "expected": ""
+    }
+   ],
+   "refs": [
+    [
+     "print/kindle/preview.sh",
+     "Kök neden"
+    ],
+    [
+     "print/kitap/qa/fig_relations.py",
+     "kritik değer"
+    ],
+    [
+     "print/kitap/qa/fig_coverage.py",
+     "mekanik etiket eşleme"
+    ],
+    [
+     "print/kindle/kindle.py",
+     "R098"
+    ]
+   ],
+   "dis_kosul": "VoiceOver/TalkBack ve gerçek Kindle cihaz/profil/font/yön testleri (kabul/erisilebilirlik-testi.csv); Previewer GUI denemesi aynı JAVA_TOOL_OPTIONS ile."
+  },
+  "R079": {
+   "baslik": "EAN-13 basılı kabul",
+   "tur": "EK VE DIŞ KABUL",
+   "degisiklik": "Dosya geometrisi doğrulandı (5X koruma, 9786250052112); basılı numune için tarayıcı ve verifier kayıt tablosu hazır.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "kabul protokolünde iki ayrı kanıt yolu (tarayıcı okuması + ISO/IEC 15416 verifier)",
+     "ok": true,
+     "observed": "KABUL-PROTOKOLU.md R079",
+     "expected": ""
+    }
+   ],
+   "refs": [
+    [
+     "print/kapak/kapak.mjs",
+     "textMargin: 3"
+    ],
+    [
+     "print/teslim/kabul/KABUL-PROTOKOLU.md",
+     "R079"
+    ]
+   ],
+   "dis_kosul": "Basılı numunede tarayıcı okuması ve verifier sınıf notu."
+  },
+  "R080": {
+   "baslik": "Hedef ICC ve bağımsız PDF/X preflight",
+   "tur": "EK VE DIŞ KABUL",
+   "degisiklik": "Matbaaya gidecek yazı ve profil gelince çalışacak komut protokolde; aynı hash üzerinde preflight tablosu.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "OutputCondition \"printer profile pending\" (dürüst etiket)",
+     "ok": true,
+     "observed": "OutputCondition",
+     "expected": ""
+    }
+   ],
+   "refs": [
+    [
+     "print/teslim/kabul/KABUL-PROTOKOLU.md",
+     "R080"
+    ]
+   ],
+   "dis_kosul": "Matbaanın yazılı ICC/baskı koşulu ve bağımsız preflight raporu."
+  },
+  "R081": {
+   "baslik": "Künye matbaa satırı ve EN ISBN",
+   "tur": "EK VE DIŞ KABUL (yazar kararı)",
+   "degisiklik": "Değişmedi: yalnız yazar/matbaa doldurabilir; adımlar protokolde.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "kalan yer tutucular (sabit True değil: gerçek liste)",
+     "ok": true,
+     "observed": {
+      "tr": [
+       "[matbaa adı, adres, sertifika no]"
+      ],
+      "en": [
+       "[ISBN]"
+      ]
+     },
+     "expected": ""
+    }
+   ],
+   "refs": [
+    [
+     "print/src/tr/on/00-kunye.md",
+     "[matbaa"
+    ],
+    [
+     "print/src/en/front/00-title.md",
+     "[ISBN]"
+    ]
+   ],
+   "dis_kosul": "Matbaa adı/adres/sertifika no ve EN ISBN."
+  },
+  "R084": {
+   "baslik": "Kâğıt, cilt, sırt ve KDP kabulü",
+   "tur": "EK VE DIŞ KABUL",
+   "degisiklik": "Kutular kesin; 45 QR × 2 telefon test tabloları (TR/EN) ve KDP Print Previewer kayıt satırı hazır.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "QR test tabloları 45/45 sayfa eşlemeli",
+     "ok": true,
+     "observed": {
+      "tr": 45,
+      "en": 45
+     },
+     "expected": ""
+    },
+    {
+     "test": "TR TrimBox 160,00 × 240,00 mm",
+     "ok": true,
+     "observed": "OKUBENI.md",
+     "expected": ""
+    },
+    {
+     "test": "EN kapak net genişliği = 2 × 6 in + iç blok sayfası × 0,002252 in (KDP standart renk, beyaz kâğıt; ±0,05 pt)",
+     "ok": true,
+     "observed": {
+      "ic_blok_sayfa": 278,
+      "kapak_trim_pt": 909.08,
+      "beklenen_pt": 909.076,
+      "sirt_mm": 15.903
+     },
+     "expected": ""
+    },
+    {
+     "test": "TR kapak net genişliği = 2 × 160 mm + kapak.json sırtı; iç blok 16'nın katı",
+     "ok": true,
+     "observed": {
+      "ic_blok_sayfa": 256,
+      "kapak_trim_mm": 334.2,
+      "sirt_mm": 14.2
+     },
+     "expected": ""
+    },
+    {
+     "test": "teslim kopyaları üretim dosyalarıyla aynı SHA-256 ve dosya adındaki sayfa sayısı doğru",
+     "ok": true,
+     "observed": {
+      "AI-for-Everyone-paperback-interior-278p.pdf": true,
+      "AI-for-Everyone-paperback-cover.pdf": true,
+      "AI-for-Everyone-kindle.epub": true,
+      "AI-for-Everyone-kindle-cover.jpg": true,
+      "Herkes-Icin-Yapay-Zeka-ic-blok-256s.pdf": true,
+      "Herkes-Icin-Yapay-Zeka-kapak-sirt14-2mm.pdf": true
+     },
+     "expected": ""
+    }
+   ],
+   "refs": [
+    [
+     "print/teslim/kabul_hazirla.py",
+     "qr-testi"
+    ],
+    [
+     "print/teslim/kabul/KABUL-PROTOKOLU.md",
+     "R084"
+    ]
+   ],
+   "dis_kosul": "Matbaa kâğıt/sırt yazılı onayı; KDP Print Previewer ve proof copy; QR testlerinin yapılması."
+  },
+  "N001": {
+   "baslik": "Tablo başlıklarının veriden ayrılması",
+   "tur": "kusur",
+   "degisiklik": "R071 kaydına bakın: kural + sayaç + PDF bağımsız ölçüm.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "R071 testleri",
+     "ok": true,
+     "observed": "R071: geçti",
+     "expected": ""
+    }
+   ],
+   "refs": [],
+   "dis_kosul": "",
+   "bagli": "R071"
+  },
+  "N002": {
+   "baslik": "Punto iddiasının kapsamı",
+   "tur": "açıklama",
+   "degisiklik": "R082 kaydına bakın: iddia daraltıldı, istisnalar sayılıyor.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "R082 testleri",
+     "ok": true,
+     "observed": "R082: geçti",
+     "expected": ""
+    }
+   ],
+   "refs": [],
+   "dis_kosul": "%100 fiziksel prova ve küçük glif okunurluğu (kabul/KABUL-PROTOKOLU.md, kucuk-glif-*.csv).",
+   "bagli": "R082"
+  },
+  "N003": {
+   "baslik": "FigureData eşleme oranının sınırı",
+   "tur": "yöntem",
+   "degisiklik": "R099 kaydına bakın: sekil-iliski-45.json ayrı kabul kaydı.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "R099 testleri",
+     "ok": true,
+     "observed": "R099: geçti",
+     "expected": ""
+    }
+   ],
+   "refs": [],
+   "dis_kosul": "VoiceOver/TalkBack ve gerçek Kindle cihaz/profil/font/yön testleri (kabul/erisilebilirlik-testi.csv); Previewer GUI denemesi aynı JAVA_TOOL_OPTIONS ile.",
+   "bagli": "R099"
+  },
+  "N004": {
+   "baslik": "Tarihsel anlatımın önsöze yayılmaması",
+   "tur": "kusur",
+   "degisiklik": "R094 kaydına bakın.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "R094 testleri",
+     "ok": true,
+     "observed": "R094: geçti",
+     "expected": ""
+    }
+   ],
+   "refs": [],
+   "dis_kosul": "",
+   "bagli": "R094"
+  },
+  "N005": {
+   "baslik": "Bağımsız Previewer dönüşümünün tekrarlanması",
+   "tur": "kabul engeli",
+   "degisiklik": "R099 kaydına bakın: A/B + JVM kanıtı, preview.sh.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "R099 testleri",
+     "ok": true,
+     "observed": "R099: geçti",
+     "expected": ""
+    }
+   ],
+   "refs": [],
+   "dis_kosul": "VoiceOver/TalkBack ve gerçek Kindle cihaz/profil/font/yön testleri (kabul/erisilebilirlik-testi.csv); Previewer GUI denemesi aynı JAVA_TOOL_OPTIONS ile.",
+   "bagli": "R099"
+  },
+  "N007": {
+   "baslik": "EN üstel büyüme sayacında Türkçe metin",
+   "tur": "kusur",
+   "degisiklik": "R064 kaydına bakın.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "R064 testleri",
+     "ok": true,
+     "observed": "R064: geçti",
+     "expected": ""
+    }
+   ],
+   "refs": [],
+   "dis_kosul": "",
+   "bagli": "R064"
+  },
+  "N008": {
+   "baslik": "ReAct çıktı etiketinin oval çizgisine teması",
+   "tur": "kusur",
+   "degisiklik": "R073 kaydına bakın.",
+   "ok": true,
+   "testler": [
+    {
+     "test": "R073 testleri",
+     "ok": true,
+     "observed": "R073: geçti",
+     "expected": ""
+    }
+   ],
+   "refs": [],
+   "dis_kosul": "Fiziksel prova R082 kapsamında.",
+   "bagli": "R073"
+  }
+ }
+}

@@ -41,15 +41,17 @@ if python3 "$HERE/check_text_integrity.py" "$HX" "$IN" "$LANG_"; then chk ok "ka
 RGBPDF="$(dirname "$HX")/ic-blok-rgb.pdf"
 kw=$(pdfinfo "$RGBPDF" 2>/dev/null | sed -n 's/^Keywords: *//p')
 case "$kw" in *kitap-tasma:0*) chk ok "sayfa alanı taşması yok ($kw)";; *kitap-tasma:*) chk bad "sayfa alanı taşıyor: $kw";; *) chk bad "taşma ölçümü yok (hooks.js çalışmadı?)";; esac
-# R082: şekil metni dizgide en az 6,5 pt; R071: kısa tablo/matris bölünmez, bölünen tablonun hiçbir parçasında tek veri satırı kalmaz
+# R082: normal şekil yazısı en az 6,5 pt (tasarım hedefi; evrensel standart değil; alt/üst simge ve Type 3 yedek glifler kapsam dışı); R071: kısa tablo/matris bölünmez, bölünen tablonun hiçbir parçasında tek veri satırı kalmaz
 fmin=$(printf '%s' "$kw" | sed -n 's/.*sekil-min-pt:\([0-9.]*\).*/\1/p')
 if [ -n "$fmin" ] && python3 -c "import sys; sys.exit(0 if float('$fmin') >= 6.58 else 1)"; then chk ok "şekil metni dizgide ≥ 6,58 pt (DOM ölçümü, en küçük $fmin pt; hedef 6,6)"; else chk bad "şekil metni dizgide 6,58 pt altında ya da ölçülmedi (${fmin:-yok})"; fi
 # PDF düzeyinde bağımsız ölçüm (Tf × Tm × CTM): üst/alt simge (< 5,5 pt) ve Type 3 yedek glifler dışında 6,5 pt altı metin olmamalı
 pf=$(node "$HERE/../kitap/qa/pdf_fontsize.mjs" "$IN" 2>/dev/null | tail -1)
 band=$(printf '%s' "$pf" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['band_5_5_to_lim'], d['normal_min_ge55'], d['sup_sub_lt55'], d['type3_fallback'])" 2>/dev/null)
 set -- $band
-if [ "${1:-x}" = 0 ]; then chk ok "PDF metni ≥ 6,5 pt (en küçük $2 pt; üst/alt simge $3 gösterim, Type 3 yedek glif $4 ayrı)"; else chk bad "PDF'te 5,5–6,5 pt arası metin: ${1:-ölçülemedi} ($pf)"; fi
-case "$kw" in *tablo-kucuk-bolunen:0\ tablo-tek-satir:0*) chk ok "kısa tablo bölünmüyor, tek satır kalan tablo parçası yok";; *tablo-kucuk-bolunen:*) chk bad "tablo kuralı ihlali: $kw";; *) chk bad "tablo ölçümü yok";; esac
+if [ "${1:-x}" = 0 ]; then chk ok "normal metin ve şekil yazısı ≥ 6,5 pt (en küçük $2 pt). Hedef dışı, ayrıca prova edilecek: matematik üst/alt simgesi $3 gösterim, Type 3 yedek glif $4 gösterim (N002)"; else chk bad "PDF'te 5,5–6,5 pt arası metin: ${1:-ölçülemedi} ($pf)"; fi
+case "$kw" in *tablo-kucuk-bolunen:0\ tablo-tek-satir:0\ tablo-yalniz-baslik:0*) chk ok "kısa tablo bölünmüyor; tek veri satırlı ya da yalnız başlıklı tablo parçası yok";; *tablo-kucuk-bolunen:*) chk bad "tablo kuralı ihlali: $kw";; *) chk bad "tablo ölçümü yok";; esac
+case "$kw" in *tablo-devam-basliksiz:0*) chk ok "bölünen her tablonun devam parçasında sütun başlığı var ($(echo "$kw" | grep -o 'tablo-devam:[0-9]*'))";; *) chk bad "başlıksız tablo devamı: $(echo "$kw" | grep -o 'tablo-devam-basliksiz:[0-9]*')";; esac
+th=$(python3 "$HERE/check_table_heads.py" "$HX" "$IN"); case "$th" in *'"yalniz_baslik": []'*) chk ok "PDF ölçümü: veri satırı olmadan kalan tablo başlığı yok";; *) chk bad "yalnız kalan tablo başlığı: $th";; esac
 echo "== QR"; node "$HERE/check_qr.mjs" "$IN" "$LANG_" || fail=1
 echo; [ $fail -eq 0 ] && echo "SONUÇ: tüm denetimler geçti" || echo "SONUÇ: hata var"
 exit $fail

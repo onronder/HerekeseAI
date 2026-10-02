@@ -1,5 +1,5 @@
 // R073: 90 şeklin geometri denetimi (gerçek fontlarla, headless Chrome). Her <text> için getBBox:
-//  (a) viewBox içinde en az KENAR birim pay, (b) iki metin kutusu birbirine binmiyor (aynı satırdaki tspan'lar tek kutu sayılır).
+//  (a) viewBox içinde en az KENAR birim pay, (b) iki metin kutusu birbirine binmiyor, (c) metin, çerçeveli kutu/elips kenar çizgisine değmiyor (R073/N008).
 // Kullanım: node print/figures/check_fig_geom.mjs [tr|en|all]   → çakışma/taşma listesi; çıkış kodu 1 = sorun var
 import fs from 'node:fs';
 import path from 'node:path';
@@ -32,6 +32,27 @@ for (const lang of langs) {
         const a = boxes[i], c = boxes[j];
         const ox = Math.min(a.x1, c.x1) - Math.max(a.x0, c.x0), oy = Math.min(a.y1, c.y1) - Math.max(a.y0, c.y0);
         if (ox > BIN && oy > BIN * 2.2) out.push(`çakışma: "${a.s}" ↔ "${c.s}" (${ox.toFixed(1)}×${oy.toFixed(1)})`);
+      }
+      // (c) metin kutusu çerçeveli bir kutunun ya da elipsin kenar çizgisini kesiyor mu (kısmen içeride, kısmen dışarıda; çizgiye değme dahil)
+      const shapes = [...s.querySelectorAll('rect, ellipse, circle')].filter((e) => {
+        const st = e.getAttribute('stroke'); return st && st !== 'none' && !(e.tagName === 'rect' && +e.getAttribute('width') >= vb.width - 0.5);
+      }).map((e) => { const b = e.getBBox(); const sw = +(e.getAttribute('stroke-width') || 1); return { x0: b.x - sw / 2, x1: b.x + b.width + sw / 2, y0: b.y - sw / 2, y1: b.y + b.height + sw / 2, sw, tag: e.tagName }; });
+      // dolu daire içindeki metin bir rozettir (ör. köşe numaraları); rozet kutu kenarına bilerek oturur
+      const badges = [...s.querySelectorAll('circle')].filter((c) => (c.getAttribute('fill') || 'none') !== 'none').map((c) => ({ cx: +c.getAttribute('cx'), cy: +c.getAttribute('cy'), r: +c.getAttribute('r') }));
+      const inBadge = (t) => badges.some((b) => Math.hypot((t.x0 + t.x1) / 2 - b.cx, (t.y0 + t.y1) / 2 - b.cy) < b.r && (t.x1 - t.x0) < 2 * b.r);
+      for (const t of boxes) for (const r of shapes) {
+        if (inBadge(t)) continue;
+        const ix = Math.min(t.x1, r.x1) - Math.max(t.x0, r.x0), iy = Math.min(t.y1, r.y1) - Math.max(t.y0, r.y0);
+        if (ix <= 0.3 || iy <= 0.3) continue;  // ayrık
+        const inside = t.x0 >= r.x0 + r.sw && t.x1 <= r.x1 - r.sw && t.y0 >= r.y0 + r.sw && t.y1 <= r.y1 - r.sw;
+        if (inside) continue;  // kutunun içinde
+        const covers = t.x0 <= r.x0 && t.x1 >= r.x1 && t.y0 <= r.y0 && t.y1 >= r.y1;  // küçük işaretleyici (nokta) metnin altında: ayrı kural
+        if (covers || (r.x1 - r.x0) < 8) continue;
+        // metin kutusunun yazı gövdesi (bbox'ın üst %15 ve alt %20 boşluğu hariç) çizgiye değiyorsa raporla
+        const ty0 = t.y0 + (t.y1 - t.y0) * 0.15, ty1 = t.y1 - (t.y1 - t.y0) * 0.2;
+        const hitsH = (y) => y > ty0 && y < ty1 && t.x1 > r.x0 && t.x0 < r.x1;
+        const hitsV = (x) => x > t.x0 && x < t.x1 && ty1 > r.y0 && ty0 < r.y1;
+        if (hitsH(r.y0) || hitsH(r.y1) || hitsV(r.x0) || hitsV(r.x1)) out.push(`çizgi teması: "${t.s}" ↔ ${r.tag} [${r.x0.toFixed(1)}–${r.x1.toFixed(1)} × ${r.y0.toFixed(1)}–${r.y1.toFixed(1)}]`);
       }
       return out;
     }, KENAR, BIN);

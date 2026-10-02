@@ -4,7 +4,7 @@
 
 Bu kitap bir soruyla başlıyor: Bir makine düşünebilir mi? Soru yeni değil; dört yüz yıldır filozofları meşgul ediyor. Yeni olan, bu soruya cevap vermeyi deneyebilecek makinelerin artık masanın üstünde durması.
 
-İlk hesap çarklarından bugünün sohbet robotlarına uzanan iki yüzyıllık bir hikâye anlatacağım. Hikâyenin kahramanları fikirler: kural, arama, olasılık, öğrenme, nöron, dikkat. Her biri bir öncekinin yetmediği yerde doğdu; bölümler de bu sırayla ilerliyor.
+İlk hesap çarklarından bugünün sohbet robotlarına uzanan iki yüzyıllık bir hikâye anlatacağım. Hikâyenin kahramanları fikirler: kural, arama, olasılık, öğrenme, nöron, dikkat. Bunların çoğu bir öncekinin yetmediği yerde doğdu, bazıları da yan yana gelişti; bölümler bu fikirleri o sırayla ele alıyor.
 
 Bu kitabın dijital sürümünde her kavramı kendi elinle deniyorsun: bir Turing makinesini adım adım çalıştırıyor, bir nöronun girdilerini çeviriyor, gürültüden bir görsel çıkarıyorsun. Basılı kitapta bu yok; onun yerine her deneyi senin için sayılarla ve çizimlerle adım adım yürüttüm. Sonra da sırayı sana bıraktım. "Kendin dene" alıştırmaları kalem ve kâğıtla çözülüyor; canlı demoların bağlantıları da her şeklin altında.
 

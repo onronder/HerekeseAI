@@ -194,9 +194,9 @@ function agentFigure(demo, { lang }) {
   body.push(line(cxm + half - (wTool / 2 + 1), bot, cxm - half + (wObs / 2 + 2), bot, { sw: 0.7, marker: true }));
   body.push(line(cxm - half + 8, bot - 7, cxm - 14, top + 6, { sw: 0.7, marker: true }));
   body.push(line(cxm, top + 6.5, cxm, bot + 10, { stroke: EMBER, sw: 0.7, dash: '1.5 1.5', marker: true }));
-  body.push(text(cxm, bot + 18, A.goal, { font: MONO, size: 6, fill: EMBER, anchor: 'middle' })); // R082: ≥ 6
+  body.push(text(cxm, bot + 21, A.goal, { font: MONO, size: 6, fill: EMBER, anchor: 'middle' })); // R082: ≥ 6
   body.push(text(cxm + half + 3, top + 12, A.edgeCall, { font: MONO, size: 6, fill: MUTED }));
-  body.push(text(cxm - 4, bot + 8.5, A.edgeOut, { font: MONO, size: 6, fill: MUTED, anchor: 'end' })); // Araç → Gözlem okunun altı, kesik çizginin solu (R082 büyük puntoda çapraz okla çakışıyordu)
+  body.push(text(cxm - 4, bot + 12.5, A.edgeOut, { font: MONO, size: 6, fill: MUTED, anchor: 'end' })); // N008: Gözlem düğümünün alt çizgisinin altında (düğüm alt kenarı bot + 6) // Araç → Gözlem okunun altı, kesik çizginin solu (R082 büyük puntoda çapraz okla çakışıyordu)
   body.push(text(cxm - half - 3, top + 12, A.edgeFeed, { font: MONO, size: 6, fill: MUTED, anchor: 'end' }));
   // --- üç kare
   const y0 = Math.max(10 + th + 16, bot + 26), fw = (W - pad * 2 - 12) / 3, fmax = cpl(fw - 8, 7, lang);

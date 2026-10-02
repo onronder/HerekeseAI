@@ -11,6 +11,27 @@ class KitapHooks extends Paged.Handler {
     this.nThead = 0; this.nCont = 0;
   }
   onOverflow(overflow, rendered, bounds) {
+    // N001/R071: kesme bir tablonun ilk veri satırından önce düşüyorsa (sayfada yalnız başlık kalacaksa) kesme tablonun öncesine çekilir;
+    // tablonun hemen önündeki kısa etiket paragrafı ("Adım adım.") da tabloyla birlikte taşınır. Sayfada tablodan önce içerik yoksa dokunulmaz (sonsuz döngü koruması).
+    if (overflow && overflow.startContainer) {
+      const sc = overflow.startContainer;
+      const at = sc.nodeType === 1 ? (sc.childNodes[overflow.startOffset] || sc) : sc.parentElement;
+      const tbl = at && at.closest ? at.closest('table') : null;
+      if (tbl && !tbl.hasAttribute('data-split-from')) {
+        const body = tbl.tBodies[0], rows = body ? [...body.rows] : [];
+        const before = rows.filter(r => { const rg = document.createRange(); rg.setStartAfter(r); return overflow.compareBoundaryPoints(Range.START_TO_START, rg) >= 0; }).length;
+        // sayfada tablodan önce içerik var mı (yapısal; yerleşim anında koordinatlar güvenilir değil): yoksa taşımak sonsuz döngü olur
+        const hasBefore = (el) => { for (let n = el; n && n !== rendered; n = n.parentElement) { if (n.previousElementSibling) return n.previousElementSibling; } return null; };
+        const prevEl = hasBefore(tbl);
+        if (before === 0 && rows.length > 0 && prevEl) {
+          let start = tbl; const prev = tbl.previousElementSibling;
+          if (prev && prev.tagName === 'P' && prev.textContent.trim().length < 80 && hasBefore(prev)) start = prev;
+          overflow.setStartBefore(start);
+          this.nHeadMove = (this.nHeadMove || 0) + 1;
+          return overflow;
+        }
+      }
+    }
     // Heceleme (hyphens:auto) ile iki satıra bölünen bir sözcükte Paged.js harf düzeyinde böler ("outs|ide"); sayfada kalan
     // "outs" yeniden akınca bir satır daha doğar ve sayfa alanından taşar. Kesme noktası sözcük başına geri çekilir.
     if (!overflow || !overflow.startContainer || overflow.startContainer.nodeType !== 3) return;
@@ -98,15 +119,22 @@ class KitapHooks extends Paged.Handler {
       if (pt < 6.58) { /* DOM vekili; Chrome PDF'e ~%1 küçük yazar, asıl kapı PDF ölçümü (≥ 6,5) */ const lab = (svg.getAttribute('aria-label') || '').slice(0, 12); figLow.push(lab.replace(/\s+/g, '_') + '=' + pt.toFixed(2)); }
     });
     // R071: bölünmemesi gereken kısa tablo/matris bölündü mü; bölünen tablonun bir parçasında tek veri satırı kaldı mı (sayaçlar Keywords'e)
-    let smallSplit = 0, loneRow = 0; const tabPages = [];
+    let smallSplit = 0, loneRow = 0, headOnly = 0; const tabPages = [];
     document.querySelectorAll('table[data-split-from], table[data-split-to]').forEach(t => {
       const pg = t.closest('.pagedjs_page'); const pno = pg ? pg.dataset.pageNumber : '?';
       if (t.classList.contains('small')) { smallSplit++; tabPages.push('k' + pno); }
       const rows = [...t.querySelectorAll('tr')].filter(r => !r.closest('thead')).length;
       if (rows === 1) { loneRow++; tabPages.push('t' + pno); }
+      if (rows === 0) { headOnly++; tabPages.push('b' + pno); }  // N001: veri satırı olmayan (yalnız başlık) parça
+    });
+    // R071: önceki sayfadan devam eden her tablo parçası sütun başlığını taşımalı (kaynak tablonun thead'i varsa)
+    let contN = 0, contNoHead = 0;
+    document.querySelectorAll('table[data-split-from]').forEach(t => {
+      const src = document.querySelector(`table[data-ref="${t.dataset.splitFrom}"]`);
+      contN++; if (!t.querySelector(':scope > thead') && (!src || src.querySelector(':scope > thead'))) { contNoHead++; tabPages.push('h' + ((t.closest('.pagedjs_page') || {}).dataset || {}).pageNumber); }
     });
     const m = document.createElement('meta'); m.name = 'keywords';
-    m.content = `kitap-tasma:${over}` + (overPages.length ? ` sayfa ${overPages.join(' ')}` : '') + ` thead-tekrar:${document.querySelectorAll('thead.thead-repeat').length} kutu-devam:${document.querySelectorAll('.h4box > .cont').length} dizin-tekrar-silinen:${removed} dizin-cozulmeyen:${unresolved} tablo-kucuk-bolunen:${smallSplit} tablo-tek-satir:${loneRow}${tabPages.length ? ' tablo-sayfa ' + tabPages.join(' ') : ''} sekil-min-pt:${figMin.toFixed(2)}` + (figLow.length ? ` sekil-dusuk:${figLow.join(',')}` : '');
+    m.content = `kitap-tasma:${over}` + (overPages.length ? ` sayfa ${overPages.join(' ')}` : '') + ` thead-tekrar:${document.querySelectorAll('thead.thead-repeat').length} kutu-devam:${document.querySelectorAll('.h4box > .cont').length} dizin-tekrar-silinen:${removed} dizin-cozulmeyen:${unresolved} tablo-kucuk-bolunen:${smallSplit} tablo-tek-satir:${loneRow} tablo-yalniz-baslik:${headOnly} tablo-baslik-tasindi:${this.nHeadMove || 0} tablo-devam:${contN} tablo-devam-basliksiz:${contNoHead}${tabPages.length ? ' tablo-sayfa ' + tabPages.join(' ') : ''} sekil-min-pt:${figMin.toFixed(2)}` + (figLow.length ? ` sekil-dusuk:${figLow.join(',')}` : '');
     document.head.appendChild(m);
   }
 }

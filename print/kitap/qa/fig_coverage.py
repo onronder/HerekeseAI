@@ -58,5 +58,5 @@ for svgp in sorted(glob.glob(f'{FIG}/{pre}-*-*.svg'), key=lambda p: [int(x) for 
         else: miss.append(l)
     res[num] = {'labels': len(labels), 'covered': have, 'pct': round(100 * have / max(1, len(labels))), 'missing': miss[:12]}
 tot = sum(v.get('labels', 0) for v in res.values()); cov = sum(v.get('covered', 0) for v in res.values())
-print(json.dumps({'lang': lang, 'figures': len(res), 'labels': tot, 'covered': cov, 'pct': round(100 * cov / max(1, tot), 1),
+print(json.dumps({'olcum': 'mekanik etiket eşleme (N003): esnek metin/sayı eşleşmesi; anlam eşdeğerliği değildir, bkz. fig_relations.py', 'lang': lang, 'figures': len(res), 'labels': tot, 'covered': cov, 'pct': round(100 * cov / max(1, tot), 1),
                   'below80': {k: v['pct'] for k, v in res.items() if v.get('pct', 0) < 80}, 'per_figure': res}, ensure_ascii=False, indent=1))
