@@ -1,107 +1,75 @@
-// Admin (has_role 'admin') bir alıcının e-postasına kitabı açar.
-// iyzilink ödemesini panelde gören Onur, /yonetim'den bu fonksiyonu çağırır.
+// Yönetici: elle erişim kaynakları (JWT + güncel admin rolü; aktör RPC'ye doğrulanmış kimlikle geçer, RPC yeniden doğrular).
+// action:
+//  - grant {email, note?, lang?}: alıcı TAM e-posta eşleşmesiyle bulunur → book_grant_manual (ayrı kaynak satırı)
+//      → "kitabın açıldı" e-postası olay anahtarı grant:<kaynak> ile kuyruktan hemen denenir
+//  - list {email}: alıcının erişim kaynakları (satın alma + elle) ve erişim durumu
+//  - revoke {sourceId, reason?}: yalnız o kaynağı kapatır; erişim kalan kaynaklardan yeniden hesaplanır
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { cors } from "../_shared/token.ts";
+import { errorResponse, HttpError, json, readJson, requestId, requireMethod, UUID_RX } from "../_shared/http.ts";
+import { getVerifiedUser, requireAdmin, serviceClient } from "../_shared/authz.ts";
+import { limit } from "../_shared/limiter.ts";
+import { deliverNow } from "../_shared/outbox.ts";
+import { PRODUCT_CODE } from "../_shared/fulfil.ts";
 
-const PRODUCT_CODE = "herkes-icin-yz";
-const SITE = "https://book.onuronder.com";
 const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 serve(async (req: Request) => {
   const corsHeaders = cors(req);
+  const rid = requestId();
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
-  const json = (body: unknown, status = 200) =>
-    new Response(JSON.stringify(body), {
-      status,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
-
   try {
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
-    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    requireMethod(req, ["POST"]);
+    const user = await getVerifiedUser(req);
+    const admin = serviceClient();
+    await requireAdmin(admin, user.id);
+    await limit(admin, `grant:${user.id}`, 30, 600, { critical: true });
+    const body = await readJson(req, 2048);
+    const action = String(body.action ?? "grant");
 
-    // Çağıran admin mi?
-    const authHeader = req.headers.get("Authorization") ?? "";
-    const userClient = createClient(supabaseUrl, anonKey, {
-      global: { headers: { Authorization: authHeader } },
-    });
-    const { data: { user }, error: userErr } = await userClient.auth.getUser();
-    if (userErr || !user) return json({ error: "unauthorized" }, 401);
+    const findUser = async () => {
+      const email = String(body.email ?? "").trim().toLowerCase();
+      if (!EMAIL_RX.test(email) || email.length > 254) throw new HttpError(400, "bad_email");
+      const { data, error } = await admin.rpc("book_find_user_by_email", { p_email: email });
+      if (error) throw new HttpError(503, "db_unavailable", true);
+      const rows = (data ?? []) as { user_id: string; lang: string }[];
+      if (rows.length !== 1) throw new HttpError(404, "user_not_found");
+      return rows[0];
+    };
 
-    const { data: isAdmin } = await userClient.rpc("has_role", {
-      _user_id: user.id,
-      _role: "admin",
-    });
-    if (!isAdmin) return json({ error: "forbidden" }, 403);
-
-    const admin = createClient(supabaseUrl, serviceKey);
-
-    const { email, note, lang } = await req.json();
-    const target = String(email ?? "").trim().toLowerCase();
-    if (!EMAIL_RX.test(target) || target.length > 254) return json({ error: "bad_email" }, 400);
-    const langParam = lang === "en" || lang === "tr" ? lang : null;
-
-    // Alıcı hesabını bul (kayıtlı olmalı; satın alma akışı önce üyelik istiyor).
-    // GoTrue admin API'sinin filter parametresiyle doğrudan arama; filtre alt-dize
-    // eşleşmesi yaptığı için sonuç yine tam eşitlikle doğrulanır.
-    const lookup = await fetch(
-      `${supabaseUrl}/auth/v1/admin/users?filter=${encodeURIComponent(target)}&per_page=10`,
-      { headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` } },
-    );
-    if (!lookup.ok) throw new Error("user lookup failed: " + lookup.status);
-    const found: { users?: { id: string; email?: string; user_metadata?: Record<string, unknown> }[] } =
-      await lookup.json();
-    const buyer = (found.users ?? []).find((u) => (u.email ?? "").toLowerCase() === target) ?? null;
-    if (!buyer) return json({ error: "user_not_found" }, 404);
-
-    const { error: upErr } = await admin.from("book_entitlements").upsert(
-      {
-        user_id: buyer.id,
-        product_code: PRODUCT_CODE,
-        granted_by: user.email ?? user.id,
-        note: note ? String(note).slice(0, 200) : null,
-      },
-      { onConflict: "user_id,product_code", ignoreDuplicates: false },
-    );
-    if (upErr) throw upErr;
-
-    // "Kitabın açıldı" e-postası (best-effort; Resend doğrudan — proje secret'ı ortak)
-    let mailed = false;
-    try {
-      const resendKey = Deno.env.get("RESEND_API_KEY");
-      if (resendKey) {
-        // Dil: açık parametre > alıcının kayıt dili (user_metadata.lang) > TR
-        const buyerLang = langParam ?? (buyer.user_metadata?.lang as string | undefined) ?? "tr";
-        const isEn = buyerLang === "en";
-        const res = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${resendKey}`,
-          },
-          body: JSON.stringify({
-            from: "Herkes İçin Yapay Zekâ <noreply@onuronder.com>",
-            to: [target],
-            subject: isEn
-              ? "Your book is unlocked — AI for Everyone"
-              : "Kitabın açıldı — Herkes İçin Yapay Zekâ",
-            html: isEn
-              ? `<p>Your purchase is confirmed and the book is now unlocked.</p><p><a href="${SITE}/en/read">Start reading</a> — sign in with this email address.</p>`
-              : `<p>Ödemen onaylandı, kitabın açıldı.</p><p><a href="${SITE}/oku">Okumaya başla</a> — bu e-posta adresinle giriş yapman yeterli.</p>`,
-          }),
-        });
-        mailed = res.ok;
-        if (!res.ok) console.error("resend failed:", res.status, await res.text());
-      }
-    } catch (mailErr) {
-      console.error("access email failed:", mailErr);
+    if (action === "grant") {
+      const target = await findUser();
+      const lang = body.lang === "en" || body.lang === "tr" ? body.lang : target.lang;
+      const note = body.note ? String(body.note).slice(0, 200) : null;
+      const { data, error } = await admin.rpc("book_grant_manual", { p_user: target.user_id, p_product: PRODUCT_CODE, p_actor: user.id, p_note: note, p_lang: lang });
+      if (error) throw new HttpError(error.code === "42501" ? 403 : 503, error.code === "42501" ? "forbidden" : "db_unavailable", error.code !== "42501");
+      const g = data as { action: string; source_id?: string; outbox_id?: string };
+      if (g.action !== "granted") throw new HttpError(404, g.action);
+      const mail = await deliverNow(admin, g.outbox_id);
+      return json({ ok: true, source_id: g.source_id, mailed: mail === "accepted", mail_state: mail }, 200, corsHeaders);
     }
 
-    return json({ ok: true, userId: buyer.id, mailed });
+    if (action === "list") {
+      const target = await findUser();
+      const { data: sources } = await admin.from("book_entitlement_source")
+        .select("id,source_type,order_id,granted_at,note,revoked_at,revoke_reason")
+        .eq("user_id", target.user_id).eq("product_code", PRODUCT_CODE).order("granted_at", { ascending: false }).limit(50);
+      const { data: acc } = await admin.rpc("book_access_check", { p_user: target.user_id, p_product: PRODUCT_CODE });
+      return json({ sources: sources ?? [], access: acc }, 200, corsHeaders);
+    }
+
+    if (action === "revoke") {
+      const sourceId = String(body.sourceId ?? "");
+      if (!UUID_RX.test(sourceId)) throw new HttpError(400, "bad_request");
+      const reason = body.reason ? String(body.reason).slice(0, 100) : "admin";
+      const { data, error } = await admin.rpc("book_revoke_source", { p_source: sourceId, p_actor: user.id, p_reason: reason });
+      if (error) throw new HttpError(error.code === "42501" ? 403 : 503, error.code === "42501" ? "forbidden" : "db_unavailable", error.code !== "42501");
+      return json(data, 200, corsHeaders);
+    }
+    throw new HttpError(400, "bad_action");
   } catch (e) {
-    console.error("grant-book error:", e);
-    return json({ error: "internal" }, 500);
+    if (e instanceof HttpError) return errorResponse(e, rid, corsHeaders);
+    console.error("grant-book error rid=" + rid, (e as Error).message);
+    return errorResponse(new HttpError(500, "internal", true), rid, corsHeaders);
   }
 });

@@ -95,3 +95,16 @@ Her adımda DB: Dashboard → Table Editor → `book_orders` (status, source, iy
   `supabase/functions/KITAP-FONKSIYONLARI.md` notu var. `site` deposundan yalnız ana sitenin fonksiyonları dağıtılır.
 - Aynı proje (`dtsgewamjkcojffustrg`) iki depodan beslendiği için deploy'u tek kişi yapar; komut her zaman Final kökünden çalışır.
 - Bilinen sunucu tarafı iyileştirmeleri (P2) yerel çalışma belgelerinde izlenir; bu dosyada ayrıntı tutulmaz.
+
+## P2 dağıtımı (ödeme, erişim, e-posta modeli)
+Site açılmadan önce tek geçiş; sıra önemli (yeni create-checkout Idempotency-Key ister, yeni ön yüz onu gönderir):
+1. Supabase secrets: iyzico anahtarları test için sandbox'a (`IYZICO_API_KEY`, `IYZICO_SECRET`, `IYZICO_BASE_URL=https://sandbox-api.iyzipay.com`,
+   `IYZICO_MODE=sandbox`); yeni: `OPS_WORKER_SECRET` (en az 32 karakter rastgele), `TERMS_VERSION=2026-10-02`. İsteğe bağlı:
+   `WATERMARK_MODE` (email | code), `IYZICO_NOT_FOUND_CODES` (sandbox'ta doğrulanınca), `IYZICO_WEBHOOK_REQUIRE_SIGNATURE=true` (V3 açılınca).
+2. SQL Editor: `supabase/migrations/20261003100000_p2_odeme_hak.sql` (tek transaction); uygulanan dosyanın SHA-256'sı not edilir.
+   Ardından `supabase/migrations/20261003110000_p2_hak_yetki.sql` (book_entitlements tablo yetkileri).
+3. `supabase functions deploy book-content book-token create-checkout grant-book order-status refund-book iyzico-callback iyzico-webhook iyzico-ifn ops-worker admin-settings --use-api` (`--use-api`: paket Supabase sunucusunda hazırlanır, yerel Docker gerekmez)
+4. SQL Editor: `supabase/sql/p2-cron.sql` (Vault anahtarı + pg_cron).
+5. Ön yüz (`store/`) PR → preview testi → main.
+6. Doğrulama: `tests/p2` (yerel DB testleri), sandbox uçtan uca senaryolar, `book_ops_health`.
+Canlıya geçiş: açılış kapısı tamamlanınca anahtarlar canlıya çevrilir (`IYZICO_MODE=live`, canlı base URL).

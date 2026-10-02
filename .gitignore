@@ -22,3 +22,7 @@ tools/site_qa/shots/
 docs/site-denetimi/
 tools/site_qa/site-test*.json
 tools/site/print-guard.json
+
+# P2 testleri: bağımlılıklar ve kanıt çıktıları yerelde
+tests/p2/node_modules/
+tests/p2/out/

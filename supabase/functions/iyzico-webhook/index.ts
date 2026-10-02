@@ -1,85 +1,60 @@
-// iyzico webhook (HPP formatı: token, paymentConversationId, status, iyziEventType, iyziPaymentId).
-// Panel: Settings > Merchant Settings > Merchant Notifications → bu fonksiyonun URL'si (HTTPS).
-// Gövdeye güvenilmez: sipariş bulunur, token eşleşir, sonuç CF-Retrieve + imza ile alınır → fulfil().
-// X-IYZ-SIGNATURE-V3 (hesapta özellik açıksa) doğrulanır; IYZICO_WEBHOOK_REQUIRE_SIGNATURE=true iken zorunlu.
-// iyzico 2xx görmezse yeniden dener (10-15 sn, sonra periyodik, en çok 3). Geçici hata → 500.
+// iyzico webhook (HPP formatı: token, paymentConversationId, status, iyziEventType, iyziPaymentId). verify_jwt=false.
+// Gövde yalnız tetikleyicidir: sipariş bulunur, token sabit zamanlı eşleşir, sonuç CF-Retrieve + yanıt imzasıyla alınır.
+// V3 imzası (X-IYZ-SIGNATURE-V3): başlık varsa her zaman doğrulanır (yanlışsa 401); IYZICO_WEBHOOK_REQUIRE_SIGNATURE=true
+// iken zorunludur (K6: ilk müşteriden önce açılır). Zorunlu değilken imzasız olay metrik olarak loglanır.
+// ACK: 2xx yalnız sonuç kalıcı olarak yazıldıktan (ya da bilinçli olarak yok sayıldıktan) sonra; geçici hata → 500 (iyzico yeniden dener).
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { makeRateLimiter } from "../_shared/token.ts";
-import {
-  IyzicoError,
-  iyzicoEnv,
-  retrieveCheckoutForm,
-  siteUrl,
-  timingSafeEqualStr,
-  verifyWebhookSignatureV3,
-  type WebhookBody,
-} from "../_shared/iyzico.ts";
-import { fulfil, loadOrderByConversationId } from "../_shared/fulfil.ts";
+import { clientIp, HttpError, json, readJson, requireMethod } from "../_shared/http.ts";
+import { serviceClient } from "../_shared/authz.ts";
+import { limit } from "../_shared/limiter.ts";
+import { IyzicoError, iyzicoEnv, retrieveCheckoutForm, timingSafeEqualStr, verifyWebhookSignatureV3, type WebhookBody } from "../_shared/iyzico.ts";
+import { mapCheckoutRetrieve } from "../_shared/provider-map.ts";
+import { applyFact, loadOrderByConversationId } from "../_shared/fulfil.ts";
 
-const allow = makeRateLimiter(60, 60 * 1000);
-// Ödeme henüz bitmedi: Retrieve tetiklenmez, 200 ile kapatılır (sonraki bildirim gelir).
-const INTERMEDIATE = new Set([
-  "INIT_THREEDS", "CALLBACK_THREEDS", "BKM_POS_SELECTED", "INIT_APM", "INIT_BANK_TRANSFER",
-  "INIT_CREDIT", "PENDING_CREDIT", "INIT_CONTACTLESS",
-]);
+// Ödeme henüz bitmedi: Retrieve tetiklenmez (sonraki bildirim / uzlaştırma gelir)
+const INTERMEDIATE = new Set(["INIT_THREEDS", "CALLBACK_THREEDS", "BKM_POS_SELECTED", "INIT_APM", "INIT_BANK_TRANSFER", "INIT_CREDIT", "PENDING_CREDIT", "INIT_CONTACTLESS"]);
 
 serve(async (req: Request) => {
-  const json = (body: unknown, status = 200) =>
-    new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
-  if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
-  const ip = (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || "unknown";
-  if (!allow(ip)) return json({ error: "rate_limited" }, 429);
-
   try {
-    const body = (await req.json().catch(() => null)) as WebhookBody | null;
-    if (!body || typeof body !== "object") return json({ ignored: true, reason: "no_json" });
-    const token = String(body.token ?? "").trim();
-    const cid = String(body.paymentConversationId ?? "").trim();
-    if (!token || !cid) return json({ ignored: true, reason: "not_hpp" }); // Direct/Subscription formatı bizde yok
-    console.log(`webhook event=${body.iyziEventType} status=${body.status} cid=${cid}`);
-
-    const { secretKey } = iyzicoEnv();
-    const sig = req.headers.get("x-iyz-signature-v3") ?? "";
+    requireMethod(req, ["POST"]);
+    const admin = serviceClient();
+    await limit(admin, `wh:${clientIp(req) ?? "noip"}`, 120, 60, { critical: false });
+    const body = (await readJson(req, 8192)) as WebhookBody;
+    const env = iyzicoEnv();
+    const sig = req.headers.get("X-IYZ-SIGNATURE-V3") ?? req.headers.get("x-iyz-signature-v3") ?? "";
     const requireSig = (Deno.env.get("IYZICO_WEBHOOK_REQUIRE_SIGNATURE") ?? "false") === "true";
     if (sig) {
-      if (!(await verifyWebhookSignatureV3(secretKey, body, sig))) {
-        console.error("webhook signature mismatch");
-        return json({ error: "bad_signature" }, 401);
-      }
+      if (!(await verifyWebhookSignatureV3(env.secretKey, body, sig))) return json({ code: "bad_signature" }, 401);
     } else if (requireSig) {
-      return json({ error: "signature_required" }, 401);
+      return json({ code: "signature_required" }, 401);
+    } else {
+      console.warn("metric webhook_unsigned");
     }
-
-    const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+    const token = String(body.token ?? "");
+    const cid = String(body.paymentConversationId ?? "");
+    if (!token || !cid || token.length > 200 || cid.length > 64) return json({ ignored: true, reason: "not_hpp" });
     const order = await loadOrderByConversationId(admin, cid);
-    if (!order) return json({ ignored: true, reason: "unknown_order" }); // yeniden deneme faydasız → 200
-    if (!order.iyzico_token || !timingSafeEqualStr(order.iyzico_token, token)) {
-      console.error(`webhook token mismatch order=${order.id}`);
-      return json({ error: "token_mismatch" }, 401);
-    }
+    if (!order) return json({ ignored: true, reason: "unknown_order" }); // bilinmeyen sipariş sağlayıcı çağrısı tetiklemez
+    if (!order.iyzico_token || !timingSafeEqualStr(order.iyzico_token, token)) return json({ code: "token_mismatch" }, 401);
     if (INTERMEDIATE.has(String(body.status ?? ""))) return json({ ignored: true, reason: "intermediate" });
-
     let r;
     try {
       r = await retrieveCheckoutForm(order.iyzico_token, order.lang === "en" ? "en" : "tr", order.conversation_id);
     } catch (e) {
-      console.error("retrieve error:", e instanceof IyzicoError ? `${e.kind}: ${e.message}` : e);
-      return json({ error: "retrieve_failed" }, 500); // iyzico yeniden dener
+      console.error("webhook retrieve error kind=" + (e instanceof IyzicoError ? e.kind : "other"));
+      return json({ code: "retrieve_failed" }, 500);
     }
-
-    // Belge: webhook ile Retrieve birbirini doğrulamalı (paymentId eşit).
     const hookPid = String(body.iyziPaymentId ?? body.paymentId ?? "");
-    if (r.paymentId && hookPid && r.paymentId !== hookPid) {
-      console.error(`webhook paymentId mismatch order=${order.id} hook=${hookPid} retrieve=${r.paymentId}`);
-      return json({ outcome: "payment_id_mismatch" }); // yetki yok; mutabakat yolu bağımsız çalışır
+    if (hookPid && r.paymentId && hookPid !== r.paymentId) {
+      console.error(`webhook paymentId mismatch order=${order.id}`);
+      return json({ ignored: true, reason: "payment_id_mismatch" });
     }
-
-    const outcome = await fulfil(admin, order, r, "webhook", siteUrl());
-    console.log(`webhook outcome=${outcome} order=${order.id} paymentId=${r.paymentId ?? "-"} signed=${sig ? "v3" : "none"}`);
-    return json({ outcome });
+    const out = await applyFact(admin, order.id, "webhook", mapCheckoutRetrieve(r)); // DB hatası fırlatır → 500
+    return json({ outcome: out.outcome });
   } catch (e) {
-    console.error("iyzico-webhook error:", e);
-    return json({ error: "internal" }, 500);
+    if (e instanceof HttpError) return json({ code: e.code }, e.status, e.headers);
+    if (e instanceof IyzicoError && e.kind === "config") return json({ code: "unavailable" }, 503);
+    console.error("iyzico-webhook error:", (e as Error).message);
+    return json({ code: "internal" }, 500);
   }
 });

@@ -1,0 +1,8 @@
+{
+  "name": "p2-tests",
+  "private": true,
+  "type": "module",
+  "description": "P2 ödeme/hak/e-posta: yerel gerçek Postgres (embedded-postgres) üzerinde şema ve RPC testleri",
+  "scripts": { "test:db": "node db/run.mjs" },
+  "devDependencies": { "embedded-postgres": "^18.4.0-beta.17", "pg": "^8.13.0" }
+}

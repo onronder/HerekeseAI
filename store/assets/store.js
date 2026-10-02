@@ -99,6 +99,12 @@
       dialValue: (n, m) => `Okuma derinliği %${n}, ${m === "t" ? "Teknik" : "Basit"} mod`,
       tickerPause: "Şeridi durdur", tickerPlay: "Şeridi oynat",
       consentLegal: `Ön bilgilendirme formu ve mesafeli satış sözleşmesi: <a href="/yasal" target="_blank" rel="noopener" style="color:#e85d3a;">yasal metinler</a>.`,
+      checkoutChecking: "Daha önce başlattığın bir ödeme var ve sonucu kontrol ediliyor. Lütfen yeni bir ödeme başlatma; durumu buradan izleyebilirsin.",
+      checkoutStatus: "Ödeme durumunu gör",
+      checkoutPaused: "Satış şu anda geçici olarak kapalı. Kısa süre sonra tekrar dene.",
+      termsOutdated: "Satış koşulları güncellendi. Sayfayı yenileyip yeni koşulları onaylaman gerekiyor.",
+      reload: "Sayfayı yenile",
+      purchaseUnknown: "Ödemenin sonucu netleşiyor.", purchaseUnknownNote: "iyzico'dan kesin sonuç henüz gelmedi. Kartından çekim yapıldıysa kitap kendiliğinden açılır ve e-posta gelir. Sonuç netleşmeden yeni bir ödeme başlatma.",
     },
     en: {
       signinTitle: "Sign in", signupTitle: "Create an account",
@@ -161,6 +167,12 @@
       dialValue: (n, m) => `Reading depth ${n}%, ${m === "t" ? "Technical" : "Simple"} mode`,
       tickerPause: "Pause the strip", tickerPlay: "Play the strip",
       consentLegal: `Pre-contract information and distance sales terms: <a href="/en/legal" target="_blank" rel="noopener" style="color:#e85d3a;">legal information</a>.`,
+      checkoutChecking: "You have a payment in progress and its result is being checked. Please don't start a new payment; you can follow its status here.",
+      checkoutStatus: "See payment status",
+      checkoutPaused: "Sales are temporarily paused. Please try again shortly.",
+      termsOutdated: "The sales terms have been updated. Please reload the page and accept the new terms.",
+      reload: "Reload the page",
+      purchaseUnknown: "The payment result is being confirmed.", purchaseUnknownNote: "We have not received a final result from iyzico yet. If your card was charged, the book unlocks on its own and you get an email. Please don't start a new payment until the result is clear.",
     },
   }[L];
 
@@ -187,16 +199,16 @@
     return !!data;
   }
 
-  async function callFn(name, body) {
+  async function callFn(name, body, extraHeaders) {
     const { data } = await sb.auth.getSession();
     const jwt = data.session ? data.session.access_token : "";
     const res = await fetch(`${C.FUNCTIONS_URL}/${name}`, {
       method: "POST",
-      headers: {
+      headers: Object.assign({
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwt}`,
         apikey: C.SUPABASE_ANON_KEY,
-      },
+      }, extraHeaders || {}),
       body: JSON.stringify(body || {}),
     });
     return { ok: res.ok, status: res.status, json: await res.json().catch(() => ({})) };
@@ -502,6 +514,8 @@
         const cbox = $("#consent-box");
         cbox.addEventListener("change", () => { cbox.removeAttribute("aria-invalid"); cbox.removeAttribute("aria-describedby"); });
         let starting = false;
+        // Satın alma niyeti başına bir Idempotency-Key: aynı niyetin yeniden denemesi aynı işi döndürür
+        let checkoutKey = null;
         $("#consent-go").onclick = async () => {
           if (starting) return;
           const m = $("#consent-msg");
@@ -513,15 +527,37 @@
           starting = true;
           const btn = $("#consent-go");
           btn.disabled = true; btn.textContent = T.working; m.className = "form-msg"; m.textContent = "";
-          let r;
-          try { r = await callFn("create-checkout", { lang: L, consent: true, gsm: $("#gsm-box").value }); }
-          catch (e) { r = { ok: false, status: 0, json: {}, offline: isOffline(e) }; }
+          const start = async () => {
+            if (!checkoutKey) checkoutKey = crypto.randomUUID();
+            try {
+              return await callFn("create-checkout",
+                { lang: L, consent: true, gsm: $("#gsm-box").value, terms_version: C.TERMS_VERSION },
+                { "Idempotency-Key": checkoutKey });
+            } catch (e) { return { ok: false, status: 0, json: {}, offline: isOffline(e) }; }
+          };
+          let r = await start();
+          // Önceki deneme sonuçlandı (başarısız/kapandı) ya da anahtar başka içerikle kullanılmış: yeni niyet, bir kez
+          if (r.status === 409 && (r.json.code === "retry_new_attempt" || r.json.code === "idempotency_conflict")) {
+            checkoutKey = null;
+            r = await start();
+          }
           if (!btn.isConnected) return; // bu arada görünüm yeniden çizildi (çıkış, sahiplik değişimi)
           if (r.ok && r.json.alreadyOwned) { refreshIndex(); return; }
           if (r.ok && r.json.paymentPageUrl) { location.href = r.json.paymentPageUrl; return; }
           starting = false;
           btn.disabled = false; btn.textContent = T.consentGo;
           m.className = "form-msg err";
+          if (r.status === 202 && r.json.orderId) {
+            m.innerHTML = esc(T.checkoutChecking) + ` <a href="${PURCHASE}?order=${encodeURIComponent(r.json.orderId)}" style="color:#e85d3a;">${T.checkoutStatus}</a>`;
+            btn.disabled = true; // açık ödeme varken yeni ödeme önerilmez
+            return;
+          }
+          if (r.status === 409 && r.json.code === "terms_outdated") {
+            m.innerHTML = esc(T.termsOutdated) + ` <button class="acc-link" onclick="location.reload()">${T.reload}</button>`;
+            return;
+          }
+          if (r.status === 503 && r.json.code === "paused") { m.textContent = T.checkoutPaused; return; }
+          if (r.status === 429) { m.textContent = T.errRate; return; }
           m.innerHTML = esc(r.offline ? T.errOffline : T.checkoutStartFail) + " " + T.purchaseSupport(SUPPORT);
         };
       } else if (PRICING.url) {
@@ -635,7 +671,7 @@
     try {
       const since = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString();
       const { data } = await sb.from("book_orders").select("id").eq("user_id", userId)
-        .in("status", ["initialized", "review"]).gte("created_at", since)
+        .in("status", ["initialized", "unknown", "review", "mismatch"]).gte("created_at", since)
         .order("created_at", { ascending: false }).limit(1);
       if (!data || !data.length) return false;
       const r = await callFn("order-status", { orderId: data[0].id });
@@ -666,6 +702,8 @@
       `<a class="muted" style="font-size:13px;" href="${HOME}">${T.toHome}</a>`);
     const slow = () => show(T.purchaseSlow, T.purchaseSlowNote + "<br>" + T.purchaseSupport(SUPPORT),
       `<button class="btn" onclick="location.reload()">${T.purchaseRefresh}</button>`);
+    const unknown = () => show(T.purchaseUnknown, T.purchaseUnknownNote + "<br>" + T.purchaseSupport(SUPPORT),
+      `<button class="btn" onclick="location.reload()">${T.purchaseRefresh}</button>`);
     const none = () => show(T.purchaseNone, T.purchaseNoneNote + "<br>" + T.purchaseSupport(SUPPORT),
       `<a class="muted" style="font-size:13px;" href="${HOME}">${T.toHome}</a>`);
     if (!orderId) { if (await hasBook(user.id)) ok(); else none(); return; }
@@ -673,18 +711,20 @@
     // Sonuç sunucudan: order-status (gerekirse iyzico ile mutabakat). Tarayıcıdaki status yalnız ipucu.
     const deadline = Date.now() + 45000;
     // Karar yalnız sunucunun doğruladığı durumdan; URL'deki status ipucu sonucu belirlemez. 404 = bu hesaba ait sipariş yok.
+    let lastStatus = "";
     while (Date.now() < deadline) {
       let r;
       try { r = await callFn("order-status", { orderId }); } catch (e) { r = { ok: false, status: 0, json: {} }; }
       if (r.ok) {
         const st = r.json.status;
+        lastStatus = st || lastStatus;
         if (r.json.entitled || st === "paid") { ok(); return; }
-        if (st === "failed" || st === "expired") { fail(); return; }
+        if (st === "failed" || st === "expired" || st === "expired_confirmed") { fail(); return; }
         if (st === "review") { review(); return; }
       } else if (r.status === 404) { none(); return; }
       await new Promise((res) => setTimeout(res, hint === "fail" ? 1000 : 2000));
     }
-    slow();
+    if (lastStatus === "unknown" || lastStatus === "mismatch") unknown(); else slow();
   }
 
   // ---- yönetim ----
@@ -702,68 +742,160 @@
       box.innerHTML = `<p class="muted">Bu sayfa yönetici hesabına özel. (${esc(user.email)})</p>`;
       return;
     }
+    // Yönetim (P2): yetki sunucuda (güncel admin rolü + RPC'de aktör doğrulaması); bu ekran yalnız arayüzdür.
+    const tl = (v) => `${Number(v).toFixed(2)} TL`;
     box.innerHTML =
-      `<form id="grant-form">
-        <div class="field"><label>Alıcı e-postası</label><input id="g-email" type="email" required placeholder="alici@ornek.com"></div>
-        <div class="field"><label>Not (isteğe bağlı iyzico işlem numarası)</label><input id="g-note" type="text"></div>
-        <button class="btn btn-ember" type="submit">Kitabı Aç</button>
-      </form>
-      <div class="admin-result" id="g-result"></div>
+      `<section class="adm-sec"><h3 class="serif">İşletim</h3><div id="ops-box" class="admin-result">Yükleniyor…</div></section>
       <hr style="border:0;border-top:1px solid rgba(255,255,255,.12);margin:26px 0;">
+      <section class="adm-sec"><h3 class="serif">Elle erişim</h3>
+      <form id="grant-form">
+        <div class="field"><label for="g-email">Alıcı e-postası</label><input id="g-email" type="email" required placeholder="alici@ornek.com"></div>
+        <div class="field"><label for="g-note">Not (isteğe bağlı)</label><input id="g-note" type="text" maxlength="200"></div>
+        <button class="btn btn-ember" type="submit">Erişim aç</button>
+        <button class="btn" type="button" id="g-list" style="margin-left:8px;">Kaynakları listele</button>
+      </form>
+      <div class="admin-result" id="g-result" role="status" aria-live="polite"></div></section>
+      <hr style="border:0;border-top:1px solid rgba(255,255,255,.12);margin:26px 0;">
+      <section class="adm-sec"><h3 class="serif">İade</h3>
       <form id="refund-form">
-        <p class="muted" style="font-size:13px;">İade (Checkout Form siparişleri): alıcının e-postasını yazıp siparişleri listele. "İade et" iyzico'da iadeyi yapar ve erişimi kapatır; "İade edildi işaretle" iade iyzico panelinden yapıldıysa kaydı doğrulayıp erişimi kapatır.</p>
-        <div class="field"><label>Alıcı e-postası</label><input id="r-email" type="email" required placeholder="alici@ornek.com"></div>
+        <p class="muted" style="font-size:13px;">Alıcının e-postasıyla siparişleri listele. "İade et" tutar boş bırakılırsa kalan tutarın tamamını iade eder; kısmi iade erişimi korur, toplam tam tutara ulaşınca erişim kapanır. Sonucu belirsiz kalan iade için yeni çağrı yapılmaz; "Uzlaştır" iyzico raporlamasıyla eşleştirir. İade iyzico panelinden yapıldıysa "Panelde iade edildi" ile kayda bağla.</p>
+        <div class="field"><label for="r-email">Alıcı e-postası</label><input id="r-email" type="email" required placeholder="alici@ornek.com"></div>
         <button class="btn" type="submit">Siparişleri listele</button>
       </form>
-      <div class="admin-result" id="r-result"></div>`;
+      <div class="admin-result" id="r-result" role="status" aria-live="polite"></div></section>`;
+
+    // ---- işletim: ayarlar + sağlık
+    const loadOps = async () => {
+      const r = await callFn("admin-settings", { action: "get" });
+      const ob = $("#ops-box");
+      if (!r.ok) { ob.textContent = `✗ ${r.json.code || r.status}`; return; }
+      const st = r.json.settings || {}, h = r.json.health || {};
+      const age = h.last_ok_run ? Math.round((Date.now() - new Date(h.last_ok_run).getTime()) / 60000) : null;
+      const warn = (c) => c ? ` style="color:#e8a08a;"` : "";
+      ob.innerHTML =
+        `<p style="font-size:13px;">Satış: <strong>${st.checkout_enabled ? "açık" : "DURDURULDU"}</strong> <button class="btn" data-set="checkout_enabled" data-val="${!st.checkout_enabled}" style="padding:4px 10px;font-size:12px;">${st.checkout_enabled ? "Durdur" : "Aç"}</button>
+         · İade başlatma: <strong>${st.refunds_enabled ? "açık" : "DURDURULDU"}</strong> <button class="btn" data-set="refunds_enabled" data-val="${!st.refunds_enabled}" style="padding:4px 10px;font-size:12px;">${st.refunds_enabled ? "Durdur" : "Aç"}</button></p>
+         <p class="mono" style="font-size:12px;line-height:1.8;">
+         <span${warn(age === null || age > 15)}>Son başarılı işçi çalışması: ${age === null ? "yok" : age + " dk önce"}</span><br>
+         <span${warn(h.paid_without_access > 0)}>Ödenmiş ama erişimi yok: ${h.paid_without_access ?? "?"}</span> ·
+         <span${warn(h.access_without_source > 0)}>Kaynağı olmayan erişim: ${h.access_without_source ?? "?"}</span><br>
+         <span${warn(h.open_orders_over_1h > 0)}>1 saati aşan açık sipariş: ${h.open_orders_over_1h ?? "?"}</span> ·
+         <span${warn(h.orders_mismatch > 0)}>Tutar uyuşmazlığı: ${h.orders_mismatch ?? "?"}</span> ·
+         <span${warn(h.orders_conflict > 0)}>Çelişki: ${h.orders_conflict ?? "?"}</span><br>
+         <span${warn(h.refunds_attention > 0)}>İlgi bekleyen iade: ${h.refunds_attention ?? "?"}</span> ·
+         <span${warn(h.outbox_needs_review > 0)}>İncelenecek e-posta: ${h.outbox_needs_review ?? "?"}</span> ·
+         <span${warn(h.outbox_stale > 0)}>Bekleyen e-posta (1 sa+): ${h.outbox_stale ?? "?"}</span></p>`;
+      ob.querySelectorAll("[data-set]").forEach((b) => {
+        b.onclick = async () => {
+          const val = b.dataset.val === "true";
+          if (!val && !confirm(`${b.dataset.set === "checkout_enabled" ? "Yeni ödemeler" : "Yeni iadeler"} sunucuda durdurulacak. Emin misin?`)) return;
+          const rr = await callFn("admin-settings", { action: "set", key: b.dataset.set, value: val });
+          if (!rr.ok) alert(`Olmadı: ${rr.json.code || rr.status}`);
+          loadOps();
+        };
+      });
+    };
+    loadOps();
+
+    // ---- elle erişim
+    const listSources = async () => {
+      const res = $("#g-result");
+      res.textContent = "Kaynaklar alınıyor…";
+      const r = await callFn("grant-book", { action: "list", email: $("#g-email").value.trim() });
+      if (!r.ok) { res.textContent = r.status === 404 ? "✗ Bu e-postayla kayıtlı hesap yok." : `✗ ${r.json.code || r.status}`; return; }
+      const acc = r.json.access || {};
+      res.innerHTML = `<p style="font-size:13px;">Erişim: <strong>${acc.active ? "açık" : "kapalı"}</strong></p>` +
+        (r.json.sources.length ? r.json.sources.map((x) =>
+          `<div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:13px;">` +
+          `<span class="mono">${esc(x.source_type === "purchase" ? "satın alma" : "elle")}</span> · ${esc(x.granted_at.slice(0, 16).replace("T", " "))}` +
+          (x.note ? ` · ${esc(x.note)}` : "") +
+          (x.revoked_at ? ` · <em>kapalı (${esc(x.revoke_reason || "")})</em>` : (x.source_type === "manual" ? ` <button class="btn" data-revoke="${esc(x.id)}" style="margin-left:8px;padding:4px 10px;font-size:12px;">Kapat</button>` : "")) +
+          `</div>`).join("") : `<p class="muted" style="font-size:13px;">Kaynak yok.</p>`);
+      res.querySelectorAll("[data-revoke]").forEach((b) => {
+        b.onclick = async () => {
+          if (!confirm("Bu elle erişim kaynağı kapatılacak (diğer kaynaklar etkilenmez). Emin misin?")) return;
+          const rr = await callFn("grant-book", { action: "revoke", sourceId: b.dataset.revoke, reason: "admin" });
+          if (!rr.ok) alert(`Olmadı: ${rr.json.code || rr.status}`);
+          listSources();
+        };
+      });
+    };
+    $("#g-list").onclick = listSources;
+    let granting = false;
+    $("#grant-form").onsubmit = async (e) => {
+      e.preventDefault();
+      if (granting) return;
+      granting = true;
+      const res = $("#g-result");
+      res.textContent = "Açılıyor…";
+      try {
+        const r = await callFn("grant-book", { action: "grant", email: $("#g-email").value, note: $("#g-note").value });
+        if (r.ok && r.json.ok) {
+          res.innerHTML = `✓ Açıldı: <strong>${esc($("#g-email").value)}</strong>` +
+            (r.json.mailed ? " · bilgilendirme e-postası gönderildi" : " · e-posta kuyrukta; işçi yeniden deneyecek");
+          $("#g-note").value = "";
+        } else if (r.status === 404) {
+          res.textContent = "✗ Bu e-postayla kayıtlı hesap yok. Alıcıdan önce sitede hesap oluşturmasını iste.";
+        } else {
+          res.textContent = `✗ Olmadı (${r.json.code || r.status}).`;
+        }
+      } finally { granting = false; }
+    };
+
+    // ---- iade
+    const opLabel = { requested: "istendi", unknown: "SONUÇ BELİRSİZ", settled: "tamamlandı", failed: "başarısız", needs_review: "ELLE İNCELE" };
     const listOrders = async () => {
       const res = $("#r-result");
       res.textContent = "Siparişler alınıyor…";
       const r = await callFn("refund-book", { action: "list", email: $("#r-email").value.trim() });
-      if (!r.ok) { res.textContent = `✗ ${r.json.error || r.status}`; return; }
+      if (!r.ok) { res.textContent = `✗ ${r.json.code || r.status}`; return; }
       if (!r.json.orders.length) { res.textContent = "Bu e-postayla sipariş yok."; return; }
+      const ops = r.json.refund_ops || [];
       res.innerHTML = r.json.orders.map((o) => {
+        const mine = ops.filter((x) => x.order_id === o.id);
+        const settled = mine.filter((x) => x.state === "settled").reduce((a, x) => a + Number(x.settled_amount || 0), 0);
+        const paid = Number(o.paid_price ?? o.price);
+        const active = mine.find((x) => x.state === "requested" || x.state === "unknown");
         const d = (o.paid_at || o.created_at).slice(0, 16).replace("T", " ");
-        const can = (o.status === "paid" || o.status === "review") && o.iyzico_payment_id;
+        const can = (o.status === "paid" || o.status === "review") && o.iyzico_payment_id && !active;
         return `<div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:13px;">` +
-          `<span class="mono">${esc(o.id.slice(0, 8))}</span> · ${d} · ${esc(String(o.price))} ${esc(o.currency)} · <strong>${esc(o.status)}</strong>` +
-          (o.fraud_status === 0 ? " · fraud incelemede" : "") +
-          (can ? ` <button class="btn" data-refund="${esc(o.id)}" style="margin-left:10px;padding:4px 10px;font-size:12px;">İade et</button>` +
-                 ` <button class="btn" data-mark="${esc(o.id)}" style="margin-left:4px;padding:4px 10px;font-size:12px;">İade edildi işaretle</button>` : "") +
+          `<span class="mono">${esc(o.id.slice(0, 8))}</span> · ${d} · ${esc(tl(paid))} · <strong>${esc(o.status)}</strong>` +
+          (o.provider_env && o.provider_env !== "live" ? ` · <em>${esc(o.provider_env)}</em>` : "") +
+          (settled ? ` · iade edilen ${esc(tl(settled))}, kalan ${esc(tl(paid - settled))}` : "") +
+          mine.map((x) => `<div class="mono muted" style="font-size:11px;margin-top:3px;">iade ${esc(tl(x.amount))}: ${esc(opLabel[x.state] || x.state)}${x.error_code ? " · " + esc(x.error_code) : ""}` +
+            ((x.state === "unknown" || x.state === "requested") ? ` <button class="btn" data-recon="${esc(x.id)}" style="padding:2px 8px;font-size:11px;">Uzlaştır</button>` : "") + `</div>`).join("") +
+          (can ? `<div style="margin-top:6px;"><input type="number" step="0.01" min="0.01" max="${(paid - settled).toFixed(2)}" placeholder="tutar (boş = kalan)" data-amt="${esc(o.id)}" style="width:150px;padding:4px 8px;background:#171614;border:1px solid rgba(242,234,215,.2);color:#f2ead7;">` +
+            ` <button class="btn" data-refund="${esc(o.id)}" style="padding:4px 10px;font-size:12px;">İade et</button>` +
+            ` <button class="btn" data-mark="${esc(o.id)}" style="padding:4px 10px;font-size:12px;">Panelde iade edildi</button></div>` : "") +
           `<div class="mono muted" id="r-line-${esc(o.id.slice(0, 8))}" style="font-size:11px;margin-top:4px;"></div></div>`;
       }).join("");
+      const outcomeText = (j) => ({ refunded: "✓ tam iade tamamlandı, erişim kapandı", partial: "✓ kısmi iade tamamlandı, erişim korunuyor", unknown: "… sonuç belirsiz; yeni çağrı yapılmadı, uzlaştırılacak", needs_review: "! eşleşme belirsiz: elle incele", failed: "✗ iyzico iadeyi reddetti", unchanged: "değişiklik yok" }[j.outcome] || JSON.stringify(j));
       res.querySelectorAll("[data-refund],[data-mark]").forEach((b) => {
         b.onclick = async () => {
           const id = b.dataset.refund || b.dataset.mark;
           const action = b.dataset.refund ? "refund" : "mark_refunded";
-          if (action === "refund" && !confirm("iyzico üzerinden iade yapılacak ve erişim kapanacak. Emin misin?")) return;
+          const amtEl = res.querySelector(`[data-amt="${id}"]`);
+          const amount = amtEl && amtEl.value ? Number(amtEl.value) : null;
+          if (action === "refund" && !confirm(`iyzico üzerinden ${amount ? tl(amount) : "kalan tutarın tamamı"} iade edilecek. Emin misin?`)) return;
+          b.disabled = true;
           const line = document.getElementById("r-line-" + id.slice(0, 8));
           line.textContent = "iyzico ile görüşülüyor…";
-          const rr = await callFn("refund-book", { orderId: id, action });
-          if (rr.ok && rr.json.ok) { line.textContent = "✓ iade olarak kapatıldı, erişim kaldırıldı" + (rr.json.mailed ? " · e-posta gitti" : ""); listOrders(); }
-          else if (rr.ok && rr.json.already) line.textContent = "zaten iade edilmiş";
-          else line.textContent = `✗ ${rr.json.error || rr.status}${rr.json.message ? " · " + rr.json.message : ""}${rr.json.refundStatus ? " · iyzico: " + rr.json.refundStatus : ""}`;
+          const rr = await callFn("refund-book", { orderId: id, action, amount });
+          if (rr.ok) line.textContent = outcomeText(rr.json);
+          else line.textContent = `✗ ${rr.json.code || rr.status}${rr.json.remaining != null ? " · kalan " + tl(rr.json.remaining) : ""}`;
+          setTimeout(listOrders, 1200);
+        };
+      });
+      res.querySelectorAll("[data-recon]").forEach((b) => {
+        b.onclick = async () => {
+          b.disabled = true;
+          const rr = await callFn("refund-book", { action: "reconcile", opId: b.dataset.recon });
+          alert(rr.ok ? outcomeText(rr.json) : `✗ ${rr.json.code || rr.status}`);
+          listOrders();
         };
       });
     };
     $("#refund-form").onsubmit = (e) => { e.preventDefault(); listOrders(); };
-    $("#grant-form").onsubmit = async (e) => {
-      e.preventDefault();
-      const res = $("#g-result");
-      res.textContent = "Açılıyor…";
-      const r = await callFn("grant-book", {
-        email: $("#g-email").value, note: $("#g-note").value,
-      });
-      if (r.ok && r.json.ok) {
-        res.innerHTML = `✓ Açıldı: <strong>${esc($("#g-email").value)}</strong>` +
-          (r.json.mailed ? " · bilgilendirme e-postası gönderildi" : " · e-posta gönderilemedi (elle haber ver)");
-        $("#g-email").value = ""; $("#g-note").value = "";
-      } else if (r.status === 404) {
-        res.innerHTML = `✗ Bu e-postayla kayıtlı hesap yok. Alıcıdan önce sitede hesap oluşturmasını iste.`;
-      } else {
-        res.innerHTML = `✗ Olmadı (${r.status}). Tekrar dene.`;
-      }
-    };
   }
 
   // ---- kapak kadranı (kitaptaki Basit/Teknik geçişi, native) ----
