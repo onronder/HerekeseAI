@@ -182,6 +182,10 @@ export async function initializeCheckoutForm(i: CheckoutInit): Promise<InitResul
       return { ok: false, errorCode: "signature_mismatch", errorMessage: "initialize signature mismatch", raw };
     }
   }
+  // Yönlendirme yalnız HTTPS ve iyzico alan adına (açık yönlendirme / sahte sayfa koruması)
+  if (!isProviderPageUrl(str(raw.paymentPageUrl))) {
+    return { ok: false, errorCode: "bad_page_url", errorMessage: "paymentPageUrl host not allowed", raw };
+  }
   return {
     ok: true,
     token: str(raw.token),
@@ -189,6 +193,15 @@ export async function initializeCheckoutForm(i: CheckoutInit): Promise<InitResul
     tokenExpireTime: typeof raw.tokenExpireTime === "number" ? raw.tokenExpireTime : undefined,
     raw,
   };
+}
+
+export function isProviderPageUrl(u: string): boolean {
+  try {
+    const x = new URL(u);
+    return x.protocol === "https:" && (x.hostname === "iyzipay.com" || x.hostname.endsWith(".iyzipay.com"));
+  } catch {
+    return false;
+  }
 }
 
 export interface RetrieveResult {

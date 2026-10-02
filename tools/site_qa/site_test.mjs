@@ -228,6 +228,49 @@ for (const [lang, url] of [['tr', '/'], ['en', '/en']]) {
     T('K11', 'tr: diyalog kapat-aç sonrası geç dönen eski yanıt yeni ekranı değiştirmiyor (istek nesli)', stale.msg === '' && !stale.btn, stale, 'boş mesaj, düğme etkin');
   }
 }
+// ---------------------------------------------------------------- K13 P2 satın alma sözleşmesi (ön yüz; yalnız yerel, sahte oturum)
+if (!REMOTE) {
+  const fakeUser = { id: '11111111-2222-3333-4444-555555555555', email: 'okur@example.test', aud: 'authenticated', role: 'authenticated', app_metadata: {}, user_metadata: { full_name: 'Test Okur' } };
+  const session = { access_token: 'sahte.jwt.token', token_type: 'bearer', expires_in: 3600, expires_at: Math.floor(Date.now() / 1000) + 3600, refresh_token: 'r', user: fakeUser };
+  const scenario = async (replies) => {
+    const calls = [];
+    supaHandler = (rq) => {
+      const u = rq.url();
+      if (/\/functions\/v1\/create-checkout/.test(u)) {
+        calls.push({ key: rq.headers()['idempotency-key'] || null, body: JSON.parse(rq.postData() || '{}') });
+        const [st, body] = replies[Math.min(calls.length - 1, replies.length - 1)];
+        return reply(rq, st, body);
+      }
+      if (/\/rest\/v1\//.test(u)) return reply(rq, 200, []);
+      if (/\/auth\/v1\/user/.test(u)) return reply(rq, 200, fakeUser);
+      return reply(rq, 200, {});
+    };
+    await page.setViewport({ width: 1280, height: 900 });
+    await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
+    await page.evaluate((k, v) => localStorage.setItem(k, v), 'sb-dtsgewamjkcojffustrg-auth-token', JSON.stringify(session));
+    await page.goto(BASE + '/?k13=' + Date.now(), { waitUntil: 'networkidle0' }); await sleep(800);
+    const ready = await page.evaluate(() => !!document.getElementById('consent-go'));
+    if (!ready) { supaHandler = null; return { ready, calls }; }
+    await page.click('#consent-box'); await page.click('#consent-go'); await sleep(1200);
+    const ui = await page.evaluate(() => ({ msg: (document.getElementById('consent-msg') || {}).innerText || '', btnDisabled: document.getElementById('consent-go').disabled, link: (document.querySelector('#consent-msg a') || {}).href || '' }));
+    supaHandler = null;
+    await page.evaluate((k) => localStorage.removeItem(k), 'sb-dtsgewamjkcojffustrg-auth-token');
+    return { ready, calls, ui };
+  };
+  const tv = (await fs.promises.readFile(path.join(STORE, 'assets/config.js'), 'utf8')).match(/TERMS_VERSION: "([^"]+)"/)[1];
+  const s202 = await scenario([[202, { orderId: 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee', checking: true }]]);
+  T('K13', 'ödeme başlatma: UUID Idempotency-Key + terms_version gönderilir; 202 → "kontrol ediliyor" + durum bağlantısı, yeni ödeme düğmesi kilitli',
+    s202.ready && s202.calls.length === 1 && /^[0-9a-f-]{36}$/.test(s202.calls[0].key || '') && s202.calls[0].body.terms_version === tv && s202.ui.btnDisabled && /order=aaaaaaaa/.test(s202.ui.link),
+    { ready: s202.ready, calls: s202.calls.map((c) => ({ key: !!c.key, tv: c.body.terms_version })), ui: s202.ui });
+  const sRetry = await scenario([[409, { code: 'retry_new_attempt' }], [200, { alreadyOwned: true }]]);
+  T('K13', '409 retry_new_attempt → yeni anahtarla tek yeniden deneme (iki farklı anahtar, en fazla 2 istek)',
+    sRetry.calls.length === 2 && sRetry.calls[0].key && sRetry.calls[1].key && sRetry.calls[0].key !== sRetry.calls[1].key, sRetry.calls.map((c) => c.key));
+  const sPaused = await scenario([[503, { code: 'paused' }]]);
+  T('K13', '503 paused → "satış geçici olarak kapalı" mesajı', /geçici olarak kapalı/.test(sPaused.ui?.msg || ''), sPaused.ui);
+  const sTerms = await scenario([[409, { code: 'terms_outdated', terms_version: '2099-01-01' }]]);
+  T('K13', '409 terms_outdated → koşullar güncellendi + yenile; yeniden deneme yapılmaz', sTerms.calls.length === 1 && /koşulları güncellendi/i.test(sTerms.ui?.msg || ''), { calls: sTerms.calls.length, ui: sTerms.ui });
+}
+
 // axe-core otomatik tarama (otomatik bulgu; AA uygunluğu iddiası değildir)
 const axeSrc = fs.existsSync(path.join(ROOT, 'tools/site_qa/.cache/axe.min.js')) ? fs.readFileSync(path.join(ROOT, 'tools/site_qa/.cache/axe.min.js'), 'utf8') : null;
 if (!axeSrc) BLOCK('K11', 'axe-core taraması', 'tools/site_qa/.cache/axe.min.js yok');

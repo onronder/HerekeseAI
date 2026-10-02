@@ -12,3 +12,7 @@ verify_jwt = false
 
 [functions.iyzico-ifn]
 verify_jwt = false
+
+# Zamanlanmış işçi: pg_cron + pg_net çağırır; kimlik fonksiyon içinde OPS_WORKER_SECRET ile (sabit zamanlı).
+[functions.ops-worker]
+verify_jwt = false
