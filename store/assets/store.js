@@ -586,7 +586,7 @@
   function buyFlow() {
     getUser().then(async (user) => {
       if (!user) { openAuth(buyFlow); return; }
-      if (await hasBook(user.id) || await isAdmin(user.id)) { window.location.href = READER; return; }
+      if (await hasBook(user.id) || (!checkoutBeta && await isAdmin(user.id))) { window.location.href = READER; return; }
       await refreshIndex();
       document.getElementById("buy-state")?.scrollIntoView({ behavior: "smooth", block: "center" });
     });

@@ -80,7 +80,8 @@ export async function iyzicoRequest(
   const { apiKey, secretKey, baseUrl } = iyzicoEnv();
   const payload = body ? JSON.stringify(body) : "";
   const randomKey = `${Date.now()}${crypto.randomUUID().replace(/-/g, "").slice(0, 12)}`;
-  const signature = await hmacSha256Hex(secretKey, randomKey + uriPath + payload);
+  // IYZWSv2 imzası sorgu dizesini içermez (iyzipay istemcileri: yol "?" öncesinde kesilir; GET'te gövde yok)
+  const signature = await hmacSha256Hex(secretKey, randomKey + uriPath.split("?")[0] + payload);
   const authorization = "IYZWSv2 " + btoa(`apiKey:${apiKey}&randomKey:${randomKey}&signature:${signature}`);
 
   let res: Response;
@@ -303,7 +304,7 @@ export async function refundV2(paymentId: string, price: string, ip: string, con
   return await iyzicoRequest("/v2/payment/refund", { locale: "tr", conversationId, paymentId, price, currency: "TRY", ip });
 }
 
-// Raporlama: ödeme detayı (iade/fraud durumu). GET; sorgu dizesi imzaya dahil (best-effort; sandbox'ta doğrulanır).
+// Raporlama: ödeme detayı (iade/fraud durumu). GET; imza yalnız yol üzerinden (sorgu dizesi hariç).
 export async function reportingPaymentDetails(paymentId: string): Promise<IyzicoResponse> {
   const path = `/v2/reporting/payment/details?paymentId=${encodeURIComponent(paymentId)}&locale=tr`;
   return await iyzicoRequest(path, null, "GET");
