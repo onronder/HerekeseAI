@@ -53,6 +53,8 @@ export function mapPaymentDetail(r: RetrieveResult): PaymentFact | null {
     if (code && notFoundCodes().has(code)) {
       return { ...projectPayment({}), kind: "not_found" };
     }
+    // Eşlenmemiş hata kodu: sipariş açık kalır (uzlaştırma sürer); kod loglanır (mesaj metni loglanmaz)
+    console.warn("payment/detail failure unmapped code=" + (code || "-"));
     return null;
   }
   return fromVerified(r, true);

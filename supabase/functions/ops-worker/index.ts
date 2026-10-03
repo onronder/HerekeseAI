@@ -54,6 +54,10 @@ serve(async (req: Request) => {
         counts.reconcile++;
         try {
           const r = await retrievePaymentDetail({ paymentConversationId: o.conversation_id }, o.lang === "en" ? "en" : "tr");
+          // Sağlayıcı yanıt kodu sayımı (book_ops_run.counts): "ödeme yok" kodunun sandbox'ta kaydı ve izleme için
+          const tag = r.status === "failure" ? `detail_failure_${String(r.errorCode ?? r.raw?.errorCode ?? "none").slice(0, 12)}`
+            : `detail_${String(r.paymentStatus ?? r.status ?? "none").slice(0, 20).toLowerCase()}`;
+          counts[tag] = (counts[tag] ?? 0) + 1;
           const out = await applyFact(admin, o.id, "reconcile", mapPaymentDetail(r));
           if (out.outcome !== "unchanged") counts.reconcile_changed++;
         } catch (e) {
