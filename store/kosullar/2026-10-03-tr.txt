@@ -1,0 +1,62 @@
+# Herkes İçin Yapay Zekâ — Satış koşulları
+
+Sürüm: 2026-10-03 · Dil: Türkçe (bağlayıcı metin)
+Kaynak: https://book.onuronder.com/yasal
+
+## Hakkında & Satıcı Bilgileri
+
+“Herkes İçin Yapay Zekâ”, yapay zekâyı herkesin anlayabileceği bir dille ve 45 canlı, interaktif demoyla anlatan dijital bir kitaptır. Yazar: Onur Önder. Satıcı: Fittechs Yazılım Anonim Şirketi, Gayrettepe Mah. Yıldız Posta Cad. No: 8/34, İstanbul, Türkiye, Vergi Dairesi/No: Mecidiyeköy V.D. / 3880798863, DUNS No: 533127058, ISBN: 978-625-00-5299-0.
+
+## İletişim
+
+E-posta: support@fittechs.com · Web: onuronder.com · Destek taleplerine en geç 2 iş günü içinde dönüş yapılır.
+
+## Ön Bilgilendirme Formu
+
+Ürün: “Herkes İçin Yapay Zekâ” interaktif dijital kitabına (Türkçe + İngilizce) hesabınıza bağlı çevrimiçi okuma erişimi. Fiziksel teslimat yoktur; alıcıya dosya indirilmez, içerik çevrimiçi okunur.
+
+Fiyat: Satış sayfasında ilan edilen tutar (KDV dahil). Ödeme, iyzico ödeme sayfası üzerinden kredi/banka kartıyla tek seferde tahsil edilir.
+
+Teslimat: Ödemenin iyzico kayıtlarından doğrulanmasının ardından erişim hakkı, ödeme sırasında bildirilen hesap e-postasına tanımlanır ve alıcı e-postayla bilgilendirilir; bu işlem ödeme onaylanır onaylanmaz, genellikle saniyeler içinde; iyzico güvenlik incelemesindeki ödemelerde en geç 24 saatte tamamlanır.
+
+Cayma hakkı: Mesafeli Sözleşmeler Yönetmeliği m.15/1-ğ uyarınca, elektronik ortamda anında ifa edilen ve tüketiciye anında teslim edilen gayrimaddi mallara ilişkin sözleşmelerde cayma hakkı kullanılamaz; erişim tanımlandığı anda ifa gerçekleşmiş sayılır. Alıcı, satın almadan önce kitabın ilk üç konusunu demolarıyla birlikte ücretsiz deneyebilmektedir.
+
+## Mesafeli Satış Sözleşmesi
+
+1. Taraflar: İşbu sözleşme, Fittechs Yazılım Anonim Şirketi (“Satıcı”) ile ödeme sırasında bilgilerini ileten alıcı (“Alıcı”) arasında elektronik ortamda kurulmuştur.
+
+2. Konu: Alıcının book.onuronder.com üzerinden satın aldığı dijital kitaba çevrimiçi erişim hakkının tanımlanmasına ilişkin hak ve yükümlülüklerin belirlenmesidir.
+
+3. İfa: Ürün dijitaldir; Alıcının hesabına erişim hakkı tanımlanmasıyla ifa tamamlanır. Erişim kişisel kullanım içindir; hesap ve içerik üçüncü kişilerle paylaşılamaz, içerik kopyalanamaz, çoğaltılamaz, dağıtılamaz. Her kopya, alıcıya özel olarak işaretlenir. Kullanım, aşağıdaki “Telif Hakkı ve Kullanım Lisansı” bölümündeki şartlara tabidir.
+
+4. Bedel: Satış sayfasında ilan edilen KDV dahil bedel iyzico üzerinden tahsil edilir; kart bilgileri Satıcı tarafından görülmez ve saklanmaz.
+
+5. Cayma: Ön Bilgilendirme Formu'nda belirtildiği üzere anında ifa edilen dijital içerik teslimlerinde cayma hakkı bulunmamaktadır (Yönetmelik m.15/1-ğ).
+
+6. Uyuşmazlık: Uyuşmazlıklarda İstanbul Tüketici Hakem Heyetleri ve Tüketici Mahkemeleri yetkilidir.
+
+7. Yürürlük: Alıcı, ödemeyi tamamlamakla işbu sözleşmeyi ve Ön Bilgilendirme Formu'nu okuyup kabul ettiğini beyan eder.
+
+## Teslimat ve İade Koşulları
+
+Teslimat: Erişim, ödemenin doğrulanmasının ardından alıcının hesabına tanımlanır (ödeme onaylanınca genellikle anında, en geç 24 saat) ve e-postayla bildirilir. Kitap; telefon, tablet ve bilgisayarda modern tarayıcılarla çalışır.
+
+İade: Dijital içeriğin doğası gereği, erişim tanımlandıktan sonra cayma hakkı bulunmaz. Ancak (a) ödeme alınıp erişimin 24 saat içinde tanımlanmaması ve tarafımızla iletişime geçilmesine rağmen sorunun çözülememesi, (b) kitabın teknik bir nedenle hiçbir cihazda açılamaması ve sorunun makul sürede giderilememesi hâllerinde bedelin tamamı iade edilir. İade talebi için support@fittechs.com adresine ödeme bilgisiyle yazmanız yeterlidir; iade, ödeme yapılan karta iyzico aracılığıyla yapılır.
+
+## Telif Hakkı ve Kullanım Lisansı
+
+Eser sahipliği: “Herkes İçin Yapay Zekâ” kitabının tüm metinleri, tasarımı, interaktif demoları ve yazılım bileşenleri, 5846 sayılı Fikir ve Sanat Eserleri Kanunu (FSEK) kapsamında korunmaktadır. Eserin yazarı ve eser üzerindeki tüm hakların sahibi Onur Önder’dir. Eserin pazarlama ve satış hakları Fittechs Yazılım Anonim Şirketi’ne aittir; satıcı bu sıfatla hareket eder. Tüm hakları saklıdır.
+
+Lisansın kapsamı: Satın alma, Alıcıya kişisel ve devredilemez bir çevrimiçi okuma lisansı verir; eser üzerindeki hiçbir hakkı devretmez. Hesap bilgileri üçüncü kişilerle paylaşılamaz; erişim yalnızca Alıcının kendi cihazlarında kullanılabilir.
+
+Yasak fiiller: İçeriğin tamamının ya da bir bölümünün kopyalanması, çoğaltılması, indirilerek ya da ekran görüntüsü/kaydı alınarak yayılması, umuma iletilmesi, başka bir ortamda yayımlanması, işlenmesi, satılması; teknik koruma önlemlerinin aşılması ya da etkisiz kılınması yasaktır.
+
+Tespit: Alıcıya açılan her kopya, hesaba özgü görünür ve gizli işaretler (filigran) taşır. İzinsiz yayılan bir kopyanın hangi hesaptan sızdırıldığı bu işaretler üzerinden tespit edilebilir.
+
+İhlalin sonuçları: İhlal tespiti hâlinde Satıcı, ilgili hesabın erişimini bedel iadesi yükümlülüğü doğmaksızın kapatma hakkını saklı tutar. İhlal edenin, FSEK m.66 ve devamı uyarınca tecavüzün durdurulması, maddi ve manevi tazminat ile FSEK m.68 kapsamındaki taleplere; fiilin suç oluşturması hâlinde FSEK m.71 ve ilgili ceza hükümlerine göre hukuki ve cezai sorumluluğu doğar. Satıcının dava ve talep hakları saklıdır.
+
+## Ödeme öncesi onay beyanları
+
+1. Ön Bilgilendirme Formu'nu ve Mesafeli Satış Sözleşmesi'ni okudum ve kabul ediyorum.
+
+2. Dijital içeriğin hemen ifasına açık onay veriyorum; erişim hesabımda tanımlandığında cayma hakkımı kaybedeceğimi biliyorum.

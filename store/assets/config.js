@@ -13,7 +13,7 @@ window.BOOK_CONFIG = {
   PURCHASE_PAGE: { tr: "/satin-alma", en: "/en/purchase" },
   // Satış koşulları sürümü: create-checkout sunucudaki TERMS_VERSION ile karşılaştırır (farklıysa 409 terms_outdated).
   // Yasal metin değiştiğinde ikisi birlikte güncellenir.
-  TERMS_VERSION: "2026-10-02",
+  TERMS_VERSION: "2026-10-03",
 
   // Dil başına fiyat + iyzilink. ÖNEMLİ: iyzico panelindeki tutarla buradaki
   // etiket AYNI tutulmalıdır (fiyat iyzico'dan okunamaz; iki yerde elle yönetilir).

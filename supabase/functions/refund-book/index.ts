@@ -33,7 +33,7 @@ serve(async (req: Request) => {
       const email = String(body.email ?? "").trim().toLowerCase();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) throw new HttpError(400, "bad_request");
       const { data: orders } = await admin.from("book_orders")
-        .select("id,status,price,paid_price,currency,lang,created_at,paid_at,refunded_at,iyzico_payment_id,fraud_status,provider_env")
+        .select("id,status,price,paid_price,currency,lang,created_at,paid_at,refunded_at,iyzico_payment_id,fraud_status,provider_env,terms_version,terms_hash")
         .eq("buyer_email", email).order("created_at", { ascending: false }).limit(20);
       const ids = (orders ?? []).map((o) => (o as { id: string }).id);
       const { data: ops } = ids.length
@@ -79,7 +79,7 @@ serve(async (req: Request) => {
 
     let r: RefundResult;
     try {
-      const raw = await refundV2(paymentId, Number(op.amount).toFixed(2), clientIp(req) ?? "85.34.78.112", op.id);
+      const raw = await refundV2(paymentId, Number(op.amount).toFixed(2), clientIp(req), op.id);
       r = mapRefundV2(raw);
     } catch (e) {
       console.error("refund call error kind=" + (e instanceof IyzicoError ? e.kind : "other"));

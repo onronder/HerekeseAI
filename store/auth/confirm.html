@@ -9,17 +9,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
 <link rel="stylesheet" href="/assets/store.css">
-<script>
-/* Dil, e-posta şablonundan ?lang= ile gelir; store.js yüklenmeden basılmalı */
-(function () {
-  var lang = new URLSearchParams(location.search).get("lang") === "en" ? "en" : "tr";
-  document.documentElement.lang = lang;
-  document.addEventListener("DOMContentLoaded", function () {
-    document.body.dataset.lang = lang;
-  });
-  window.__confirmLang = lang;
-})();
-</script>
+<script src="/assets/confirm-lang.js"></script>
 </head>
 <body data-page="confirm" class="ruled page-full">
 

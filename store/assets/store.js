@@ -64,6 +64,11 @@
       consentLabel: "Dijital içeriğin hemen ifasına açık onay veriyorum; erişim hesabımda " +
         "tanımlandığında cayma hakkımı kaybedeceğimi biliyorum.",
       consentGo: "Ödemeye Git", consentNeed: "Devam etmek için onay kutusunu işaretlemen gerekiyor.",
+      // Sözleşme kabulü ayrı beyan (tools/site/terms.py bu metni değişmez koşul kopyasına alır)
+      consentContractLabel: "Ön Bilgilendirme Formu'nu ve Mesafeli Satış Sözleşmesi'ni okudum ve kabul ediyorum.",
+      consentNeedBoth: "Devam etmek için iki onay kutusunu da işaretlemen gerekiyor.",
+      consentContractLinks: (v) => `<a href="/yasal#on-bilgilendirme" target="_blank" rel="noopener" style="color:#e85d3a;">Metinler</a> · ` +
+        `<a href="/kosullar/${encodeURIComponent(v)}-tr.txt" target="_blank" rel="noopener" style="color:#e85d3a;">değişmez kopya (sürüm ${esc(v)})</a>`,
       accEyebrow: "Hesap", signinDesc: "Kitabına ulaşmak için giriş yap.",
       signupDesc: "Kitap bu hesaba bağlanır; her cihazda bu hesapla okursun.",
       forgotTitle: "Şifreni mi unuttun?",
@@ -132,6 +137,10 @@
       consentLabel: "I expressly consent to the immediate performance of this digital content " +
         "and acknowledge that I lose my right of withdrawal once access is granted to my account.",
       consentGo: "Proceed to Payment", consentNeed: "Please check the consent box to continue.",
+      consentContractLabel: "I have read and accept the pre-contract information form and the distance sales contract (the Turkish original is legally binding).",
+      consentNeedBoth: "Please check both boxes to continue.",
+      consentContractLinks: (v) => `<a href="/en/legal" target="_blank" rel="noopener" style="color:#e85d3a;">Summary</a> · ` +
+        `<a href="/kosullar/${encodeURIComponent(v)}-tr.txt" target="_blank" rel="noopener" style="color:#e85d3a;">binding Turkish text (version ${esc(v)})</a>`,
       accEyebrow: "Account", signinDesc: "Sign in to open your book.",
       signupDesc: "The book is tied to this account; you’ll sign in with it to read on any device.",
       forgotTitle: "Forgot your password?",
@@ -213,6 +222,9 @@
     });
     return { ok: res.ok, status: res.status, json: await res.json().catch(() => ({})) };
   }
+
+  // "Yeniden yükle" düğmeleri: satır içi onclick yerine tek dinleyici (CSP script-src 'self', satır içi handler yok)
+  document.addEventListener("click", (e) => { if (e.target.closest && e.target.closest("[data-reload]")) location.reload(); });
 
   // innerHTML'e giren kullanıcı verisi (e-posta vb.) için HTML kaçışı
   function esc(s) {
@@ -507,21 +519,27 @@
           `<input id="gsm-box" type="tel" inputmode="tel" placeholder="05xx xxx xx xx" autocomplete="tel">` +
           `<p class="muted" style="font-size:12px;margin:6px 0 0;">${T.gsmHint}</p></div>` +
           `<label style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;cursor:pointer;">` +
+          `<input type="checkbox" id="contract-box" style="margin-top:3px;accent-color:#e85d3a;">` +
+          `<span style="font-size:13px;line-height:1.55;color:#b8b0a0;">${T.consentContractLabel} ${T.consentContractLinks(C.TERMS_VERSION)}</span></label>` +
+          `<label style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;cursor:pointer;">` +
           `<input type="checkbox" id="consent-box" style="margin-top:3px;accent-color:#e85d3a;">` +
-          `<span style="font-size:13px;line-height:1.55;color:#b8b0a0;">${T.consentLabel} ${T.consentLegal}</span></label>` +
+          `<span style="font-size:13px;line-height:1.55;color:#b8b0a0;">${T.consentLabel}</span></label>` +
           `<button class="btn btn-ember" id="consent-go" style="margin-top:14px;">${T.consentGo}</button>` +
           `<p class="form-msg" id="consent-msg" role="status" aria-live="polite" aria-atomic="true" style="margin-top:10px;"></p>`;
-        const cbox = $("#consent-box");
-        cbox.addEventListener("change", () => { cbox.removeAttribute("aria-invalid"); cbox.removeAttribute("aria-describedby"); });
+        const cbox = $("#consent-box"), kbox = $("#contract-box");
+        for (const b of [cbox, kbox]) b.addEventListener("change", () => { b.removeAttribute("aria-invalid"); b.removeAttribute("aria-describedby"); });
         let starting = false;
         // Satın alma niyeti başına bir Idempotency-Key: aynı niyetin yeniden denemesi aynı işi döndürür
         let checkoutKey = null;
         $("#consent-go").onclick = async () => {
           if (starting) return;
           const m = $("#consent-msg");
-          if (!cbox.checked) {
-            m.className = "form-msg err"; m.textContent = T.consentNeed;
-            cbox.setAttribute("aria-invalid", "true"); cbox.setAttribute("aria-describedby", "consent-msg"); cbox.focus();
+          // İki ayrı beyan: sözleşme kabulü ve hemen ifa/cayma beyanı (biri diğerinin yerine geçmez)
+          const unchecked = [kbox, cbox].filter((b) => !b.checked);
+          if (unchecked.length) {
+            m.className = "form-msg err"; m.textContent = T.consentNeedBoth;
+            for (const b of unchecked) { b.setAttribute("aria-invalid", "true"); b.setAttribute("aria-describedby", "consent-msg"); }
+            unchecked[0].focus();
             return;
           }
           starting = true;
@@ -531,7 +549,7 @@
             if (!checkoutKey) checkoutKey = crypto.randomUUID();
             try {
               return await callFn("create-checkout",
-                { lang: L, consent: true, gsm: $("#gsm-box").value, terms_version: C.TERMS_VERSION },
+                { lang: L, consent: true, consent_contract: true, gsm: $("#gsm-box").value, terms_version: C.TERMS_VERSION },
                 { "Idempotency-Key": checkoutKey });
             } catch (e) { return { ok: false, status: 0, json: {}, offline: isOffline(e) }; }
           };
@@ -553,7 +571,7 @@
             return;
           }
           if (r.status === 409 && r.json.code === "terms_outdated") {
-            m.innerHTML = esc(T.termsOutdated) + ` <button class="acc-link" onclick="location.reload()">${T.reload}</button>`;
+            m.innerHTML = esc(T.termsOutdated) + ` <button class="acc-link" data-reload>${T.reload}</button>`;
             return;
           }
           if (r.status === 503 && r.json.code === "paused") { m.textContent = T.checkoutPaused; return; }
@@ -648,7 +666,7 @@
       wrap.innerHTML = "";
     } catch (e) {
       console.error("reader:", (e && e.message) || "error"); // ayrıntı (token/yanıt gövdesi) konsola yazılmaz
-      wrap.innerHTML = `<p class="muted">${T.err}</p><button class="btn" onclick="location.reload()">${T.retry}</button>`;
+      wrap.innerHTML = `<p class="muted">${T.err}</p><button class="btn" data-reload>${T.retry}</button>`;
     }
   }
 
@@ -701,9 +719,9 @@
     const review = () => show(T.purchaseReview, T.purchaseReviewNote + "<br>" + T.purchaseSupport(SUPPORT),
       `<a class="muted" style="font-size:13px;" href="${HOME}">${T.toHome}</a>`);
     const slow = () => show(T.purchaseSlow, T.purchaseSlowNote + "<br>" + T.purchaseSupport(SUPPORT),
-      `<button class="btn" onclick="location.reload()">${T.purchaseRefresh}</button>`);
+      `<button class="btn" data-reload>${T.purchaseRefresh}</button>`);
     const unknown = () => show(T.purchaseUnknown, T.purchaseUnknownNote + "<br>" + T.purchaseSupport(SUPPORT),
-      `<button class="btn" onclick="location.reload()">${T.purchaseRefresh}</button>`);
+      `<button class="btn" data-reload>${T.purchaseRefresh}</button>`);
     const none = () => show(T.purchaseNone, T.purchaseNoneNote + "<br>" + T.purchaseSupport(SUPPORT),
       `<a class="muted" style="font-size:13px;" href="${HOME}">${T.toHome}</a>`);
     if (!orderId) { if (await hasBook(user.id)) ok(); else none(); return; }
@@ -881,6 +899,8 @@
         return `<div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:13px;">` +
           `<span class="mono">${esc(o.id.slice(0, 8))}</span> · ${d} · ${esc(tl(paid))} · <strong>${esc(o.status)}</strong>` +
           (o.provider_env && o.provider_env !== "live" ? ` · <em>${esc(o.provider_env)}</em>` : "") +
+          // Sipariş teyidi: kabul edilen koşul sürümü + değişmez kopya bağlantısı (özetin ilk 12 hanesi)
+          (o.terms_version ? ` · <a class="mono" href="/kosullar/${encodeURIComponent(o.terms_version)}-tr.txt" target="_blank" rel="noopener" style="color:#e85d3a;" title="SHA-256 ${esc(o.terms_hash || "")}">koşullar ${esc(o.terms_version)}${o.terms_hash ? " · " + esc(String(o.terms_hash).slice(0, 12)) : ""}</a>` : "") +
           (settled ? ` · iade edilen ${esc(tl(settled))}, kalan ${esc(tl(paid - settled))}` : "") +
           mine.map((x) => `<div class="mono muted" style="font-size:11px;margin-top:3px;">iade ${esc(tl(x.amount))}: ${esc(opLabel[x.state] || x.state)}${x.error_code ? " · " + esc(x.error_code) : ""}` +
             ((x.state === "unknown" || x.state === "requested") ? ` <button class="btn" data-recon="${esc(x.id)}" style="padding:2px 8px;font-size:11px;">Uzlaştır</button>` : "") + `</div>`).join("") +
