@@ -729,6 +729,26 @@
 
   // ---- yönetim ----
   async function initAdmin() {
+    // Sayfa içi onay: ilk tıklama düğmeyi "Onayla: …" yapar (6 sn), ikinci tıklama işi yapar.
+    // Yerleşik confirm/alert bazı tarayıcı ortamlarında gösterilmez ve otomatik reddedilir.
+    const armed = (b, label) => {
+      if (b.dataset.armed === "1") { clearTimeout(b._armT); delete b.dataset.armed; b.textContent = b.dataset.orig; return true; }
+      b.dataset.orig = b.textContent; b.dataset.armed = "1"; b.textContent = label;
+      b._armT = setTimeout(() => { delete b.dataset.armed; b.textContent = b.dataset.orig; }, 6000);
+      return false;
+    };
+    // Kalıcı bildirim: liste yeniden çizilse de sonuç ekranda kalır (8 sn; ekran okuyucuya duyurulur)
+    const toast = (msg) => {
+      let t = document.getElementById("admin-toast");
+      if (!t) {
+        t = document.createElement("div"); t.id = "admin-toast"; t.setAttribute("role", "status"); t.setAttribute("aria-live", "polite");
+        t.style.cssText = "position:fixed;left:16px;right:16px;bottom:16px;max-width:640px;margin:0 auto;padding:12px 16px;background:#f1eadb;color:#1a1a1a;font-size:14px;z-index:50;box-shadow:0 4px 18px rgba(0,0,0,.4);";
+        document.body.appendChild(t);
+      }
+      t.textContent = msg; t.hidden = false;
+      clearTimeout(t._h); t._h = setTimeout(() => { t.hidden = true; }, 8000);
+    };
+
     const user = await getUser();
     const box = $("#admin-box");
     if (!user) {
@@ -788,9 +808,9 @@
       ob.querySelectorAll("[data-set]").forEach((b) => {
         b.onclick = async () => {
           const val = b.dataset.val === "true";
-          if (!val && !confirm(`${b.dataset.set === "checkout_enabled" ? "Yeni ödemeler" : "Yeni iadeler"} sunucuda durdurulacak. Emin misin?`)) return;
+          if (!val && !armed(b, "Onayla: durdur")) return;
           const rr = await callFn("admin-settings", { action: "set", key: b.dataset.set, value: val });
-          if (!rr.ok) alert(`Olmadı: ${rr.json.code || rr.status}`);
+          toast(rr.ok ? "✓ Kaydedildi" : `✗ Olmadı: ${rr.json.code || rr.status}`);
           loadOps();
         };
       });
@@ -813,9 +833,9 @@
           `</div>`).join("") : `<p class="muted" style="font-size:13px;">Kaynak yok.</p>`);
       res.querySelectorAll("[data-revoke]").forEach((b) => {
         b.onclick = async () => {
-          if (!confirm("Bu elle erişim kaynağı kapatılacak (diğer kaynaklar etkilenmez). Emin misin?")) return;
+          if (!armed(b, "Onayla: kapat")) return;
           const rr = await callFn("grant-book", { action: "revoke", sourceId: b.dataset.revoke, reason: "admin" });
-          if (!rr.ok) alert(`Olmadı: ${rr.json.code || rr.status}`);
+          toast(rr.ok ? "✓ Kaynak kapatıldı" : `✗ Olmadı: ${rr.json.code || rr.status}`);
           listSources();
         };
       });
@@ -881,13 +901,14 @@
           const action = b.dataset.refund ? "refund" : "mark_refunded";
           const amtEl = res.querySelector(`[data-amt="${id}"]`);
           const amount = amtEl && amtEl.value ? Number(amtEl.value) : null;
-          if (action === "refund" && !confirm(`iyzico üzerinden ${amount ? tl(amount) : "kalan tutarın tamamı"} iade edilecek. Emin misin?`)) return;
+          if (!armed(b, action === "refund" ? `Onayla: ${amount ? tl(amount) : "kalanın tamamı"} iade` : "Onayla: panel iadesini bağla")) return;
           b.disabled = true;
           const line = document.getElementById("r-line-" + id.slice(0, 8));
           line.textContent = "iyzico ile görüşülüyor…";
           const rr = await callFn("refund-book", { orderId: id, action, amount });
-          if (rr.ok) line.textContent = outcomeText(rr.json);
-          else line.textContent = `✗ ${rr.json.code || rr.status}${rr.json.remaining != null ? " · kalan " + tl(rr.json.remaining) : ""}`;
+          const msg = rr.ok ? outcomeText(rr.json) : `✗ ${rr.json.code || rr.status}${rr.json.remaining != null ? " · kalan " + tl(rr.json.remaining) : ""}`;
+          line.textContent = msg;
+          toast(msg);
           setTimeout(listOrders, 1200);
         };
       });
@@ -895,7 +916,7 @@
         b.onclick = async () => {
           b.disabled = true;
           const rr = await callFn("refund-book", { action: "reconcile", opId: b.dataset.recon });
-          alert(rr.ok ? outcomeText(rr.json) : `✗ ${rr.json.code || rr.status}`);
+          toast(rr.ok ? outcomeText(rr.json) : `✗ ${rr.json.code || rr.status}`);
           listOrders();
         };
       });
