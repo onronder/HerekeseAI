@@ -6,7 +6,7 @@ import { clientIp, HttpError, readJson, requireMethod } from "../../../supabase/
 import { signReadToken, verifyReadToken } from "../../../supabase/functions/_shared/token.ts";
 import { sendResend } from "../../../supabase/functions/_shared/mail.ts";
 import { render, type OutboxRow } from "../../../supabase/functions/_shared/outbox.ts";
-import { isProviderPageUrl, type RetrieveResult } from "../../../supabase/functions/_shared/iyzico.ts";
+import { hmacSha256Hex, isProviderPageUrl, reportingPaymentDetails, type RetrieveResult } from "../../../supabase/functions/_shared/iyzico.ts";
 
 const OID = "11111111-2222-3333-4444-555555555555";
 function rr(over: Partial<RetrieveResult> & { raw?: Record<string, unknown> } = {}): RetrieveResult {
@@ -163,4 +163,24 @@ Deno.test("B01 paymentPageUrl yalnız HTTPS + iyzipay.com", () => {
   assert(!isProviderPageUrl("http://cpp.iyzipay.com/x"));
   assert(!isProviderPageUrl("https://iyzipay.com.evil.example/x"));
   assert(!isProviderPageUrl("javascript:alert(1)"));
+});
+
+Deno.test("iyzico GET imzası: sorgu dizesi imzaya girmez, istek sorguyla gider (raporlama)", async () => {
+  let seen: { url: string; auth: string; rnd: string; method: string } | null = null;
+  const srv = Deno.serve({ port: 0, hostname: "127.0.0.1", onListen() {} }, (req) => {
+    seen = { url: req.url, auth: req.headers.get("Authorization") ?? "", rnd: req.headers.get("x-iyzi-rnd") ?? "", method: req.method };
+    return Response.json({ status: "success", payments: [] });
+  });
+  Deno.env.set("IYZICO_API_KEY", "ak"); Deno.env.set("IYZICO_SECRET", "sk");
+  Deno.env.set("IYZICO_BASE_URL", `http://127.0.0.1:${srv.addr.port}`);
+  try {
+    const r = await reportingPaymentDetails("38102126");
+    assertEquals(r.status, "success");
+    const s = seen!;
+    assertEquals(s.method, "GET");
+    assert(s.url.endsWith("/v2/reporting/payment/details?paymentId=38102126&locale=tr"));
+    const decoded = atob(s.auth.replace("IYZWSv2 ", ""));
+    const sig = decoded.split("&signature:")[1];
+    assertEquals(sig, await hmacSha256Hex("sk", s.rnd + "/v2/reporting/payment/details"));
+  } finally { await srv.shutdown(); }
 });
