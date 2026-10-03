@@ -46,12 +46,22 @@ function notFoundCodes(): Set<string> {
   return new Set((Deno.env.get("IYZICO_NOT_FOUND_CODES") ?? "").split(",").map((x) => x.trim()).filter(Boolean));
 }
 
+// Banka ret kodları 10000–10999 aralığındadır (iyzico hata kodları). payment/detail (paymentConversationId ile)
+// ödeme sayfasındaki SON denemenin reddini bu kodla döndürür (sandbox: 10034 FRAUD_SUSPECT, 10051 NOT_SUFFICIENT_FUNDS).
+const BANK_DECLINE_RX = /^10\d{3}$/;
+
 // /payment/detail (uzlaştırma, IFN): fraudStatus 2 = inceleme sonrası onay. "Kayıt yok" yalnız doğrulanmış kodlarla.
-export function mapPaymentDetail(r: RetrieveResult): PaymentFact | null {
+// sessionClosed: ödeme sayfasının süresi doldu (token_expires_at geçti). Sayfa açıkken alıcı başka kartla deneyebilir;
+// bu yüzden banka reddi yalnız sayfa kapandıktan sonra siparişi kapatır (failure).
+export function mapPaymentDetail(r: RetrieveResult, opts: { sessionClosed?: boolean } = {}): PaymentFact | null {
   if (r.status === "failure") {
     const code = errorCodeOf(r.raw) ?? "";
     if (code && notFoundCodes().has(code)) {
       return { ...projectPayment({}), kind: "not_found" };
+    }
+    if (BANK_DECLINE_RX.test(code)) {
+      if (opts.sessionClosed) return { ...projectPayment({}), payment_status: "FAILURE", kind: "failure" };
+      return null; // sayfa açık: yeni deneme mümkün, karar yok
     }
     // Eşlenmemiş hata kodu: sipariş açık kalır (uzlaştırma sürer); kod loglanır (mesaj metni loglanmaz)
     console.warn("payment/detail failure unmapped code=" + (code || "-"));

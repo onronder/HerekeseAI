@@ -31,7 +31,8 @@ serve(async (req: Request) => {
     if (OPEN_STATES.includes(order.status) && order.status !== "created" && age < RECONCILE_WINDOW_MS) {
       try {
         const r = await retrievePaymentDetail({ paymentConversationId: order.conversation_id }, order.lang === "en" ? "en" : "tr");
-        await applyFact(admin, order.id, "status", mapPaymentDetail(r));
+        const sessionClosed = order.token_expires_at != null && new Date(order.token_expires_at).getTime() < Date.now();
+        await applyFact(admin, order.id, "status", mapPaymentDetail(r, { sessionClosed }));
         order = (await loadOrderById(admin, orderId)) ?? order;
       } catch (e) {
         console.error("order-status reconcile error kind=" + (e instanceof IyzicoError ? e.kind : "db"));
