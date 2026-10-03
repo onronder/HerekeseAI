@@ -184,3 +184,16 @@ Deno.test("iyzico GET imzası: sorgu dizesi imzaya girmez, istek sorguyla gider 
     assertEquals(sig, await hmacSha256Hex("sk", s.rnd + "/v2/reporting/payment/details"));
   } finally { await srv.shutdown(); }
 });
+
+Deno.test("payment/detail banka reddi (10xxx): sayfa açıkken karar yok, sayfa kapandıysa failure; diğer kodlar karar üretmez", () => {
+  const fail = (code: string) => ({ status: "failure", signatureValid: false, raw: { status: "failure", errorCode: code, errorMessage: "x" } }) as unknown as RetrieveResult;
+  assertEquals(mapPaymentDetail(fail("10034")), null);
+  assertEquals(mapPaymentDetail(fail("10051"), { sessionClosed: false }), null);
+  const f = mapPaymentDetail(fail("10034"), { sessionClosed: true })!;
+  assertEquals(f.kind, "failure");
+  assertEquals(f.payment_status, "FAILURE");
+  assert(!JSON.stringify(f).includes("errorMessage"));
+  assertEquals(mapPaymentDetail(fail("5086"), { sessionClosed: true }), null);
+  assertEquals(mapPaymentDetail(fail("1"), { sessionClosed: true }), null);
+  assertEquals(mapPaymentDetail(fail("100345"), { sessionClosed: true }), null);
+});

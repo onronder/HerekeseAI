@@ -49,7 +49,7 @@ serve(async (req: Request) => {
     // (2) açık sipariş uzlaştırma
     if (left() > 5000) {
       const { data } = await admin.rpc("book_claim_reconcile", { p_limit: LIMITS.reconcile, p_lease_seconds: 60 });
-      for (const o of (data ?? []) as { id: string; conversation_id: string; lang: string }[]) {
+      for (const o of (data ?? []) as { id: string; conversation_id: string; lang: string; token_expires_at: string | null }[]) {
         if (left() < 3000) break;
         counts.reconcile++;
         try {
@@ -58,7 +58,8 @@ serve(async (req: Request) => {
           const tag = r.status === "failure" ? `detail_failure_${String(r.errorCode ?? r.raw?.errorCode ?? "none").slice(0, 12)}`
             : `detail_${String(r.paymentStatus ?? r.status ?? "none").slice(0, 20).toLowerCase()}`;
           counts[tag] = (counts[tag] ?? 0) + 1;
-          const out = await applyFact(admin, o.id, "reconcile", mapPaymentDetail(r));
+          const sessionClosed = o.token_expires_at != null && new Date(o.token_expires_at).getTime() < Date.now();
+          const out = await applyFact(admin, o.id, "reconcile", mapPaymentDetail(r, { sessionClosed }));
           if (out.outcome !== "unchanged") counts.reconcile_changed++;
         } catch (e) {
           console.error("ops reconcile error:", (e as Error).name);

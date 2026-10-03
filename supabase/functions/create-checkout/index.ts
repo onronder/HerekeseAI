@@ -91,9 +91,10 @@ serve(async (req: Request) => {
       // Oturum dolmuş / belirsiz / inceleme: önce sağlayıcıya sor; ödeme yoksa ve süre dolduysa sipariş kapanır
       try {
         const r = await retrievePaymentDetail({ paymentConversationId: orderId }, lang);
-        const out = await applyFact(admin, orderId, "status", mapPaymentDetail(r));
+        const sessionClosed = b.token_expires_at != null && new Date(b.token_expires_at).getTime() < Date.now();
+        const out = await applyFact(admin, orderId, "status", mapPaymentDetail(r, { sessionClosed }));
         if (out.outcome === "paid" || out.outcome === "already_paid") return json({ alreadyOwned: true }, 200, corsHeaders);
-        if (out.outcome === "expired_confirmed") return json({ code: "retry_new_attempt", orderId, request_id: rid }, 409, corsHeaders);
+        if (out.outcome === "expired_confirmed" || out.outcome === "failed") return json({ code: "retry_new_attempt", orderId, request_id: rid }, 409, corsHeaders);
       } catch (e) {
         console.error("checkout reconcile error kind=" + (e instanceof IyzicoError ? e.kind : "db"));
       }
