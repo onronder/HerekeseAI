@@ -108,3 +108,12 @@ Site açılmadan önce tek geçiş; sıra önemli (yeni create-checkout Idempote
 5. Ön yüz (`store/`) PR → preview testi → main.
 6. Doğrulama: `tests/p2` (yerel DB testleri), sandbox uçtan uca senaryolar, `book_ops_health`.
 Canlıya geçiş: açılış kapısı tamamlanınca anahtarlar canlıya çevrilir (`IYZICO_MODE=live`, canlı base URL).
+
+## Satış koşulları sürümü (sözleşme kanıtı)
+Ödeme öncesi gösterilen koşulların değişmez kopyası sürümlüdür: `store/kosullar/<sürüm>-tr.txt` (bağlayıcı), `-en.txt` (özet),
+`store/kosullar/manifest.json` ve `supabase/sql/kosullar-<sürüm>.sql`. Sipariş, kabul edilen Türkçe metnin SHA-256'sını taşır;
+makbuz e-postası metni sipariş teyidi olarak ekler. Koşul metni (yasal sayfanın sözleşme bölümleri ya da onay cümleleri) değişirse:
+1. `store/assets/config.js` içinde `TERMS_VERSION`'ı yeni sürüme yükselt; `python3 tools/site/terms.py --write` (eski sürüm dosyaları değişmez).
+2. SQL: `supabase db query --linked -f supabase/sql/kosullar-<sürüm>.sql` (satırlar değiştirilemez; özet veritabanında doğrulanır).
+3. Secret: `supabase secrets set TERMS_VERSION=<sürüm>`; ardından ön yüz PR'ı. `python3 tools/site/terms.py --check` (site testi K15)
+   sürüm yükseltilmeden metin değişirse hata verir.

@@ -116,14 +116,20 @@ export async function iyzicoRequest(
 
 // ---------------------------------------------------------------- Checkout Form
 
+// iyzico CF-Initialize alan kuralları (docs.iyzico.com, CF başlatma): buyer.identityNumber ve gsmNumber ZORUNLU,
+// buyer.ip İSTEĞE BAĞLI; tüm kalemler VIRTUAL ise shippingAddress gerekmez, billingAddress zorunlu.
+// Toplanmayan zorunlu alanlar iyzico'nun resmi WooCommerce eklentisindeki gibi doldurulur
+// (iyzico/iyzipay-woocommerce DataFactory: identityNumber "11111111111", boş alan "UNKNOWN"). Uydurma IP gönderilmez.
+export const PLACEHOLDER_IDENTITY = "11111111111";
+export const PLACEHOLDER_UNKNOWN = "UNKNOWN";
+
 export interface CheckoutBuyer {
   id: string;
   name: string;
   surname: string;
   email: string;
-  gsmNumber: string;
-  identityNumber: string;
-  ip: string;
+  gsmNumber: string | null; // null → "UNKNOWN" (alıcı telefon vermedi)
+  ip: string | null; // null → alan gönderilmez (isteğe bağlı)
 }
 
 export interface CheckoutInit {
@@ -157,13 +163,13 @@ export async function initializeCheckoutForm(i: CheckoutInit): Promise<InitResul
       id: i.buyer.id,
       name: i.buyer.name,
       surname: i.buyer.surname,
-      identityNumber: i.buyer.identityNumber,
+      identityNumber: PLACEHOLDER_IDENTITY,
       email: i.buyer.email,
-      gsmNumber: i.buyer.gsmNumber,
+      gsmNumber: i.buyer.gsmNumber || PLACEHOLDER_UNKNOWN,
       registrationAddress: address,
       city: "Istanbul",
       country: "Turkey",
-      ip: i.buyer.ip,
+      ...(i.buyer.ip ? { ip: i.buyer.ip } : {}),
     },
     // Tüm kalemler VIRTUAL: shippingAddress gerekmez (belge); billingAddress zorunlu.
     billingAddress: { address, contactName, city: "Istanbul", country: "Turkey" },
@@ -300,8 +306,9 @@ export async function retrievePaymentDetail(
 }
 
 // Refund V2: paymentId + tutar (tek kalemli sepet için belge önerisi).
-export async function refundV2(paymentId: string, price: string, ip: string, conversationId: string): Promise<IyzicoResponse> {
-  return await iyzicoRequest("/v2/payment/refund", { locale: "tr", conversationId, paymentId, price, currency: "TRY", ip });
+// Refund V2: ip isteğe bağlı ("isteğin gönderildiği IP"); bilinmiyorsa gönderilmez
+export async function refundV2(paymentId: string, price: string, ip: string | null, conversationId: string): Promise<IyzicoResponse> {
+  return await iyzicoRequest("/v2/payment/refund", { locale: "tr", conversationId, paymentId, price, currency: "TRY", ...(ip ? { ip } : {}) });
 }
 
 // Raporlama: ödeme detayı (iade/fraud durumu). GET; imza yalnız yol üzerinden (sorgu dizesi hariç).

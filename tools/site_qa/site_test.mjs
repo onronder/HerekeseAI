@@ -6,6 +6,8 @@
 //   Deployment Protection → Protection Bypass for Automation). Değer yalnız istek başlığına konur; rapora ve loga yazılmaz.
 // Yerel öykünme kendi yönlendirme kuralını uyguladığı için Vercel'in gerçek davranışını kanıtlamaz; rota ve başlık
 // sonuçları yalnız BASE_URL ile kabul sayılır. Çıktı: tools/site_qa/site-test-{yerel,preview,uretim}.json + tools/site_qa/shots/*.png
+import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
@@ -27,11 +29,20 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // ---------------------------------------------------------------- yerel sunucu (Vercel cleanUrls + trailingSlash:false + 404.html)
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png',
   '.woff2': 'font/woff2', '.json': 'application/json', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8', '.ico': 'image/x-icon' };
+// vercel.json başlık kuralları (CSP dahil) yerelde de uygulanır; kaynaklar birbirini dışlar, eşleşen her kural yazılır
+const VERCEL = JSON.parse(fs.readFileSync(path.join(ROOT, 'store', 'vercel.json'), 'utf8'));
+const vercelHeaders = (p) => {
+  const h = {};
+  for (const r of VERCEL.headers) if (new RegExp('^' + r.source + '$').test(p)) for (const x of r.headers) h[x.key.toLowerCase()] = x.value;
+  return h;
+};
 function serve(dir, prefix) {
   return (req, res) => {
     const u = new URL(req.url, 'http://x'); let p = decodeURIComponent(u.pathname);
+    // okuyucu vekili (dist/web) üretimde /oku içindeki srcdoc iframe'de çalışır ve onun politikasını devralır
+    const hdr = vercelHeaders(prefix ? '/oku' : p);
     if (prefix) p = p.slice(prefix.length) || '/';
-    const send = (code, file, extra = {}) => { res.writeHead(code, { 'content-type': MIME[path.extname(file)] || 'application/octet-stream', ...extra }); res.end(fs.readFileSync(file)); };
+    const send = (code, file, extra = {}) => { res.writeHead(code, { 'content-type': MIME[path.extname(file)] || 'application/octet-stream', ...hdr, ...extra }); res.end(fs.readFileSync(file)); };
     const redirect = (to) => { res.writeHead(308, { location: (prefix || '') + to + u.search }); res.end(); };
     if (p.length > 1 && p.endsWith('/')) return redirect(p.replace(/\/+$/, ''));
     if (p.endsWith('.html')) return redirect(p.replace(/(index)?\.html$/, '').replace(/\/$/, '') || '/');
@@ -63,6 +74,8 @@ const browser = await puppeteer.launch({ headless: 'new', executablePath: '/Appl
 const page = await browser.newPage();
 if (BYPASS) await page.setExtraHTTPHeaders(BYPASS_H);
 const pageErrors = []; page.on('pageerror', (e) => pageErrors.push(String(e).slice(0, 200)));
+// CSP ihlalleri tarayıcı konsoluna yazılır; her ziyaret edilen sayfada toplanır
+const cspErrors = []; page.on('console', (m) => { if (/Content Security Policy/i.test(m.text())) cspErrors.push(`${page.url().replace(BASE, '')} · ${m.text().slice(0, 160)}`); });
 // Supabase çağrıları testte gerçek projeye gitmez: anonim oturum, istekler engellenir (form testleri kendi yanıtını kurar)
 let supaHandler = null;
 // Sahte yanıtlar çapraz kaynak olduğu için CORS başlığı taşımalı; aksi hâlde tarayıcı "Failed to fetch" verir ve test yanlış sebeple geçer
@@ -232,7 +245,7 @@ for (const [lang, url] of [['tr', '/'], ['en', '/en']]) {
 if (!REMOTE) {
   const fakeUser = { id: '11111111-2222-3333-4444-555555555555', email: 'okur@example.test', aud: 'authenticated', role: 'authenticated', app_metadata: {}, user_metadata: { full_name: 'Test Okur' } };
   const session = { access_token: 'sahte.jwt.token', token_type: 'bearer', expires_in: 3600, expires_at: Math.floor(Date.now() / 1000) + 3600, refresh_token: 'r', user: fakeUser };
-  const scenario = async (replies) => {
+  const scenario = async (replies, boxes = ['#contract-box', '#consent-box']) => {
     const calls = [];
     supaHandler = (rq) => {
       const u = rq.url();
@@ -251,22 +264,30 @@ if (!REMOTE) {
     await page.goto(BASE + '/?k13=' + Date.now(), { waitUntil: 'networkidle0' }); await sleep(800);
     const ready = await page.evaluate(() => !!document.getElementById('consent-go'));
     if (!ready) { supaHandler = null; return { ready, calls }; }
-    await page.click('#consent-box'); await page.click('#consent-go'); await sleep(1200);
-    const ui = await page.evaluate(() => ({ msg: (document.getElementById('consent-msg') || {}).innerText || '', btnDisabled: document.getElementById('consent-go').disabled, link: (document.querySelector('#consent-msg a') || {}).href || '' }));
+    for (const b of boxes) await page.click(b);
+    await page.click('#consent-go'); await sleep(1200);
+    const ui = await page.evaluate(() => ({ msg: (document.getElementById('consent-msg') || {}).innerText || '', btnDisabled: document.getElementById('consent-go').disabled, link: (document.querySelector('#consent-msg a') || {}).href || '',
+      invalid: [...document.querySelectorAll('#buy-state input[type=checkbox][aria-invalid=true]')].map((x) => x.id),
+      termsLink: (document.querySelector('#buy-state a[href^="/kosullar/"]') || {}).getAttribute?.('href') || '' }));
     supaHandler = null;
     await page.evaluate((k) => localStorage.removeItem(k), 'sb-dtsgewamjkcojffustrg-auth-token');
     return { ready, calls, ui };
   };
   const tv = (await fs.promises.readFile(path.join(STORE, 'assets/config.js'), 'utf8')).match(/TERMS_VERSION: "([^"]+)"/)[1];
   const s202 = await scenario([[202, { orderId: 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee', checking: true }]]);
-  T('K13', 'ödeme başlatma: UUID Idempotency-Key + terms_version gönderilir; 202 → "kontrol ediliyor" + durum bağlantısı, yeni ödeme düğmesi kilitli',
-    s202.ready && s202.calls.length === 1 && /^[0-9a-f-]{36}$/.test(s202.calls[0].key || '') && s202.calls[0].body.terms_version === tv && s202.ui.btnDisabled && /order=aaaaaaaa/.test(s202.ui.link),
+  T('K13', 'ödeme başlatma: UUID Idempotency-Key + terms_version + iki beyan (consent, consent_contract) gönderilir; 202 → "kontrol ediliyor" + durum bağlantısı, yeni ödeme düğmesi kilitli',
+    s202.ready && s202.calls.length === 1 && /^[0-9a-f-]{36}$/.test(s202.calls[0].key || '') && s202.calls[0].body.terms_version === tv
+      && s202.calls[0].body.consent === true && s202.calls[0].body.consent_contract === true && s202.ui.btnDisabled && /order=aaaaaaaa/.test(s202.ui.link),
     { ready: s202.ready, calls: s202.calls.map((c) => ({ key: !!c.key, tv: c.body.terms_version })), ui: s202.ui });
   const sRetry = await scenario([[409, { code: 'retry_new_attempt' }], [200, { alreadyOwned: true }]]);
   T('K13', '409 retry_new_attempt → yeni anahtarla tek yeniden deneme (iki farklı anahtar, en fazla 2 istek)',
     sRetry.calls.length === 2 && sRetry.calls[0].key && sRetry.calls[1].key && sRetry.calls[0].key !== sRetry.calls[1].key, sRetry.calls.map((c) => c.key));
   const sPaused = await scenario([[503, { code: 'paused' }]]);
   T('K13', '503 paused → "satış geçici olarak kapalı" mesajı', /geçici olarak kapalı/.test(sPaused.ui?.msg || ''), sPaused.ui);
+  // İki ayrı beyan: yalnız biri işaretliyse istek gitmez, eksik kutu işaretlenir; sözleşme bağlantısı değişmez kopyaya gider
+  const sOne = await scenario([[200, {}]], ['#consent-box']);
+  T('K13', 'yalnız cayma beyanı işaretli → istek gitmez, "iki onay kutusu" mesajı, sözleşme kutusu aria-invalid; bağlantı /kosullar/<sürüm>-tr.txt',
+    sOne.ready && sOne.calls.length === 0 && /iki onay kutusunu/.test(sOne.ui.msg) && sOne.ui.invalid.join() === 'contract-box' && sOne.ui.termsLink === `/kosullar/${tv}-tr.txt`, sOne.ui);
   const sTerms = await scenario([[409, { code: 'terms_outdated', terms_version: '2099-01-01' }]]);
   T('K13', '409 terms_outdated → koşullar güncellendi + yenile; yeniden deneme yapılmaz', sTerms.calls.length === 1 && /koşulları güncellendi/i.test(sTerms.ui?.msg || ''), { calls: sTerms.calls.length, ui: sTerms.ui });
 }
@@ -276,7 +297,9 @@ const axeSrc = fs.existsSync(path.join(ROOT, 'tools/site_qa/.cache/axe.min.js'))
 if (!axeSrc) BLOCK('K11', 'axe-core taraması', 'tools/site_qa/.cache/axe.min.js yok');
 else for (const u of ['/', '/en', '/yasal', '/en/legal', '/hakkimizda', '/404-yok-boyle-bir-sayfa', '/demo/demo', '/demo/demo-en']) {
   // Giriş animasyonları (fadeIn 1,1 s) bitmeden ölçülürse yarı saydam renkler sahte kontrast ihlali verir
-  await page.setViewport({ width: 1280, height: 900 }); await page.goto(BASE + u, { waitUntil: 'networkidle0' }); await sleep(2000); await page.addScriptTag({ content: axeSrc });
+  await page.setViewport({ width: 1280, height: 900 }); await page.goto(BASE + u, { waitUntil: 'networkidle0' }); await sleep(2000);
+  // Satır içi <script> eklemek sıkı CSP'ye takılır; devtools değerlendirmesi CSP dışıdır (sayfa politikası değişmez)
+  await page.evaluate(axeSrc);
   const v = await page.evaluate(async () => (await window.axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] } })).violations
     .map((x) => ({ id: x.id, impact: x.impact, n: x.nodes.length, ornek: x.nodes[0] && x.nodes[0].target.join(' ') })));
   const serious = v.filter((x) => ['serious', 'critical'].includes(x.impact));
@@ -344,6 +367,56 @@ if (REMOTE) {
   T('K12', 'taslak belgeler (docs/) dağıtımda yok', d.status === 404, d.status);
 } else BLOCK('K12', 'üretim başlıkları (HSTS/CSP) ve docs/ dağıtım dışı', 'yalnız BASE_URL (Vercel preview) ile ölçülür');
 
+// ---------------------------------------------------------------- K15 satış koşullarının değişmez kopyası
+{
+  const tv = fs.readFileSync(path.join(STORE, 'assets/config.js'), 'utf8').match(/TERMS_VERSION: "([^"]+)"/)[1];
+  let chk = '';
+  try { chk = execFileSync('python3', [path.join(ROOT, 'tools/site/terms.py'), '--check'], { encoding: 'utf8' }); } catch (e) { chk = 'HATA ' + (e.stdout || e.message); }
+  T('K15', 'terms.py --check: yayımlanan koşul dosyaları manifestle aynı; yasal sayfa ve onay metni güncel sürümle aynı (sürüm değişmeden metin değişemez)', /^✓/.test(chk.trim()), chk.trim().slice(0, 300));
+  const man = JSON.parse(fs.readFileSync(path.join(STORE, 'kosullar/manifest.json'), 'utf8'));
+  const bad = [];
+  for (const loc of ['tr', 'en']) {
+    const r = await fetchNoRedirect(`${BASE}/kosullar/${tv}-${loc}.txt`);
+    const buf = Buffer.from(await r.arrayBuffer());
+    const h = crypto.createHash('sha256').update(buf).digest('hex');
+    const ct = r.headers.get('content-type') || '';
+    if (r.status !== 200 || !/text\/plain/.test(ct) || !/utf-8/i.test(ct) || h !== man[tv][loc]) bad.push({ loc, status: r.status, ct, h: h.slice(0, 12), beklenen: (man[tv][loc] || '').slice(0, 12) });
+  }
+  T('K15', `değişmez koşul kopyaları (/kosullar/${tv}-tr.txt, -en.txt): 200, text/plain; charset=utf-8, SHA-256 manifestle aynı`, bad.length === 0, bad.length ? bad : man[tv]);
+}
+
+// ---------------------------------------------------------------- K14 CSP: sayfa başına politika
+{
+  const STRICT = ['/', '/en', '/yasal', '/en/legal', '/hakkimizda', '/en/about', '/satin-alma', '/en/purchase', '/yonetim', '/auth/confirm', '/olmayan-yol-csp'];
+  const qrFile = fs.readdirSync(path.join(STORE, 'd')).find((f) => f.endsWith('.html'));
+  const RELAXED = ['/oku', '/en/read', '/demo/demo', '/demo/demo-en', '/d/' + qrFile.replace(/\.html$/, '')];
+  const scriptSrc = (csp) => ((csp || '').split(';').map((x) => x.trim()).find((x) => x.startsWith('script-src')) || '');
+  const bad = [];
+  for (const r of STRICT) {
+    const h = await fetchNoRedirect(BASE + r); const ss = scriptSrc(h.headers.get('content-security-policy'));
+    if (ss !== "script-src 'self'") bad.push({ r, ss });
+  }
+  for (const r of RELAXED) {
+    const h = await fetchNoRedirect(BASE + r); const ss = scriptSrc(h.headers.get('content-security-policy'));
+    if (!/'unsafe-eval'/.test(ss) || !/'unsafe-inline'/.test(ss)) bad.push({ r, ss });
+  }
+  T('K14', `CSP: ${STRICT.length} mağaza rotasında script-src 'self' (satır içi ve eval yok); okuyucu/demo/QR'de şablon motoru istisnası`, bad.length === 0, bad);
+  // Sıkı rotalar tarayıcıda hatasız açılmalı (satır içi betik/handler kalmadı)
+  const before = cspErrors.length, errBefore = pageErrors.length;
+  for (const r of STRICT) { await page.goto(BASE + r, { waitUntil: 'networkidle0' }).catch(() => {}); await sleep(300); }
+  T('K14', 'sıkı CSP altında mağaza sayfaları ihlalsiz ve JS hatasız açılıyor', cspErrors.length === before && pageErrors.length === errBefore,
+    cspErrors.slice(before, before + 5).concat(pageErrors.slice(errBefore, errBefore + 3)));
+}
+// Okuyucu vekili dist/web sürümünü kullanır; o sürüm Google Fonts bağlantısı taşır (CSP engeller). Satılan sürüm (dist/gated)
+// fontları gömülü taşır: aşağıda ayrıca kontrol edilir. Bu yüzden yalnız vekilin Google Fonts ihlali ayrı tutulur.
+const proxyFont = (e) => e.startsWith('/__dist') && /fonts\.googleapis\.com/.test(e);
+T('genel', 'ziyaret edilen hiçbir sayfada CSP ihlali yok (okuyucu, demo ve QR dahil)', cspErrors.filter((e) => !proxyFont(e)).length === 0, cspErrors.filter((e) => !proxyFont(e)).slice(0, 5));
+{
+  const gated = ['book-tr.html', 'book-en.html'].map((f) => path.join(ROOT, 'dist/gated', f)).filter((f) => fs.existsSync(f));
+  const ext = gated.flatMap((f) => (fs.readFileSync(f, 'utf8').match(/(?:src|href)=["']https?:\/\/[^"']+|@import\s+url\(["']?https?:[^)]+/g) || []).map((m) => `${path.basename(f)}: ${m.slice(0, 80)}`));
+  if (gated.length) T('K14', 'satılan kitap (dist/gated) dış kaynak yüklemez: fontlar gömülü, Google Fonts yok (okuyucu CSP\'si altında ihlalsiz)', ext.length === 0, ext.length ? ext.slice(0, 5) : gated.map((f) => path.basename(f)));
+  else BLOCK('K14', 'satılan kitap dosyaları dış kaynak denetimi', 'dist/gated yok (build.py çalıştırılmadı)');
+}
 T('genel', 'sayfa JavaScript hatası yok', pageErrors.length === 0, pageErrors.slice(0, 5));
 await browser.close(); if (server) server.close();
 let commit = ''; try { commit = execSync('git rev-parse --short HEAD', { cwd: ROOT }).toString().trim() + (execSync('git status --porcelain store build.py Atlas-Kitap.dc.html', { cwd: ROOT }).toString().trim() ? '+değişiklik' : ''); } catch (e) {}

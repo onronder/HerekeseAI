@@ -10,7 +10,9 @@ export interface SendResult {
   errorCode: string | null;
 }
 
-export async function sendResend(p: { to: string; subject: string; html: string; idempotencyKey: string }): Promise<SendResult> {
+export interface MailAttachment { filename: string; content: string } // content: base64
+
+export async function sendResend(p: { to: string; subject: string; html: string; idempotencyKey: string; attachments?: MailAttachment[] }): Promise<SendResult> {
   const key = Deno.env.get("RESEND_API_KEY");
   if (!key) return { ok: false, permanent: false, providerMessageId: null, errorCode: "resend_not_configured" };
   const base = (Deno.env.get("RESEND_API_BASE") ?? "https://api.resend.com").replace(/\/$/, "");
@@ -27,6 +29,7 @@ export async function sendResend(p: { to: string; subject: string; html: string;
         to: [p.to],
         subject: p.subject,
         html: p.html,
+        ...(p.attachments?.length ? { attachments: p.attachments } : {}),
       }),
       signal: AbortSignal.timeout(10000),
     });
@@ -47,13 +50,19 @@ export async function sendResend(p: { to: string; subject: string; html: string;
 function esc(s: string): string {
   return s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 }
-function tl(v: unknown): string {
+export function tl(v: unknown): string {
   return `${Number(v).toFixed(2).replace(".", ",")} TL`;
 }
 
-export function receiptEmail(o: { lang: "tr" | "en"; orderId: string; price: unknown; paidAt: Date; siteUrl: string; supportEmail: string }) {
+export function receiptEmail(o: { lang: "tr" | "en"; orderId: string; price: unknown; paidAt: Date; siteUrl: string; supportEmail: string; termsVersion?: string | null }) {
   const short = o.orderId.slice(0, 8);
   const date = o.paidAt.toISOString().slice(0, 10);
+  // Sipariş teyidi: kabul edilen koşul metni ekte (kalıcı veri saklayıcısı)
+  const terms = o.termsVersion
+    ? (o.lang === "en"
+      ? `<p style="color:#666;font-size:13px">The pre-contract information and distance sales contract you accepted (version ${esc(o.termsVersion)}) are attached as your order confirmation; the Turkish text is legally binding. Please keep this email.</p>`
+      : `<p style="color:#666;font-size:13px">Kabul ettiğin Ön Bilgilendirme Formu ve Mesafeli Satış Sözleşmesi (sürüm ${esc(o.termsVersion)}) sipariş teyidi olarak ektedir; bu e-postayı saklamanı öneririz.</p>`)
+    : "";
   if (o.lang === "en") {
     return {
       subject: "Payment received — your book is unlocked — AI for Everyone",
@@ -61,7 +70,7 @@ export function receiptEmail(o: { lang: "tr" | "en"; orderId: string; price: unk
         `<p>Thank you! Your payment was received and the book is now unlocked on this account.</p>` +
         `<p><a href="${o.siteUrl}/en/read">Start reading</a> — sign in with this email address.</p>` +
         `<p style="color:#666;font-size:13px">Order ${esc(short)} · ${esc(tl(o.price))} · ${date}<br>` +
-        `This message is a payment confirmation. Questions: ${esc(o.supportEmail)}</p>`,
+        `This message is a payment confirmation. Questions: ${esc(o.supportEmail)}</p>` + terms,
     };
   }
   return {
@@ -70,7 +79,7 @@ export function receiptEmail(o: { lang: "tr" | "en"; orderId: string; price: unk
       `<p>Teşekkürler! Ödemen alındı ve kitap bu hesapta açıldı.</p>` +
       `<p><a href="${o.siteUrl}/oku">Okumaya başla</a> — bu e-posta adresinle giriş yapman yeterli.</p>` +
       `<p style="color:#666;font-size:13px">Sipariş ${esc(short)} · ${esc(tl(o.price))} · ${date}<br>` +
-      `Bu ileti bir ödeme bilgilendirmesidir. Sorular için: ${esc(o.supportEmail)}</p>`,
+      `Bu ileti bir ödeme bilgilendirmesidir. Sorular için: ${esc(o.supportEmail)}</p>` + terms,
   };
 }
 

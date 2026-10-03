@@ -5,8 +5,8 @@ import { projectPayment } from "../../../supabase/functions/_shared/projection.t
 import { clientIp, HttpError, readJson, requireMethod } from "../../../supabase/functions/_shared/http.ts";
 import { signReadToken, verifyReadToken } from "../../../supabase/functions/_shared/token.ts";
 import { sendResend } from "../../../supabase/functions/_shared/mail.ts";
-import { render, type OutboxRow } from "../../../supabase/functions/_shared/outbox.ts";
-import { hmacSha256Hex, isProviderPageUrl, reportingPaymentDetails, type RetrieveResult } from "../../../supabase/functions/_shared/iyzico.ts";
+import { render, termsAttachments, type OutboxRow, type TermsDoc } from "../../../supabase/functions/_shared/outbox.ts";
+import { hmacSha256Hex, initializeCheckoutForm, isProviderPageUrl, refundV2, reportingPaymentDetails, type RetrieveResult } from "../../../supabase/functions/_shared/iyzico.ts";
 
 const OID = "11111111-2222-3333-4444-555555555555";
 function rr(over: Partial<RetrieveResult> & { raw?: Record<string, unknown> } = {}): RetrieveResult {
@@ -196,4 +196,62 @@ Deno.test("payment/detail banka reddi (10xxx): sayfa açıkken karar yok, sayfa 
   assertEquals(mapPaymentDetail(fail("5086"), { sessionClosed: true }), null);
   assertEquals(mapPaymentDetail(fail("1"), { sessionClosed: true }), null);
   assertEquals(mapPaymentDetail(fail("100345"), { sessionClosed: true }), null);
+});
+
+// ---------------------------------------------------------------- sipariş teyidi (satış koşulları kanıtı)
+Deno.test("Teyit eki: sipariş, tutar, alıcı, sürüm + SHA-256, değişmez kopya ve bağlayıcı metin; EN siparişe ek İngilizce özet; deterministik", () => {
+  const t: TermsDoc = { version: "2026-10-03", hash: "ab".repeat(32), trText: "# Satış koşulları\n\nÖn Bilgilendirme Formu … çğıöşü", enText: "# Terms (summary)" };
+  const row: OutboxRow = { id: "1", event_key: "receipt:" + OID, kind: "receipt", order_id: OID, recipient: "a@example.test", lang: "tr", payload: { amount: 349, paid_at: "2026-10-03T09:41:49Z" }, lease_version: 1 };
+  const dec = (b: string) => new TextDecoder().decode(Uint8Array.from(atob(b), (c) => c.charCodeAt(0)));
+  const a = termsAttachments(row, t);
+  assertEquals(a.length, 1);
+  assertEquals(a[0].filename, `siparis-teyidi-${OID.slice(0, 8)}.txt`);
+  const txt = dec(a[0].content);
+  for (const part of [OID, "2026-10-03T09:41:49.000Z", "349,00", "a@example.test", `sürüm 2026-10-03 · SHA-256 ${"ab".repeat(32)}`, "/kosullar/2026-10-03-tr.txt", t.trText]) {
+    assert(txt.includes(part), part);
+  }
+  assertEquals(JSON.stringify(termsAttachments(row, t)), JSON.stringify(a)); // aynı olay → aynı gövde (Resend tekrar koruması)
+  const en = termsAttachments({ ...row, lang: "en" }, t);
+  assertEquals(en.length, 2);
+  assert(dec(en[1].content).includes("Turkish text is legally binding") && dec(en[1].content).includes(t.enText!));
+  // Makbuz metni eki anar; koşul kaydı olmayan (eski) siparişte anmaz
+  assert(render(row, t).html.includes("sürüm 2026-10-03"));
+  assert(!render(row, null).html.includes("Mesafeli Satış"));
+  assert(render({ ...row, lang: "en" }, t).html.includes("version 2026-10-03"));
+});
+Deno.test("sendResend ekleri gövdeye koyar; ek yoksa alan gönderilmez", async () => {
+  const bodies: Record<string, unknown>[] = [];
+  const srv = Deno.serve({ port: 0, hostname: "127.0.0.1", onListen() {} }, async (req) => { bodies.push(await req.json()); return Response.json({ id: "re_2" }); });
+  Deno.env.set("RESEND_API_KEY", "k"); Deno.env.set("RESEND_API_BASE", `http://127.0.0.1:${srv.addr.port}`);
+  try {
+    await sendResend({ to: "a@example.test", subject: "s", html: "h", idempotencyKey: "receipt:x", attachments: [{ filename: "f.txt", content: "eA==" }] });
+    await sendResend({ to: "a@example.test", subject: "s", html: "h", idempotencyKey: "refund:y" });
+    assertEquals(bodies[0].attachments, [{ filename: "f.txt", content: "eA==" }]);
+    assert(!("attachments" in bodies[1]));
+  } finally { await srv.shutdown(); Deno.env.delete("RESEND_API_BASE"); }
+});
+
+// ---------------------------------------------------------------- SEC05 iyzico alanları (docs.iyzico.com + resmi eklenti)
+Deno.test("SEC05 iyzico istekleri: IP yoksa gönderilmez, telefon yoksa UNKNOWN, kimlik no eklentiyle aynı yer tutucu; uydurma IP/telefon yok", async () => {
+  const bodies: Record<string, any>[] = [];
+  const srv = Deno.serve({ port: 0, hostname: "127.0.0.1", onListen() {} }, async (req) => {
+    bodies.push(await req.json());
+    return Response.json({ status: "success", token: "tok", paymentPageUrl: "https://sandbox-cpp.iyzipay.com/?token=tok", conversationId: "x" });
+  });
+  Deno.env.set("IYZICO_API_KEY", "ak"); Deno.env.set("IYZICO_SECRET", "sk"); Deno.env.set("IYZICO_BASE_URL", `http://127.0.0.1:${srv.addr.port}`);
+  try {
+    const base = { orderId: OID, lang: "tr" as const, price: "349.00", productCode: "p", productName: "n", callbackUrl: "https://x.test/cb" };
+    const a = await initializeCheckoutForm({ ...base, buyer: { id: "u", name: "A", surname: "B", email: "a@example.test", gsmNumber: null, ip: null } });
+    await initializeCheckoutForm({ ...base, buyer: { id: "u", name: "A", surname: "B", email: "a@example.test", gsmNumber: "+905321112233", ip: "203.0.113.7" } });
+    await refundV2("p1", "50.00", null, "op1");
+    await refundV2("p1", "50.00", "203.0.113.8", "op2");
+    assert(a.ok);
+    assertEquals(bodies[0].buyer.gsmNumber, "UNKNOWN");
+    assert(!("ip" in bodies[0].buyer));
+    assertEquals(bodies[0].buyer.identityNumber, "11111111111");
+    assertEquals([bodies[1].buyer.gsmNumber, bodies[1].buyer.ip], ["+905321112233", "203.0.113.7"]);
+    assert(!("shippingAddress" in bodies[0]) && bodies[0].basketItems.every((b: any) => b.itemType === "VIRTUAL"));
+    assert(!("ip" in bodies[2]) && bodies[3].ip === "203.0.113.8");
+    assert(!JSON.stringify(bodies).includes("85.34.78.112") && !JSON.stringify(bodies).includes("+905000000000"));
+  } finally { await srv.shutdown(); }
 });

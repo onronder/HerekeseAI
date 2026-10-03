@@ -21,6 +21,9 @@ const R = [];
 const T = (id, test, ok, actual, expected = '') => R.push({ id, test, status: ok ? 'PASS' : 'FAIL', actual, expected });
 const sql = (f) => fs.readFileSync(f, 'utf8');
 
+// Güncel koşul sürümü ve bağlayıcı Türkçe metnin özeti (store/kosullar/manifest.json)
+const TV = fs.readFileSync(path.join(ROOT, 'store', 'assets', 'config.js'), 'utf8').match(/TERMS_VERSION: "([^"]+)"/)[1];
+const TH = JSON.parse(fs.readFileSync(path.join(ROOT, 'store', 'kosullar', 'manifest.json'), 'utf8'))[TV].tr;
 let admin;
 let s;
 try {
@@ -28,7 +31,9 @@ try {
   await admin.query(sql(path.join(HERE, 'supabase-stub.sql')));
   await admin.query(sql(path.join(HERE, 'site-roles.sql')));
   for (const f of fs.readdirSync(MIG).filter((x) => x.endsWith('.sql')).sort()) await admin.query(sql(path.join(MIG, f)));
-  T('kurulum', 'Supabase taklidi + site rolleri + 3 migration hatasız uygulandı', true, fs.readdirSync(MIG).filter((x) => x.endsWith('.sql')).sort());
+  // Güncel koşul sürümünün değişmez metni (tools/site/terms.py üretir)
+  await admin.query(sql(path.join(ROOT, 'supabase', 'sql', `kosullar-${TV}.sql`)));
+  T('kurulum', 'Supabase taklidi + site rolleri + migration\'lar + koşul metni hatasız uygulandı', true, fs.readdirSync(MIG).filter((x) => x.endsWith('.sql')).sort());
 } catch (e) {
   T('kurulum', 'migration uygulanamadı', false, String(e.message || e));
   await finish();
@@ -46,7 +51,7 @@ async function newUser(email, isAdmin = false) {
 s = await svc();
 const rpc = async (c, fn, args) => (await c.query(`SELECT public.${fn}(${args.map((_, i) => `$${i + 1}`).join(',')}) AS r`, args)).rows[0].r;
 const begin = (c, uid, key, snap = 'h1', price = '349.00') =>
-  rpc(c, 'book_checkout_begin', [uid, PROD, key, snap, price, 'TRY', 'tr', '2026-10-02', 'tr', ['pre_contract', 'withdrawal'], 'a@example.test', null, '1.2.3.4', 'sandbox', 60]);
+  rpc(c, 'book_checkout_begin', [uid, PROD, key, snap, price, 'TRY', 'tr', TV, 'tr', ['pre_contract', 'distance_sales', 'withdrawal_waiver'], 'a@example.test', null, '1.2.3.4', 'sandbox', 60, TH]);
 const approved = (oid, price = '349', extra = {}) => ({ kind: 'approved', payment_id: 'p-' + oid.slice(0, 8), payment_transaction_id: 't-' + oid.slice(0, 8),
   payment_status: 'SUCCESS', fraud_status: 1, price, paid_price: price, currency: 'TRY', conversation_id: oid, basket_id: oid,
   item_transactions: [{ itemId: PROD, paymentTransactionId: 't1', transactionStatus: 2, price, paidPrice: price }], raw_schema: 1, ...extra });
@@ -362,6 +367,32 @@ process.on('unhandledRejection', async (e) => { T('hata', 'beklenmeyen hata', fa
   const h = await one('SELECT last_ok_run IS NOT NULL ok FROM book_ops_health');
   T('K10', '5 eşzamanlı worker çalışması → yalnız biri kilidi alır, diğerleri skipped kaydı; bitince kilit serbest; sağlık görünümü son başarılı çalışmayı gösterir',
     acq.length === 1 && again.acquired === true && h.ok === true, { acquired: acq.length, again: again.acquired, health: h });
+}
+
+// ================================================================ K11 satış koşullarının kanıtı
+{
+  const u = await newUser('kosul@example.test');
+  const rpcBegin = (ver, hash, key) => rpc(s, 'book_checkout_begin', [u, PROD, key, 'hk-' + key, '349.00', 'TRY', 'tr', ver, 'tr', ['pre_contract', 'distance_sales', 'withdrawal_waiver'], 'k@example.test', null, null, 'sandbox', 60, hash]);
+  const wrongHash = await rpcBegin(TV, 'f'.repeat(64), crypto.randomUUID());
+  const noHash = await rpcBegin(TV, null, crypto.randomUUID());
+  const oldVer = await rpcBegin('2000-01-01', TH, crypto.randomUUID());
+  const ok = await rpcBegin(TV, TH, crypto.randomUUID());
+  const ord = await one('SELECT terms_version, terms_hash, consent_kinds FROM book_orders WHERE id = $1', [ok.order_id]);
+  T('K11', 'yayımlanmamış/eşleşmeyen koşul özeti ya da sürümüyle sipariş açılmaz; doğru özetle açılan sipariş sürüm + özet + beyan türlerini taşır',
+    wrongHash.action === 'terms_unavailable' && noHash.action === 'terms_unavailable' && oldVer.action === 'terms_unavailable' && ok.action === 'new'
+      && ord.terms_version === TV && ord.terms_hash === TH && ord.consent_kinds.length === 3,
+    { wrongHash: wrongHash.action, noHash: noHash.action, oldVer: oldVer.action, ok: ok.action, ord });
+  const tryQ = async (q, a) => { try { await admin.query(q, a); return 'ok'; } catch (e) { return e.code || e.message; } };
+  const upd = await tryQ(`UPDATE book_policy_version SET content = content || ' ' WHERE version = $1`, [TV]);
+  const del = await tryQ(`DELETE FROM book_policy_version WHERE version = $1`, [TV]);
+  const bad = await tryQ(`INSERT INTO book_policy_version (kind, locale, version, content_hash, content) VALUES ('terms_bundle', 'tr', '2099-01-01', $1, 'x')`, ['0'.repeat(64)]);
+  const row = await one(`SELECT content_hash = encode(sha256(convert_to(content, 'UTF8')), 'hex') AS match FROM book_policy_version WHERE kind = 'terms_bundle' AND locale = 'tr' AND version = $1`, [TV]);
+  T('K11', 'koşul metni değiştirilemez ve silinemez (55000); içerikle uyuşmayan özet reddedilir (23514); yüklü metnin özeti içerikle aynı',
+    upd === '55000' && del === '55000' && bad === '23514' && row.match === true, { upd, del, bad, row });
+  const cu = await asUser(u);
+  const read = await (async () => { try { await cu.query('SELECT 1 FROM public.book_policy_version'); return 'ok'; } catch (e) { return e.code; } })();
+  await cu.end();
+  T('K11', 'kullanıcı JWT\'si koşul tablosunu doğrudan okuyamaz (metin herkese açık dosyadan okunur)', read === '42501', read);
 }
 
 // ================================================================ izleme görünümü
