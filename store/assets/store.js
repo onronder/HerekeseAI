@@ -869,7 +869,12 @@
             ` <button class="btn" data-mark="${esc(o.id)}" style="padding:4px 10px;font-size:12px;">Panelde iade edildi</button></div>` : "") +
           `<div class="mono muted" id="r-line-${esc(o.id.slice(0, 8))}" style="font-size:11px;margin-top:4px;"></div></div>`;
       }).join("");
-      const outcomeText = (j) => ({ refunded: "✓ tam iade tamamlandı, erişim kapandı", partial: "✓ kısmi iade tamamlandı, erişim korunuyor", unknown: "… sonuç belirsiz; yeni çağrı yapılmadı, uzlaştırılacak", needs_review: "! eşleşme belirsiz: elle incele", failed: "✗ iyzico iadeyi reddetti", unchanged: "değişiklik yok" }[j.outcome] || JSON.stringify(j));
+      const hm = (iso) => { try { return new Date(iso).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" }); } catch (e) { return iso; } };
+      const unknownText = (j) => j.reason === "provider_unreachable" ? `… iyzico raporlamasına ulaşılamadı${j.provider_status ? " (HTTP " + j.provider_status + ")" : ""}; kayıt değişmedi`
+        : j.reason === "provider_failure" ? `… iyzico raporlama hatası${j.provider_code ? " (" + j.provider_code + ")" : ""}; kayıt değişmedi`
+        : j.reason === "no_record_yet" ? `… iyzico'da bu iadeye ait kayıt henüz yok; ${hm(j.review_after)} sonrası elle incelemeye düşer`
+        : "… sonuç belirsiz; yeni çağrı yapılmadı, uzlaştırılacak";
+      const outcomeText = (j) => j.outcome === "unknown" ? unknownText(j) : ({ refunded: "✓ tam iade tamamlandı, erişim kapandı", partial: "✓ kısmi iade tamamlandı, erişim korunuyor", needs_review: "! eşleşme belirsiz: elle incele", failed: "✗ iyzico iadeyi reddetti", unchanged: "değişiklik yok" }[j.outcome] || JSON.stringify(j));
       res.querySelectorAll("[data-refund],[data-mark]").forEach((b) => {
         b.onclick = async () => {
           const id = b.dataset.refund || b.dataset.mark;

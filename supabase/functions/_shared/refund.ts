@@ -20,12 +20,23 @@ export async function reconcileRefundOp(admin: SupabaseClient, op: { id: string;
   try {
     raw = await reportingPaymentDetails(paymentId);
   } catch (e) {
-    console.error("refund reconcile reporting error kind=" + (e instanceof IyzicoError ? e.kind : "other"));
-    return { outcome: "unknown" };
+    const kind = e instanceof IyzicoError ? e.kind : "other";
+    const status = e instanceof IyzicoError ? e.status ?? null : null;
+    console.error(`refund reconcile reporting error kind=${kind} status=${status ?? "-"}`);
+    return { outcome: "unknown", reason: "provider_unreachable", provider_status: status };
+  }
+  // Sağlayıcı iş hatası (status: failure): kod loglanır ve yanıtta döner (mesaj metni dönmez)
+  if (raw.status !== "success") {
+    const code = raw.errorCode == null ? null : String(raw.errorCode).slice(0, 20);
+    console.error("refund reconcile reporting failure code=" + (code ?? "-"));
+    return { outcome: "unknown", reason: "provider_failure", provider_code: code };
   }
   const r = matchRefund(raw, { id: op.id, amount: String(op.amount), currency: op.currency, createdAt: op.created_at },
     (known ?? []).map((k) => String((k as { provider_refund_id: string }).provider_refund_id)));
-  if (r.kind === "unknown") return { outcome: "unknown" };
+  // Kayıt henüz görünmüyor: 30 dk dolunca elle incelemeye düşer (review_after)
+  if (r.kind === "unknown") {
+    return { outcome: "unknown", reason: "no_record_yet", review_after: new Date(Number(new Date(op.created_at)) + 30 * 60_000).toISOString() };
+  }
   return await applyRefund(admin, op.id, r);
 }
 
